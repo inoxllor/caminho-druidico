@@ -29,7 +29,6 @@ const oghamAlphabet = [
     { symbol: "ᚔ", name: "Iodal", tree: "Teixo", family: "Ailm (A)", herb: "Teixo", meaning: "Imortalidade da alma, regeneração profunda e ligação ao tempo eterno." }
 ];
 
-// CALENDÁRIO ARBÓREO CELTA (13 MESES LUNARES)
 const celticTreeMonths = [
     { startM: 12, startD: 24, endM: 1, endD: 20, symbol: "ᚁ", name: "Beith (Bétula)", desc: "Mês da purificação, dos novos começos após o Solstício de Inverno e da renovação da luz." },
     { startM: 1, startD: 21, endM: 2, endD: 17, symbol: "ᚂ", name: "Luis (Rowan)", desc: "Mês da proteção espiritual, do despertar da visão interior e da energia de Imbolc." },
@@ -57,49 +56,302 @@ const runeAlphabet = [
     { symbol: "ᚹ", name: "Wunjo", element: "Terra / Alegria", meaning: "Harmonia no clã, felicidade e realização." }
 ];
 
-// TAROT MÍTICO COM SPRITES PIXEL ART NATIVOS EM SVG (16x16)
-const tarotCards = [
-    {
-        num: "0", name: "O VIAJANTE", realm: "TÍR NA NÓG",
-        svg: `<svg viewBox="0 0 16 16" class="w-28 h-28 pixel-svg"><rect x="3" y="3" width="10" height="10" fill="#0f172a"/><rect x="6" y="4" width="4" height="3" fill="#34d399"/><rect x="5" y="7" width="6" height="5" fill="#10b981"/><rect x="11" y="2" width="1" height="12" fill="#d97706"/><rect x="3" y="4" width="2" height="2" fill="#f8fafc"/></svg>`,
-        desc: "Bardo dando o salto de fé entre mundos. Corvos de Odin e cão guardião."
-    },
-    {
-        num: "I", name: "O DRUIDA", realm: "BOSQUE SAGRADO",
-        svg: `<svg viewBox="0 0 16 16" class="w-28 h-28 pixel-svg"><rect x="7" y="2" width="2" height="12" fill="#92400e"/><rect x="4" y="4" width="8" height="4" fill="#16a34a"/><rect x="5" y="3" width="6" height="2" fill="#22c55e"/><rect x="7" y="1" width="2" height="1" fill="#eab308"/><rect x="4" y="13" width="8" height="1" fill="#4ade80"/></svg>`,
-        desc: "Maestria elemental, canalização da Awen e vara de carvalho rúnico."
-    },
-    {
-        num: "II", name: "A VALQUÍRIA", realm: "VÉU DE SAMHAIN",
-        svg: `<svg viewBox="0 0 16 16" class="w-28 h-28 pixel-svg"><rect x="3" y="5" width="3" height="4" fill="#e2e8f0"/><rect x="10" y="5" width="3" height="4" fill="#e2e8f0"/><rect x="6" y="4" width="4" height="8" fill="#6366f1"/><rect x="7" y="2" width="2" height="2" fill="#fef08a"/><rect x="7" y="12" width="2" height="2" fill="#818cf8"/></svg>`,
-        desc: "Mistérios ocultos e leitura de inscrições Ogham ancestrais."
-    },
-    {
-        num: "III", name: "A GRANDE MÃE", realm: "TERRA FÉRTIL",
-        svg: `<svg viewBox="0 0 16 16" class="w-28 h-28 pixel-svg"><rect x="5" y="3" width="6" height="2" fill="#eab308"/><rect x="6" y="2" width="1" height="1" fill="#fef08a"/><rect x="9" y="2" width="1" height="1" fill="#fef08a"/><rect x="4" y="6" width="8" height="7" fill="#059669"/><rect x="7" y="8" width="2" height="3" fill="#f59e0b"/></svg>`,
-        desc: "Abundância agrícola e harmonia com a Roda do Ano."
-    },
-    {
-        num: "IV", name: "O PAI DE TODOS", realm: "ASGARD",
-        svg: `<svg viewBox="0 0 16 16" class="w-28 h-28 pixel-svg"><rect x="4" y="3" width="8" height="10" fill="#334155"/><rect x="6" y="5" width="1" height="1" fill="#38bdf8"/><rect x="9" y="5" width="1" height="1" fill="#0f172a"/><rect x="5" y="8" width="6" height="4" fill="#cbd5e1"/><rect x="12" y="2" width="1" height="12" fill="#eab308"/></svg>`,
-        desc: "Liderança de clã, ordem cósmica e sabedoria inabalável."
-    },
-    {
-        num: "X", name: "A RODA DO ANO", realm: "CICLOS DA TERRA",
-        svg: `<svg viewBox="0 0 16 16" class="w-28 h-28 pixel-svg"><rect x="5" y="2" width="6" height="1" fill="#eab308"/><rect x="5" y="13" width="6" height="1" fill="#eab308"/><rect x="2" y="5" width="1" height="6" fill="#eab308"/><rect x="13" y="5" width="1" height="6" fill="#eab308"/><rect x="7" y="3" width="2" height="10" fill="#818cf8"/><rect x="3" y="7" width="10" height="2" fill="#818cf8"/></svg>`,
-        desc: "Os 8 festivais sagrados e o destino em constante rotação."
-    },
-    {
-        num: "XIII", name: "TRAVESSIA DE HEL", realm: "MUNDO SUBTERRÂNEO",
-        svg: `<svg viewBox="0 0 16 16" class="w-28 h-28 pixel-svg"><rect x="5" y="3" width="6" height="5" fill="#e2e8f0"/><rect x="6" y="5" width="1" height="1" fill="#090d16"/><rect x="9" y="5" width="1" height="1" fill="#090d16"/><rect x="6" y="8" width="4" height="2" fill="#94a3b8"/><rect x="3" y="11" width="10" height="2" fill="#475569"/></svg>`,
-        desc: "Transformação radical, fim de ciclo e renascimento de novas sementes."
-    },
-    {
-        num: "XIX", name: "O SOL DE LITHA", realm: "SOLSTÍCIO DE VERÃO",
-        svg: `<svg viewBox="0 0 16 16" class="w-28 h-28 pixel-svg"><rect x="5" y="5" width="6" height="6" fill="#facc15"/><rect x="7" y="2" width="2" height="2" fill="#f97316"/><rect x="7" y="12" width="2" height="2" fill="#f97316"/><rect x="2" y="7" width="2" height="2" fill="#f97316"/><rect x="12" y="7" width="2" height="2" fill="#f97316"/><rect x="6" y="6" width="4" height="4" fill="#fef08a"/></svg>`,
-        desc: "Alegria pura, vitalidade e apogeu solar nos prados sagrados."
+function generateFullTarotDeck() {
+    const deck = [];
+    const majors = [
+        { num: "00", name: "O VIAJANTE", realm: "TÍR NA NÓG", desc: "Bardo dando o salto de fé entre mundos. Corvos de Odin e cão guardião.", color: "#34d399", fill: "#10b981" },
+        { num: "01", name: "O DRUIDA", realm: "BOSQUE SAGRADO", desc: "Maestria elemental, canalização da Awen e vara de carvalho rúnico.", color: "#eab308", fill: "#ca8a04" },
+        { num: "02", name: "A VALQUÍRIA", realm: "VÉU DE SAMHAIN", desc: "Mistérios ocultos e leitura de inscrições Ogham ancestrais.", color: "#818cf8", fill: "#4f46e5" },
+        { num: "03", name: "A GRANDE MÃE", realm: "TERRA FÉRTIL", desc: "Abundância agrícola e harmonia com a Roda do Ano.", color: "#34d399", fill: "#059669" },
+        { num: "04", name: "O PAI DE TODOS", realm: "ASGARD", desc: "Liderança de clã, ordem cósmica e sabedoria inabalável.", color: "#38bdf8", fill: "#0284c7" },
+        { num: "05", name: "O HIEROFANTE", realm: "TEMPLO DE PIEDRA", desc: "Tradição sagrada, ensinamentos de barddas e iniciação.", color: "#fbbf24", fill: "#d97706" },
+        { num: "06", name: "OS AMANTES", realm: "BOSQUE DOURADO", desc: "União de opostos, escolha de caminho e alinhamento do coração.", color: "#f472b6", fill: "#db2777" },
+        { num: "07", name: "A CARRUAGEM", realm: "ESTRADA DOS REIS", desc: "Determinação, foco, vitória e condução de forças opostas.", color: "#a78bfa", fill: "#7c3aed" },
+        { num: "08", name: "A FORÇA", realm: "CLAREIRA DO URSO", desc: "Coragem suave, domínio dos instintos e resiliência espiritual.", color: "#fb923c", fill: "#ea580c" },
+        { num: "09", name: "O EREMITA", realm: "MONTANHA SOLITÁRIA", desc: "Busca interior, lanterna da sabedoria e retiro no silêncio.", color: "#94a3b8", fill: "#475569" },
+        { num: "10", name: "A RODA DO ANO", realm: "CICLOS DA TERRA", desc: "Os 8 festivais sagrados e o destino em constante rotação.", color: "#facc15", fill: "#eab308" },
+        { num: "11", name: "A JUSTIÇA", realm: "CÍRCULO DE MEGALITOS", desc: "Equilíbrio cármico, verdade, lei natural e imparcialidade.", color: "#60a5fa", fill: "#2563eb" },
+        { num: "12", name: "O PENDURADO", realm: "YGGDRASIL", desc: "Perspetiva invertida, sacrifício voluntário e iluminação.", color: "#34d399", fill: "#0d9488" },
+        { num: "13", name: "TRAVESSIA DE HEL", realm: "MUNDO SUBTERRÂNEO", desc: "Transformação radical, fim de ciclo e renascimento de novas sementes.", color: "#cbd5e1", fill: "#64748b" },
+        { num: "14", name: "A TEMPERANÇA", realm: "FONTE SAGRADA", desc: "Alquimia interior, paciência e mistura harmoniosa dos elementos.", color: "#38bdf8", fill: "#0284c7" },
+        { num: "15", name: "O DIABO", realm: "SOMBRAS DE UTGARD", desc: "Apego material, ilusões e libertação de amarras limitantes.", color: "#ef4444", fill: "#991b1b" },
+        { num: "16", name: "A TORRE", realm: "FORTALEZA DE RAIOS", desc: "Queda de falsas estruturas, revelação súbita e libertação.", color: "#f97316", fill: "#c2410c" },
+        { num: "17", name: "A ESTRELA", realm: "CÉU DE AVALON", desc: "Esperança, inspiração divina, cura e fé renovada.", color: "#9333ea", fill: "#581c87" },
+        { num: "18", name: "A LUA", realm: "PÂNTANO MÍSTICO", desc: "Ilusão, intuição profunda, sonhos e subconsciente.", color: "#818cf8", fill: "#3730a3" },
+        { num: "19", name: "O SOL DE LITHA", realm: "SOLSTÍCIO DE VERÃO", desc: "Alegria pura, vitalidade e apogeu solar nos prados sagrados.", color: "#facc15", fill: "#ca8a04" },
+        { num: "20", name: "O JULGAMENTO", realm: "VALE DOS ANCESTRAIS", desc: "Despertar espiritual, chamado ancestral e absolvição.", color: "#4ade80", fill: "#15803d" },
+        { num: "21", name: "O MUNDO", realm: "GRANDE BOSQUE", desc: "Plenitude, conclusão bem-sucedida e integração cósmica.", color: "#ec4899", fill: "#be185d" }
+    ];
+
+    majors.forEach((m, idx) => {
+        deck.push({
+            id: `maj-${idx}`,
+            category: 'major',
+            num: m.num,
+            name: m.name,
+            realm: m.realm,
+            desc: m.desc,
+            svg: generateUniquePixelSvg(idx, m.color, m.fill, 'major', idx)
+        });
+    });
+
+    const suits = [
+        { key: 'wands', name: 'PAUS', symbol: '🔥', color: '#f97316', fill: '#c2410c' },
+        { key: 'cups', name: 'COPAS', symbol: '💧', color: '#38bdf8', fill: '#0284c7' },
+        { key: 'swords', name: 'ESPADAS', symbol: '⚔️', color: '#818cf8', fill: '#4f46e5' },
+        { key: 'pentacles', name: 'OUROS', symbol: '🪙', color: '#eab308', fill: '#ca8a04' }
+    ];
+
+    const ranks = [
+        { name: 'Ás', val: 1 }, { name: '2', val: 2 }, { name: '3', val: 3 }, { name: '4', val: 4 },
+        { name: '5', val: 5 }, { name: '6', val: 6 }, { name: '7', val: 7 }, { name: '8', val: 8 },
+        { name: '9', val: 9 }, { name: '10', val: 10 }, { name: 'Pajem', val: 11 }, { name: 'Cavaleiro', val: 12 },
+        { name: 'Rainha', val: 13 }, { name: 'Rei', val: 14 }
+    ];
+
+    suits.forEach((suit, sIdx) => {
+        ranks.forEach((r, rIdx) => {
+            const uniqueSeed = sIdx * 50 + rIdx;
+            deck.push({
+                id: `${suit.key}-${r.val}`,
+                category: suit.key,
+                num: `${r.name} de ${suit.name}`,
+                name: `${r.name} DE ${suit.name}`,
+                realm: `DOMÍNIO DE ${suit.name}`,
+                desc: `Energia de ${suit.name.toLowerCase()} (${r.name}): manifestação e dinâmica no caminho druídico.`,
+                svg: generateUniquePixelSvg(uniqueSeed, suit.color, suit.fill, suit.key, r.val)
+            });
+        });
+    });
+
+    return deck;
+}
+
+function generateUniquePixelSvg(seed, color, fill, type, index) {
+    let shapes = '';
+    const altColor = '#f8fafc';
+    const darkBg = '#060911';
+
+    if (type === 'major') {
+        const cx1 = 10 + (seed * 3) % 12;
+        const cy1 = 8 + (seed * 5) % 12;
+        const cx2 = 22 - (seed * 2) % 10;
+        const cy2 = 20 + (seed * 4) % 6;
+        shapes = `
+            <rect x="${cx1}" y="${cy1}" width="8" height="8" fill="${color}" />
+            <rect x="${cx2}" y="${cy2}" width="6" height="6" fill="${fill}" />
+            <circle cx="16" cy="16" r="${4 + (seed % 4)}" fill="none" stroke="${altColor}" stroke-width="2" />
+            <rect x="6" y="14" width="20" height="2" fill="${color}" />
+        `;
+    } else if (type === 'wands') {
+        const count = Math.min((index % 6) + 1, 5);
+        for (let i = 0; i < count; i++) {
+            const posX = 6 + i * 5;
+            shapes += `<rect x="${posX}" y="${6 + (i % 2) * 4}" width="3" height="20" fill="${color}" /><rect x="${posX - 1}" y="${4 + (i % 2) * 4}" width="5" height="2" fill="${fill}" />`;
+        }
+    } else if (type === 'cups') {
+        const count = Math.min((index % 5) + 1, 4);
+        for (let i = 0; i < count; i++) {
+            const posX = 6 + i * 6;
+            const posY = 10 + (i % 2) * 6;
+            shapes += `<path d="M${posX} ${posY}h8v6c0 3-2 4-4 4s-4-1-4-4v-6z" fill="${color}" /><rect x="${posX + 3}" y="${posY + 10}" width="2" height="3" fill="${fill}" />`;
+        }
+    } else if (type === 'swords') {
+        const count = Math.min((index % 5) + 1, 4);
+        for (let i = 0; i < count; i++) {
+            const posX = 7 + i * 5;
+            shapes += `<rect x="${posX}" y="4" width="2" height="20" fill="${color}" /><rect x="${posX - 2}" y="18" width="6" height="2" fill="${fill}" /><rect x="${posX - 1}" y="20" width="4" height="4" fill="${altColor}" />`;
+        }
+    } else if (type === 'pentacles') {
+        const count = Math.min((index % 6) + 1, 5);
+        for (let i = 0; i < count; i++) {
+            const posX = 8 + (i % 3) * 7;
+            const posY = 8 + Math.floor(i / 3) * 10;
+            shapes += `<circle cx="${posX + 3}" cy="${posY + 3}" r="4" fill="${color}" /><circle cx="${posX + 3}" cy="${posY + 3}" r="2" fill="${fill}" />`;
+        }
     }
-];
+
+    return `<svg viewBox="0 0 32 32" class="w-32 h-32 pixel-svg">
+        <rect x="2" y="2" width="28" height="28" fill="${darkBg}"/>
+        ${shapes}
+        <rect x="4" y="4" width="2" height="2" fill="${altColor}" opacity="0.8"/>
+        <rect x="26" y="26" width="2" height="2" fill="${altColor}" opacity="0.8"/>
+    </svg>`;
+}
+
+const fullTarotDeck = generateFullTarotDeck();
+let currentTarotFilter = 'all';
+let currentTarotMode = 'draw';
+let lastReadings = { ogham: "", tarot: "", runes: "" };
+
+function setTarotFilter(filter) {
+    currentTarotFilter = filter;
+    ['all', 'major', 'wands', 'cups', 'swords', 'pentacles'].forEach(f => {
+        const btn = document.getElementById(`filter-btn-${f}`);
+        if (btn) {
+            if (f === filter) {
+                btn.className = "bg-[var(--btn-primary)] text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition";
+            } else {
+                btn.className = "theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition";
+            }
+        }
+    });
+    if (currentTarotMode === 'gallery') {
+        renderTarotGallery();
+    } else {
+        showToast(`Filtro de Tarot: ${filter.toUpperCase()}`);
+    }
+}
+
+function switchTarotMode(mode) {
+    currentTarotMode = mode;
+    const btnDraw = document.getElementById('tarot-mode-draw');
+    const btnGallery = document.getElementById('tarot-mode-gallery');
+    const actions = document.getElementById('tarot-draw-actions');
+    const saveBar = document.getElementById('tarot-save-bar');
+
+    if (mode === 'draw') {
+        btnDraw.className = "bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer";
+        btnGallery.className = "theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer";
+        actions.classList.remove('hidden');
+        document.getElementById('tarot-card-container').innerHTML = `
+            <div class="tarot-flip-wrapper is-flipped" onclick="this.classList.toggle('is-flipped')">
+                <div class="tarot-flip-inner">
+                    <div class="tarot-card-back pixel-card-vertical">
+                        <div class="card-header-pixel">AWEN • 78 CARTAS</div>
+                        <div class="card-art-box flex items-center justify-center">
+                            <svg viewBox="0 0 32 32" class="w-32 h-32 pixel-svg">
+                                <rect x="14" y="2" width="4" height="28" fill="#eab308"/>
+                                <rect x="8" y="8" width="4" height="20" fill="#818cf8"/>
+                                <rect x="4" y="16" width="4" height="12" fill="#6366f1"/>
+                                <rect x="20" y="8" width="4" height="20" fill="#818cf8"/>
+                                <rect x="24" y="16" width="4" height="12" fill="#6366f1"/>
+                                <circle cx="16" cy="6" r="2" fill="#fef08a"/>
+                            </svg>
+                        </div>
+                        <div class="card-footer-pixel">CLIQUE PARA VIRAR</div>
+                    </div>
+                    <div class="tarot-card-front pixel-card-vertical">
+                        <div class="card-header-pixel">00 • O VIAJANTE</div>
+                        <div class="card-art-box flex items-center justify-center">
+                            <svg viewBox="0 0 32 32" class="w-32 h-32 pixel-svg">
+                                <rect x="4" y="4" width="24" height="24" fill="#090d16"/>
+                                <rect x="10" y="6" width="12" height="10" fill="#34d399"/>
+                                <rect x="8" y="16" width="16" height="12" fill="#10b981"/>
+                                <rect x="26" y="2" width="2" height="28" fill="#d97706"/>
+                                <rect x="6" y="8" width="4" height="4" fill="#f8fafc"/>
+                                <circle cx="16" cy="11" r="2" fill="#065f46"/>
+                            </svg>
+                        </div>
+                        <div class="card-footer-pixel">TÍR NA NÓG</div>
+                    </div>
+                </div>
+            </div>
+            <span class="theme-accent opacity-70 text-xs mt-5">Escolha uma tiragem (1, 3 ou 5 cartas) ou abra a galeria</span>
+        `;
+        showToast("Modo Tiragem Oracular ativo.");
+    } else {
+        btnGallery.className = "bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer";
+        btnDraw.className = "theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer";
+        actions.classList.add('hidden');
+        saveBar.classList.add('hidden');
+        renderTarotGallery();
+        showToast("Galeria de Contemplação de Cartas ativa.");
+    }
+}
+
+function renderTarotGallery() {
+    const container = document.getElementById('tarot-card-container');
+    let pool = fullTarotDeck;
+    if (currentTarotFilter !== 'all') {
+        pool = fullTarotDeck.filter(c => c.category === currentTarotFilter);
+    }
+
+    container.innerHTML = `
+        <div class="w-full text-left mb-3">
+            <span class="text-xs theme-accent font-semibold">Exibindo ${pool.length} cartas em contemplação</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-h-[580px] overflow-y-auto p-2">
+            ${pool.map(c => `
+                <div class="theme-card border rounded-2xl p-4 flex flex-col items-center text-center space-y-3 shadow-xl bg-[var(--bg-inner)] hover:border-[var(--text-accent)] transition">
+                    <div class="pixel-card-vertical !w-[160px] !h-[240px]">
+                        <div class="card-header-pixel">${c.num}</div>
+                        <div class="card-art-box flex items-center justify-center">
+                            ${c.svg}
+                        </div>
+                        <div class="card-footer-pixel">${c.realm}</div>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-cinzel text-xs font-bold text-white">${c.name}</h4>
+                        <p class="text-[10px] theme-muted leading-snug">${c.desc}</p>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function drawTarotCard(count) {
+    if (currentTarotMode === 'gallery') switchTarotMode('draw');
+    const container = document.getElementById('tarot-card-container');
+    let pool = fullTarotDeck;
+    if (currentTarotFilter !== 'all') {
+        pool = fullTarotDeck.filter(c => c.category === currentTarotFilter);
+    }
+    const shuffled = [...pool].sort(() => 0.5 - Math.random()).slice(0, Math.min(count, pool.length));
+    const labels3 = ["Passado", "Presente", "Futuro"];
+    const labels5 = ["Origem", "Desafio", "Aliado", "Consciência", "Destino"];
+
+    container.innerHTML = `
+        <div class="flex flex-wrap justify-center gap-5 w-full items-start">
+            ${shuffled.map((c, i) => `
+                <div class="flex flex-col items-center space-y-2">
+                    ${count === 3 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels3[i]}</span>` : ''}
+                    ${count === 5 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels5[i]}</span>` : ''}
+                    <div class="tarot-flip-wrapper" id="tarot-flip-${i}" onclick="this.classList.toggle('is-flipped')">
+                        <div class="tarot-flip-inner">
+                            <div class="tarot-card-back pixel-card-vertical">
+                                <div class="card-header-pixel">AWEN • 78</div>
+                                <div class="card-art-box flex items-center justify-center">
+                                    <svg viewBox="0 0 32 32" class="w-28 h-28 pixel-svg">
+                                        <rect x="14" y="2" width="4" height="28" fill="#eab308"/>
+                                        <rect x="8" y="8" width="4" height="20" fill="#818cf8"/>
+                                        <rect x="20" y="8" width="4" height="20" fill="#818cf8"/>
+                                    </svg>
+                                </div>
+                                <div class="card-footer-pixel">A REVELAR...</div>
+                            </div>
+                            <div class="tarot-card-front pixel-card-vertical">
+                                <div class="card-header-pixel">${c.num}</div>
+                                <div class="card-art-box flex items-center justify-center">
+                                    ${c.svg}
+                                </div>
+                                <div class="card-footer-pixel">${c.realm}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-cinzel text-xs font-bold text-white max-w-[210px] text-center">${c.name}</h4>
+                    <p class="text-[10px] theme-muted max-w-[210px] text-center leading-relaxed">${c.desc}</p>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    shuffled.forEach((_, i) => {
+        setTimeout(() => {
+            const el = document.getElementById(`tarot-flip-${i}`);
+            if (el) el.classList.add('is-flipped');
+        }, 200 + i * 150);
+    });
+
+    lastReadings.tarot = shuffled.map((c, i) => {
+        const pos = count === 3 ? `[${labels3[i]}] ` : (count === 5 ? `[${labels5[i]}] ` : '');
+        return `${pos}${c.num} - ${c.name} (${c.realm}): ${c.desc}`;
+    }).join('\n');
+
+    document.getElementById('tarot-save-bar').classList.remove('hidden');
+    showToast(`Tiragem efetuada com o baralho completo (${shuffled.length} cartas).`);
+}
 
 const wheelFestivals = [
     { id: 1, name: "Yule", date: "21 Dezembro", theme: "Solstício de Inverno", elem: "Terra (Norte - Ancestrais & Raízes)", ritual: "Celebração do renascimento da luz solar, vela de Yule e aconchego no lar.", blessing: "Que a luz renascida ilumine os nossos passos durante o inverno." },
@@ -109,11 +361,10 @@ const wheelFestivals = [
     { id: 5, name: "Litha", date: "21 Junho", theme: "Solstício de Verão", elem: "Fogo (Sul - Transformação & Luz)", ritual: "Apogeu da força solar, colheita de ervas ao meio-dia e gratidão pela luz.", blessing: "Honramos o Sol no seu trono mais alto e agradecemos a abundância." },
     { id: 6, name: "Lughnasadh", date: "1 Agosto", theme: "Primeira Colheita", elem: "Terra (Norte - Ancestrais & Raízes)", ritual: "Partilha do pão sagrado feito com os primeiros grãos e celebração dos talentos.", blessing: "Partilhamos o pão da terra com gratidão pelo trabalho e sustento." },
     { id: 7, name: "Mabon", date: "21 Setembro", theme: "Equinócio de Outono", elem: "Água (Oeste - Cura & Memória)", ritual: "Agradecimento pela colheita completa, equilíbrio e preparação para o recolhimento.", blessing: "Agradecemos os frutos recolhidos e acolhemos a serenidade do outono." },
-    { id: 8, name: "Samhain", date: "31 Outubro", theme: "Ano Novo Druídico & Ancestrais", elem: "Água (Oeste - Cura & Memória)", ritual: "Altar aos antepassados, vela na janela para os que partiram e silêncio sagrado.", blessing: "Honramos os nossos ancestrais e entramos em paz no novo ciclo." }
+    { id: 8, name: "Samhain", date: "31 Outubro", theme: "Ano Novo Druídico & Ancestrais", elem: "Água (Oeste - Cura & Memória)", ritual: "Altar aos antepassados, acender fogueiras de proteção e libertação de ciclos passados.", blessing: "Honramos os nossos ancestrais e entramos em paz no novo ciclo." }
 ];
 
 let selectedFestivalId = 8;
-let lastReadings = { ogham: "", tarot: "", runes: "" };
 
 function selectFestival(id) {
     selectedFestivalId = id;
@@ -233,7 +484,6 @@ function drawRandomTriad() {
     document.getElementById('triad-text').innerText = `"${druidicTriads[randomIndex]}"`;
 }
 
-// CÁLCULO DO MÊS ARBÓREO CELTA (BETH-LUIS-NION)
 function calculateCelticTreeMonth() {
     const now = new Date();
     const m = now.getMonth() + 1;
@@ -269,7 +519,6 @@ function calculateCelticTreeMonth() {
     if (astroDesc) astroDesc.innerText = currentTree.desc;
 }
 
-// CÁLCULO LUNAR & SOLAR (COM SUPORTE A COORDENADAS GPS REAIS)
 function calculateAstronomy(lat = 38.95, lon = -8.99) {
     const now = new Date();
     const year = now.getFullYear(), month = now.getMonth() + 1, day = now.getDate();
@@ -295,7 +544,6 @@ function calculateAstronomy(lat = 38.95, lon = -8.99) {
     else if (age > 20.3 && age <= 24.0) { phaseName = "Quarto Minguante"; icon = "🌗"; }
     else if (age > 24.0 && age < 27.7) { phaseName = "Lua Minguante"; icon = "🌘"; }
 
-    // Cálculo trigonométrico aproximado do Nascer e Pôr do Sol para a latitude/longitude
     const startOfYear = new Date(year, 0, 0);
     const dayOfYear = Math.floor((now - startOfYear) / 86400000);
     const rad = Math.PI / 180;
@@ -363,61 +611,6 @@ function drawOghamCard(count) {
 
     document.getElementById('ogham-save-bar').classList.remove('hidden');
     showToast(`Oráculo de Ogham consultado (${count} Few).`);
-}
-
-function drawTarotCard(count) {
-    const container = document.getElementById('tarot-card-container');
-    const shuffled = [...tarotCards].sort(() => 0.5 - Math.random()).slice(0, count);
-    const labels = ["Passado", "Presente", "Destino"];
-    container.innerHTML = `
-        <div class="flex flex-wrap justify-center gap-6 w-full items-start">
-            ${shuffled.map((c, i) => `
-                <div class="flex flex-col items-center space-y-3">
-                    ${count === 3 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels[i]}</span>` : ''}
-                    <div class="tarot-flip-wrapper" id="tarot-flip-${i}" onclick="this.classList.toggle('is-flipped')">
-                        <div class="tarot-flip-inner">
-                            <div class="tarot-card-back pixel-card-vertical">
-                                <div class="card-header-pixel">AWEN • ARCANO</div>
-                                <div class="card-art-box flex items-center justify-center">
-                                    <svg viewBox="0 0 16 16" class="w-24 h-24 pixel-svg">
-                                        <rect x="7" y="1" width="2" height="2" fill="#eab308"/>
-                                        <rect x="5" y="4" width="1" height="10" fill="#818cf8"/>
-                                        <rect x="7" y="5" width="2" height="9" fill="#eab308"/>
-                                        <rect x="10" y="4" width="1" height="10" fill="#818cf8"/>
-                                    </svg>
-                                </div>
-                                <div class="card-footer-pixel">A REVELAR...</div>
-                            </div>
-                            <div class="tarot-card-front pixel-card-vertical">
-                                <div class="card-header-pixel">${c.num} • ${c.name}</div>
-                                <div class="card-art-box flex items-center justify-center">
-                                    ${c.svg}
-                                </div>
-                                <div class="card-footer-pixel">${c.realm}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-[11px] theme-muted max-w-[210px] text-center leading-relaxed">${c.desc}</p>
-                </div>
-            `).join('')}
-        </div>
-    `;
-
-    // Revelar cartas automaticamente em cascata suave
-    shuffled.forEach((_, i) => {
-        setTimeout(() => {
-            const el = document.getElementById(`tarot-flip-${i}`);
-            if (el) el.classList.add('is-flipped');
-        }, 250 + i * 250);
-    });
-
-    lastReadings.tarot = shuffled.map((c, i) => {
-        const pos = count === 3 ? `[${labels[i]}] ` : '';
-        return `${pos}${c.num} - ${c.name} (${c.realm}): ${c.desc}`;
-    }).join('\n');
-
-    document.getElementById('tarot-save-bar').classList.remove('hidden');
-    showToast("Tiragem de Tarot Mítico efetuada.");
 }
 
 function drawRunes(count) {
@@ -530,10 +723,10 @@ function startCompassListener() {
 
 function updateRitualPreview() {
     const title = document.getElementById('rit-title').value || "Cerimónia do Grove";
-    const peace = document.getElementById('rit-peace').value || "Que haja paz nos quatro quadrantes.";
+    const peace = document.getElementById('rit-peace').value || "Que haja paz no Norte, no Leste, no Sul e no Oeste.";
     const intent = document.getElementById('rit-intent').value || "Definir intenção do rito...";
     const elem = document.getElementById('rit-elem').value;
-    const blessing = document.getElementById('rit-blessing').value || "Partilha da taça e bênção da terra.";
+    const blessing = document.getElementById('rit-blessing').value || "Partilhamos a água da fonte e o pão da terra com gratidão.";
     const words = document.getElementById('rit-words').value || "O círculo está aberto, mas nunca quebrado.";
 
     document.getElementById('ritual-preview').innerHTML = `
@@ -575,7 +768,6 @@ function saveRitualTemplate() {
     switchTab('journal');
 }
 
-// SEGURANÇA POR PIN & CADERNO BÁRDICO
 function initJournalSecurityAndLoad() {
     const saved = localStorage.getItem('druid_journal_content');
     if (saved) document.getElementById('journal-input').value = saved;
@@ -698,10 +890,10 @@ function exportBackupJSON() {
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const aElem = document.createElement('a');
-    aElem.href = url;
-    aElem.download = `backup-caminho-druidico-${new Date().toISOString().slice(0,10)}.json`;
-    aElem.click();
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `backup-caminho-druidico-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
     showToast("Backup JSON criado.");
 }
 
@@ -729,7 +921,6 @@ function importBackupJSON(event) {
     reader.readAsText(file);
 }
 
-// ÁUDIO: SONS NATURAIS, DRONE VOCAL AWEN & TAÇA SAGRADA
 let audioCtx = null, noiseNode = null, droneOsc = null, droneOsc2 = null;
 
 function toggleAmbientSound(type) {
@@ -772,7 +963,7 @@ function toggleVocalDrone(freq, label) {
 
         droneOsc2 = audioCtx.createOscillator();
         droneOsc2.type = 'triangle';
-        droneOsc2.frequency.setValueAtTime(freq * 1.5, audioCtx.currentTime); // Quinta justa harmónica
+        droneOsc2.frequency.setValueAtTime(freq * 1.5, audioCtx.currentTime);
 
         const subGain = audioCtx.createGain();
         subGain.gain.value = 0.25;
@@ -817,7 +1008,6 @@ function playSacredBell() {
     } catch(e) {}
 }
 
-// RESPIRAÇÃO GUIADA
 let breathInterval = null, isBreathing = false;
 function toggleBreathing() {
     const btn = document.getElementById('btn-breath-toggle');
@@ -859,7 +1049,6 @@ function toggleBreathing() {
     showToast("Exercício de respiração Awen iniciado.");
 }
 
-// TEMPORIZADOR DE MEDITAÇÃO DO NEMETON INTERIOR
 let medTotalSeconds = 15 * 60;
 let medRemainingSeconds = 15 * 60;
 let medInterval = null;
@@ -922,7 +1111,6 @@ function resetMeditationTimer() {
     document.getElementById('meditation-status').innerText = "Feche os olhos e visualize a clareira sagrada do seu Nemeton...";
 }
 
-// GERADOR DIRETO DE PACOTE .ZIP NO NAVEGADOR PARA GITHUB
 async function downloadProjectZip() {
     if (typeof JSZip === 'undefined') {
         showToast("A aguardar biblioteca ZIP...");
@@ -931,16 +1119,17 @@ async function downloadProjectZip() {
     showToast("A empacotar ficheiros do projeto em .ZIP...");
     try {
         const zip = new JSZip();
-        const filesToFetch = ['index.html', 'style.css', 'script.js', 'manifest.json', 'sw.js', 'README.md'];
-        for (const file of filesToFetch) {
-            try {
-                const res = await fetch(`./${file}`);
-                if (res.ok) {
-                    const text = await res.text();
-                    zip.file(file, text);
-                }
-            } catch (e) {}
-        }
+        zip.file("index.html", document.documentElement.outerHTML);
+        zip.file("manifest.json", JSON.stringify({
+            name: "Caminho Druídico Pro Ultimate",
+            short_name: "Caminho Druídico",
+            start_url: "./index.html",
+            display: "standalone",
+            background_color: "#090d16",
+            theme_color: "#090d16"
+        }, null, 2));
+        zip.file("README.md", "# Caminho Druídico Pro Ultimate (Edição OBOD)\nAplicação web progressiva offline-first com 78 cartas de Tarot pixel art.");
+        
         const blob = await zip.generateAsync({ type: 'blob' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');

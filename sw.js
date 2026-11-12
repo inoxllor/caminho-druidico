@@ -1,4 +1,4 @@
-const CACHE_NAME = 'caminho-druidico-pro-v5-obod';
+const CACHE_NAME = 'caminho-druidico-pro-v7-obod';
 const assetsToCache = [
   './index.html',
   './style.css',
