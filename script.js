@@ -38,6 +38,57 @@ const runeAlphabet = [
     { symbol: "ᚲ", name: "Kenaz", element: "Fogo / Iluminação", meaning: "Conhecimento, clareza e fogo criativo." }
 ];
 
+const tarotDeck = [
+    { 
+        number: "0", name: "O Viajante dos Mundos (O Louco)", 
+        pixelArt: "🌲🐦👤", 
+        artDesc: "Bardo com manto verde e runas no rosto, corvo de Odin e cão selvagem à beira do abismo.", 
+        meaning: "Início de jornada, inocência, salto de fé entre mundos e o desconhecido." 
+    },
+    { 
+        number: "I", name: "O Druida & Alquimista (O Mago)", 
+        pixelArt: "🪵✨🌿", 
+        artDesc: "Druida idoso com bastão de carvalho, mesa de pedra com elementos sagrados.", 
+        meaning: "Manifestação, poder da vontade, canalização da Awen e magia elemental." 
+    },
+    { 
+        number: "II", name: "A Valquíria do Véu (A Sacerdotisa)", 
+        pixelArt: "🐺❄️📜", 
+        artDesc: "Figura em trono de basalto entre gelo e carvalho, pergaminho Ogham e lobo branco.", 
+        meaning: "Intuição profunda, véu de Samhain, mistérios ocultos e sabedoria ancestral." 
+    },
+    { 
+        number: "III", name: "A Grande Mãe da Terra (A Imperatriz)", 
+        pixelArt: "👑🌾🦅", 
+        artDesc: "Rainha coroada com flores e trigo, trono musgoso, falcão dourado e frutos.", 
+        meaning: "Fertilidadade, abundância da natureza, ciclos da Roda do Ano e amor incondicional." 
+    },
+    { 
+        number: "IV", name: "O Pai de Todos (O Imperador)", 
+        pixelArt: "👑🐺⚔️", 
+        artDesc: "Patriarca severo com um só olho, trono com cabeças de lobos e cetro solar.", 
+        meaning: "Estrutura, autoridade, ordem cósmica, liderança e proteção do clã." 
+    },
+    { 
+        number: "X", name: "A Roda do Ano (A Roda da Fortuna)", 
+        pixelArt: "🎡ᚠᚁ", 
+        artDesc: "Grande roda de carroça celta pixelizada com os 8 festivais e runas brilhantes.", 
+        meaning: "Destino, ciclos mutáveis da natureza, karma e inevitabilidade da mudança." 
+    },
+    { 
+        number: "XIII", name: "A Travessia de Hel (A Morte)", 
+        pixelArt: "🐎💀🌫️", 
+        artDesc: "Cavaleiro esquelético em Sleipnir (cavalo de 8 patas) com cota de malha e nevoeiro.", 
+        meaning: "Transformação radical, renascimento, fim de um ciclo e novas sementes." 
+    },
+    { 
+        number: "XIX", name: "O Solstício de Verão (O Sol)", 
+        pixelArt: "☀️🌻👶", 
+        artDesc: "Sol radiante com espirais celtas e crianças a dançar junto ao carvalho sagrado.", 
+        meaning: "Alegria pura, clareza, sucesso, vitalidade e energia de Litha." 
+    }
+];
+
 const wheelFestivals = [
     { id: 1, name: "Yule", date: "21 Dezembro", theme: "Solstício de Inverno", ritual: "Celebração do regresso da luz solar e aconchego no lar." },
     { id: 2, name: "Imbolc", date: "1 Fevereiro", theme: "Purificação & Brigid", ritual: "Limpeza energética, acolhimento da primavera e acender velas de renovação." },
@@ -198,6 +249,27 @@ function drawRunes(count) {
         </div>
     `;
     showToast("Oráculo de Runas consultado.");
+}
+
+function drawTarotCards(count) {
+    const container = document.getElementById('tarot-display');
+    const shuffled = [...tarotDeck].sort(() => 0.5 - Math.random()).slice(0, count);
+    const labels = ["Passado", "Presente", "Futuro"];
+    container.innerHTML = `
+        <div class="grid ${count === 1 ? 'grid-cols-1 max-w-md mx-auto col-span-full' : 'grid-cols-1 md:grid-cols-3 col-span-full'} gap-4 w-full">
+            ${shuffled.map((card, i) => `
+                <div class="pixel-card rounded-2xl p-5 flex flex-col items-center text-center space-y-3 shadow-xl">
+                    ${count === 3 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels[i]}</span>` : ''}
+                    <div class="text-xs text-amber-300 font-bold tracking-widest">ARCANO ${card.number}</div>
+                    <div class="text-4xl py-2 bg-[var(--bg-inner)] w-full rounded-xl border border-[var(--border-color)]">${card.pixelArt}</div>
+                    <h3 class="font-cinzel text-sm font-bold text-white">${card.name}</h3>
+                    <p class="text-[11px] theme-accent italic">${card.artDesc}</p>
+                    <p class="text-xs theme-muted leading-relaxed">${card.meaning}</p>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    showToast("Tiragem de Tarot Mítico efetuada.");
 }
 
 function renderHerbal(items) {
