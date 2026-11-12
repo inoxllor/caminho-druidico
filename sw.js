@@ -1,6 +1,8 @@
-const CACHE_NAME = 'caminho-druidico-v2';
+const CACHE_NAME = 'caminho-druidico-pro-v3';
 const assetsToCache = [
   './index.html',
+  './style.css',
+  './script.js',
   './manifest.json',
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600&display=swap'
