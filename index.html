@@ -1,146 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" class="theme-night">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Caminho Druídico Pro Ultimate</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <!-- Configurações PWA -->
+    <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#090d16">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Caminho Druídico">
-
-    <style>
-        .theme-night {
-            --bg-main: #090d16;
-            --bg-header: #101625;
-            --bg-card: #141b2d;
-            --bg-inner: #0a0f1a;
-            --border-color: #1e2942;
-            --border-hover: #3b4f7d;
-            --text-title: #e0e7ff;
-            --text-accent: #818cf8;
-            --text-muted: #c7d2fe;
-            --btn-primary: #4f46e5;
-            --btn-primary-hover: #6366f1;
-        }
-
-        .theme-forest {
-            --bg-main: #09130d;
-            --bg-header: #102217;
-            --bg-card: #12261b;
-            --bg-inner: #09130d;
-            --border-color: #234731;
-            --border-hover: #3c7853;
-            --text-title: #fde68a;
-            --text-accent: #34d399;
-            --text-muted: #a7f3d0;
-            --btn-primary: #059669;
-            --btn-primary-hover: #10b981;
-        }
-
-        .theme-stone {
-            --bg-main: #121212;
-            --bg-header: #1c1c1c;
-            --bg-card: #242424;
-            --bg-inner: #141414;
-            --border-color: #383838;
-            --border-hover: #5c5c5c;
-            --text-title: #f5f5f5;
-            --text-accent: #a3a3a3;
-            --text-muted: #e5e5e5;
-            --btn-primary: #525252;
-            --btn-primary-hover: #737373;
-        }
-
-        .theme-autumn {
-            --bg-main: #170d0a;
-            --bg-header: #24140e;
-            --bg-card: #2d1912;
-            --bg-inner: #120906;
-            --border-color: #4a281d;
-            --border-hover: #7c4432;
-            --text-title: #fde68a;
-            --text-accent: #f97316;
-            --text-muted: #fed7aa;
-            --btn-primary: #ea580c;
-            --btn-primary-hover: #f97316;
-        }
-
-        .theme-mist {
-            --bg-main: #0e1217;
-            --bg-header: #161d26;
-            --bg-card: #1e2633;
-            --bg-inner: #10151c;
-            --border-color: #2e3b4e;
-            --border-hover: #4d617d;
-            --text-title: #e2e8f0;
-            --text-accent: #94a3b8;
-            --text-muted: #cbd5e1;
-            --btn-primary: #475569;
-            --btn-primary-hover: #64748b;
-        }
-
-        .theme-gold {
-            --bg-main: #141109;
-            --bg-header: #211c10;
-            --bg-card: #2b2515;
-            --bg-inner: #120f08;
-            --border-color: #4d4022;
-            --border-hover: #8c733c;
-            --text-title: #fef08a;
-            --text-accent: #eab308;
-            --text-muted: #fef3c7;
-            --btn-primary: #ca8a04;
-            --btn-primary-hover: #eab308;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: #e8f5e9;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .font-cinzel { font-family: 'Cinzel', serif; }
-        .theme-card { background-color: var(--bg-card); border-color: var(--border-color); transition: border-color 0.2s ease, transform 0.2s ease; }
-        .theme-card:hover { border-color: var(--border-hover); }
-        .theme-inner { background-color: var(--bg-inner); border-color: var(--border-color); }
-        .theme-title { color: var(--text-title); }
-        .theme-accent { color: var(--text-accent); }
-        .theme-muted { color: var(--text-muted); }
-        
-        .nav-item { transition: all 0.2s ease; }
-        .nav-item:hover { background-color: var(--bg-card); border-color: var(--border-hover); }
-        .nav-item.active { background-color: var(--btn-primary); color: #ffffff; border-color: var(--border-hover); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25); }
-
-        .breath-animation { transition: transform 4s ease-in-out, border-color 4s ease-in-out; }
-
-        ::-webkit-scrollbar { width: 7px; height: 7px; }
-        ::-webkit-scrollbar-track { background: var(--bg-main); }
-        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
-
-        .awen-svg {
-            width: 32px;
-            height: 32px;
-            fill: none;
-            stroke: var(--text-accent);
-            stroke-width: 6;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* Estilos interativos para a Roda do Ano SVG */
-        .wheel-node { cursor: pointer; transition: transform 0.2s ease, filter 0.2s ease; }
-        .wheel-node:hover { transform: scale(1.08); filter: brightness(1.2); }
-    </style>
 </head>
-<body id="app-body" class="theme-night min-h-screen flex flex-col lg:flex-row">
+<body id="app-body" class="min-h-screen flex flex-col lg:flex-row">
 
     <!-- SIDEBAR DESKTOP -->
     <aside class="hidden lg:flex lg:flex-col lg:w-72 lg:fixed lg:inset-y-0 bg-[var(--bg-header)] border-r border-[var(--border-color)] z-40 shadow-2xl">
@@ -201,7 +74,7 @@
             </button>
         </nav>
 
-        <!-- Secção de Apoio e Tema na Sidebar -->
+        <!-- Apoio e Tema -->
         <div class="p-4 border-t border-[var(--border-color)] space-y-3">
             <div>
                 <label class="text-[10px] uppercase tracking-widest theme-muted opacity-70 block mb-1.5">Apoiar o Projeto</label>
@@ -277,7 +150,6 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="flex-1 lg:pl-72 flex flex-col min-h-screen">
         
-        <!-- BARRA SUPERIOR DESKTOP -->
         <div class="hidden lg:flex items-center justify-between px-8 py-4 border-b border-[var(--border-color)] bg-[var(--bg-header)]/50 backdrop-blur-sm">
             <div class="flex items-center gap-6 text-xs">
                 <div class="flex items-center gap-2">
@@ -373,7 +245,7 @@
                 </div>
             </section>
 
-            <!-- BÚSSOLA & GPS MELHORADA -->
+            <!-- BÚSSOLA & GPS -->
             <section id="tab-compass" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl max-w-3xl mx-auto text-center space-y-6">
                     <div>
@@ -385,28 +257,23 @@
                         📍 Coordenadas GPS: A aguardar permissão...
                     </div>
 
-                    <!-- Bússola Visual Aprimorada em SVG -->
                     <div class="relative w-72 h-72 mx-auto theme-inner border-4 border-[var(--border-hover)] rounded-full flex items-center justify-center shadow-2xl overflow-hidden p-4">
-                        <!-- Anel Graduado de Fundo -->
                         <svg class="absolute inset-0 w-full h-full opacity-40 pointer-events-none" viewBox="0 0 200 200">
                             <circle cx="100" cy="100" r="90" fill="none" stroke="var(--text-accent)" stroke-width="1.5" stroke-dasharray="4 4" />
                             <circle cx="100" cy="100" r="75" fill="none" stroke="var(--border-color)" stroke-width="1" />
                         </svg>
 
-                        <!-- Pontteiro / Agulha Dinâmica -->
                         <div id="compass-needle" class="absolute w-4 h-56 transition-transform duration-150 flex items-center justify-center">
                             <div class="w-2 h-28 bg-gradient-to-t from-transparent via-red-500 to-red-600 rounded-t-full -translate-y-14 shadow-lg"></div>
                             <div class="w-2 h-28 bg-gradient-to-b from-transparent via-indigo-500 to-indigo-700 rounded-b-full translate-y-14 shadow-lg"></div>
                             <div class="absolute w-5 h-5 rounded-full bg-[var(--bg-card)] border-2 border-[var(--text-accent)] shadow"></div>
                         </div>
 
-                        <!-- Rótulos Cardinales Fixos -->
                         <span class="absolute top-3 text-xs font-bold text-amber-300 tracking-wider">NORTE</span>
                         <span class="absolute bottom-3 text-xs font-bold text-blue-400 tracking-wider">OESTE</span>
                         <span class="absolute left-3 text-xs font-bold text-amber-200 tracking-wider">LESTE</span>
                         <span class="absolute right-3 text-xs font-bold text-red-400 tracking-wider">SUL</span>
 
-                        <!-- Visor Central de Graus -->
                         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                             <span id="heading-deg" class="text-xs font-bold theme-title bg-[var(--bg-card)]/95 px-3 py-1 rounded-full border border-[var(--border-color)] shadow">0°</span>
                         </div>
@@ -416,7 +283,6 @@
                         <button onclick="initGeoAndCompass()" class="bg-[var(--btn-primary)] hover:opacity-95 text-white font-bold py-3 px-8 rounded-xl text-xs lg:text-sm shadow-lg transition cursor-pointer">Ativar GPS & Sensores</button>
                     </div>
 
-                    <!-- Cartões Informativos dos Elementos -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left pt-2">
                         <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
                             <span class="text-[10px] uppercase font-bold text-amber-300">Norte (Terra)</span>
@@ -428,7 +294,7 @@
                         </div>
                         <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
                             <span class="text-[10px] uppercase font-bold text-red-400">Sul (Fogo)</span>
-                            <p class="text-[11px] theme-muted leading-snug">Transformación, paixão criativa, energia e vontade.</p>
+                            <p class="text-[11px] theme-muted leading-snug">Transformação, paixão criativa, energia e vontade.</p>
                         </div>
                         <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
                             <span class="text-[10px] uppercase font-bold text-blue-400">Oeste (Água)</span>
@@ -438,7 +304,7 @@
                 </div>
             </section>
 
-            <!-- RODA DO ANO MELHORADA COM DIAGRAMA SVG INTERATIVO -->
+            <!-- RODA DO ANO -->
             <section id="tab-wheel" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl space-y-6 max-w-4xl mx-auto text-center">
                     <div class="max-w-xl mx-auto space-y-1">
@@ -446,75 +312,62 @@
                         <p class="text-xs lg:text-sm theme-muted">Explore visualmente os 8 festivais sagrados da Terra. Clique em cada esfera para revelar a essência do festival.</p>
                     </div>
 
-                    <!-- Diagrama SVG Cíclico Interativo da Roda do Ano -->
                     <div class="relative w-full max-w-md mx-auto aspect-square flex items-center justify-center p-2">
                         <svg class="w-full h-full drop-shadow-2xl" viewBox="0 0 400 400">
-                            <!-- Anéis Exteriores e Guias -->
                             <circle cx="200" cy="200" r="175" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-dasharray="6 4" />
                             <circle cx="200" cy="200" r="130" fill="var(--bg-inner)" stroke="var(--border-hover)" stroke-width="1.5" />
                             <circle cx="200" cy="200" r="45" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2" />
                             
-                            <!-- Eixos Cruzados -->
                             <line x1="200" y1="25" x2="200" y2="375" stroke="var(--border-color)" stroke-width="1" />
                             <line x1="25" y1="200" x2="375" y2="200" stroke="var(--border-color)" stroke-width="1" />
                             <line x1="76" y1="76" x2="324" y2="324" stroke="var(--border-color)" stroke-width="1" />
                             <line x1="76" y1="324" x2="324" y2="76" stroke="var(--border-color)" stroke-width="1" />
 
-                            <!-- Centro Awen / Símbolo -->
                             <text x="200" y="195" text-anchor="middle" font-size="20" fill="var(--text-accent)" font-family="Cinzel, serif" font-weight="bold">/ I \</text>
-                            <text x="200" y="215" text-anchor="middle" font-size="9" fill="var(--text-muted)" uppercase tracking-widest>RODA</text>
+                            <text x="200" y="215" text-anchor="middle" font-size="9" fill="var(--text-muted)">RODA</text>
 
-                            <!-- Nós dos 8 Festivais (Posicionados Geometricamente em Círculo) -->
-                            <!-- Yule (Topo - 12h) -->
                             <g class="wheel-node" onclick="selectFestival(1)">
                                 <circle cx="200" cy="40" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
                                 <text x="200" y="37" text-anchor="middle" font-size="11" fill="var(--text-title)" font-weight="bold">Yule</text>
                                 <text x="200" y="49" text-anchor="middle" font-size="8" fill="var(--text-muted)">21 Dez</text>
                             </g>
 
-                            <!-- Imbolc (Nordeste - 1h30) -->
                             <g class="wheel-node" onclick="selectFestival(2)">
                                 <circle cx="304" cy="96" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
                                 <text x="304" y="93" text-anchor="middle" font-size="11" fill="var(--text-title)" font-weight="bold">Imbolc</text>
                                 <text x="304" y="105" text-anchor="middle" font-size="8" fill="var(--text-muted)">1 Fev</text>
                             </g>
 
-                            <!-- Ostara (Direita - 3h) -->
                             <g class="wheel-node" onclick="selectFestival(3)">
                                 <circle cx="360" cy="200" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
                                 <text x="360" y="197" text-anchor="middle" font-size="10" fill="var(--text-title)" font-weight="bold">Ostara</text>
                                 <text x="360" y="209" text-anchor="middle" font-size="8" fill="var(--text-muted)">21 Mar</text>
                             </g>
 
-                            <!-- Beltane (Sudeste - 4h30) -->
                             <g class="wheel-node" onclick="selectFestival(4)">
                                 <circle cx="304" cy="304" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
                                 <text x="304" y="301" text-anchor="middle" font-size="10" fill="var(--text-title)" font-weight="bold">Beltane</text>
                                 <text x="304" y="313" text-anchor="middle" font-size="8" fill="var(--text-muted)">1 Mai</text>
                             </g>
 
-                            <!-- Litha (Baixo - 6h) -->
                             <g class="wheel-node" onclick="selectFestival(5)">
                                 <circle cx="200" cy="360" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
                                 <text x="200" y="357" text-anchor="middle" font-size="11" fill="var(--text-title)" font-weight="bold">Litha</text>
                                 <text x="200" y="369" text-anchor="middle" font-size="8" fill="var(--text-muted)">21 Jun</text>
                             </g>
 
-                            <!-- Lughnasadh (Sudoeste - 7h30) -->
                             <g class="wheel-node" onclick="selectFestival(6)">
                                 <circle cx="96" cy="304" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
                                 <text x="96" y="301" text-anchor="middle" font-size="9" fill="var(--text-title)" font-weight="bold">Lughnasadh</text>
                                 <text x="96" y="313" text-anchor="middle" font-size="8" fill="var(--text-muted)">1 Ago</text>
                             </g>
 
-                            <!-- Mabon (Esquerda - 9h) -->
                             <g class="wheel-node" onclick="selectFestival(7)">
                                 <circle cx="40" cy="200" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
                                 <text x="40" y="197" text-anchor="middle" font-size="11" fill="var(--text-title)" font-weight="bold">Mabon</text>
                                 <text x="40" y="209" text-anchor="middle" font-size="8" fill="var(--text-muted)">21 Set</text>
                             </g>
 
-                            <!-- Samhain (Noroeste - 10h30) -->
                             <g class="wheel-node" onclick="selectFestival(8)">
                                 <circle cx="96" cy="96" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
                                 <text x="96" y="93" text-anchor="middle" font-size="10" fill="var(--text-title)" font-weight="bold">Samhain</text>
@@ -523,7 +376,6 @@
                         </svg>
                     </div>
 
-                    <!-- Caixa de Detalhe do Festival Selecionado -->
                     <div id="festival-detail-card" class="theme-inner border rounded-2xl p-6 text-left max-w-xl mx-auto space-y-2 shadow-inner">
                         <span id="fest-date-badge" class="text-[10px] uppercase tracking-widest theme-accent font-semibold">31 de Outubro</span>
                         <h3 id="fest-name-title" class="font-cinzel text-xl font-bold text-white">Samhain (Ano Novo Druídico)</h3>
@@ -556,7 +408,6 @@
                         </div>
                     </div>
 
-                    <!-- CAIXA DE LINK OFICIAL OBOD -->
                     <div class="theme-inner border rounded-2xl p-6 text-center space-y-3 shadow-inner flex flex-col items-center justify-center">
                         <span class="text-xs uppercase tracking-widest theme-accent font-semibold">Organização Internacional de Referência</span>
                         <h3 class="font-cinzel text-lg font-bold theme-title">Order of Bards, Ovates and Druids (OBOD)</h3>
@@ -575,7 +426,7 @@
                 </div>
             </section>
 
-            <!-- ORGANIZAÇÕES & LINKS SUGERIDOS -->
+            <!-- ORGANIZAÇÕES -->
             <section id="tab-orgs" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl space-y-6 max-w-4xl mx-auto">
                     <div class="text-center space-y-1">
@@ -584,7 +435,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- OBOD -->
                         <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
                             <div class="space-y-1.5">
                                 <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Ordem Principal</span>
@@ -596,7 +446,6 @@
                             </a>
                         </div>
 
-                        <!-- AODA -->
                         <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
                             <div class="space-y-1.5">
                                 <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Ordem Norte-Americana</span>
@@ -608,7 +457,6 @@
                             </a>
                         </div>
 
-                        <!-- The Druid Network -->
                         <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
                             <div class="space-y-1.5">
                                 <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Recursos & Comunidade</span>
@@ -623,7 +471,7 @@
                 </div>
             </section>
 
-            <!-- TRÍADES DE BARDDAS -->
+            <!-- TRÍADES -->
             <section id="tab-triads" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl max-w-3xl mx-auto text-center space-y-6">
                     <div>
@@ -710,7 +558,7 @@
                 </div>
             </section>
 
-            <!-- GROUNDING & SOM -->
+            <!-- SOM & RESPIRAÇÃO -->
             <section id="tab-grounding" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl text-center max-w-2xl mx-auto space-y-6">
                     <div>
@@ -735,7 +583,7 @@
                 </div>
             </section>
 
-            <!-- HERBAL & 20 OGHAM -->
+            <!-- HERBAL -->
             <section id="tab-herbal" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-8 shadow-2xl space-y-5">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -751,7 +599,6 @@
 
         </main>
 
-        <!-- RODAPÉ COM BOTÕES DE APOIO -->
         <footer class="max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 border-t border-[var(--border-color)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs theme-muted">
             <div class="flex items-center gap-2">
                 <svg class="awen-svg !w-5 !h-5 inline" viewBox="0 0 100 100"><line x1="25" y1="85" x2="40" y2="20" /><line x1="50" y1="85" x2="50" y2="35" /><line x1="75" y1="85" x2="60" y2="20" /><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" /></svg>
@@ -770,453 +617,6 @@
 
     <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker ativo:', reg.scope))
-                    .catch(err => console.log('Erro no Service Worker:', err));
-            });
-        }
-
-        const oghamAlphabet = [
-            { symbol: "ᚁ", name: "Beith", tree: "Bétula", family: "Beith (B)", herb: "Camomila / Bétula", meaning: "Novos começos, purificação, limpeza energética e renovação." },
-            { symbol: "ᚂ", name: "Luis", tree: "Rowan (Frailha)", family: "Beith (B)", herb: "Zimbro / Rowan", meaning: "Proteção espiritual, visão expandida e intuição apurada." },
-            { symbol: "ᚃ", name: "Nion", tree: "Freixo", family: "Beith (B)", herb: "Freixo", meaning: "Conexão cósmica, paz interior e união de opostos." },
-            { symbol: "ᚄ", name: "Fearn", tree: "Amieiro", family: "Beith (B)", herb: "Amieiro", meaning: "Coragem na adversidade, resiliência e proteção das águas." },
-            { symbol: "ᚅ", name: "Saille", tree: "Salgueiro", family: "Beith (B)", herb: "Salgueiro-branco", meaning: "Ritmo lunar, intuição profunda, sonhos e adaptabilidade." },
-            { symbol: "ᚆ", name: "Uath", tree: "Espinheiro-alvar", family: "Uath (H)", herb: "Espinheiro", meaning: "Paciência, testes de resiliência e estabelecimento de limites." },
-            { symbol: "ᚇ", name: "Dair", tree: "Carvalho", family: "Uath (H)", herb: "Carvalho (Casca)", meaning: "Força inabalável, nobreza, sabedoria ancestral e perseverança." },
-            { symbol: "ᚈ", name: "Tinne", tree: "Azevinho", family: "Uath (H)", herb: "Azevinho", meaning: "Maturidade, clareza mental, liderança justa e defesa." },
-            { symbol: "ᚉ", name: "Coll", tree: "Avelaneira", family: "Uath (H)", herb: "Aveleira", meaning: "Inspiração criativa (Awen), sabedoria poética e conhecimento." },
-            { symbol: "ᚊ", name: "Ceirt", tree: "Macieira", family: "Uath (H)", herb: "Flor de Maçã", meaning: "Amor incondicional, cura, beleza e regeneração." },
-            { symbol: "ᚋ", name: "Muin", tree: "Videira", family: "Muine (M)", herb: "Uva / Videira", meaning: "Profecia, alegria, colheita espiritual e transformação interior." },
-            { symbol: "ᚌ", name: "Gort", tree: "Hera", family: "Muine (M)", herb: "Hera", meaning: "Determinação, persistência, busca interna e união." },
-            { symbol: "ᚍ", name: "Ngetal", tree: "Urtiga", family: "Muine (M)", herb: "Urtiga", meaning: "Cura através do desafio, purificação do sangue e coragem." },
-            { symbol: "ᚎ", name: "Straif", tree: "Abrunheiro", family: "Muine (M)", herb: "Abrunheiro", meaning: "Superação de crises, verdade implacável e destino." },
-            { symbol: "ᚏ", name: "Ruis", tree: "Sabugueiro", family: "Muine (M)", herb: "Sabugueiro", meaning: "Ciclos de fim e recomeço, honra aos ancestrais e transmutação." },
-            { symbol: "ᚐ", name: "Ailm", tree: "Pinheiro / Abeto", family: "Ailm (A)", herb: "Pinheiro", meaning: "Visão de longo alcance, clareza, elevação e esperança." },
-            { symbol: "ᚑ", name: "Onn", tree: "Ulece / Torgas", family: "Ailm (A)", herb: "Torgas", meaning: "Combustão interna, paixão sustentada e superação de obstáculos." },
-            { symbol: "ᚒ", name: "Ur", tree: "Urze", family: "Ailm (A)", herb: "Urze", meaning: "Cura compassiva, gratidão, conexão com a terra e suavidade." },
-            { symbol: "ᚓ", name: "Ebad", tree: "Álamo / Tremor", family: "Ailm (A)", herb: "Álamo", meaning: "Superação do medo, audácia e comunicação com mundos subtis." },
-            { symbol: "ᚔ", name: "Iodal", tree: "Teixo", family: "Ailm (A)", herb: "Teixo", meaning: "Imortalidade da alma, regeneração profunda e ligação ao tempo eterno." }
-        ];
-
-        const runeAlphabet = [
-            { symbol: "ᚠ", name: "Fehu", element: "Fogo / Abundância", meaning: "Riqueza, prosperidade e novos ganhos." },
-            { symbol: "ᚢ", name: "Uruz", element: "Terra / Força", meaning: "Força vital, saúde e coragem." },
-            { symbol: "ᚦ", name: "Thurisaz", element: "Fogo / Proteção", meaning: "Defesa e quebra de barreiras." },
-            { symbol: "ᚨ", name: "Ansuz", element: "Ar / Inspiração", meaning: "Comunicação sagrada e sabedoria." },
-            { symbol: "ᚱ", name: "Raidho", element: "Ar / Jornada", meaning: "Viagem espiritual, ritmo e evolução." },
-            { symbol: "ᚲ", name: "Kenaz", element: "Fogo / Iluminação", meaning: "Conhecimento, clareza e fogo criativo." }
-        ];
-
-        const wheelFestivals = [
-            { id: 1, name: "Yule", date: "21 Dezembro", theme: "Solstício de Inverno", ritual: "Celebração do regresso da luz solar e aconchego no lar." },
-            { id: 2, name: "Imbolc", date: "1 Fevereiro", theme: "Purificação & Brigid", ritual: "Limpeza energética, acolhimento da primavera e acender velas de renovação." },
-            { id: 3, name: "Ostara", date: "21 Março", theme: "Equinócio de Primavera", ritual: "Plantação de intenções na terra e celebração do equilíbrio." },
-            { id: 4, name: "Beltane", date: "1 Maio", theme: "Fogo Sagrado & Vitalidade", ritual: "Passeio matinal na natureza, fitas de bênção e fogueiras sagradas." },
-            { id: 5, name: "Litha", date: "21 Junho", theme: "Solstício de Verão", ritual: "Apogeu da luz, colheita de ervas medicinais e gratidão." },
-            { id: 6, name: "Lughnasadh", date: "1 Agosto", theme: "Primeira Colheita", ritual: "Agradecimento pelos frutos iniciais e partilha do pão sagrado." },
-            { id: 7, name: "Mabon", date: "21 Setembro", theme: "Equinócio de Outono", ritual: "Gratidão pela abundância e preparação para o recolhimento." },
-            { id: 8, name: "Samhain", date: "31 Outubro", theme: "Ano Novo Druídico & Ancestrais", ritual: "Altar aos antepassados, fogueiras de proteção e libertação de ciclos." }
-        ];
-
-        function selectFestival(id) {
-            const f = wheelFestivals.find(item => item.id === id);
-            if(!f) return;
-            document.getElementById('fest-date-badge').innerText = f.date;
-            document.getElementById('fest-name-title').innerText = `${f.name} (${f.theme})`;
-            document.getElementById('fest-theme-desc').innerText = f.theme;
-            document.getElementById('fest-ritual-desc').innerHTML = `<strong>Prática Ritual:</strong> ${f.ritual}`;
-            showToast(`Festival selecionado: ${f.name}`);
-        }
-
-        const druidicTriads = [
-            "Três coisas que geram a luz da mente: a busca da verdade, o amor à beleza e a coragem de enfrentar o desconhecido.",
-            "Três velas que iluminam toda a escuridão: Verdade, Natureza e Conhecimento.",
-            "Três deveres de um Druida: honrar os deuses, fazer o bem aos homens e não temer nenhuma fatalidade.",
-            "Três fontes de poesia e inspiração (Awen): ver claramente o que é, amar o que vale a pena e criar harmonia.",
-            "Três grandezas da alma: generosidade para com os necessitados, perseverança na aflição e perdão para com os ofensores."
-        ];
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadSavedTheme();
-            calculateAstronomy();
-            renderHerbal(oghamAlphabet);
-            loadJournal();
-            drawRandomTriad();
-            selectFestival(8); // Começa selecionado no Samhain
-        });
-
-        function showToast(message) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = "theme-card border px-4 py-3 rounded-2xl shadow-2xl text-xs theme-title flex items-center gap-2.5 pointer-events-auto transition-all transform translate-y-2 opacity-0";
-            toast.innerHTML = `<svg class="awen-svg !w-4 !h-4 inline" viewBox="0 0 100 100"><line x1="25" y1="85" x2="40" y2="20" /><line x1="50" y1="85" x2="50" y2="35" /><line x1="75" y1="85" x2="60" y2="20" /><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" /></svg> <span>${message}</span>`;
-            container.appendChild(toast);
-            
-            setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
-            setTimeout(() => {
-                toast.classList.add('translate-y-2', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        function changeTheme(themeName) {
-            document.getElementById('app-body').className = `${themeName} min-h-screen flex flex-col lg:flex-row`;
-            localStorage.setItem('druid_app_theme', themeName);
-            const deskSel = document.getElementById('theme-selector-desktop');
-            const mobSel = document.getElementById('theme-selector-mobile');
-            if (deskSel) deskSel.value = themeName;
-            if (mobSel) mobSel.value = themeName;
-            showToast("Ambiente visual atualizado.");
-        }
-
-        function loadSavedTheme() {
-            const saved = localStorage.getItem('druid_app_theme') || 'theme-night';
-            changeTheme(saved);
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            const deskBtn = document.getElementById(`desk-nav-${tabId}`);
-            const mobBtn = document.getElementById(`mob-nav-${tabId}`);
-            if (deskBtn) deskBtn.classList.add('active');
-            if (mobBtn) mobBtn.classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function drawRandomTriad() {
-            const randomIndex = Math.floor(Math.random() * druidicTriads.length);
-            document.getElementById('triad-text').innerText = `"${druidicTriads[randomIndex]}"`;
-        }
-
-        function calculateAstronomy() {
-            const now = new Date();
-            const year = now.getFullYear(), month = now.getMonth() + 1, day = now.getDate();
-            let c = 0, e = 0, jd = 0;
-            if (month < 3) {
-                let y = year - 1, m = month + 12;
-                c = Math.floor(y / 100); e = 2 - c + Math.floor(c / 4);
-                jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + day + e - 1524;
-            } else {
-                c = Math.floor(year / 100); e = 2 - c + Math.floor(c / 4);
-                jd = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + e - 1524;
-            }
-            const daysSinceNew = (jd - 2451549.5) % 29.53058770576;
-            const age = daysSinceNew < 0 ? daysSinceNew + 29.53058770576 : daysSinceNew;
-            const illumination = Math.round((1 - Math.cos((age / 29.53058770576) * 2 * Math.PI)) / 2 * 100);
-            
-            let phaseName = "Lua Nova", icon = "🌑";
-            if (age > 1.84 && age <= 5.5) { phaseName = "Lua Crescente"; icon = "🌒"; }
-            else if (age > 5.5 && age <= 9.2) { phaseName = "Quarto Crescente"; icon = "🌓"; }
-            else if (age > 9.2 && age <= 12.9) { phaseName = "Gibosa Crescente"; icon = "🌔"; }
-            else if (age > 12.9 && age <= 16.6) { phaseName = "Lua Cheia"; icon = "🌕"; }
-            else if (age > 16.6 && age <= 20.3) { phaseName = "Gibosa Minguante"; icon = "🌖"; }
-            else if (age > 20.3 && age <= 24.0) { phaseName = "Quarto Minguante"; icon = "🌗"; }
-            else if (age > 24.0 && age < 27.7) { phaseName = "Lua Minguante"; icon = "🌘"; }
-
-            document.getElementById('moon-icon').innerText = icon;
-            document.getElementById('moon-phase-name').innerText = phaseName;
-            document.getElementById('moon-details').innerText = `Idade: ${age.toFixed(1)} dias • ${illumination}% Iluminada`;
-            document.getElementById('solar-status').innerText = "Luz Natural Ativa";
-            document.getElementById('solar-duration').innerText = "Dia Luz: aprox. 12h 30m";
-            document.getElementById('sunrise-time').innerText = "Nascer: 07:15";
-            document.getElementById('sunset-time').innerText = "Pôr: 18:45";
-
-            document.getElementById('top-moon-icon').innerText = icon;
-            document.getElementById('top-moon-text').innerText = `${phaseName} (${illumination}%)`;
-        }
-
-        function drawOghamCard(count) {
-            const container = document.getElementById('ogham-card');
-            const shuffled = [...oghamAlphabet].sort(() => 0.5 - Math.random()).slice(0, count);
-            const labels = ["Raiz (Passado)", "Tronco (Presente)", "Copa (Futuro)"];
-            container.innerHTML = `
-                <div class="grid ${count === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-1 md:grid-cols-3'} gap-4 w-full">
-                    ${shuffled.map((card, i) => `
-                        <div class="theme-card border rounded-2xl p-6 flex flex-col items-center text-center space-y-2 shadow-lg hover:-translate-y-0.5">
-                            ${count === 3 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels[i]}</span>` : ''}
-                            <span class="text-5xl theme-accent font-bold my-2">${card.symbol}</span>
-                            <h3 class="font-cinzel text-base font-bold text-white">${card.name} (${card.tree})</h3>
-                            <span class="text-[10px] theme-accent font-medium">Família: ${card.family}</span>
-                            <p class="text-xs theme-muted leading-relaxed">${card.meaning}</p>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            showToast("Oráculo de Ogham consultado.");
-        }
-
-        function drawRunes(count) {
-            const container = document.getElementById('rune-card');
-            const shuffled = [...runeAlphabet].sort(() => 0.5 - Math.random()).slice(0, count);
-            const labels = ["Passado", "Presente", "Futuro"];
-            container.innerHTML = `
-                <div class="grid ${count === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-1 md:grid-cols-3'} gap-4 w-full">
-                    ${shuffled.map((rune, i) => `
-                        <div class="theme-card border rounded-2xl p-6 flex flex-col items-center text-center space-y-2 shadow-lg hover:-translate-y-0.5">
-                            ${count === 3 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels[i]}</span>` : ''}
-                            <span class="text-5xl text-amber-300 font-bold my-2">${rune.symbol}</span>
-                            <h3 class="font-cinzel text-base font-bold text-white">${rune.name}</h3>
-                            <span class="text-[11px] theme-accent">${rune.element}</span>
-                            <p class="text-xs theme-muted leading-relaxed">${rune.meaning}</p>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            showToast("Oráculo de Runas consultado.");
-        }
-
-        function renderHerbal(items) {
-            const list = document.getElementById('tree-list');
-            list.innerHTML = items.map(o => `
-                <div class="theme-inner border rounded-2xl p-5 flex items-start gap-4 hover:border-[var(--border-hover)] transition">
-                    <span class="text-4xl theme-accent font-bold">${o.symbol}</span>
-                    <div class="space-y-1">
-                        <h4 class="font-cinzel text-base font-bold text-white">${o.name} <span class="text-xs theme-accent font-normal">(${o.tree})</span></h4>
-                        <span class="inline-block text-[10px] theme-accent bg-[var(--bg-card)] px-2 py-0.5 rounded border border-[var(--border-color)]">Aicmí: ${o.family}</span>
-                        <p class="text-xs text-white/90 pt-1"><strong>Erva/Fitoterapia:</strong> ${o.herb}</p>
-                        <p class="text-[11px] theme-muted leading-relaxed">${o.meaning}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function filterHerbal() {
-            const q = document.getElementById('herbal-search').value.toLowerCase();
-            const filtered = oghamAlphabet.filter(o => 
-                o.name.toLowerCase().includes(q) || 
-                o.tree.toLowerCase().includes(q) || 
-                o.herb.toLowerCase().includes(q) ||
-                o.family.toLowerCase().includes(q) ||
-                o.meaning.toLowerCase().includes(q)
-            );
-            renderHerbal(filtered);
-        }
-
-        function initGeoAndCompass() {
-            if (navigator.geolocation) {
-                showToast("A obter coordenadas GPS...");
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        document.getElementById('gps-info').innerHTML = `📍 Lat: ${position.coords.latitude.toFixed(4)}° | Lon: ${position.coords.longitude.toFixed(4)}°`;
-                        showToast("Localização geográfica obtida!");
-                    },
-                    () => {
-                        document.getElementById('gps-info').innerHTML = `📍 GPS indisponível neste dispositivo`;
-                        showToast("Não foi possível obter localização GPS.");
-                    },
-                    { enableHighAccuracy: true, timeout: 10000 }
-                );
-            }
-
-            if (window.DeviceOrientationEvent) {
-                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                    DeviceOrientationEvent.requestPermission().then(res => {
-                        if (res === 'granted') startCompassListener();
-                    }).catch(console.error);
-                } else {
-                    startCompassListener();
-                }
-            }
-        }
-
-        function startCompassListener() {
-            window.addEventListener('deviceorientation', (event) => {
-                let heading = event.webkitCompassHeading !== undefined ? event.webkitCompassHeading : (event.alpha !== null ? 360 - event.alpha : null);
-                if (heading !== null) {
-                    document.getElementById('compass-needle').style.transform = `rotate(${-heading}deg)`;
-                    document.getElementById('heading-deg').innerText = `${Math.round(heading)}°`;
-                }
-            }, true);
-            showToast("Sensores de orientação ativados.");
-        }
-
-        function updateRitualPreview() {
-            const title = document.getElementById('rit-title').value || "Título do Ritual";
-            const intent = document.getElementById('rit-intent').value || "Definir intenção...";
-            const elem = document.getElementById('rit-elem').value;
-            const words = document.getElementById('rit-words').value || "Palavras de encerramento...";
-
-            document.getElementById('ritual-preview').innerHTML = `
-                <h4 class="font-cinzel text-base font-bold theme-title border-b border-[var(--border-color)] pb-2">${title}</h4>
-                <p><strong class="theme-accent">Elemento Invocado:</strong> ${elem}</p>
-                <p><strong class="theme-accent">Intenção:</strong> ${intent}</p>
-                <div class="pt-2 border-t border-[var(--border-color)]">
-                    <strong class="theme-accent block mb-1">Encerramento:</strong>
-                    <p class="italic text-white/90">"${words}"</p>
-                </div>
-            `;
-        }
-
-        function registerAwenPractice() {
-            const text = `\n[${new Date().toLocaleDateString()}] Prática Druídica: Invocação da Awen realizada. Foco em Fogo, Ar e Água.`;
-            document.getElementById('journal-input').value += text;
-            autoSaveJournal();
-            showToast("Prática de Awen registada no Diário!");
-        }
-
-        function saveRitualTemplate() {
-            const title = document.getElementById('rit-title').value;
-            const intent = document.getElementById('rit-intent').value;
-            const elem = document.getElementById('rit-elem').value;
-            const words = document.getElementById('rit-words').value;
-
-            if(!title) {
-                showToast("Indique o título do ritual.");
-                return;
-            }
-
-            const ritualText = `\n\n--- RITUAL: ${title.toUpperCase()} ---\nData: ${new Date().toLocaleDateString()}\nElemento: ${elem}\nIntenção: ${intent}\nEncerramento: ${words}\n------------------------------------------`;
-            document.getElementById('journal-input').value += ritualText;
-            autoSaveJournal();
-            showToast("Ritual guardado no Diário!");
-            switchTab('journal');
-        }
-
-        function autoSaveJournal() {
-            const content = document.getElementById('journal-input').value;
-            localStorage.setItem('druid_journal_content', content);
-            document.getElementById('save-status').innerText = "Guardado às " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        }
-
-        function loadJournal() {
-            const saved = localStorage.getItem('druid_journal_content');
-            if(saved) document.getElementById('journal-input').value = saved;
-        }
-
-        function clearJournal() {
-            if(confirm("Tem certeza que deseja limpar todo o conteúdo do diário?")) {
-                document.getElementById('journal-input').value = '';
-                localStorage.removeItem('druid_journal_content');
-                showToast("Diário limpo.");
-            }
-        }
-
-        function exportJournalTXT() {
-            const content = document.getElementById('journal-input').value;
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `diario-druidico-${new Date().toISOString().slice(0,10)}.txt`;
-            a.click();
-            showToast("Diário exportado em TXT.");
-        }
-
-        function exportBackupJSON() {
-            const data = {
-                journal: document.getElementById('journal-input').value,
-                theme: localStorage.getItem('druid_app_theme'),
-                exportDate: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `backup-caminho-druidico-${new Date().toISOString().slice(0,10)}.json`;
-            a.click();
-            showToast("Backup JSON criado.");
-        }
-
-        function importBackupJSON(event) {
-            const file = event.target.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    if(data.journal) {
-                        document.getElementById('journal-input').value = data.journal;
-                        autoSaveJournal();
-                    }
-                    if(data.theme) changeTheme(data.theme);
-                    showToast("Backup importado!");
-                } catch(err) {
-                    showToast("Erro ao ler ficheiro JSON.");
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        let audioCtx = null, noiseNode = null;
-        function toggleAmbientSound(type) {
-            stopAmbientSound();
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const bufferSize = audioCtx.sampleRate * 2;
-                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                const data = buffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-                
-                noiseNode = audioCtx.createBufferSource();
-                noiseNode.buffer = buffer;
-                noiseNode.loop = true;
-
-                const filter = audioCtx.createBiquadFilter();
-                filter.type = type === 'rain' ? 'lowpass' : 'bandpass';
-                filter.frequency.value = type === 'rain' ? 600 : 350;
-
-                noiseNode.connect(filter);
-                filter.connect(audioCtx.destination);
-                noiseNode.start(0);
-                showToast(`Reproduzindo som de ${type === 'rain' ? 'Chuva' : 'Vento'}.`);
-            } catch(e) {
-                showToast("Áudio bloqueado pelo navegador.");
-            }
-        }
-
-        function stopAmbientSound() {
-            if (noiseNode) { noiseNode.stop(); noiseNode.disconnect(); noiseNode = null; }
-            if (audioCtx) { audioCtx.close(); audioCtx = null; }
-        }
-
-        let breathInterval = null, isBreathing = false;
-        function toggleBreathing() {
-            const btn = document.getElementById('btn-breath-toggle');
-            const action = document.getElementById('breath-action');
-            const timer = document.getElementById('breath-timer');
-            const circle = document.getElementById('breath-circle');
-
-            if (isBreathing) {
-                clearInterval(breathInterval);
-                isBreathing = false;
-                btn.innerText = "Iniciar Ciclo de Respiração";
-                action.innerText = "Preparar";
-                timer.innerText = "4";
-                circle.style.transform = "scale(1)";
-                return;
-            }
-
-            isBreathing = true;
-            btn.innerText = "Parar Exercício";
-            let phase = 0;
-            let count = 4;
-
-            function runBreath() {
-                if(count > 0) {
-                    timer.innerText = count;
-                    count--;
-                } else {
-                    phase = (phase + 1) % 3;
-                    if(phase === 0) { action.innerText = "Inalar (Ar)"; count = 4; circle.style.transform = "scale(1.25)"; }
-                    else if(phase === 1) { action.innerText = "Segurar (Fogo)"; count = 4; circle.style.transform = "scale(1.25)"; }
-                    else if(phase === 2) { action.innerText = "Exalar (Água)"; count = 4; circle.style.transform = "scale(1)"; }
-                    timer.innerText = count;
-                }
-            }
-
-            action.innerText = "Inalar (Ar)";
-            circle.style.transform = "scale(1.25)";
-            breathInterval = setInterval(runBreath, 1000);
-            showToast("Exercício de respiração Awen iniciado.");
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
