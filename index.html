@@ -134,6 +134,10 @@
             stroke-linecap: round;
             stroke-linejoin: round;
         }
+
+        /* Estilos interativos para a Roda do Ano SVG */
+        .wheel-node { cursor: pointer; transition: transform 0.2s ease, filter 0.2s ease; }
+        .wheel-node:hover { transform: scale(1.08); filter: brightness(1.2); }
     </style>
 </head>
 <body id="app-body" class="theme-night min-h-screen flex flex-col lg:flex-row">
@@ -369,44 +373,163 @@
                 </div>
             </section>
 
-            <!-- BÚSSOLA & GPS -->
+            <!-- BÚSSOLA & GPS MELHORADA -->
             <section id="tab-compass" class="tab-content hidden space-y-6">
-                <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl max-w-2xl mx-auto text-center space-y-6">
+                <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl max-w-3xl mx-auto text-center space-y-6">
                     <div>
-                        <h2 class="font-cinzel text-2xl font-bold theme-title">🧭 Bússola & Portais Elementais</h2>
-                        <p class="text-xs lg:text-sm theme-muted mt-1">Alinhe-se com os quadrantes sagrados com base na sua posição geográfica.</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🧭 Bússola & Portais Elementais</h2>
+                        <p class="text-xs lg:text-sm theme-muted mt-1">Alinhe-se com os quadrantes sagrados, bússola física e orientadores direcionais.</p>
                     </div>
 
-                    <div id="gps-info" class="theme-inner border rounded-xl p-3.5 text-xs theme-accent max-w-md mx-auto">
+                    <div id="gps-info" class="theme-inner border rounded-xl p-3.5 text-xs theme-accent max-w-md mx-auto shadow-inner">
                         📍 Coordenadas GPS: A aguardar permissão...
                     </div>
 
-                    <div class="relative w-64 h-64 mx-auto theme-inner border-4 border-dashed rounded-full flex items-center justify-center shadow-2xl overflow-hidden">
-                        <div id="compass-needle" class="absolute w-3 h-48 bg-gradient-to-t from-red-500 via-amber-400 to-indigo-500 rounded-full transition-transform duration-150"></div>
-                        <div class="absolute top-3 text-xs font-bold text-amber-300">NORTE (Terra)</div>
-                        <div class="absolute bottom-3 text-xs font-bold text-blue-400">OESTE (Água)</div>
-                        <div class="absolute left-3 text-xs font-bold text-amber-200">LESTE (Ar)</div>
-                        <div class="absolute right-3 text-xs font-bold text-red-400">SUL (Fogo)</div>
+                    <!-- Bússola Visual Aprimorada em SVG -->
+                    <div class="relative w-72 h-72 mx-auto theme-inner border-4 border-[var(--border-hover)] rounded-full flex items-center justify-center shadow-2xl overflow-hidden p-4">
+                        <!-- Anel Graduado de Fundo -->
+                        <svg class="absolute inset-0 w-full h-full opacity-40 pointer-events-none" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="90" fill="none" stroke="var(--text-accent)" stroke-width="1.5" stroke-dasharray="4 4" />
+                            <circle cx="100" cy="100" r="75" fill="none" stroke="var(--border-color)" stroke-width="1" />
+                        </svg>
+
+                        <!-- Pontteiro / Agulha Dinâmica -->
+                        <div id="compass-needle" class="absolute w-4 h-56 transition-transform duration-150 flex items-center justify-center">
+                            <div class="w-2 h-28 bg-gradient-to-t from-transparent via-red-500 to-red-600 rounded-t-full -translate-y-14 shadow-lg"></div>
+                            <div class="w-2 h-28 bg-gradient-to-b from-transparent via-indigo-500 to-indigo-700 rounded-b-full translate-y-14 shadow-lg"></div>
+                            <div class="absolute w-5 h-5 rounded-full bg-[var(--bg-card)] border-2 border-[var(--text-accent)] shadow"></div>
+                        </div>
+
+                        <!-- Rótulos Cardinales Fixos -->
+                        <span class="absolute top-3 text-xs font-bold text-amber-300 tracking-wider">NORTE</span>
+                        <span class="absolute bottom-3 text-xs font-bold text-blue-400 tracking-wider">OESTE</span>
+                        <span class="absolute left-3 text-xs font-bold text-amber-200 tracking-wider">LESTE</span>
+                        <span class="absolute right-3 text-xs font-bold text-red-400 tracking-wider">SUL</span>
+
+                        <!-- Visor Central de Graus -->
                         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <span id="heading-deg" class="text-sm font-bold theme-title bg-[var(--bg-card)]/90 px-3 py-1 rounded-lg border border-[var(--border-color)]">0°</span>
+                            <span id="heading-deg" class="text-xs font-bold theme-title bg-[var(--bg-card)]/95 px-3 py-1 rounded-full border border-[var(--border-color)] shadow">0°</span>
                         </div>
                     </div>
 
-                    <div class="flex justify-center">
-                        <button onclick="initGeoAndCompass()" class="bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold py-3 px-8 rounded-xl text-xs lg:text-sm shadow-lg transition cursor-pointer">Ativar GPS & Sensores</button>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button onclick="initGeoAndCompass()" class="bg-[var(--btn-primary)] hover:opacity-95 text-white font-bold py-3 px-8 rounded-xl text-xs lg:text-sm shadow-lg transition cursor-pointer">Ativar GPS & Sensores</button>
                     </div>
-                    <p id="compass-status" class="text-xs theme-accent italic">Toque em ativar para calibrar a orientação física.</p>
+
+                    <!-- Cartões Informativos dos Elementos -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left pt-2">
+                        <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
+                            <span class="text-[10px] uppercase font-bold text-amber-300">Norte (Terra)</span>
+                            <p class="text-[11px] theme-muted leading-snug">Estabilidade, corpo, ancestralidade e recursos materiais.</p>
+                        </div>
+                        <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
+                            <span class="text-[10px] uppercase font-bold text-amber-200">Leste (Ar)</span>
+                            <p class="text-[11px] theme-muted leading-snug">Mente, inspiração poética, alento e novos começos.</p>
+                        </div>
+                        <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
+                            <span class="text-[10px] uppercase font-bold text-red-400">Sul (Fogo)</span>
+                            <p class="text-[11px] theme-muted leading-snug">Transformación, paixão criativa, energia e vontade.</p>
+                        </div>
+                        <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
+                            <span class="text-[10px] uppercase font-bold text-blue-400">Oeste (Água)</span>
+                            <p class="text-[11px] theme-muted leading-snug">Emoção, cura profunda, intuição e mundo espiritual.</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- RODA DO ANO -->
+            <!-- RODA DO ANO MELHORADA COM DIAGRAMA SVG INTERATIVO -->
             <section id="tab-wheel" class="tab-content hidden space-y-6">
-                <div class="theme-card border rounded-3xl p-6 lg:p-8 shadow-2xl space-y-6">
-                    <div class="text-center max-w-xl mx-auto space-y-1">
+                <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl space-y-6 max-w-4xl mx-auto text-center">
+                    <div class="max-w-xl mx-auto space-y-1">
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🎡 A Roda do Ano Céltica</h2>
-                        <p class="text-xs lg:text-sm theme-muted">Os 8 festivais sagrados que marcam os solstícios, equinócios e pontos intermédios da Terra.</p>
+                        <p class="text-xs lg:text-sm theme-muted">Explore visualmente os 8 festivais sagrados da Terra. Clique em cada esfera para revelar a essência do festival.</p>
                     </div>
-                    <div id="festivals-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+                    <!-- Diagrama SVG Cíclico Interativo da Roda do Ano -->
+                    <div class="relative w-full max-w-md mx-auto aspect-square flex items-center justify-center p-2">
+                        <svg class="w-full h-full drop-shadow-2xl" viewBox="0 0 400 400">
+                            <!-- Anéis Exteriores e Guias -->
+                            <circle cx="200" cy="200" r="175" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-dasharray="6 4" />
+                            <circle cx="200" cy="200" r="130" fill="var(--bg-inner)" stroke="var(--border-hover)" stroke-width="1.5" />
+                            <circle cx="200" cy="200" r="45" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2" />
+                            
+                            <!-- Eixos Cruzados -->
+                            <line x1="200" y1="25" x2="200" y2="375" stroke="var(--border-color)" stroke-width="1" />
+                            <line x1="25" y1="200" x2="375" y2="200" stroke="var(--border-color)" stroke-width="1" />
+                            <line x1="76" y1="76" x2="324" y2="324" stroke="var(--border-color)" stroke-width="1" />
+                            <line x1="76" y1="324" x2="324" y2="76" stroke="var(--border-color)" stroke-width="1" />
+
+                            <!-- Centro Awen / Símbolo -->
+                            <text x="200" y="195" text-anchor="middle" font-size="20" fill="var(--text-accent)" font-family="Cinzel, serif" font-weight="bold">/ I \</text>
+                            <text x="200" y="215" text-anchor="middle" font-size="9" fill="var(--text-muted)" uppercase tracking-widest>RODA</text>
+
+                            <!-- Nós dos 8 Festivais (Posicionados Geometricamente em Círculo) -->
+                            <!-- Yule (Topo - 12h) -->
+                            <g class="wheel-node" onclick="selectFestival(1)">
+                                <circle cx="200" cy="40" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
+                                <text x="200" y="37" text-anchor="middle" font-size="11" fill="var(--text-title)" font-weight="bold">Yule</text>
+                                <text x="200" y="49" text-anchor="middle" font-size="8" fill="var(--text-muted)">21 Dez</text>
+                            </g>
+
+                            <!-- Imbolc (Nordeste - 1h30) -->
+                            <g class="wheel-node" onclick="selectFestival(2)">
+                                <circle cx="304" cy="96" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
+                                <text x="304" y="93" text-anchor="middle" font-size="11" fill="var(--text-title)" font-weight="bold">Imbolc</text>
+                                <text x="304" y="105" text-anchor="middle" font-size="8" fill="var(--text-muted)">1 Fev</text>
+                            </g>
+
+                            <!-- Ostara (Direita - 3h) -->
+                            <g class="wheel-node" onclick="selectFestival(3)">
+                                <circle cx="360" cy="200" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
+                                <text x="360" y="197" text-anchor="middle" font-size="10" fill="var(--text-title)" font-weight="bold">Ostara</text>
+                                <text x="360" y="209" text-anchor="middle" font-size="8" fill="var(--text-muted)">21 Mar</text>
+                            </g>
+
+                            <!-- Beltane (Sudeste - 4h30) -->
+                            <g class="wheel-node" onclick="selectFestival(4)">
+                                <circle cx="304" cy="304" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
+                                <text x="304" y="301" text-anchor="middle" font-size="10" fill="var(--text-title)" font-weight="bold">Beltane</text>
+                                <text x="304" y="313" text-anchor="middle" font-size="8" fill="var(--text-muted)">1 Mai</text>
+                            </g>
+
+                            <!-- Litha (Baixo - 6h) -->
+                            <g class="wheel-node" onclick="selectFestival(5)">
+                                <circle cx="200" cy="360" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
+                                <text x="200" y="357" text-anchor="middle" font-size="11" fill="var(--text-title)" font-weight="bold">Litha</text>
+                                <text x="200" y="369" text-anchor="middle" font-size="8" fill="var(--text-muted)">21 Jun</text>
+                            </g>
+
+                            <!-- Lughnasadh (Sudoeste - 7h30) -->
+                            <g class="wheel-node" onclick="selectFestival(6)">
+                                <circle cx="96" cy="304" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
+                                <text x="96" y="301" text-anchor="middle" font-size="9" fill="var(--text-title)" font-weight="bold">Lughnasadh</text>
+                                <text x="96" y="313" text-anchor="middle" font-size="8" fill="var(--text-muted)">1 Ago</text>
+                            </g>
+
+                            <!-- Mabon (Esquerda - 9h) -->
+                            <g class="wheel-node" onclick="selectFestival(7)">
+                                <circle cx="40" cy="200" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
+                                <text x="40" y="197" text-anchor="middle" font-size="11" fill="var(--text-title)" font-weight="bold">Mabon</text>
+                                <text x="40" y="209" text-anchor="middle" font-size="8" fill="var(--text-muted)">21 Set</text>
+                            </g>
+
+                            <!-- Samhain (Noroeste - 10h30) -->
+                            <g class="wheel-node" onclick="selectFestival(8)">
+                                <circle cx="96" cy="96" r="24" fill="var(--bg-card)" stroke="var(--text-accent)" stroke-width="2.5" />
+                                <text x="96" y="93" text-anchor="middle" font-size="10" fill="var(--text-title)" font-weight="bold">Samhain</text>
+                                <text x="96" y="105" text-anchor="middle" font-size="8" fill="var(--text-muted)">31 Out</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Caixa de Detalhe do Festival Selecionado -->
+                    <div id="festival-detail-card" class="theme-inner border rounded-2xl p-6 text-left max-w-xl mx-auto space-y-2 shadow-inner">
+                        <span id="fest-date-badge" class="text-[10px] uppercase tracking-widest theme-accent font-semibold">31 de Outubro</span>
+                        <h3 id="fest-name-title" class="font-cinzel text-xl font-bold text-white">Samhain (Ano Novo Druídico)</h3>
+                        <p id="fest-theme-desc" class="text-xs text-white/90 font-medium">Portal entre os mundos e honra aos ancestrais.</p>
+                        <p id="fest-ritual-desc" class="text-xs theme-muted italic pt-2 border-t border-[var(--border-color)]"><strong>Prática Ritual:</strong> Altar aos antepassados, acender fogueiras de proteção e libertação de ciclos passados.</p>
+                    </div>
                 </div>
             </section>
 
@@ -689,15 +812,25 @@
         ];
 
         const wheelFestivals = [
-            { name: "Samhain", date: "31 Outubro", theme: "Ano Novo Druídico & Ancestrais", ritual: "Altar aos antepassados e libertação." },
-            { name: "Yule", date: "21 Dezembro", theme: "Solstício de Inverno", ritual: "Celebração do retorno da luz solar." },
-            { name: "Imbolc", date: "1 Fevereiro", theme: "Purificação & Brigid", ritual: "Limpeza energética e acolhimento." },
-            { name: "Ostara", date: "21 Março", theme: "Equinócio de Primavera", ritual: "Plantação de intenções na terra." },
-            { name: "Beltane", date: "1 Maio", theme: "Fogo Sagrado & Vitalidade", ritual: "Passeio na natureza e fitas de bênção." },
-            { name: "Litha", date: "21 Junho", theme: "Solstício de Verão", ritual: "Colheita de ervas medicinais." },
-            { name: "Lughnasadh", date: "1 Agosto", theme: "Primeira Colheita", ritual: "Agradecimento pelas colheitas." },
-            { name: "Mabon", date: "21 Setembro", theme: "Equinócio de Outono", ritual: "Gratidão e partilha de frutos." }
+            { id: 1, name: "Yule", date: "21 Dezembro", theme: "Solstício de Inverno", ritual: "Celebração do regresso da luz solar e aconchego no lar." },
+            { id: 2, name: "Imbolc", date: "1 Fevereiro", theme: "Purificação & Brigid", ritual: "Limpeza energética, acolhimento da primavera e acender velas de renovação." },
+            { id: 3, name: "Ostara", date: "21 Março", theme: "Equinócio de Primavera", ritual: "Plantação de intenções na terra e celebração do equilíbrio." },
+            { id: 4, name: "Beltane", date: "1 Maio", theme: "Fogo Sagrado & Vitalidade", ritual: "Passeio matinal na natureza, fitas de bênção e fogueiras sagradas." },
+            { id: 5, name: "Litha", date: "21 Junho", theme: "Solstício de Verão", ritual: "Apogeu da luz, colheita de ervas medicinais e gratidão." },
+            { id: 6, name: "Lughnasadh", date: "1 Agosto", theme: "Primeira Colheita", ritual: "Agradecimento pelos frutos iniciais e partilha do pão sagrado." },
+            { id: 7, name: "Mabon", date: "21 Setembro", theme: "Equinócio de Outono", ritual: "Gratidão pela abundância e preparação para o recolhimento." },
+            { id: 8, name: "Samhain", date: "31 Outubro", theme: "Ano Novo Druídico & Ancestrais", ritual: "Altar aos antepassados, fogueiras de proteção e libertação de ciclos." }
         ];
+
+        function selectFestival(id) {
+            const f = wheelFestivals.find(item => item.id === id);
+            if(!f) return;
+            document.getElementById('fest-date-badge').innerText = f.date;
+            document.getElementById('fest-name-title').innerText = `${f.name} (${f.theme})`;
+            document.getElementById('fest-theme-desc').innerText = f.theme;
+            document.getElementById('fest-ritual-desc').innerHTML = `<strong>Prática Ritual:</strong> ${f.ritual}`;
+            showToast(`Festival selecionado: ${f.name}`);
+        }
 
         const druidicTriads = [
             "Três coisas que geram a luz da mente: a busca da verdade, o amor à beleza e a coragem de enfrentar o desconhecido.",
@@ -710,10 +843,10 @@
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedTheme();
             calculateAstronomy();
-            renderFestivals();
             renderHerbal(oghamAlphabet);
             loadJournal();
             drawRandomTriad();
+            selectFestival(8); // Começa selecionado no Samhain
         });
 
         function showToast(message) {
@@ -838,18 +971,6 @@
                 </div>
             `;
             showToast("Oráculo de Runas consultado.");
-        }
-
-        function renderFestivals() {
-            const grid = document.getElementById('festivals-grid');
-            grid.innerHTML = wheelFestivals.map(f => `
-                <div class="theme-inner border rounded-2xl p-5 space-y-2 shadow-sm hover:border-[var(--border-hover)] transition">
-                    <span class="text-[10px] theme-accent font-semibold tracking-wider uppercase">${f.date}</span>
-                    <h3 class="font-cinzel text-base font-bold text-white">${f.name}</h3>
-                    <p class="text-xs text-white/90 font-medium">${f.theme}</p>
-                    <p class="text-[11px] theme-muted italic pt-1 border-t border-[var(--border-color)]">Ritual: ${f.ritual}</p>
-                </div>
-            `).join('');
         }
 
         function renderHerbal(items) {
