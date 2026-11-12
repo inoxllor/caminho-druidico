@@ -38,55 +38,15 @@ const runeAlphabet = [
     { symbol: "ᚲ", name: "Kenaz", element: "Fogo / Iluminação", meaning: "Conhecimento, clareza e fogo criativo." }
 ];
 
-const tarotDeck = [
-    { 
-        number: "0", name: "O Viajante dos Mundos (O Louco)", 
-        pixelArt: "🌲🐦👤", 
-        artDesc: "Bardo com manto verde e runas no rosto, corvo de Odin e cão selvagem à beira do abismo.", 
-        meaning: "Início de jornada, inocência, salto de fé entre mundos e o desconhecido." 
-    },
-    { 
-        number: "I", name: "O Druida & Alquimista (O Mago)", 
-        pixelArt: "🪵✨🌿", 
-        artDesc: "Druida idoso com bastão de carvalho, mesa de pedra com elementos sagrados.", 
-        meaning: "Manifestação, poder da vontade, canalização da Awen e magia elemental." 
-    },
-    { 
-        number: "II", name: "A Valquíria do Véu (A Sacerdotisa)", 
-        pixelArt: "🐺❄️📜", 
-        artDesc: "Figura em trono de basalto entre gelo e carvalho, pergaminho Ogham e lobo branco.", 
-        meaning: "Intuição profunda, véu de Samhain, mistérios ocultos e sabedoria ancestral." 
-    },
-    { 
-        number: "III", name: "A Grande Mãe da Terra (A Imperatriz)", 
-        pixelArt: "👑🌾🦅", 
-        artDesc: "Rainha coroada com flores e trigo, trono musgoso, falcão dourado e frutos.", 
-        meaning: "Fertilidade, abundância da natureza, ciclos da Roda do Ano e amor incondicional." 
-    },
-    { 
-        number: "IV", name: "O Pai de Todos (O Imperador)", 
-        pixelArt: "👑🐺⚔️", 
-        artDesc: "Patriarca severo com um só olho, trono com cabeças de lobos e cetro solar.", 
-        meaning: "Estrutura, autoridade, ordem cósmica, liderança e proteção do clã." 
-    },
-    { 
-        number: "X", name: "A Roda do Ano (A Roda da Fortuna)", 
-        pixelArt: "🎡ᚠᚁ", 
-        artDesc: "Grande roda de carroça celta pixelizada com os 8 festivais e runas brilhantes.", 
-        meaning: "Destino, ciclos mutáveis da natureza, karma e inevitabilidade da mudança." 
-    },
-    { 
-        number: "XIII", name: "A Travessia de Hel (A Morte)", 
-        pixelArt: "🐎💀🌫️", 
-        artDesc: "Cavaleiro esquelético em Sleipnir (cavalo de 8 patas) com cota de malha e nevoeiro.", 
-        meaning: "Transformação radical, renascimento, fim de um ciclo e novas sementes." 
-    },
-    { 
-        number: "XIX", name: "O Solstício de Verão (O Sol)", 
-        pixelArt: "☀️🌻👶", 
-        artDesc: "Sol radiante com espirais celtas e crianças a dançar junto ao carvalho sagrado.", 
-        meaning: "Alegria pura, clareza, sucesso, vitalidade e energia de Litha." 
-    }
+const tarotCards = [
+    { num: "0", name: "O VIAJANTE", realm: "TÍR NA NÓG", symbol: "🦅🌲", desc: "Bardo dando o salto de fé entre mundos. Corvos de Odin e cão guardião." },
+    { num: "I", name: "O DRUIDA", realm: "BOSQUE SAGRADO", symbol: "🪄🌳", desc: "Maestria elemental, canalização da Awen e vara de carvalho rúnico." },
+    { num: "II", name: "A VALQUÍRIA", realm: "VÉU DE SAMHAIN", symbol: "❄️📜", desc: "Mistérios ocultos e leitura de inscrições Ogham ancestrais." },
+    { num: "III", name: "A GRANDE MÃE", realm: "TERRA FÉRTIL", symbol: "👑🌾", desc: "Abundância agrícola e harmonia com a Roda do Ano." },
+    { num: "IV", name: "O PAI DE TODOS", realm: "ASGARD", symbol: "👁️🪨", desc: "Liderança de clã, ordem cósmica e sabedoria inabalável." },
+    { num: "X", name: "A RODA DO ANO", realm: "CICLOS DA TERRA", symbol: "🎡✨", desc: "Os 8 festivais sagrados e o destino em constante rotação." },
+    { num: "XIII", name: "TRAVESSIA DE HEL", realm: "MUNDO SUBTERRÂNEO", symbol: "🐴⚔️", desc: "Transformação radical e montaria em Sleipnir." },
+    { num: "XIX", name: "O SOL DE LITHA", realm: "SOLSTÍCIO DE VERÃO", symbol: "☀️🌿", desc: "Alegria pura, vitalidade e apogeu solar nos prados sagrados." }
 ];
 
 const wheelFestivals = [
@@ -142,7 +102,7 @@ function showToast(message) {
 }
 
 function changeTheme(themeName) {
-    document.getElementById('app-body').className = `${themeName} min-h-screen flex flex-col lg:flex-row pb-16 lg:pb-0`;
+    document.getElementById('app-body').className = `${themeName} min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0`;
     localStorage.setItem('druid_app_theme', themeName);
     const deskSel = document.getElementById('theme-selector-desktop');
     const mobSel = document.getElementById('theme-selector-mobile');
@@ -160,12 +120,6 @@ function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
     
-    // Atualizar botões bottom nav mobile
-    document.querySelectorAll('nav.fixed button').forEach(btn => {
-        btn.classList.remove('text-[var(--text-accent)]');
-        btn.classList.add('theme-muted');
-    });
-
     document.getElementById(`tab-${tabId}`).classList.remove('hidden');
     const deskBtn = document.getElementById(`desk-nav-${tabId}`);
     const mobBtn = document.getElementById(`mob-nav-${tabId}`);
@@ -237,6 +191,30 @@ function drawOghamCard(count) {
     showToast("Oráculo de Ogham consultado.");
 }
 
+function drawTarotCard(count) {
+    const container = document.getElementById('tarot-card-container');
+    const shuffled = [...tarotCards].sort(() => 0.5 - Math.random()).slice(0, count);
+    const labels = ["Passado", "Presente", "Destino"];
+    container.innerHTML = `
+        <div class="flex flex-wrap justify-center gap-6 w-full items-center">
+            ${shuffled.map((c, i) => `
+                <div class="flex flex-col items-center space-y-3">
+                    ${count === 3 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels[i]}</span>` : ''}
+                    <div class="pixel-card-vertical">
+                        <div class="card-header-pixel">${c.num} • ${c.name}</div>
+                        <div class="card-art-box flex items-center justify-center">
+                            <div class="text-4xl filter drop-shadow">${c.symbol}</div>
+                        </div>
+                        <div class="card-footer-pixel">${c.realm}</div>
+                    </div>
+                    <p class="text-[11px] theme-muted max-w-[200px] text-center leading-relaxed">${c.desc}</p>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    showToast("Tiragem de Tarot Mítico efetuada.");
+}
+
 function drawRunes(count) {
     const container = document.getElementById('rune-card');
     const shuffled = [...runeAlphabet].sort(() => 0.5 - Math.random()).slice(0, count);
@@ -255,27 +233,6 @@ function drawRunes(count) {
         </div>
     `;
     showToast("Oráculo de Runas consultado.");
-}
-
-function drawTarotCards(count) {
-    const container = document.getElementById('tarot-display');
-    const shuffled = [...tarotDeck].sort(() => 0.5 - Math.random()).slice(0, count);
-    const labels = ["Passado", "Presente", "Futuro"];
-    container.innerHTML = `
-        <div class="grid ${count === 1 ? 'grid-cols-1 max-w-md mx-auto col-span-full' : 'grid-cols-1 md:grid-cols-3 col-span-full'} gap-4 w-full">
-            ${shuffled.map((card, i) => `
-                <div class="pixel-card rounded-2xl p-5 flex flex-col items-center text-center space-y-3 shadow-xl">
-                    ${count === 3 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels[i]}</span>` : ''}
-                    <div class="text-xs text-amber-300 font-bold tracking-widest">ARCANO ${card.number}</div>
-                    <div class="text-4xl py-3 bg-[var(--bg-inner)] w-full rounded-xl border border-[var(--border-color)]">${card.pixelArt}</div>
-                    <h3 class="font-cinzel text-sm font-bold text-white">${card.name}</h3>
-                    <p class="text-[11px] theme-accent italic">${card.artDesc}</p>
-                    <p class="text-xs theme-muted leading-relaxed">${card.meaning}</p>
-                </div>
-            `).join('')}
-        </div>
-    `;
-    showToast("Tiragem de Tarot Mítico efetuada.");
 }
 
 function renderHerbal(items) {
@@ -423,10 +380,11 @@ function exportBackupJSON() {
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `backup-caminho-druidico-${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
+    const a = URL.createObjectURL(blob);
+    const aElem = document.createElement('a');
+    aElem.href = url;
+    aElem.download = `backup-caminho-druidico-${new Date().toISOString().slice(0,10)}.json`;
+    aElem.click();
     showToast("Backup JSON criado.");
 }
 
