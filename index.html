@@ -125,12 +125,15 @@
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-        .awen-symbol {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            letter-spacing: 0.1em;
-            font-weight: 900;
+        /* Estilização do Símbolo Awen SVG */
+        .awen-svg {
+            width: 32px;
+            height: 32px;
+            fill: none;
+            stroke: var(--text-accent);
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
     </style>
 </head>
@@ -139,7 +142,13 @@
     <!-- SIDEBAR DESKTOP -->
     <aside class="hidden lg:flex lg:flex-col lg:w-72 lg:fixed lg:inset-y-0 bg-[var(--bg-header)] border-r border-[var(--border-color)] z-40 shadow-2xl">
         <div class="p-6 border-b border-[var(--border-color)] flex items-center gap-3.5">
-            <span class="text-3xl theme-accent awen-symbol drop-shadow">/ I \</span>
+            <!-- SÍMBOLO AWEN SVG VETORIAL -->
+            <svg class="awen-svg" viewBox="0 0 100 100">
+                <line x1="25" y1="85" x2="40" y2="20" />
+                <line x1="50" y1="85" x2="50" y2="35" />
+                <line x1="75" y1="85" x2="60" y2="20" />
+                <circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" />
+            </svg>
             <div>
                 <h1 class="font-cinzel text-lg font-bold theme-title tracking-wider leading-tight">CAMINHO DRUÍDICO</h1>
                 <p class="text-[10px] theme-accent uppercase tracking-widest mt-0.5">Pro Ultimate • OBOD</p>
@@ -222,7 +231,12 @@
     <header class="lg:hidden bg-[var(--bg-header)]/95 backdrop-blur-md border-b border-[var(--border-color)] sticky top-0 z-50 shadow-xl">
         <div class="px-4 py-3 flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
-                <span class="text-2xl theme-accent awen-symbol">/ I \</span>
+                <svg class="awen-svg !w-7 !h-7" viewBox="0 0 100 100">
+                    <line x1="25" y1="85" x2="40" y2="20" />
+                    <line x1="50" y1="85" x2="50" y2="35" />
+                    <line x1="75" y1="85" x2="60" y2="20" />
+                    <circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" />
+                </svg>
                 <div>
                     <h1 class="font-cinzel text-sm font-bold theme-title tracking-wider">CAMINHO DRUÍDICO</h1>
                     <p class="text-[9px] theme-accent opacity-90 uppercase">Sabedoria Céltica</p>
@@ -283,7 +297,7 @@
 
             <div class="flex items-center gap-3">
                 <button onclick="registerAwenPractice()" class="theme-inner hover:border-[var(--text-accent)] border text-xs theme-title px-3.5 py-2 rounded-xl flex items-center gap-2 transition cursor-pointer">
-                    <span class="theme-accent awen-symbol font-bold">/ I \</span> Invocar Awen
+                    <svg class="awen-svg !w-5 !h-5 inline" viewBox="0 0 100 100"><line x1="25" y1="85" x2="40" y2="20" /><line x1="50" y1="85" x2="50" y2="35" /><line x1="75" y1="85" x2="60" y2="20" /><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" /></svg> Invocar Awen
                 </button>
             </div>
         </div>
@@ -421,10 +435,10 @@
                         </div>
                     </div>
 
-                    <div class="theme-inner border rounded-2xl p-6 lg:p-8 text-center space-y-3 shadow-inner">
-                        <span class="text-4xl theme-accent awen-symbol font-bold">/ I \</span>
+                    <div class="theme-inner border rounded-2xl p-6 lg:p-8 text-center space-y-3 shadow-inner flex flex-col items-center justify-center">
+                        <svg class="awen-svg !w-14 !h-14 my-2" viewBox="0 0 100 100"><line x1="25" y1="85" x2="40" y2="20" /><line x1="50" y1="85" x2="50" y2="35" /><line x1="75" y1="85" x2="60" y2="20" /><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" /></svg>
                         <h3 class="font-cinzel text-lg font-bold theme-title">Invocação da Awen</h3>
-                        <p class="text-xs lg:text-sm theme-muted leading-relaxed max-w-lg mx-auto">Entoe <strong class="theme-accent">AH-OO-WEN</strong> em três expirações profundas, canalizando Fogo, Ar e Água através do símbolo sagrado <span class="theme-accent awen-symbol font-bold">/ I \</span>.</p>
+                        <p class="text-xs lg:text-sm theme-muted leading-relaxed max-w-lg mx-auto">Entoe <strong class="theme-accent">AH-OO-WEN</strong> em três expirações profundas, canalizando Fogo, Ar e Água através do símbolo sagrado Awen.</p>
                         <button onclick="registerAwenPractice()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs lg:text-sm py-3 px-6 rounded-xl transition shadow cursor-pointer mt-2">Registar Prática de Awen no Diário</button>
                     </div>
                 </div>
@@ -590,7 +604,7 @@
         <!-- RODAPÉ COM BOTÕES DE APOIO -->
         <footer class="max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 border-t border-[var(--border-color)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs theme-muted">
             <div class="flex items-center gap-2">
-                <span class="theme-accent awen-symbol font-bold">/ I \</span>
+                <svg class="awen-svg !w-5 !h-5 inline" viewBox="0 0 100 100"><line x1="25" y1="85" x2="40" y2="20" /><line x1="50" y1="85" x2="50" y2="35" /><line x1="75" y1="85" x2="60" y2="20" /><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" /></svg>
                 <span>Caminho Druídico Pro Ultimate • Sabedoria Céltica Offline</span>
             </div>
             <div class="flex items-center gap-3">
@@ -679,7 +693,7 @@
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = "theme-card border px-4 py-3 rounded-2xl shadow-2xl text-xs theme-title flex items-center gap-2.5 pointer-events-auto transition-all transform translate-y-2 opacity-0";
-            toast.innerHTML = `<span class="theme-accent awen-symbol font-bold">/ I \</span> <span>${message}</span>`;
+            toast.innerHTML = `<svg class="awen-svg !w-4 !h-4 inline" viewBox="0 0 100 100"><line x1="25" y1="85" x2="40" y2="20" /><line x1="50" y1="85" x2="50" y2="35" /><line x1="75" y1="85" x2="60" y2="20" /><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" /></svg> <span>${message}</span>`;
             container.appendChild(toast);
             
             setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
@@ -894,7 +908,7 @@
         }
 
         function registerAwenPractice() {
-            const text = `\n[${new Date().toLocaleDateString()}] Prática OBOD: Invocação da Awen (/ I \) realizada. Foco em Fogo, Ar e Água.`;
+            const text = `\n[${new Date().toLocaleDateString()}] Prática OBOD: Invocação da Awen realizada. Foco em Fogo, Ar e Água.`;
             document.getElementById('journal-input').value += text;
             autoSaveJournal();
             showToast("Prática de Awen registada no Diário!");
