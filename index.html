@@ -86,276 +86,329 @@
         .theme-title { color: var(--text-title); }
         .theme-accent { color: var(--text-accent); }
         .theme-muted { color: var(--text-muted); }
-        .breath-animation { transition: transform 4s ease-in-out, border-color 4s ease-in-out; }
+        
+        .tab-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-btn.active {
+            background-color: var(--btn-primary);
+            color: #ffffff;
+            border-color: var(--border-hover);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
 
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
     </style>
 </head>
-<body id="app-body" class="theme-night min-h-screen pb-16 select-none">
+<body id="app-body" class="theme-night min-h-screen pb-20 select-none">
 
-    <header class="bg-[var(--bg-header)] border-b border-[var(--border-color)] sticky top-0 z-50 shadow-xl">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
-                <div class="flex items-center gap-2">
-                    <div>
-                        <h1 class="font-cinzel text-base sm:text-lg font-bold theme-title tracking-wider">CAMINHO DRUÍDICO PRO</h1>
-                        <p class="text-[10px] theme-accent opacity-90">Sabedoria Céltica & OBOD • Offline PWA</p>
-                    </div>
+    <!-- Header & Navegação Superior Fixa -->
+    <header class="bg-[var(--bg-header)]/90 backdrop-blur-md border-b border-[var(--border-color)] sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl theme-accent font-bold tracking-widest drop-shadow">/ \ \</span>
+                <div>
+                    <h1 class="font-cinzel text-base sm:text-xl font-bold theme-title tracking-wider">CAMINHO DRUÍDICO PRO</h1>
+                    <p class="text-[10px] theme-accent opacity-90 uppercase tracking-widest">Sabedoria Céltica & OBOD • PWA</p>
                 </div>
-                <select id="theme-selector" onchange="changeTheme(this.value)" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs text-[var(--text-title)] rounded-lg px-2 py-1.5 focus:outline-none cursor-pointer sm:hidden">
-                    <option value="theme-night">Noite</option>
-                    <option value="theme-forest">Floresta</option>
-                    <option value="theme-stone">Pedra</option>
-                    <option value="theme-autumn">Outono</option>
-                </select>
             </div>
             
-            <div class="hidden sm:flex items-center gap-2">
-                <select id="theme-selector-desktop" onchange="changeTheme(this.value)" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs text-[var(--text-title)] rounded-lg px-2.5 py-1.5 focus:outline-none cursor-pointer">
-                    <option value="theme-night">Noite Mística</option>
-                    <option value="theme-forest">Floresta Profunda</option>
-                    <option value="theme-stone">Pedra Ancestral</option>
-                    <option value="theme-autumn">Outono Dourado</option>
+            <div class="flex items-center gap-2">
+                <select id="theme-selector" onchange="changeTheme(this.value)" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs text-[var(--text-title)] rounded-xl px-3 py-2 focus:outline-none cursor-pointer shadow-inner">
+                    <option value="theme-night">🌙 Noite Mística</option>
+                    <option value="theme-forest">🌲 Floresta Profunda</option>
+                    <option value="theme-stone">🗿 Pedra Ancestral</option>
+                    <option value="theme-autumn">🍂 Outono Dourado</option>
                 </select>
             </div>
         </div>
 
-        <nav class="flex overflow-x-auto px-4 pb-2 pt-1 gap-1.5 text-xs font-semibold border-t border-[var(--border-color)] bg-[var(--bg-header)]">
-            <button onclick="switchTab('oracle')" id="nav-oracle" class="px-3 py-1.5 rounded-lg bg-indigo-900/70 theme-title border border-indigo-600/50 whitespace-nowrap transition">Ogham</button>
-            <button onclick="switchTab('runes')" id="nav-runes" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Runas</button>
-            <button onclick="switchTab('astro')" id="nav-astro" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Lua & Sol</button>
-            <button onclick="switchTab('compass')" id="nav-compass" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Bússola</button>
-            <button onclick="switchTab('wheel')" id="nav-wheel" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Roda do Ano</button>
-            <button onclick="switchTab('obod')" id="nav-obod" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Graus OBOD</button>
-            <button onclick="switchTab('ritual')" id="nav-ritual" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Rituais</button>
-            <button onclick="switchTab('journal')" id="nav-journal" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Diário</button>
-            <button onclick="switchTab('grounding')" id="nav-grounding" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Grounding & Som</button>
-            <button onclick="switchTab('herbal')" id="nav-herbal" class="px-3 py-1.5 rounded-lg bg-[var(--bg-inner)] theme-muted whitespace-nowrap transition">Herbal & Árvores</button>
+        <!-- Barra de Navegação Horizontal com Scroll Suave -->
+        <nav class="flex overflow-x-auto px-4 pb-2.5 pt-1 gap-2 text-xs font-semibold border-t border-[var(--border-color)] bg-[var(--bg-header)] scrollbar-none">
+            <button onclick="switchTab('oracle')" id="nav-oracle" class="tab-btn active px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] whitespace-nowrap">ᚁ Ogham</button>
+            <button onclick="switchTab('runes')" id="nav-runes" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">ᚠ Runas</button>
+            <button onclick="switchTab('astro')" id="nav-astro" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌕 Lua & Sol</button>
+            <button onclick="switchTab('compass')" id="nav-compass" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🧭 Bússola</button>
+            <button onclick="switchTab('wheel')" id="nav-wheel" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎡 Roda do Ano</button>
+            <button onclick="switchTab('obod')" id="nav-obod" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌿 Graus OBOD</button>
+            <button onclick="switchTab('ritual')" id="nav-ritual" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">📜 Rituais</button>
+            <button onclick="switchTab('journal')" id="nav-journal" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">📖 Diário</button>
+            <button onclick="switchTab('grounding')" id="nav-grounding" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎧 Som & Foco</button>
+            <button onclick="switchTab('herbal')" id="nav-herbal" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌲 Herbal</button>
         </nav>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 pt-4 space-y-5">
+    <main class="max-w-5xl mx-auto px-4 pt-6 space-y-6">
 
         <!-- LUA & SOL -->
         <section id="tab-astro" class="tab-content hidden space-y-4">
-            <div class="theme-card border rounded-2xl p-4 shadow-xl flex items-center gap-4">
-                <div id="moon-icon" class="text-5xl select-none">🌕</div>
-                <div>
-                    <div class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Ciclo Lunar</div>
-                    <h2 id="moon-phase-name" class="font-cinzel text-lg text-white font-bold">A calcular...</h2>
-                    <p id="moon-details" class="text-xs theme-muted opacity-80 mt-0.5">Idade e iluminação...</p>
-                </div>
-            </div>
-
-            <div class="theme-card border rounded-2xl p-4 shadow-xl flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <div class="text-4xl select-none">☀️</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="theme-card border rounded-2xl p-5 shadow-xl flex items-center gap-5">
+                    <div id="moon-icon" class="text-6xl select-none">🌕</div>
                     <div>
-                        <div class="text-[10px] uppercase tracking-widest theme-title font-semibold">Ciclo Solar Diário</div>
-                        <h2 id="solar-status" class="font-cinzel text-base text-white font-bold">Calculando Sol...</h2>
-                        <p id="solar-duration" class="text-xs theme-muted opacity-80 mt-0.5">Duração do dia luz</p>
+                        <div class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Ciclo Lunar Atual</div>
+                        <h2 id="moon-phase-name" class="font-cinzel text-lg text-white font-bold mt-0.5">A calcular...</h2>
+                        <p id="moon-details" class="text-xs theme-muted opacity-80 mt-1">Idade e iluminação...</p>
                     </div>
                 </div>
-                <div class="text-right">
-                    <div id="sunrise-time" class="text-xs theme-accent font-semibold">Nascer: --:--</div>
-                    <div id="sunset-time" class="text-xs theme-muted font-semibold">Pôr: --:--</div>
+
+                <div class="theme-card border rounded-2xl p-5 shadow-xl flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="text-5xl select-none">☀️</div>
+                        <div>
+                            <div class="text-[10px] uppercase tracking-widest theme-title font-semibold">Ciclo Solar Diário</div>
+                            <h2 id="solar-status" class="font-cinzel text-base text-white font-bold mt-0.5">Calculando Sol...</h2>
+                            <p id="solar-duration" class="text-xs theme-muted opacity-80 mt-1">Duração do dia luz</p>
+                        </div>
+                    </div>
+                    <div class="text-right space-y-1">
+                        <div id="sunrise-time" class="text-xs theme-accent font-semibold">Nascer: --:--</div>
+                        <div id="sunset-time" class="text-xs theme-muted font-semibold">Pôr: --:--</div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- ORÁCULO OGHAM -->
         <section id="tab-oracle" class="tab-content space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl text-center">
-                <h2 class="font-cinzel text-xl font-bold theme-title mb-1">ᚁ Oráculo Sagrado de Ogham</h2>
-                <p class="text-xs theme-muted max-w-md mx-auto mb-4">Conecte-se com os espíritos do bosque céltico através das letras sagradas.</p>
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl text-center max-w-2xl mx-auto">
+                <h2 class="font-cinzel text-2xl font-bold theme-title mb-1">ᚁ Oráculo Sagrado de Ogham</h2>
+                <p class="text-xs theme-muted max-w-md mx-auto mb-5">Conecte-se com os espíritos do bosque céltico através das letras sagradas das árvores.</p>
 
-                <div id="ogham-card" class="theme-inner border rounded-xl p-5 my-2 min-h-[200px] flex flex-col items-center justify-center transition-all">
-                    <span class="theme-accent opacity-60 text-xs">Toque abaixo para revelar a sua mensagem diária</span>
+                <div id="ogham-card" class="theme-inner border rounded-2xl p-6 my-3 min-h-[220px] flex flex-col items-center justify-center transition-all shadow-inner">
+                    <span class="theme-accent opacity-60 text-xs">Toque num botão abaixo para revelar a sua mensagem</span>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-2.5 justify-center max-w-sm mx-auto mt-4">
-                    <button onclick="drawOghamCard(1)" class="w-full bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)] text-white font-bold py-2.5 px-4 rounded-xl shadow-lg transition text-xs">1 Carta (Conselho)</button>
-                    <button onclick="drawOghamCard(3)" class="w-full theme-inner theme-title font-semibold py-2.5 px-4 rounded-xl border border-[var(--border-color)] transition text-xs">3 Cartas (Tríade)</button>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto mt-6">
+                    <button onclick="drawOghamCard(1)" class="w-full bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold py-3 px-5 rounded-xl shadow-lg transition text-xs tracking-wider">1 Carta (Conselho Diário)</button>
+                    <button onclick="drawOghamCard(3)" class="w-full theme-inner theme-title font-semibold py-3 px-5 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs tracking-wider">3 Cartas (Tríade Sagrada)</button>
                 </div>
             </div>
         </section>
 
         <!-- ORÁCULO DE RUNAS -->
         <section id="tab-runes" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl text-center">
-                <h2 class="font-cinzel text-xl font-bold theme-title mb-1">ᚠ Oráculo de Runas (Elder Futhark)</h2>
-                <p class="text-xs theme-muted max-w-md mx-auto mb-4">Consulte os símbolos ancestrais de sabedoria nórdica.</p>
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl text-center max-w-2xl mx-auto">
+                <h2 class="font-cinzel text-2xl font-bold theme-title mb-1">ᚠ Oráculo de Runas (Elder Futhark)</h2>
+                <p class="text-xs theme-muted max-w-md mx-auto mb-5">Consulte os símbolos ancestrais de sabedoria nórdica e germânica.</p>
 
-                <div id="rune-card" class="theme-inner border rounded-xl p-5 my-2 min-h-[200px] flex flex-col items-center justify-center transition-all">
-                    <span class="theme-accent opacity-60 text-xs">Selecione uma tiragem de Runas</span>
+                <div id="rune-card" class="theme-inner border rounded-2xl p-6 my-3 min-h-[220px] flex flex-col items-center justify-center transition-all shadow-inner">
+                    <span class="theme-accent opacity-60 text-xs">Selecione uma tiragem rúnica</span>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-2.5 justify-center max-w-sm mx-auto mt-4">
-                    <button onclick="drawRunes(1)" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold py-2.5 px-4 rounded-xl shadow-lg transition text-xs">1 Runa (Conselho)</button>
-                    <button onclick="drawRunes(3)" class="w-full theme-inner theme-title font-semibold py-2.5 px-4 rounded-xl border border-[var(--border-color)] transition text-xs">3 Runas (Passado/Pres/Fut)</button>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto mt-6">
+                    <button onclick="drawRunes(1)" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold py-3 px-5 rounded-xl shadow-lg transition text-xs tracking-wider">1 Runa (Conselho)</button>
+                    <button onclick="drawRunes(3)" class="w-full theme-inner theme-title font-semibold py-3 px-5 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs tracking-wider">3 Runas (Passado/Pres/Fut)</button>
                 </div>
             </div>
         </section>
 
-        <!-- BÚSSOLA -->
+        <!-- BÚSSOLA CARDINAL -->
         <section id="tab-compass" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl text-center space-y-4">
-                <h2 class="font-cinzel text-lg font-bold theme-title">🧭 Bússola dos Quatro Quartos</h2>
-                <p class="text-xs theme-muted max-w-xs mx-auto">Alinhe-se com os portais elementais sagrados para abrir círculos ou meditar.</p>
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl text-center max-w-md mx-auto space-y-5">
+                <div>
+                    <h2 class="font-cinzel text-xl font-bold theme-title">🧭 Bússola dos Quatro Quartos</h2>
+                    <p class="text-xs theme-muted mt-1">Alinhe-se com os portais elementais sagrados.</p>
+                </div>
 
-                <div class="relative w-48 h-48 mx-auto theme-inner border-4 border-dashed rounded-full flex items-center justify-center shadow-inner">
-                    <div id="compass-needle" class="absolute w-2 h-36 bg-gradient-to-t from-red-500 to-indigo-500 rounded-full transition-transform duration-300"></div>
+                <div class="relative w-52 h-52 mx-auto theme-inner border-4 border-dashed rounded-full flex items-center justify-center shadow-2xl">
+                    <div id="compass-needle" class="absolute w-2 h-40 bg-gradient-to-t from-red-500 to-indigo-500 rounded-full transition-transform duration-300"></div>
                     <div class="absolute top-2 text-xs font-bold text-amber-300">NORTE</div>
                     <div class="absolute bottom-2 text-xs font-bold text-blue-400">OESTE</div>
                     <div class="absolute left-2 text-xs font-bold text-amber-200">LESTE</div>
                     <div class="absolute right-2 text-xs font-bold text-red-400">SUL</div>
                 </div>
 
-                <button onclick="initCompass()" class="bg-[var(--btn-primary)] text-white font-bold py-2 px-5 rounded-xl text-xs shadow transition">Ativar Sensores de Orientação</button>
-                <p id="compass-status" class="text-[10px] theme-accent italic">Toque em ativar para calibrar a bússola física do telemóvel.</p>
+                <button onclick="initCompass()" class="bg-[var(--btn-primary)] text-white font-bold py-2.5 px-6 rounded-xl text-xs shadow-lg transition">Ativar Bússola Magnética</button>
+                <p id="compass-status" class="text-[11px] theme-accent italic">Aguardando calibração do dispositivo...</p>
             </div>
         </section>
 
         <!-- RODA DO ANO -->
         <section id="tab-wheel" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl space-y-4">
-                <div class="text-center max-w-md mx-auto space-y-1">
-                    <h2 class="font-cinzel text-xl font-bold theme-title">🎡 A Roda do Ano Céltica</h2>
-                    <p class="text-xs theme-muted">Os 8 festivais sagrados e datas tradicionais.</p>
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl space-y-5 max-w-3xl mx-auto">
+                <div class="text-center space-y-1">
+                    <h2 class="font-cinzel text-2xl font-bold theme-title">🎡 A Roda do Ano Céltica</h2>
+                    <p class="text-xs theme-muted">Os 8 festivais sagrados que marcam o ritmo da Terra.</p>
                 </div>
-                <div id="festivals-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                <div id="festivals-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5"></div>
             </div>
         </section>
 
         <!-- GRAUS OBOD -->
         <section id="tab-obod" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl space-y-4">
-                <div class="text-center max-w-md mx-auto space-y-1">
-                    <h2 class="font-cinzel text-xl font-bold theme-title">🌿 Três Graus Druídicos (OBOD)</h2>
-                    <p class="text-xs theme-muted">Práticas avançadas de Bardos, Ovates e Druidas.</p>
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl space-y-5 max-w-2xl mx-auto">
+                <div class="text-center space-y-1">
+                    <h2 class="font-cinzel text-2xl font-bold theme-title">🌿 Três Graus Druídicos (OBOD)</h2>
+                    <p class="text-xs theme-muted">A jornada evolutiva: Bardos, Ovates e Druidas.</p>
                 </div>
 
-                <div class="theme-inner border rounded-xl p-4 text-center space-y-2">
-                    <span class="text-3xl text-amber-300 tracking-widest font-bold">/ \ \</span>
-                    <h3 class="font-cinzel text-sm font-bold theme-title">Invocação da Awen</h3>
-                    <p class="text-[11px] theme-muted leading-relaxed">Entoe <strong class="theme-accent">AH-OO-WEN</strong> em três expirações focando Fogo, Ar e Água.</p>
-                    <button onclick="showModal('Awen Registada', 'Sua conexão com a inspiração divina foi guardada para hoje.')" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs py-2 px-4 rounded-lg transition mt-1">Registar Awen Hoje</button>
+                <div class="theme-inner border rounded-2xl p-6 text-center space-y-3 shadow-inner">
+                    <span class="text-4xl theme-accent tracking-widest font-bold">/ \ \</span>
+                    <h3 class="font-cinzel text-base font-bold theme-title">Invocação da Awen</h3>
+                    <p class="text-xs theme-muted leading-relaxed">Entoe <strong class="theme-accent">AH-OO-WEN</strong> em três expirações profundas, canalizando Fogo, Ar e Água através do símbolo sagrado <span class="theme-accent font-bold">/ \ \</span>.</p>
+                    <button onclick="registerAwenPractice()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs py-2.5 px-5 rounded-xl transition shadow">Registar Prática de Awen Hoje</button>
                 </div>
             </div>
         </section>
 
-        <!-- RITUAIS -->
+        <!-- CONSTRUTOR DE RITUAIS -->
         <section id="tab-ritual" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl space-y-3">
-                <h2 class="font-cinzel text-base font-bold theme-title">📜 Criador de Rituais Célticos</h2>
-                <p class="text-xs theme-muted">Construa a sua cerimónia personalizada.</p>
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl space-y-4 max-w-2xl mx-auto">
+                <h2 class="font-cinzel text-xl font-bold theme-title">📜 Criador de Rituais Célticos</h2>
+                <p class="text-xs theme-muted">Estruture a sua cerimónia personalizada para solstícios, equinócios ou transições pessoais.</p>
                 
-                <div class="space-y-2 text-xs">
+                <div class="space-y-3 text-xs">
                     <div>
                         <label class="theme-title font-semibold">Título do Ritual:</label>
-                        <input id="rit-title" type="text" placeholder="Ex: Cerimónia de Agradecimento em Mabon" class="w-full theme-inner border rounded-lg p-2 text-white mt-1">
+                        <input id="rit-title" type="text" placeholder="Ex: Cerimónia de Agradecimento em Mabon" class="w-full theme-inner border rounded-xl p-3 text-white mt-1.5 focus:outline-none focus:border-[var(--text-accent)]">
                     </div>
                     <div>
                         <label class="theme-title font-semibold">Intenção / Objetivo:</label>
-                        <input id="rit-intent" type="text" placeholder="Ex: Libertar pesos antigos e acolher a abundância" class="w-full theme-inner border rounded-lg p-2 text-white mt-1">
+                        <input id="rit-intent" type="text" placeholder="Ex: Libertar pesos antigos e acolher a abundância" class="w-full theme-inner border rounded-xl p-3 text-white mt-1.5 focus:outline-none focus:border-[var(--text-accent)]">
                     </div>
-                    <button onclick="showModal('Ritual Criado', 'O seu ritual foi memorizado com sucesso.')" class="w-full bg-[var(--btn-primary)] text-white font-bold py-2 rounded-xl transition shadow">Guardar Ritual</button>
+                    <div>
+                        <label class="theme-title font-semibold">Elemento Principal:</label>
+                        <select id="rit-elem" class="w-full theme-inner border rounded-xl p-3 text-white mt-1.5 focus:outline-none cursor-pointer">
+                            <option value="Ar">Ar (Leste - Inspiração & Mente)</option>
+                            <option value="Fogo">Fogo (Sul - Transformação & Paixão)</option>
+                            <option value="Água">Água (Oeste - Emoção & Cura)</option>
+                            <option value="Terra">Terra (Norte - Estabilidade & Abundância)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="theme-title font-semibold">Palavras de Encerramento:</label>
+                        <textarea id="rit-words" placeholder="Escreva as palavras de gratidão final..." class="w-full h-24 theme-inner border rounded-xl p-3 text-white mt-1.5 focus:outline-none"></textarea>
+                    </div>
+                    <button onclick="saveRitualTemplate()" class="w-full bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold py-3 rounded-xl transition shadow-lg text-xs tracking-wider">Guardar Ritual no Diário</button>
                 </div>
             </div>
         </section>
 
         <!-- DIÁRIO -->
         <section id="tab-journal" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl space-y-3">
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl space-y-4 max-w-3xl mx-auto">
                 <div class="flex justify-between items-center flex-wrap gap-2">
-                    <h2 class="font-cinzel text-base font-bold theme-title">📖 Diário & Sincronicidades</h2>
-                    <span id="save-status" class="text-[11px] theme-accent italic">Guardado</span>
+                    <h2 class="font-cinzel text-xl font-bold theme-title">📖 Diário & Sincronicidades</h2>
+                    <span id="save-status" class="text-[11px] theme-accent italic">Guardado automaticamente</span>
                 </div>
-                <textarea id="journal-input" placeholder="Escreva reflexões, presságios ou rituais..." class="w-full h-52 theme-inner border rounded-xl p-3 text-white focus:outline-none text-xs leading-relaxed"></textarea>
+                <textarea id="journal-input" oninput="autoSaveJournal()" placeholder="Escreva reflexões, presságios, sonhos ou apontamentos rituais..." class="w-full h-60 theme-inner border rounded-2xl p-4 text-white focus:outline-none text-xs leading-relaxed shadow-inner"></textarea>
+                
+                <div class="flex flex-wrap gap-2.5 justify-between items-center pt-3 border-t border-[var(--border-color)]">
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="exportJournalTXT()" class="theme-inner text-emerald-200 border text-xs font-semibold py-2 px-3.5 rounded-xl transition hover:border-emerald-500">📄 Exportar TXT</button>
+                        <button onclick="exportBackupJSON()" class="theme-inner text-amber-200 border text-xs font-semibold py-2 px-3.5 rounded-xl transition hover:border-amber-500">📦 Backup JSON</button>
+                        <label class="theme-inner text-indigo-200 border text-xs font-semibold py-2 px-3.5 rounded-xl transition cursor-pointer hover:border-indigo-500">
+                            📥 Importar Backup <input type="file" id="import-json-file" accept=".json" onchange="importBackupJSON(event)" class="hidden">
+                        </label>
+                    </div>
+                    <button onclick="clearJournal()" class="bg-red-950/60 text-red-300 border border-red-800/40 text-xs py-2 px-3.5 rounded-xl transition hover:bg-red-900/60">Limpar Diário</button>
+                </div>
             </div>
         </section>
 
-        <!-- GROUNDING & SOM -->
+        <!-- GROUNDING & SOM AMBIENTE -->
         <section id="tab-grounding" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl text-center space-y-5">
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl text-center max-w-2xl mx-auto space-y-6">
                 <div>
-                    <h2 class="font-cinzel text-lg font-bold theme-title">🎧 Respiração & Som Ambiente</h2>
-                    <p class="text-xs theme-muted max-w-xs mx-auto mt-1">Sintonize o sistema com frequências relaxantes.</p>
+                    <h2 class="font-cinzel text-xl font-bold theme-title">🎧 Som & Meditação Awen</h2>
+                    <p class="text-xs theme-muted max-w-xs mx-auto mt-1">Sintonize o sistema com frequências relaxantes da natureza.</p>
                 </div>
 
-                <div class="flex justify-center gap-2">
-                    <button onclick="toggleAmbientSound('rain')" class="theme-inner theme-title text-xs px-3 py-2 rounded-xl border transition">🌧️ Chuva</button>
-                    <button onclick="stopAmbientSound()" class="bg-red-900/60 text-red-200 text-xs px-3 py-2 rounded-xl border border-red-700/50 transition">Parar Som</button>
+                <div class="flex justify-center gap-3">
+                    <button onclick="toggleAmbientSound('rain')" id="btn-rain" class="theme-inner theme-title text-xs px-4 py-2.5 rounded-xl border transition">🌧️ Chuva Suave</button>
+                    <button onclick="toggleAmbientSound('wind')" id="btn-wind" class="theme-inner theme-title text-xs px-4 py-2.5 rounded-xl border transition">🍃 Vento no Bosque</button>
+                    <button onclick="stopAmbientSound()" class="bg-red-900/60 text-red-200 text-xs px-4 py-2.5 rounded-xl border border-red-700/50 transition">Parar Som</button>
                 </div>
 
-                <div class="py-2 flex flex-col items-center justify-center">
-                    <div id="breath-circle" class="breath-animation w-36 h-36 rounded-full border-4 border-indigo-500/40 bg-indigo-950/30 flex flex-col items-center justify-center shadow-2xl">
+                <div class="py-4 flex flex-col items-center justify-center">
+                    <div id="breath-circle" class="breath-animation w-40 h-40 rounded-full border-4 border-indigo-500/40 bg-indigo-950/30 flex flex-col items-center justify-center shadow-2xl">
                         <span id="breath-action" class="font-cinzel text-base font-bold theme-title">Preparar</span>
+                        <span id="breath-timer" class="text-2xl font-bold theme-accent mt-1">4</span>
                     </div>
                 </div>
+
+                <button id="btn-breath-toggle" onclick="toggleBreathing()" class="bg-[var(--btn-primary)] text-white font-bold py-3 px-8 rounded-xl shadow-lg transition text-xs tracking-wider">Iniciar Ciclo de Respiração</button>
             </div>
         </section>
 
         <!-- HERBAL & ÁRVORES -->
         <section id="tab-herbal" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-2xl p-5 shadow-xl space-y-3">
-                <h2 class="font-cinzel text-base font-bold theme-title">🌲 Guia de Ogham, Ervas & Árvores</h2>
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl space-y-4 max-w-3xl mx-auto">
+                <h2 class="font-cinzel text-xl font-bold theme-title">🌲 Guia de Ogham, Ervas & Árvores</h2>
                 <p class="text-xs theme-muted mb-2">Correspondências tradicionais de fitoterapia e fitossofia celta.</p>
-                <div id="tree-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[420px] overflow-y-auto pr-1"></div>
+                <div id="tree-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[460px] overflow-y-auto pr-1"></div>
             </div>
         </section>
 
     </main>
 
-    <!-- Modal -->
-    <div id="custom-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
-        <div class="theme-card border rounded-2xl p-5 max-w-xs w-full text-center space-y-3 shadow-2xl">
-            <h3 id="modal-title" class="font-cinzel text-base font-bold theme-title">Aviso</h3>
-            <p id="modal-body" class="text-xs theme-muted opacity-90"></p>
-            <button onclick="closeModal()" class="w-full bg-[var(--btn-primary)] text-white font-bold py-2 rounded-xl transition text-xs">Compreendido</button>
-        </div>
-    </div>
+    <!-- Sistema de Notificações Toast Moderno -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
-        // --- REGISTO DO SERVICE WORKER PARA PWA ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker ativo:', reg.scope))
-                    .catch(err => console.log('Erro no Service Worker:', err));
-            });
-        }
-
         // --- BASES DE DADOS ---
         const oghamAlphabet = [
-            { symbol: "ᚁ", name: "Beith", tree: "Bétula", meaning: "Novos começos, purificação e renovação." },
-            { symbol: "ᚂ", name: "Luis", tree: "Rowan", meaning: "Proteção espiritual e intuição apurada." },
-            { symbol: "ᚃ", name: "Nion", tree: "Freixo", meaning: "Conexão cósmica e paz interior." },
-            { symbol: "ᚄ", name: "Fearn", tree: "Amieiro", meaning: "Coragem na adversidade e resiliência." }
+            { symbol: "ᚁ", name: "Beith", tree: "Bétula", herb: "Camomila / Bétula", meaning: "Novos começos, purificação e renovação." },
+            { symbol: "ᚂ", name: "Luis", tree: "Rowan (Frailha)", herb: "Zimbro / Rowan", meaning: "Proteção espiritual e intuição apurada." },
+            { symbol: "ᚃ", name: "Nion", tree: "Freixo", herb: "Freixo", meaning: "Conexão cósmica e paz interior." },
+            { symbol: "ᚄ", name: "Fearn", tree: "Amieiro", herb: "Amieiro", meaning: "Coragem na adversidade e resiliência." },
+            { symbol: "ᚅ", name: "Saille", tree: "Salgueiro", herb: "Salgueiro-branco", meaning: "Ritmo lunar, intuição e sonhos." },
+            { symbol: "ᚆ", name: "Uath", tree: "Espinheiro", herb: "Espinheiro-alvar", meaning: "Paciência e limites saudáveis." },
+            { symbol: "ᚇ", name: "Dair", tree: "Carvalho", herb: "Carvalho (Casca)", meaning: "Força inabalável e sabedoria ancestral." },
+            { symbol: "ᚈ", name: "Tinne", tree: "Azevinho", herb: "Azevinho", meaning: "Maturidade e clareza mental." }
+        ];
+
+        const runeAlphabet = [
+            { symbol: "ᚠ", name: "Fehu", element: "Fogo / Abundância", meaning: "Riqueza, prosperidade e novos ganhos." },
+            { symbol: "ᚢ", name: "Uruz", element: "Terra / Força", meaning: "Força vital, saúde e coragem." },
+            { symbol: "ᚦ", name: "Thurisaz", element: "Fogo / Proteção", meaning: "Defesa e quebra de barreiras." },
+            { symbol: "ᚨ", name: "Ansuz", element: "Ar / Inspiração", meaning: "Comunicação sagrada e sabedoria." }
         ];
 
         const wheelFestivals = [
-            { name: "Samhain", date: "31 Out", theme: "Ano Novo Druídico" },
-            { name: "Yule", date: "21 Dez", theme: "Solstício de Inverno" },
-            { name: "Imbolc", date: "1 Fev", theme: "Purificação" },
-            { name: "Ostara", date: "21 Mar", theme: "Equinócio de Primavera" }
+            { name: "Samhain", date: "31 Outubro", theme: "Ano Novo Druídico & Ancestrais", ritual: "Altar aos antepassados e libertação." },
+            { name: "Yule", date: "21 Dezembro", theme: "Solstício de Inverno", ritual: "Celebração do retorno da luz solar." },
+            { name: "Imbolc", date: "1 Fevereiro", theme: "Purificação & Brigid", ritual: "Limpeza energética e acolhimento." },
+            { name: "Ostara", date: "21 Março", theme: "Equinócio de Primavera", ritual: "Plantação de intenções na terra." },
+            { name: "Beltane", date: "1 Maio", theme: "Fogo Sagrado & Vitalidade", ritual: "Passeio na natureza e fitas de bênção." },
+            { name: "Litha", date: "21 Junho", theme: "Solstício de Verão", ritual: "Colheita de ervas medicinais." },
+            { name: "Lughnasadh", date: "1 Agosto", theme: "Primeira Colheita", ritual: "Agradecimento pelas colheitas." },
+            { name: "Mabon", date: "21 Setembro", theme: "Equinócio de Outono", ritual: "Gratidão e partilha de frutos." }
         ];
 
-        // --- INICIALIZAÇÃO DA INTERFACE ---
+        // --- INICIALIZAÇÃO ---
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedTheme();
             calculateAstronomy();
             renderFestivals();
             renderHerbal();
+            loadJournal();
         });
 
+        // --- NOTIFICAÇÕES TOAST ---
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "theme-card border px-4 py-3 rounded-2xl shadow-2xl text-xs theme-title flex items-center gap-2 pointer-events-auto transition-all transform translate-y-2 opacity-0";
+            toast.innerHTML = `<span class="theme-accent font-bold">/ \\ \\</span> <span>${message}</span>`;
+            container.appendChild(toast);
+            
+            setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- TEMA ---
         function changeTheme(themeName) {
-            document.getElementById('app-body').className = `${themeName} min-h-screen pb-16 select-none`;
+            document.getElementById('app-body').className = `${themeName} min-h-screen pb-20 select-none`;
             localStorage.setItem('druid_app_theme', themeName);
             document.getElementById('theme-selector').value = themeName;
-            document.getElementById('theme-selector-desktop').value = themeName;
+            showToast("Tema visual atualizado com sucesso.");
         }
 
         function loadSavedTheme() {
@@ -363,36 +416,95 @@
             changeTheme(saved);
         }
 
+        // --- NAVEGAÇÃO ENTRE ABAS ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`nav-${tabId}`).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function showModal(title, body) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-body').innerText = body;
-            document.getElementById('custom-modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('custom-modal').classList.add('hidden');
-        }
-
+        // --- ASTRONOMIA ---
         function calculateAstronomy() {
-            document.getElementById('moon-phase-name').innerText = "Lua Crescente";
-            document.getElementById('moon-details').innerText = "Ciclo ativo no firmamento";
+            const now = new Date();
+            const year = now.getFullYear(), month = now.getMonth() + 1, day = now.getDate();
+            let c = 0, e = 0, jd = 0;
+            if (month < 3) {
+                let y = year - 1, m = month + 12;
+                c = Math.floor(y / 100); e = 2 - c + Math.floor(c / 4);
+                jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + day + e - 1524;
+            } else {
+                c = Math.floor(year / 100); e = 2 - c + Math.floor(c / 4);
+                jd = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + e - 1524;
+            }
+            const daysSinceNew = (jd - 2451549.5) % 29.53058770576;
+            const age = daysSinceNew < 0 ? daysSinceNew + 29.53058770576 : daysSinceNew;
+            const illumination = Math.round((1 - Math.cos((age / 29.53058770576) * 2 * Math.PI)) / 2 * 100);
+            
+            let phaseName = "Lua Nova", icon = "🌑";
+            if (age > 1.84 && age <= 5.5) { phaseName = "Lua Crescente"; icon = "🌒"; }
+            else if (age > 5.5 && age <= 9.2) { phaseName = "Quarto Crescente"; icon = "🌓"; }
+            else if (age > 9.2 && age <= 12.9) { phaseName = "Gibosa Crescente"; icon = "🌔"; }
+            else if (age > 12.9 && age <= 16.6) { phaseName = "Lua Cheia"; icon = "🌕"; }
+            else if (age > 16.6 && age <= 20.3) { phaseName = "Gibosa Minguante"; icon = "🌖"; }
+            else if (age > 20.3 && age <= 24.0) { phaseName = "Quarto Minguante"; icon = "🌗"; }
+            else if (age > 24.0 && age < 27.7) { phaseName = "Lua Minguante"; icon = "🌘"; }
+
+            document.getElementById('moon-icon').innerText = icon;
+            document.getElementById('moon-phase-name').innerText = phaseName;
+            document.getElementById('moon-details').innerText = `Idade: ${age.toFixed(1)} dias • ${illumination}% Iluminada`;
             document.getElementById('solar-status').innerText = "Luz Natural Ativa";
-            document.getElementById('sunrise-time').innerText = "Nascer: 07:00";
-            document.getElementById('sunset-time').innerText = "Pôr: 18:30";
+            document.getElementById('solar-duration').innerText = "Dia Luz: aprox. 12h 30m";
+            document.getElementById('sunrise-time').innerText = "Nascer: 07:15";
+            document.getElementById('sunset-time').innerText = "Pôr: 18:45";
+        }
+
+        // --- ORÁCULOS & RODA ---
+        function drawOghamCard(count) {
+            const container = document.getElementById('ogham-card');
+            const shuffled = [...oghamAlphabet].sort(() => 0.5 - Math.random()).slice(0, count);
+            container.innerHTML = `
+                <div class="grid ${count === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'} gap-3 w-full">
+                    ${shuffled.map(card => `
+                        <div class="theme-card border rounded-xl p-4 flex flex-col items-center text-center space-y-1.5 shadow">
+                            <span class="text-4xl theme-accent font-bold my-1">${card.symbol}</span>
+                            <h3 class="font-cinzel text-sm font-bold text-white">${card.name} (${card.tree})</h3>
+                            <p class="text-[11px] theme-muted">${card.meaning}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            showToast("Oráculo de Ogham consultado.");
+        }
+
+        function drawRunes(count) {
+            const container = document.getElementById('rune-card');
+            const shuffled = [...runeAlphabet].sort(() => 0.5 - Math.random()).slice(0, count);
+            container.innerHTML = `
+                <div class="grid ${count === 1 ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'} gap-3 w-full">
+                    ${shuffled.map(rune => `
+                        <div class="theme-card border rounded-xl p-4 flex flex-col items-center text-center space-y-1.5 shadow">
+                            <span class="text-4xl text-amber-300 font-bold my-1">${rune.symbol}</span>
+                            <h3 class="font-cinzel text-sm font-bold text-white">${rune.name}</h3>
+                            <span class="text-[10px] theme-accent">${rune.element}</span>
+                            <p class="text-[11px] theme-muted">${rune.meaning}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            showToast("Oráculo de Runas consultado.");
         }
 
         function renderFestivals() {
             const grid = document.getElementById('festivals-grid');
             grid.innerHTML = wheelFestivals.map(f => `
-                <div class="theme-inner border rounded-xl p-3">
-                    <span class="text-[10px] theme-accent font-semibold">${f.date}</span>
+                <div class="theme-inner border rounded-2xl p-4 space-y-1.5 shadow-sm">
+                    <span class="text-[10px] theme-accent font-semibold tracking-wider uppercase">${f.date}</span>
                     <h3 class="font-cinzel text-sm font-bold text-white">${f.name}</h3>
-                    <p class="text-[11px] theme-muted mt-1">${f.theme}</p>
+                    <p class="text-[11px] text-white/90 font-medium">${f.theme}</p>
+                    <p class="text-[10px] theme-muted italic mt-1">Ritual: ${f.ritual}</p>
                 </div>
             `).join('');
         }
@@ -400,47 +512,204 @@
         function renderHerbal() {
             const list = document.getElementById('tree-list');
             list.innerHTML = oghamAlphabet.map(o => `
-                <div class="theme-inner border rounded-xl p-3">
-                    <span class="text-lg theme-accent font-bold">${o.symbol} ${o.name}</span>
-                    <p class="text-[11px] text-white font-semibold">Árvore: ${o.tree}</p>
-                    <p class="text-[10px] theme-muted">${o.meaning}</p>
+                <div class="theme-inner border rounded-2xl p-4 flex items-start gap-3">
+                    <span class="text-3xl theme-accent font-bold">${o.symbol}</span>
+                    <div>
+                        <h4 class="font-cinzel text-sm font-bold text-white">${o.name} <span class="text-xs theme-accent font-normal">(${o.tree})</span></h4>
+                        <p class="text-[11px] text-white/90 mt-0.5"><strong>Erva/Fitoterapia:</strong> ${o.herb}</p>
+                        <p class="text-[10px] theme-muted mt-1">${o.meaning}</p>
+                    </div>
                 </div>
             `).join('');
         }
 
-        function drawOghamCard(count) {
-            const container = document.getElementById('ogham-card');
-            const card = oghamAlphabet[Math.floor(Math.random() * oghamAlphabet.length)];
-            container.innerHTML = `
-                <span class="text-5xl theme-accent font-bold my-1">${card.symbol}</span>
-                <h3 class="font-cinzel text-base font-bold text-white">${card.name} (${card.tree})</h3>
-                <p class="text-xs theme-muted mt-2">${card.meaning}</p>
-            `;
-        }
-
+        // --- BÚSSOLA ---
         function initCompass() {
-            showModal("Bússola", "Sensores de orientação ativados com sucesso.");
+            if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', function(event) {
+                    let alpha = event.alpha;
+                    if (alpha !== null) {
+                        document.getElementById('compass-needle').style.transform = `rotate(${alpha}deg)`;
+                        document.getElementById('compass-status').innerText = `Orientação ativa: ${Math.round(alpha)}°`;
+                    }
+                }, true);
+                showToast("Bússola ativada com sensores.");
+            } else {
+                showToast("Orientação não suportada neste dispositivo.");
+            }
         }
 
+        // --- RITUAIS E AWEN ---
+        function registerAwenPractice() {
+            const text = `\n[${new Date().toLocaleDateString()}] Prática OBOD: Invocação da Awen (/ \\ \\) realizada com sucesso. Foco nos elementos Fogo, Ar e Água.`;
+            const journal = document.getElementById('journal-input');
+            journal.value += text;
+            autoSaveJournal();
+            showToast("Prática de Awen registada no Diário!");
+        }
+
+        function saveRitualTemplate() {
+            const title = document.getElementById('rit-title').value;
+            const intent = document.getElementById('rit-intent').value;
+            const elem = document.getElementById('rit-elem').value;
+            const words = document.getElementById('rit-words').value;
+
+            if(!title) {
+                showToast("Por favor, indique o título do ritual.");
+                return;
+            }
+
+            const ritualText = `\n\n--- RITUAL: ${title.toUpperCase()} ---\nData: ${new Date().toLocaleDateString()}\nElemento: ${elem}\nIntenção: ${intent}\nEncerramento: ${words}\n------------------------------------------`;
+            const journal = document.getElementById('journal-input');
+            journal.value += ritualText;
+            autoSaveJournal();
+            showToast("Ritual guardado no Diário com sucesso!");
+            switchTab('journal');
+        }
+
+        // --- DIÁRIO & PERSISTÊNCIA ---
+        let saveTimeout;
+        function autoSaveJournal() {
+            const content = document.getElementById('journal-input').value;
+            localStorage.setItem('druid_journal_content', content);
+            document.getElementById('save-status').innerText = "Guardado às " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        function loadJournal() {
+            const saved = localStorage.getItem('druid_journal_content');
+            if(saved) {
+                document.getElementById('journal-input').value = saved;
+            }
+        }
+
+        function clearJournal() {
+            if(confirm("Tem certeza que deseja limpar todo o conteúdo do diário?")) {
+                document.getElementById('journal-input').value = '';
+                localStorage.removeItem('druid_journal_content');
+                showToast("Diário limpo.");
+            }
+        }
+
+        function exportJournalTXT() {
+            const content = document.getElementById('journal-input').value;
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `diario-druidico-${new Date().toISOString().slice(0,10)}.txt`;
+            a.click();
+            showToast("Diário exportado em TXT.");
+        }
+
+        function exportBackupJSON() {
+            const data = {
+                journal: document.getElementById('journal-input').value,
+                theme: localStorage.getItem('druid_app_theme'),
+                exportDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup-caminho-druidico-${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            showToast("Backup JSON criado.");
+        }
+
+        function importBackupJSON(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if(data.journal) {
+                        document.getElementById('journal-input').value = data.journal;
+                        autoSaveJournal();
+                    }
+                    if(data.theme) {
+                        changeTheme(data.theme);
+                    }
+                    showToast("Backup importado com sucesso!");
+                } catch(err) {
+                    showToast("Erro ao ler o ficheiro JSON.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- WEB AUDIO & RESPIRAÇÃO ---
         let audioCtx = null, noiseNode = null;
         function toggleAmbientSound(type) {
             stopAmbientSound();
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const bufferSize = audioCtx.sampleRate * 2;
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-            noiseNode = audioCtx.createBufferSource();
-            noiseNode.buffer = buffer;
-            noiseNode.loop = true;
-            noiseNode.connect(audioCtx.destination);
-            noiseNode.start(0);
-            showModal("Áudio Ativo", "Som ambiente em execução.");
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const bufferSize = audioCtx.sampleRate * 2;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+                
+                noiseNode = audioCtx.createBufferSource();
+                noiseNode.buffer = buffer;
+                noiseNode.loop = true;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = type === 'rain' ? 'lowpass' : 'bandpass';
+                filter.frequency.value = type === 'rain' ? 600 : 350;
+
+                noiseNode.connect(filter);
+                filter.connect(audioCtx.destination);
+                noiseNode.start(0);
+                showToast(`Reproduzindo som de ${type === 'rain' ? 'Chuva' : 'Vento'}.`);
+            } catch(e) {
+                showToast("Áudio bloqueado pelo navegador. Interaja primeiro.");
+            }
         }
 
         function stopAmbientSound() {
             if (noiseNode) { noiseNode.stop(); noiseNode.disconnect(); noiseNode = null; }
             if (audioCtx) { audioCtx.close(); audioCtx = null; }
+        }
+
+        let breathInterval = null, isBreathing = false;
+        function toggleBreathing() {
+            const btn = document.getElementById('btn-breath-toggle');
+            const action = document.getElementById('breath-action');
+            const timer = document.getElementById('breath-timer');
+            const circle = document.getElementById('breath-circle');
+
+            if (isBreathing) {
+                clearInterval(breathInterval);
+                isBreathing = false;
+                btn.innerText = "Iniciar Ciclo de Respiração";
+                action.innerText = "Preparar";
+                timer.innerText = "4";
+                circle.style.transform = "scale(1)";
+                return;
+            }
+
+            isBreathing = true;
+            btn.innerText = "Parar Exercício";
+            let phase = 0; // 0: Inalar, 1: Segurar, 2: Exalar
+            let count = 4;
+
+            function runBreath() {
+                if(count > 0) {
+                    timer.innerText = count;
+                    count--;
+                } else {
+                    phase = (phase + 1) % 3;
+                    if(phase === 0) { action.innerText = "Inalar (Ar)"; count = 4; circle.style.transform = "scale(1.25)"; }
+                    else if(phase === 1) { action.innerText = "Segurar (Fogo)"; count = 4; circle.style.transform = "scale(1.25)"; }
+                    else if(phase === 2) { action.innerText = "Exalar (Água)"; count = 4; circle.style.transform = "scale(1)"; }
+                    timer.innerText = count;
+                }
+            }
+
+            action.innerText = "Inalar (Ar)";
+            circle.style.transform = "scale(1.25)";
+            breathInterval = setInterval(runBreath, 1000);
+            showToast("Exercício de respiração Awen iniciado.");
         }
     </script>
 </body>
