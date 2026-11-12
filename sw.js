@@ -1,4 +1,4 @@
-const CACHE_NAME = 'caminho-druidico-pro-v4';
+const CACHE_NAME = 'caminho-druidico-pro-v5';
 const assetsToCache = [
   './index.html',
   './style.css',
@@ -8,6 +8,7 @@ const assetsToCache = [
   'https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600&display=swap'
 ];
 
+self.assert_installed = true;
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)

@@ -61,7 +61,7 @@ const tarotDeck = [
         number: "III", name: "A Grande Mãe da Terra (A Imperatriz)", 
         pixelArt: "👑🌾🦅", 
         artDesc: "Rainha coroada com flores e trigo, trono musgoso, falcão dourado e frutos.", 
-        meaning: "Fertilidadade, abundância da natureza, ciclos da Roda do Ano e amor incondicional." 
+        meaning: "Fertilidade, abundância da natureza, ciclos da Roda do Ano e amor incondicional." 
     },
     { 
         number: "IV", name: "O Pai de Todos (O Imperador)", 
@@ -142,7 +142,7 @@ function showToast(message) {
 }
 
 function changeTheme(themeName) {
-    document.getElementById('app-body').className = `${themeName} min-h-screen flex flex-col lg:flex-row`;
+    document.getElementById('app-body').className = `${themeName} min-h-screen flex flex-col lg:flex-row pb-16 lg:pb-0`;
     localStorage.setItem('druid_app_theme', themeName);
     const deskSel = document.getElementById('theme-selector-desktop');
     const mobSel = document.getElementById('theme-selector-mobile');
@@ -160,6 +160,12 @@ function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
     
+    // Atualizar botões bottom nav mobile
+    document.querySelectorAll('nav.fixed button').forEach(btn => {
+        btn.classList.remove('text-[var(--text-accent)]');
+        btn.classList.add('theme-muted');
+    });
+
     document.getElementById(`tab-${tabId}`).classList.remove('hidden');
     const deskBtn = document.getElementById(`desk-nav-${tabId}`);
     const mobBtn = document.getElementById(`mob-nav-${tabId}`);
@@ -261,7 +267,7 @@ function drawTarotCards(count) {
                 <div class="pixel-card rounded-2xl p-5 flex flex-col items-center text-center space-y-3 shadow-xl">
                     ${count === 3 ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">${labels[i]}</span>` : ''}
                     <div class="text-xs text-amber-300 font-bold tracking-widest">ARCANO ${card.number}</div>
-                    <div class="text-4xl py-2 bg-[var(--bg-inner)] w-full rounded-xl border border-[var(--border-color)]">${card.pixelArt}</div>
+                    <div class="text-4xl py-3 bg-[var(--bg-inner)] w-full rounded-xl border border-[var(--border-color)]">${card.pixelArt}</div>
                     <h3 class="font-cinzel text-sm font-bold text-white">${card.name}</h3>
                     <p class="text-[11px] theme-accent italic">${card.artDesc}</p>
                     <p class="text-xs theme-muted leading-relaxed">${card.meaning}</p>

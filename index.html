@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Caminho Druídico">
 </head>
-<body id="app-body" class="min-h-screen flex flex-col lg:flex-row">
+<body id="app-body" class="min-h-screen flex flex-col lg:flex-row pb-16 lg:pb-0">
 
     <!-- SIDEBAR DESKTOP -->
     <aside class="hidden lg:flex lg:flex-col lg:w-72 lg:fixed lg:inset-y-0 bg-[var(--bg-header)] border-r border-[var(--border-color)] z-40 shadow-2xl">
@@ -151,6 +151,25 @@
         </nav>
     </header>
 
+    <!-- BARRA DE NAVEGAÇÃO INFERIOR MOBILE (UI APERFEIÇOADA) -->
+    <nav class="lg:hidden fixed bottom-0 inset-x-0 bg-[var(--bg-header)]/95 backdrop-blur-md border-t border-[var(--border-color)] z-50 flex items-center justify-around py-2.5 px-2 shadow-2xl text-[10px]">
+        <button onclick="switchTab('oracle')" id="bot-nav-oracle" class="flex flex-col items-center gap-1 text-[var(--text-accent)] font-semibold transition">
+            <span class="text-base">ᚁ</span><span>Ogham</span>
+        </button>
+        <button onclick="switchTab('tarot')" id="bot-nav-tarot" class="flex flex-col items-center gap-1 theme-muted font-semibold transition">
+            <span class="text-base">🎴</span><span>Tarot</span>
+        </button>
+        <button onclick="switchTab('wheel')" id="bot-nav-wheel" class="flex flex-col items-center gap-1 theme-muted font-semibold transition">
+            <span class="text-base">🎡</span><span>Roda</span>
+        </button>
+        <button onclick="switchTab('compass')" id="bot-nav-compass" class="flex flex-col items-center gap-1 theme-muted font-semibold transition">
+            <span class="text-base">🧭</span><span>Bússola</span>
+        </button>
+        <button onclick="switchTab('journal')" id="bot-nav-journal" class="flex flex-col items-center gap-1 theme-muted font-semibold transition">
+            <span class="text-base">📖</span><span>Diário</span>
+        </button>
+    </nav>
+
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="flex-1 lg:pl-72 flex flex-col min-h-screen">
         
@@ -225,7 +244,7 @@
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl text-center">
                     <div class="max-w-xl mx-auto">
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">🎴 Tarot Mítico (Celta & Nórdico)</h2>
-                        <p class="text-xs lg:text-sm theme-muted mb-6">Consulte os Arcanos em Pixel Art inspirados na fusão mitológica celta e nórdica.</p>
+                        <p class="text-xs lg:text-sm theme-muted mb-6">Consulte os Arcanos em Pixel Art detalhado inspirados em Stable Diffusion e mitologia ancestral.</p>
                     </div>
 
                     <div id="tarot-display" class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
@@ -641,7 +660,7 @@
         </footer>
     </div>
 
-    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toast-container" class="fixed bottom-20 lg:bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <script src="script.js"></script>
 </body>
