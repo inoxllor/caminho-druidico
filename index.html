@@ -125,7 +125,6 @@
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-        /* Estilização do Símbolo Awen SVG */
         .awen-svg {
             width: 32px;
             height: 32px;
@@ -142,7 +141,6 @@
     <!-- SIDEBAR DESKTOP -->
     <aside class="hidden lg:flex lg:flex-col lg:w-72 lg:fixed lg:inset-y-0 bg-[var(--bg-header)] border-r border-[var(--border-color)] z-40 shadow-2xl">
         <div class="p-6 border-b border-[var(--border-color)] flex items-center gap-3.5">
-            <!-- SÍMBOLO AWEN SVG VETORIAL -->
             <svg class="awen-svg" viewBox="0 0 100 100">
                 <line x1="25" y1="85" x2="40" y2="20" />
                 <line x1="50" y1="85" x2="50" y2="35" />
@@ -181,9 +179,12 @@
                 <span class="text-base w-5 text-center">🧭</span> Bússola & Portais GPS
             </button>
 
-            <div class="text-[10px] uppercase tracking-widest theme-muted opacity-50 px-3 pt-4 pb-1">Prática & Registo</div>
+            <div class="text-[10px] uppercase tracking-widest theme-muted opacity-50 px-3 pt-4 pb-1">Prática & Comunidade</div>
             <button onclick="switchTab('obod')" id="desk-nav-obod" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
                 <span class="text-base w-5 text-center">🌿</span> Graus OBOD & Awen
+            </button>
+            <button onclick="switchTab('orgs')" id="desk-nav-orgs" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+                <span class="text-base w-5 text-center">🌐</span> Organizações & Links
             </button>
             <button onclick="switchTab('podcasts')" id="desk-nav-podcasts" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
                 <span class="text-base w-5 text-center">🎙️</span> Druidcast & Áudio
@@ -263,6 +264,7 @@
             <button onclick="switchTab('compass')" id="mob-nav-compass" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🧭 Bússola</button>
             <button onclick="switchTab('wheel')" id="mob-nav-wheel" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎡 Roda do Ano</button>
             <button onclick="switchTab('obod')" id="mob-nav-obod" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌿 OBOD</button>
+            <button onclick="switchTab('orgs')" id="mob-nav-orgs" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌐 Organizações</button>
             <button onclick="switchTab('triads')" id="mob-nav-triads" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🔺 Tríades</button>
             <button onclick="switchTab('podcasts')" id="mob-nav-podcasts" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎙️ Podcasts</button>
             <button onclick="switchTab('ritual')" id="mob-nav-ritual" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">📜 Rituais</button>
@@ -440,6 +442,66 @@
                         <h3 class="font-cinzel text-lg font-bold theme-title">Invocação da Awen</h3>
                         <p class="text-xs lg:text-sm theme-muted leading-relaxed max-w-lg mx-auto">Entoe <strong class="theme-accent">AH-OO-WEN</strong> em três expirações profundas, canalizando Fogo, Ar e Água através do símbolo sagrado Awen.</p>
                         <button onclick="registerAwenPractice()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs lg:text-sm py-3 px-6 rounded-xl transition shadow cursor-pointer mt-2">Registar Prática de Awen no Diário</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ORGANIZAÇÕES & LINKS SUGERIDOS (NOVO SEPARADOR) -->
+            <section id="tab-orgs" class="tab-content hidden space-y-6">
+                <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl space-y-6 max-w-4xl mx-auto">
+                    <div class="text-center space-y-1">
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🌐 Organizações Druídicas & Comunidade</h2>
+                        <p class="text-xs lg:text-sm theme-muted">Explore portais oficiais, ordens internacionais e recursos formativos de referência mundial.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- OBOD -->
+                        <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
+                            <div class="space-y-1.5">
+                                <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Ordem Principal</span>
+                                <h3 class="font-cinzel text-base font-bold text-white">OBOD (Order of Bards, Ovates and Druids)</h3>
+                                <p class="text-xs theme-muted leading-relaxed">A maior e mais ativa ordem druídica internacional, fundada por Ross Nichols. Oferece cursos por correspondência em Bardo, Ovate e Druida.</p>
+                            </div>
+                            <a href="https://druidry.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-[var(--btn-primary)] hover:opacity-90 text-white font-semibold text-xs py-2.5 px-4 rounded-xl transition shadow">
+                                <span>Visitar Site Oficial OBOD</span> ↗
+                            </a>
+                        </div>
+
+                        <!-- Druidcast -->
+                        <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
+                            <div class="space-y-1.5">
+                                <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Podcast Oficial</span>
+                                <h3 class="font-cinzel text-base font-bold text-white">Druidcast (OBOD Podcast)</h3>
+                                <p class="text-xs theme-muted leading-relaxed">O podcast oficial da OBOD conduzido por Damh the Bard, repleto de música celta, entrevistas inspiradoras e reflexões espirituais.</p>
+                            </div>
+                            <a href="https://druidry.org/resources/druidcast" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 theme-card hover:border-[var(--text-accent)] text-white font-semibold text-xs py-2.5 px-4 rounded-xl border border-[var(--border-color)] transition">
+                                <span>Ouvir Druidcast</span> ↗
+                            </a>
+                        </div>
+
+                        <!-- AODA -->
+                        <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
+                            <div class="space-y-1.5">
+                                <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Ordem Norte-Americana</span>
+                                <h3 class="font-cinzel text-base font-bold text-white">AODA (Ancient Order of Druids in America)</h3>
+                                <p class="text-xs theme-muted leading-relaxed">Ordem focada no ecodruidismo, sustentabilidade, magia natural e desenvolvimento pessoal através da conexão com a floresta.</p>
+                            </div>
+                            <a href="https://aoda.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 theme-card hover:border-[var(--text-accent)] text-white font-semibold text-xs py-2.5 px-4 rounded-xl border border-[var(--border-color)] transition">
+                                <span>Visitar AODA</span> ↗
+                            </a>
+                        </div>
+
+                        <!-- The Order of Bards Ovates and Druids (Europa / Global) -->
+                        <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
+                            <div class="space-y-1.5">
+                                <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Recursos & Comunidade</span>
+                                <h3 class="font-cinzel text-base font-bold text-white">The Druid Network (TDN)</h3>
+                                <p class="text-xs theme-muted leading-relaxed">Organização educativa sem fins lucrativos dedicada a promover o druidismo como religião viva e filosofia ecológica na sociedade contemporânea.</p>
+                            </div>
+                            <a href="https://druidnetwork.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 theme-card hover:border-[var(--text-accent)] text-white font-semibold text-xs py-2.5 px-4 rounded-xl border border-[var(--border-color)] transition">
+                                <span>Visitar The Druid Network</span> ↗
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
