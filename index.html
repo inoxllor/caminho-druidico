@@ -149,7 +149,7 @@
             </svg>
             <div>
                 <h1 class="font-cinzel text-lg font-bold theme-title tracking-wider leading-tight">CAMINHO DRUÍDICO</h1>
-                <p class="text-[10px] theme-accent uppercase tracking-widest mt-0.5">Pro Ultimate • OBOD</p>
+                <p class="text-[10px] theme-accent uppercase tracking-widest mt-0.5">Pro Ultimate</p>
             </div>
         </div>
 
@@ -181,13 +181,10 @@
 
             <div class="text-[10px] uppercase tracking-widest theme-muted opacity-50 px-3 pt-4 pb-1">Prática & Comunidade</div>
             <button onclick="switchTab('obod')" id="desk-nav-obod" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
-                <span class="text-base w-5 text-center">🌿</span> Graus OBOD & Awen
+                <span class="text-base w-5 text-center">🌿</span> Graus & OBOD
             </button>
             <button onclick="switchTab('orgs')" id="desk-nav-orgs" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
                 <span class="text-base w-5 text-center">🌐</span> Organizações & Links
-            </button>
-            <button onclick="switchTab('podcasts')" id="desk-nav-podcasts" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
-                <span class="text-base w-5 text-center">🎙️</span> Druidcast & Áudio
             </button>
             <button onclick="switchTab('ritual')" id="desk-nav-ritual" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
                 <span class="text-base w-5 text-center">📜</span> Criador de Rituais
@@ -208,8 +205,8 @@
                     <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 bg-[#FFDD00] hover:bg-[#ffea5c] text-slate-950 font-bold text-[11px] py-2 px-2.5 rounded-xl shadow transition">
                         <span>☕</span> Coffee
                     </a>
-                    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=inoxllor@gmail.com&item_name=Apoio+Caminho+Druidico+Pro&currency_code=EUR" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 bg-[#0070BA] hover:bg-[#0082d9] text-white font-bold text-[11px] py-2 px-2.5 rounded-xl shadow transition">
-                        <span>💙</span> PayPal
+                    <a href="mailto:inoxllor+bard@gmail.com" class="flex items-center justify-center gap-1.5 theme-inner hover:border-[var(--text-accent)] border border-[var(--border-color)] theme-title font-semibold text-[11px] py-2 px-2.5 rounded-xl shadow transition">
+                        <span>✉️</span> Email
                     </a>
                 </div>
             </div>
@@ -244,8 +241,8 @@
                 </div>
             </div>
             <div class="flex items-center gap-1.5">
-                <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" title="Buy Me a Coffee" class="bg-[#FFDD00] text-slate-950 font-bold text-xs px-2 py-1.5 rounded-lg shadow">☕</a>
-                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=inoxllor@gmail.com&item_name=Apoio+Caminho+Druidico+Pro&currency_code=EUR" target="_blank" rel="noopener noreferrer" title="Doar via PayPal" class="bg-[#0070BA] text-white font-bold text-xs px-2 py-1.5 rounded-lg shadow">💙</a>
+                <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" title="Buy Me a Coffee" class="bg-[#FFDD00] text-slate-950 font-bold text-xs px-2.5 py-1.5 rounded-lg shadow">☕</a>
+                <a href="mailto:inoxllor+bard@gmail.com" title="Contacto por Email" class="theme-inner border border-[var(--border-color)] theme-title font-bold text-xs px-2.5 py-1.5 rounded-lg shadow">✉️</a>
                 <select id="theme-selector-mobile" onchange="changeTheme(this.value)" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs text-[var(--text-title)] rounded-lg px-2 py-1.5 focus:outline-none">
                     <option value="theme-night">🌙</option>
                     <option value="theme-forest">🌲</option>
@@ -263,10 +260,9 @@
             <button onclick="switchTab('astro')" id="mob-nav-astro" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌕 Lua & Sol</button>
             <button onclick="switchTab('compass')" id="mob-nav-compass" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🧭 Bússola</button>
             <button onclick="switchTab('wheel')" id="mob-nav-wheel" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎡 Roda do Ano</button>
-            <button onclick="switchTab('obod')" id="mob-nav-obod" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌿 OBOD</button>
+            <button onclick="switchTab('obod')" id="mob-nav-obod" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌿 Graus & OBOD</button>
             <button onclick="switchTab('orgs')" id="mob-nav-orgs" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌐 Organizações</button>
             <button onclick="switchTab('triads')" id="mob-nav-triads" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🔺 Tríades</button>
-            <button onclick="switchTab('podcasts')" id="mob-nav-podcasts" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎙️ Podcasts</button>
             <button onclick="switchTab('ritual')" id="mob-nav-ritual" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">📜 Rituais</button>
             <button onclick="switchTab('journal')" id="mob-nav-journal" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">📖 Diário</button>
             <button onclick="switchTab('grounding')" id="mob-nav-grounding" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎧 Som</button>
@@ -414,12 +410,12 @@
                 </div>
             </section>
 
-            <!-- GRAUS OBOD -->
+            <!-- GRAUS & OBOD -->
             <section id="tab-obod" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl space-y-6 max-w-3xl mx-auto">
                     <div class="text-center space-y-1">
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🌿 Três Graus Druídicos (OBOD)</h2>
-                        <p class="text-xs lg:text-sm theme-muted">A jornada evolutiva da Ordem dos Bardos, Ovates e Druidas.</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🌿 Três Graus Tradicionais (OBOD)</h2>
+                        <p class="text-xs lg:text-sm theme-muted">A estrutura evolutiva formativa da Order of Bards, Ovates and Druids.</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
@@ -437,6 +433,16 @@
                         </div>
                     </div>
 
+                    <!-- CAIXA DE LINK OFICIAL OBOD -->
+                    <div class="theme-inner border rounded-2xl p-6 text-center space-y-3 shadow-inner flex flex-col items-center justify-center">
+                        <span class="text-xs uppercase tracking-widest theme-accent font-semibold">Organização Internacional de Referência</span>
+                        <h3 class="font-cinzel text-lg font-bold theme-title">Order of Bards, Ovates and Druids (OBOD)</h3>
+                        <p class="text-xs theme-muted leading-relaxed max-w-md mx-auto">Visite o portal oficial para conhecer os cursos por correspondência, meditações e recursos globais da ordem.</p>
+                        <a href="https://druidry.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold text-xs py-3 px-6 rounded-xl transition shadow cursor-pointer mt-1">
+                            <span>Aceder ao Site Oficial OBOD</span> ↗
+                        </a>
+                    </div>
+
                     <div class="theme-inner border rounded-2xl p-6 lg:p-8 text-center space-y-3 shadow-inner flex flex-col items-center justify-center">
                         <svg class="awen-svg !w-14 !h-14 my-2" viewBox="0 0 100 100"><line x1="25" y1="85" x2="40" y2="20" /><line x1="50" y1="85" x2="50" y2="35" /><line x1="75" y1="85" x2="60" y2="20" /><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" /></svg>
                         <h3 class="font-cinzel text-lg font-bold theme-title">Invocação da Awen</h3>
@@ -446,7 +452,7 @@
                 </div>
             </section>
 
-            <!-- ORGANIZAÇÕES & LINKS SUGERIDOS (NOVO SEPARADOR) -->
+            <!-- ORGANIZAÇÕES & LINKS SUGERIDOS -->
             <section id="tab-orgs" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl space-y-6 max-w-4xl mx-auto">
                     <div class="text-center space-y-1">
@@ -467,18 +473,6 @@
                             </a>
                         </div>
 
-                        <!-- Druidcast -->
-                        <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
-                            <div class="space-y-1.5">
-                                <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Podcast Oficial</span>
-                                <h3 class="font-cinzel text-base font-bold text-white">Druidcast (OBOD Podcast)</h3>
-                                <p class="text-xs theme-muted leading-relaxed">O podcast oficial da OBOD conduzido por Damh the Bard, repleto de música celta, entrevistas inspiradoras e reflexões espirituais.</p>
-                            </div>
-                            <a href="https://druidry.org/resources/druidcast" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 theme-card hover:border-[var(--text-accent)] text-white font-semibold text-xs py-2.5 px-4 rounded-xl border border-[var(--border-color)] transition">
-                                <span>Ouvir Druidcast</span> ↗
-                            </a>
-                        </div>
-
                         <!-- AODA -->
                         <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
                             <div class="space-y-1.5">
@@ -491,7 +485,7 @@
                             </a>
                         </div>
 
-                        <!-- The Order of Bards Ovates and Druids (Europa / Global) -->
+                        <!-- The Druid Network -->
                         <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
                             <div class="space-y-1.5">
                                 <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Recursos & Comunidade</span>
@@ -520,35 +514,6 @@
                     </div>
 
                     <button onclick="drawRandomTriad()" class="bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold py-3.5 px-8 rounded-xl text-xs lg:text-sm shadow-lg transition cursor-pointer">Sortear Nova Tríade</button>
-                </div>
-            </section>
-
-            <!-- DRUIDCAST & PODCASTS -->
-            <section id="tab-podcasts" class="tab-content hidden space-y-6">
-                <div class="theme-card border rounded-3xl p-6 lg:p-8 shadow-2xl space-y-6 max-w-3xl mx-auto">
-                    <div class="text-center space-y-1">
-                        <h2 class="font-cinzel text-2xl font-bold theme-title">🎙️ Druidcast & Meditações em Áudio</h2>
-                        <p class="text-xs lg:text-sm theme-muted">Sessões de conversa, entrevistas e ensinamentos inspirados na comunidade global.</p>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div class="theme-inner border rounded-2xl p-4 flex items-center justify-between gap-4">
-                            <div>
-                                <span class="text-[10px] theme-accent font-semibold uppercase">Episódio 227</span>
-                                <h4 class="font-cinzel text-sm font-bold text-white">A Força das Árvores Anciãs e o Ciclo do Teixo</h4>
-                                <p class="text-xs theme-muted mt-0.5">Duração: 45 min • Entrevista com curadores OBOD</p>
-                            </div>
-                            <button onclick="showToast('A reproduzir episódio de áudio...')" class="bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold text-xs py-2.5 px-5 rounded-xl shadow cursor-pointer whitespace-nowrap">▶ Ouvir</button>
-                        </div>
-                        <div class="theme-inner border rounded-2xl p-4 flex items-center justify-between gap-4">
-                            <div>
-                                <span class="text-[10px] theme-accent font-semibold uppercase">Episódio Especial</span>
-                                <h4 class="font-cinzel text-sm font-bold text-white">Meditação Guiada para o Solstício</h4>
-                                <p class="text-xs theme-muted mt-0.5">Duração: 20 min • Prática de Grounding Awen</p>
-                            </div>
-                            <button onclick="showToast('A reproduzir meditação guiada...')" class="bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold text-xs py-2.5 px-5 rounded-xl shadow cursor-pointer whitespace-nowrap">▶ Ouvir</button>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -673,8 +638,8 @@
                 <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-[#FFDD00] hover:bg-[#ffea5c] text-slate-950 font-bold text-xs py-2 px-4 rounded-xl shadow transition">
                     <span>☕</span> Buy Me a Coffee
                 </a>
-                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=inoxllor@gmail.com&item_name=Apoio+Caminho+Druidico+Pro&currency_code=EUR" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-[#0070BA] hover:bg-[#0082d9] text-white font-bold text-xs py-2 px-4 rounded-xl shadow transition">
-                    <span>💙</span> Apoiar via PayPal
+                <a href="mailto:inoxllor+bard@gmail.com" class="flex items-center gap-2 theme-inner hover:border-[var(--text-accent)] border border-[var(--border-color)] theme-title font-bold text-xs py-2 px-4 rounded-xl shadow transition">
+                    <span>✉️</span> Contactar por Email
                 </a>
             </div>
         </footer>
@@ -970,7 +935,7 @@
         }
 
         function registerAwenPractice() {
-            const text = `\n[${new Date().toLocaleDateString()}] Prática OBOD: Invocação da Awen realizada. Foco em Fogo, Ar e Água.`;
+            const text = `\n[${new Date().toLocaleDateString()}] Prática Druídica: Invocação da Awen realizada. Foco em Fogo, Ar e Água.`;
             document.getElementById('journal-input').value += text;
             autoSaveJournal();
             showToast("Prática de Awen registada no Diário!");
