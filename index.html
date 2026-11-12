@@ -125,12 +125,12 @@
             </div>
         </div>
 
-        <!-- Barra de Navegação Horizontal com Scroll Suave -->
+        <!-- Barra de Navegação Horizontal -->
         <nav class="flex overflow-x-auto px-4 pb-2.5 pt-1 gap-2 text-xs font-semibold border-t border-[var(--border-color)] bg-[var(--bg-header)] scrollbar-none">
             <button onclick="switchTab('oracle')" id="nav-oracle" class="tab-btn active px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] whitespace-nowrap">ᚁ Ogham</button>
             <button onclick="switchTab('runes')" id="nav-runes" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">ᚠ Runas</button>
             <button onclick="switchTab('astro')" id="nav-astro" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌕 Lua & Sol</button>
-            <button onclick="switchTab('compass')" id="nav-compass" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🧭 Bússola</button>
+            <button onclick="switchTab('compass')" id="nav-compass" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🧭 Bússola & GPS</button>
             <button onclick="switchTab('wheel')" id="nav-wheel" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎡 Roda do Ano</button>
             <button onclick="switchTab('obod')" id="nav-obod" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌿 Graus OBOD</button>
             <button onclick="switchTab('ritual')" id="nav-ritual" class="tab-btn px-3.5 py-2 rounded-xl theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">📜 Rituais</button>
@@ -205,24 +205,33 @@
             </div>
         </section>
 
-        <!-- BÚSSOLA CARDINAL -->
+        <!-- BÚSSOLA & GEOLOCALIZAÇÃO -->
         <section id="tab-compass" class="tab-content hidden space-y-5">
-            <div class="theme-card border rounded-3xl p-6 shadow-2xl text-center max-w-md mx-auto space-y-5">
+            <div class="theme-card border rounded-3xl p-6 shadow-2xl text-center max-w-lg mx-auto space-y-5">
                 <div>
-                    <h2 class="font-cinzel text-xl font-bold theme-title">🧭 Bússola dos Quatro Quartos</h2>
-                    <p class="text-xs theme-muted mt-1">Alinhe-se com os portais elementais sagrados.</p>
+                    <h2 class="font-cinzel text-xl font-bold theme-title">🧭 Bússola & Portais Elementais</h2>
+                    <p class="text-xs theme-muted mt-1">Alinhe-se com os quadrantes sagrados com base na sua posição GPS.</p>
                 </div>
 
-                <div class="relative w-52 h-52 mx-auto theme-inner border-4 border-dashed rounded-full flex items-center justify-center shadow-2xl">
-                    <div id="compass-needle" class="absolute w-2 h-40 bg-gradient-to-t from-red-500 to-indigo-500 rounded-full transition-transform duration-300"></div>
-                    <div class="absolute top-2 text-xs font-bold text-amber-300">NORTE</div>
-                    <div class="absolute bottom-2 text-xs font-bold text-blue-400">OESTE</div>
-                    <div class="absolute left-2 text-xs font-bold text-amber-200">LESTE</div>
-                    <div class="absolute right-2 text-xs font-bold text-red-400">SUL</div>
+                <div id="gps-info" class="theme-inner border rounded-xl p-3 text-[11px] theme-accent">
+                    📍 Coordenadas GPS: A aguardar permissão...
                 </div>
 
-                <button onclick="initCompass()" class="bg-[var(--btn-primary)] text-white font-bold py-2.5 px-6 rounded-xl text-xs shadow-lg transition">Ativar Bússola Magnética</button>
-                <p id="compass-status" class="text-[11px] theme-accent italic">Aguardando calibração do dispositivo...</p>
+                <div class="relative w-56 h-56 mx-auto theme-inner border-4 border-dashed rounded-full flex items-center justify-center shadow-2xl overflow-hidden">
+                    <div id="compass-needle" class="absolute w-2.5 h-44 bg-gradient-to-t from-red-500 via-amber-400 to-indigo-500 rounded-full transition-transform duration-150"></div>
+                    <div class="absolute top-2 text-xs font-bold text-amber-300">NORTE (Terra)</div>
+                    <div class="absolute bottom-2 text-xs font-bold text-blue-400">OESTE (Água)</div>
+                    <div class="absolute left-2 text-xs font-bold text-amber-200">LESTE (Ar)</div>
+                    <div class="absolute right-2 text-xs font-bold text-red-400">SUL (Fogo)</div>
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <span id="heading-deg" class="text-xs font-bold theme-title bg-[var(--bg-card)]/80 px-2 py-1 rounded-lg">0°</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-2 justify-center">
+                    <button onclick="initGeoAndCompass()" class="bg-[var(--btn-primary)] text-white font-bold py-2.5 px-5 rounded-xl text-xs shadow-lg transition">Ativar GPS & Sensores</button>
+                </div>
+                <p id="compass-status" class="text-[11px] theme-accent italic">Toque em ativar para calibrar a orientação física.</p>
             </div>
         </section>
 
@@ -345,10 +354,19 @@
 
     </main>
 
-    <!-- Sistema de Notificações Toast Moderno -->
+    <!-- Sistema de Notificações Toast -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
+        // --- SERVICE WORKER REGISTRATION ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker ativo:', reg.scope))
+                    .catch(err => console.log('Erro no Service Worker:', err));
+            });
+        }
+
         // --- BASES DE DADOS ---
         const oghamAlphabet = [
             { symbol: "ᚁ", name: "Beith", tree: "Bétula", herb: "Camomila / Bétula", meaning: "Novos começos, purificação e renovação." },
@@ -379,7 +397,6 @@
             { name: "Mabon", date: "21 Setembro", theme: "Equinócio de Outono", ritual: "Gratidão e partilha de frutos." }
         ];
 
-        // --- INICIALIZAÇÃO ---
         window.addEventListener('DOMContentLoaded', () => {
             loadSavedTheme();
             calculateAstronomy();
@@ -388,7 +405,6 @@
             loadJournal();
         });
 
-        // --- NOTIFICAÇÕES TOAST ---
         function showToast(message) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -403,12 +419,11 @@
             }, 3000);
         }
 
-        // --- TEMA ---
         function changeTheme(themeName) {
             document.getElementById('app-body').className = `${themeName} min-h-screen pb-20 select-none`;
             localStorage.setItem('druid_app_theme', themeName);
             document.getElementById('theme-selector').value = themeName;
-            showToast("Tema visual atualizado com sucesso.");
+            showToast("Tema visual atualizado.");
         }
 
         function loadSavedTheme() {
@@ -416,7 +431,6 @@
             changeTheme(saved);
         }
 
-        // --- NAVEGAÇÃO ENTRE ABAS ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -426,7 +440,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- ASTRONOMIA ---
         function calculateAstronomy() {
             const now = new Date();
             const year = now.getFullYear(), month = now.getMonth() + 1, day = now.getDate();
@@ -461,7 +474,6 @@
             document.getElementById('sunset-time').innerText = "Pôr: 18:45";
         }
 
-        // --- ORÁCULOS & RODA ---
         function drawOghamCard(count) {
             const container = document.getElementById('ogham-card');
             const shuffled = [...oghamAlphabet].sort(() => 0.5 - Math.random()).slice(0, count);
@@ -523,27 +535,55 @@
             `).join('');
         }
 
-        // --- BÚSSOLA ---
-        function initCompass() {
+        let userLatitude = null, userLongitude = null;
+        function initGeoAndCompass() {
+            if (navigator.geolocation) {
+                showToast("A obter coordenadas GPS...");
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLatitude = position.coords.latitude;
+                        userLongitude = position.coords.longitude;
+                        document.getElementById('gps-info').innerHTML = `📍 Lat: ${userLatitude.toFixed(4)}° | Lon: ${userLongitude.toFixed(4)}°`;
+                        showToast("Posição GPS obtida!");
+                    },
+                    (error) => {
+                        document.getElementById('gps-info').innerHTML = `📍 GPS indisponível`;
+                        showToast("GPS não disponível. A usar sensores.");
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            }
+
             if (window.DeviceOrientationEvent) {
-                window.addEventListener('deviceorientation', function(event) {
-                    let alpha = event.alpha;
-                    if (alpha !== null) {
-                        document.getElementById('compass-needle').style.transform = `rotate(${alpha}deg)`;
-                        document.getElementById('compass-status').innerText = `Orientação ativa: ${Math.round(alpha)}°`;
-                    }
-                }, true);
-                showToast("Bússola ativada com sensores.");
-            } else {
-                showToast("Orientação não suportada neste dispositivo.");
+                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    DeviceOrientationEvent.requestPermission().then(response => {
+                        if (response === 'granted') startCompassListener();
+                    }).catch(console.error);
+                } else {
+                    startCompassListener();
+                }
             }
         }
 
-        // --- RITUAIS E AWEN ---
+        function startCompassListener() {
+            window.addEventListener('deviceorientation', (event) => {
+                let heading = null;
+                if (event.webkitCompassHeading !== undefined) {
+                    heading = event.webkitCompassHeading;
+                } else if (event.alpha !== null) {
+                    heading = 360 - event.alpha;
+                }
+                if (heading !== null) {
+                    document.getElementById('compass-needle').style.transform = `rotate(${-heading}deg)`;
+                    document.getElementById('heading-deg').innerText = `${Math.round(heading)}°`;
+                }
+            }, true);
+            showToast("Bússola ativada.");
+        }
+
         function registerAwenPractice() {
-            const text = `\n[${new Date().toLocaleDateString()}] Prática OBOD: Invocação da Awen (/ \\ \\) realizada com sucesso. Foco nos elementos Fogo, Ar e Água.`;
-            const journal = document.getElementById('journal-input');
-            journal.value += text;
+            const text = `\n[${new Date().toLocaleDateString()}] Prática OBOD: Invocação da Awen (/ \\ \\) realizada. Foco em Fogo, Ar e Água.`;
+            document.getElementById('journal-input').value += text;
             autoSaveJournal();
             showToast("Prática de Awen registada no Diário!");
         }
@@ -555,20 +595,17 @@
             const words = document.getElementById('rit-words').value;
 
             if(!title) {
-                showToast("Por favor, indique o título do ritual.");
+                showToast("Indique o título do ritual.");
                 return;
             }
 
             const ritualText = `\n\n--- RITUAL: ${title.toUpperCase()} ---\nData: ${new Date().toLocaleDateString()}\nElemento: ${elem}\nIntenção: ${intent}\nEncerramento: ${words}\n------------------------------------------`;
-            const journal = document.getElementById('journal-input');
-            journal.value += ritualText;
+            document.getElementById('journal-input').value += ritualText;
             autoSaveJournal();
-            showToast("Ritual guardado no Diário com sucesso!");
+            showToast("Ritual guardado no Diário!");
             switchTab('journal');
         }
 
-        // --- DIÁRIO & PERSISTÊNCIA ---
-        let saveTimeout;
         function autoSaveJournal() {
             const content = document.getElementById('journal-input').value;
             localStorage.setItem('druid_journal_content', content);
@@ -577,9 +614,7 @@
 
         function loadJournal() {
             const saved = localStorage.getItem('druid_journal_content');
-            if(saved) {
-                document.getElementById('journal-input').value = saved;
-            }
+            if(saved) document.getElementById('journal-input').value = saved;
         }
 
         function clearJournal() {
@@ -627,18 +662,15 @@
                         document.getElementById('journal-input').value = data.journal;
                         autoSaveJournal();
                     }
-                    if(data.theme) {
-                        changeTheme(data.theme);
-                    }
-                    showToast("Backup importado com sucesso!");
+                    if(data.theme) changeTheme(data.theme);
+                    showToast("Backup importado!");
                 } catch(err) {
-                    showToast("Erro ao ler o ficheiro JSON.");
+                    showToast("Erro ao ler ficheiro JSON.");
                 }
             };
             reader.readAsText(file);
         }
 
-        // --- WEB AUDIO & RESPIRAÇÃO ---
         let audioCtx = null, noiseNode = null;
         function toggleAmbientSound(type) {
             stopAmbientSound();
@@ -662,7 +694,7 @@
                 noiseNode.start(0);
                 showToast(`Reproduzindo som de ${type === 'rain' ? 'Chuva' : 'Vento'}.`);
             } catch(e) {
-                showToast("Áudio bloqueado pelo navegador. Interaja primeiro.");
+                showToast("Áudio bloqueado pelo navegador.");
             }
         }
 
@@ -690,7 +722,7 @@
 
             isBreathing = true;
             btn.innerText = "Parar Exercício";
-            let phase = 0; // 0: Inalar, 1: Segurar, 2: Exalar
+            let phase = 0;
             let count = 4;
 
             function runBreath() {
