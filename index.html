@@ -2,19 +2,297 @@
 <html lang="pt" class="theme-night">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Caminho Druídico Pro Ultimate • Edição OBOD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Caminho Druídico Pro Ultimate • Edição OBOD & Tarot Nórdico 16-Bit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+    <style>
+/* ============================================================
+   CAMINHO DRUÍDICO PRO ULTIMATE • ESTILOS & 7 TEMAS VISUAIS
+   ============================================================ */
+
+:root, .theme-night {
+    --bg-body: #090d16;
+    --bg-header: #0d1322;
+    --bg-card: #121a2d;
+    --bg-inner: #0b111e;
+    --border-color: #1e293b;
+    --border-hover: #6366f1;
+    --text-title: #f8fafc;
+    --text-accent: #818cf8;
+    --text-muted: #94a3b8;
+    --btn-primary: #4f46e5;
+}
+
+.theme-forest {
+    --bg-body: #07120c;
+    --bg-header: #0b1c13;
+    --bg-card: #10261a;
+    --bg-inner: #08150e;
+    --border-color: #1b3b29;
+    --border-hover: #10b981;
+    --text-title: #ecfdf5;
+    --text-accent: #34d399;
+    --text-muted: #a7f3d0;
+    --btn-primary: #059669;
+}
+
+.theme-stone {
+    --bg-body: #121316;
+    --bg-header: #181a1e;
+    --bg-card: #202329;
+    --bg-inner: #14161a;
+    --border-color: #32363f;
+    --border-hover: #9ca3af;
+    --text-title: #f3f4f6;
+    --text-accent: #d1d5db;
+    --text-muted: #9ca3af;
+    --btn-primary: #4b5563;
+}
+
+.theme-autumn {
+    --bg-body: #160e08;
+    --bg-header: #21150c;
+    --bg-card: #2b1c10;
+    --bg-inner: #181009;
+    --border-color: #452c19;
+    --border-hover: #f59e0b;
+    --text-title: #fffbeb;
+    --text-accent: #fbbf24;
+    --text-muted: #fde68a;
+    --btn-primary: #d97706;
+}
+
+.theme-mist {
+    --bg-body: #0b141a;
+    --bg-header: #101d26;
+    --bg-card: #162733;
+    --bg-inner: #0c171f;
+    --border-color: #233c4d;
+    --border-hover: #38bdf8;
+    --text-title: #f0f9ff;
+    --text-accent: #7dd3fc;
+    --text-muted: #bae6fd;
+    --btn-primary: #0284c7;
+}
+
+.theme-gold {
+    --bg-body: #171307;
+    --bg-header: #221c0b;
+    --bg-card: #2d250f;
+    --bg-inner: #1a1508;
+    --border-color: #4a3d18;
+    --border-hover: #eab308;
+    --text-title: #fefce8;
+    --text-accent: #facc15;
+    --text-muted: #fef08a;
+    --btn-primary: #ca8a04;
+}
+
+.theme-lantern {
+    --bg-body: #090202;
+    --bg-header: #120404;
+    --bg-card: #1a0606;
+    --bg-inner: #0d0303;
+    --border-color: #3f1111;
+    --border-hover: #dc2626;
+    --text-title: #fecaca;
+    --text-accent: #f87171;
+    --text-muted: #fca5a5;
+    --btn-primary: #991b1b;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-title);
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.font-cinzel {
+    font-family: 'Cinzel', serif;
+}
+
+.theme-card {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.theme-inner {
+    background-color: var(--bg-inner);
+    border-color: var(--border-color);
+}
+
+.theme-title {
+    color: var(--text-title);
+}
+
+.theme-accent {
+    color: var(--text-accent);
+}
+
+.theme-muted {
+    color: var(--text-muted);
+}
+
+.awen-svg {
+    width: 34px;
+    height: 34px;
+    stroke: var(--text-accent);
+    stroke-width: 6;
+    stroke-linecap: round;
+    fill: none;
+}
+
+.nav-item.active, .bot-nav-item.active {
+    border-color: var(--text-accent) !important;
+    color: var(--text-accent) !important;
+    background-color: rgba(129, 140, 248, 0.12);
+}
+
+.wheel-node {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    transform-origin: center;
+}
+
+.wheel-node:hover circle {
+    stroke-width: 4;
+    filter: drop-shadow(0 0 6px var(--text-accent));
+}
+
+.breath-animation {
+    transition: transform 4s ease-in-out, border-color 1s ease;
+}
+
+/* ============================================================
+   CARTAS DE TAROT PIXEL ART 16-BIT (3D FLIP)
+   ============================================================ */
+.tarot-flip-wrapper {
+    width: 196px;
+    height: 290px;
+    perspective: 1000px;
+    margin: 0 auto;
+}
+
+.tarot-flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.tarot-flip-wrapper.is-flipped .tarot-flip-inner {
+    transform: rotateY(180deg);
+}
+
+.tarot-card-back, .tarot-card-front {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 14px;
+    border: 3px solid #eab308;
+    background: #0b1120;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.65), inset 0 0 0 2px #1e293b;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.tarot-card-front {
+    transform: rotateY(180deg);
+}
+
+.card-header-pixel, .card-footer-pixel {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px;
+    line-height: 1.35;
+    color: #fef08a;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid #854d0e;
+    padding: 5px 4px;
+    border-radius: 6px;
+    text-align: center;
+    letter-spacing: 0.4px;
+}
+
+.card-art-box {
+    flex: 1;
+    margin: 6px 0;
+    border: 2px solid #334155;
+    border-radius: 8px;
+    background: #060913;
+    overflow: hidden;
+}
+
+.pixel-svg {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* ============================================================
+   AJUSTES v2: acessibilidade, legibilidade e movimento
+   ============================================================ */
+:focus-visible { outline: 2px solid var(--text-accent); outline-offset: 2px; border-radius: 8px; }
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--btn-primary); color: #fff; padding: 8px 14px; border-radius: 10px; font-size: 13px; }
+.skip-link:focus { left: 8px; }
+html body .text-\[9px\] { font-size: 10.5px !important; }
+html body .text-\[10px\] { font-size: 11.5px !important; }
+html body .text-\[11px\] { font-size: 12px !important; }
+.tab-in { animation: tabIn .28s ease-out; }
+@keyframes tabIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)); }
+.nav-item[aria-current="page"], .bot-nav-item[aria-current="page"] { font-weight: 700; }
+#sound-bar { position: fixed; left: 12px; bottom: 76px; z-index: 55; display: none; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 14px; font-size: 12px; background: var(--bg-header); border: 1px solid var(--border-hover); box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+@media (min-width: 1024px) { #sound-bar { left: 304px; bottom: 20px; } }
+#sound-bar select, #sound-bar button { background: var(--bg-inner); border: 1px solid var(--border-color); border-radius: 8px; padding: 3px 8px; color: var(--text-title); cursor: pointer; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .tarot-flip-inner { transition: none !important; }
+}
+
+/* ============================================================
+   TEMA CLARO: LUZ DE MUSGO
+   ============================================================ */
+.theme-parchment {
+    --bg-body: #eceee6; --bg-header: #e1e6d9; --bg-card: #fafbf6; --bg-inner: #f0f2e9;
+    --border-color: #c5cdb8; --border-hover: #2f6b45; --text-title: #17261c;
+    --text-accent: #2b6342; --text-muted: #475549; --btn-primary: #2f6b45;
+    color-scheme: light;
+}
+.theme-parchment .nav-item.active, .theme-parchment .bot-nav-item.active { background-color: rgba(47, 107, 69, 0.12); }
+.theme-parchment .shadow-2xl, .theme-parchment .shadow-xl { box-shadow: 0 10px 30px rgba(40, 55, 40, 0.12); }
+.theme-parchment .text-white:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: var(--text-title) !important; }
+.theme-parchment .text-amber-200:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #7a4e00 !important; }
+.theme-parchment .text-amber-300:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #7a4e00 !important; }
+.theme-parchment .text-amber-400:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #7a4e00 !important; }
+.theme-parchment .text-sky-300:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #0b5f8a !important; }
+.theme-parchment .text-emerald-200:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #1c5e3c !important; }
+.theme-parchment .text-emerald-300:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #1c5e3c !important; }
+.theme-parchment .text-red-200:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #9b1c1c !important; }
+.theme-parchment .text-red-300:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #9b1c1c !important; }
+.theme-parchment .text-red-400:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #9b1c1c !important; }
+.theme-parchment .text-indigo-200:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #3730a3 !important; }
+.theme-parchment .text-indigo-300:not([class*="bg-["]):not([class*="-950"]):not([class*="-900"]):not([class*="bg-emerald"]):not([class*="bg-amber-6"]):not([class*="bg-red-6"]):not([class*="bg-slate"]) { color: #3730a3 !important; }
+
+/* ============================================================
+   TAROT v3
+   ============================================================ */
+.tarot-meaning { animation: tabIn .25s ease-out; }
+#tarot-reveal-bar button { background: var(--bg-inner); border: 1px solid var(--border-color); border-radius: 10px; padding: 6px 12px; cursor: pointer; }
+    </style>
     <meta name="theme-color" content="#090d16">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Caminho Druídico">
 </head>
 <body id="app-body" class="theme-night min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
+    <a href="#main" class="skip-link" onclick="event.preventDefault();document.getElementById('main').focus()">Saltar para o conteúdo</a>
 
     <!-- SIDEBAR DESKTOP -->
     <aside class="hidden lg:flex lg:flex-col lg:w-72 lg:fixed lg:inset-y-0 bg-[var(--bg-header)] border-r border-[var(--border-color)] z-40 shadow-2xl">
@@ -33,47 +311,50 @@
 
         <nav class="flex-1 overflow-y-auto p-4 space-y-1.5 text-xs font-semibold">
             <div class="text-[10px] uppercase tracking-widest theme-muted opacity-50 px-3 pt-1 pb-1">Oráculos & Sabedoria</div>
-            <button onclick="switchTab('oracle')" id="desk-nav-oracle" class="nav-item active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] text-left">
+            <button onclick="switchTab('oracle')" id="desk-nav-oracle" class="nav-item active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] text-left cursor-pointer">
                 <span class="text-base w-5 text-center">ᚁ</span> Oráculo de Ogham
             </button>
-            <button onclick="switchTab('tarot')" id="desk-nav-tarot" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
-                <span class="text-base w-5 text-center">🃏</span> Tarot 78 Cartas Pixel Art
+            <button onclick="switchTab('tarot')" id="desk-nav-tarot" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
+                <span class="text-base w-5 text-center">🃏</span> Tarot Nórdico 16-Bit (78)
             </button>
-            <button onclick="switchTab('runes')" id="desk-nav-runes" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('runes')" id="desk-nav-runes" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">ᚠ</span> Runas Elder Futhark
             </button>
-            <button onclick="switchTab('herbal')" id="desk-nav-herbal" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('herbal')" id="desk-nav-herbal" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">🌲</span> Herbal & Árvores (20 Ogham)
             </button>
-            <button onclick="switchTab('triads')" id="desk-nav-triads" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('triads')" id="desk-nav-triads" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">🔺</span> Tríades de Barddas
             </button>
 
             <div class="text-[10px] uppercase tracking-widest theme-muted opacity-50 px-3 pt-4 pb-1">Ciclos & Orientação</div>
-            <button onclick="switchTab('astro')" id="desk-nav-astro" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('astro')" id="desk-nav-astro" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">🌕</span> Astronomia & Mês Celta
             </button>
-            <button onclick="switchTab('wheel')" id="desk-nav-wheel" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('wheel')" id="desk-nav-wheel" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">🎡</span> A Roda do Ano
             </button>
-            <button onclick="switchTab('compass')" id="desk-nav-compass" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('compass')" id="desk-nav-compass" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">🧭</span> Bússola & Portais GPS
             </button>
 
             <div class="text-[10px] uppercase tracking-widest theme-muted opacity-50 px-3 pt-4 pb-1">Prática & Grove OBOD</div>
-            <button onclick="switchTab('obod')" id="desk-nav-obod" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('obod')" id="desk-nav-obod" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">🌿</span> Graus & OBOD
             </button>
-            <button onclick="switchTab('ritual')" id="desk-nav-ritual" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('altar')" id="desk-nav-altar" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
+                <span class="text-base w-5 text-center">🔥</span> Altar Digital Interativo
+            </button>
+            <button onclick="switchTab('ritual')" id="desk-nav-ritual" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">📜</span> Liturgia & Rituais Grove
             </button>
-            <button onclick="switchTab('journal')" id="desk-nav-journal" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('journal')" id="desk-nav-journal" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">📖</span> Diário, Poesia & PIN
             </button>
-            <button onclick="switchTab('grounding')" id="desk-nav-grounding" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('grounding')" id="desk-nav-grounding" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">🎧</span> Nemeton, Awen & Som
             </button>
-            <button onclick="switchTab('orgs')" id="desk-nav-orgs" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left">
+            <button onclick="switchTab('orgs')" id="desk-nav-orgs" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl theme-inner border border-[var(--border-color)] theme-muted text-left cursor-pointer">
                 <span class="text-base w-5 text-center">🌐</span> Organizações & Links
             </button>
         </nav>
@@ -105,6 +386,7 @@
                     <option value="theme-mist">🌫️ Neblina Mística</option>
                     <option value="theme-gold">✨ Solstício Dourado</option>
                     <option value="theme-lantern">🏮 Lanterna Ritual (Noturno)</option>
+                    <option value="theme-parchment">☀️ Luz de Musgo (Claro)</option>
                 </select>
             </div>
         </div>
@@ -126,9 +408,9 @@
                 </div>
             </div>
             <div class="flex items-center gap-1.5">
-                <button onclick="downloadProjectZip()" title="Descarregar ZIP para GitHub" class="bg-emerald-600 text-white font-bold text-xs px-2.5 py-1.5 rounded-lg shadow">📦</button>
-                <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" title="Buy Me a Coffee" class="bg-[#FFDD00] text-slate-950 font-bold text-xs px-2.5 py-1.5 rounded-lg shadow">☕</a>
-                <select id="theme-selector-mobile" onchange="changeTheme(this.value)" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs text-[var(--text-title)] rounded-lg px-2 py-1.5 focus:outline-none">
+                <button onclick="downloadProjectZip()" title="Descarregar ZIP" class="bg-emerald-600 text-white font-bold text-xs px-2.5 py-1.5 rounded-lg shadow cursor-pointer">📦</button>
+                <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" title="Coffee" class="bg-[#FFDD00] text-slate-950 font-bold text-xs px-2.5 py-1.5 rounded-lg shadow">☕</a>
+                <select id="theme-selector-mobile" onchange="changeTheme(this.value)" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs text-[var(--text-title)] rounded-lg px-2 py-1.5 focus:outline-none cursor-pointer">
                     <option value="theme-night">🌙</option>
                     <option value="theme-forest">🌲</option>
                     <option value="theme-stone">🗿</option>
@@ -136,46 +418,52 @@
                     <option value="theme-mist">🌫️</option>
                     <option value="theme-gold">✨</option>
                     <option value="theme-lantern">🏮</option>
+                    <option value="theme-parchment">☀️</option>
                 </select>
             </div>
         </div>
 
         <nav class="flex overflow-x-auto px-4 pb-2.5 pt-1 gap-1.5 text-xs font-semibold border-t border-[var(--border-color)] bg-[var(--bg-header)]">
-            <button onclick="switchTab('oracle')" id="mob-nav-oracle" class="nav-item active px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] whitespace-nowrap">ᚁ Ogham</button>
-            <button onclick="switchTab('tarot')" id="mob-nav-tarot" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🃏 Tarot 78</button>
-            <button onclick="switchTab('runes')" id="mob-nav-runes" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">ᚠ Runas</button>
-            <button onclick="switchTab('astro')" id="mob-nav-astro" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌕 Lua & Sol</button>
-            <button onclick="switchTab('compass')" id="mob-nav-compass" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🧭 Bússola</button>
-            <button onclick="switchTab('wheel')" id="mob-nav-wheel" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎡 Roda</button>
-            <button onclick="switchTab('obod')" id="mob-nav-obod" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌿 OBOD</button>
-            <button onclick="switchTab('ritual')" id="mob-nav-ritual" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">📜 Grove</button>
-            <button onclick="switchTab('journal')" id="mob-nav-journal" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">📖 Diário</button>
-            <button onclick="switchTab('grounding')" id="mob-nav-grounding" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🎧 Nemeton</button>
-            <button onclick="switchTab('triads')" id="mob-nav-triads" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🔺 Tríades</button>
-            <button onclick="switchTab('herbal')" id="mob-nav-herbal" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌲 Herbal</button>
-            <button onclick="switchTab('orgs')" id="mob-nav-orgs" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap">🌐 Links</button>
+            <button onclick="switchTab('oracle')" id="mob-nav-oracle" class="nav-item active px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] whitespace-nowrap cursor-pointer">ᚁ Ogham</button>
+            <button onclick="switchTab('tarot')" id="mob-nav-tarot" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🃏 Tarot 16-Bit</button>
+            <button onclick="switchTab('runes')" id="mob-nav-runes" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">ᚠ Runas</button>
+            <button onclick="switchTab('astro')" id="mob-nav-astro" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🌕 Lua & Sol</button>
+            <button onclick="switchTab('compass')" id="mob-nav-compass" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🧭 Bússola</button>
+            <button onclick="switchTab('wheel')" id="mob-nav-wheel" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🎡 Roda</button>
+            <button onclick="switchTab('obod')" id="mob-nav-obod" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🌿 OBOD</button>
+            <button onclick="switchTab('altar')" id="mob-nav-altar" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🔥 Altar</button>
+            <button onclick="switchTab('ritual')" id="mob-nav-ritual" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">📜 Grove</button>
+            <button onclick="switchTab('journal')" id="mob-nav-journal" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">📖 Diário</button>
+            <button onclick="switchTab('grounding')" id="mob-nav-grounding" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🎧 Nemeton</button>
+            <button onclick="switchTab('triads')" id="mob-nav-triads" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🔺 Tríades</button>
+            <button onclick="switchTab('herbal')" id="mob-nav-herbal" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🌲 Herbal</button>
+            <button onclick="switchTab('orgs')" id="mob-nav-orgs" class="nav-item px-3 py-1.5 rounded-lg theme-inner border border-[var(--border-color)] theme-muted whitespace-nowrap cursor-pointer">🌐 Links</button>
         </nav>
     </header>
 
-    <!-- BOTTOM NAVIGATION BAR MOBILE SINCRONIZADA -->
+    <!-- BOTTOM NAVIGATION BAR MOBILE -->
     <nav class="lg:hidden fixed bottom-0 inset-x-0 bg-[var(--bg-header)]/95 backdrop-blur-md border-t border-[var(--border-color)] z-50 px-2 py-1.5 flex justify-around items-center text-xs">
-        <button onclick="switchTab('oracle')" id="bot-nav-oracle" class="bot-nav-item active flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl transition">
+        <button onclick="switchTab('oracle')" id="bot-nav-oracle" class="bot-nav-item active flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl transition cursor-pointer">
             <span class="text-base">ᚁ</span>
             <span class="text-[9px] font-semibold">Ogham</span>
         </button>
-        <button onclick="switchTab('tarot')" id="bot-nav-tarot" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition">
+        <button onclick="switchTab('tarot')" id="bot-nav-tarot" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition cursor-pointer">
             <span class="text-base">🃏</span>
             <span class="text-[9px] font-semibold">Tarot</span>
         </button>
-        <button onclick="switchTab('wheel')" id="bot-nav-wheel" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition">
+        <button onclick="switchTab('wheel')" id="bot-nav-wheel" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition cursor-pointer">
             <span class="text-base">🎡</span>
             <span class="text-[9px] font-semibold">Roda</span>
         </button>
-        <button onclick="switchTab('grounding')" id="bot-nav-grounding" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition">
-            <span class="text-base">🎧</span>
-            <span class="text-[9px] font-semibold">Nemeton</span>
+        <button onclick="switchTab('compass')" id="bot-nav-compass" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition cursor-pointer">
+            <span class="text-base">🧭</span>
+            <span class="text-[9px] font-semibold">Bússola</span>
         </button>
-        <button onclick="switchTab('journal')" id="bot-nav-journal" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition">
+        <button onclick="switchTab('altar')" id="bot-nav-altar" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition cursor-pointer">
+            <span class="text-base">🔥</span>
+            <span class="text-[9px] font-semibold">Altar</span>
+        </button>
+        <button onclick="switchTab('journal')" id="bot-nav-journal" class="bot-nav-item flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-xl theme-muted transition cursor-pointer">
             <span class="text-base">📖</span>
             <span class="text-[9px] font-semibold">Diário</span>
         </button>
@@ -213,7 +501,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <button onclick="toggleLanternMode()" id="btn-lantern-toggle" title="Modo Lanterna Ritual (Preserva visão noturna ao ar livre)" class="theme-inner hover:border-red-500/60 border text-xs theme-title px-3 py-2 rounded-xl flex items-center gap-1.5 transition cursor-pointer">
+                <button onclick="toggleLanternMode()" id="btn-lantern-toggle" title="Modo Lanterna Ritual" class="theme-inner hover:border-red-500/60 border text-xs theme-title px-3 py-2 rounded-xl flex items-center gap-1.5 transition cursor-pointer">
                     <span>🏮</span> Lanterna
                 </button>
                 <button onclick="registerAwenPractice()" class="theme-inner hover:border-[var(--text-accent)] border text-xs theme-title px-3.5 py-2 rounded-xl flex items-center gap-2 transition cursor-pointer">
@@ -222,7 +510,7 @@
             </div>
         </div>
 
-        <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 lg:py-8 space-y-6">
+        <main id="main" tabindex="-1" class="flex-1 outline-none max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 lg:py-8 space-y-6">
 
             <!-- ORÁCULO OGHAM -->
             <section id="tab-oracle" class="tab-content space-y-6">
@@ -231,6 +519,8 @@
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">ᚁ Oráculo Sagrado de Ogham</h2>
                         <p class="text-xs lg:text-sm theme-muted mb-6">Conecte-se com os espíritos dos 20 Few (gravetos de árvores sagradas) da tradição celta.</p>
                     </div>
+
+                    <div id="daily-few" class="theme-inner border rounded-2xl p-4 text-left flex items-center gap-4 mb-4"></div>
 
                     <div id="ogham-card" class="theme-inner border rounded-2xl p-6 lg:p-8 my-4 min-h-[260px] flex flex-col items-center justify-center transition-all shadow-inner">
                         <span class="theme-accent opacity-60 text-xs lg:text-sm">Escolha o tipo de tiragem abaixo para revelar a mensagem dos Few</span>
@@ -248,76 +538,100 @@
                         <button onclick="drawOghamCard(5)" class="w-full theme-inner theme-title font-semibold py-3.5 px-4 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs tracking-wider cursor-pointer">5 Few (Roda Elemental)</button>
                     </div>
                 </div>
+                <details id="reading-history" class="theme-card border rounded-2xl p-4 text-left">
+                    <summary class="cursor-pointer text-sm font-semibold theme-title">Histórico de leituras <span id="history-count" class="theme-muted text-xs font-normal"></span></summary>
+                    <div id="history-list" class="mt-3 space-y-2 text-xs"></div>
+                    <button onclick="clearReadingLog()" class="mt-3 text-xs theme-muted underline cursor-pointer">Limpar histórico</button>
+                </details>
             </section>
 
-            <!-- BARALHO COMPLETO DE TAROT MÍTICO (78 CARTAS) -->
+            <!-- BARALHO DE TAROT NÓRDICO 16-BIT (78 CARTAS) -->
             <section id="tab-tarot" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl text-center">
                     <div class="max-w-2xl mx-auto">
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">🃏 Baralho Completo de Tarot Mítico (78 Cartas)</h2>
-                        <p class="text-xs lg:text-sm theme-muted mb-4">Explore os 22 Arcanos Maiores e 56 Arcanos Menores com sprites SVG pixel art individuais e alta variabilidade visual.</p>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] font-semibold tracking-widest uppercase mb-2">
+                            <span>⚔️</span> Edda Poética • Arte 16-Bit (32×32px)
+                        </div>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">🃏 Tarot da Mitologia Nórdica (78 Cartas)</h2>
+                        <p class="text-xs lg:text-sm theme-muted mb-4">22 Arcanos Maiores dos Deuses de Asgard &amp; Nove Mundos e 56 Arcanos Menores dos Naipes Nórdicos: <strong>Gungnir (Lanças)</strong>, <strong>Hidromel (Cálices)</strong>, <strong>Skofnung (Espadas)</strong> e <strong>Draupnir (Anéis)</strong>.</p>
                         
                         <div class="flex flex-wrap justify-center gap-2 mb-4">
-                            <button onclick="setTarotFilter('all')" id="filter-btn-all" class="bg-[var(--btn-primary)] text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition">Todo o Baralho (78)</button>
-                            <button onclick="setTarotFilter('major')" id="filter-btn-major" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition">Maiores (22)</button>
-                            <button onclick="setTarotFilter('wands')" id="filter-btn-wands" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition">🔥 Paus (14)</button>
-                            <button onclick="setTarotFilter('cups')" id="filter-btn-cups" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition">💧 Copas (14)</button>
-                            <button onclick="setTarotFilter('swords')" id="filter-btn-swords" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition">⚔️ Espadas (14)</button>
-                            <button onclick="setTarotFilter('pentacles')" id="filter-btn-pentacles" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition">🪙 Ouros (14)</button>
+                            <button onclick="setTarotFilter('all')" id="filter-btn-all" class="bg-[var(--btn-primary)] text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todo o Baralho (78)</button>
+                            <button onclick="setTarotFilter('major')" id="filter-btn-major" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">⚡ Asgard / Maiores (22)</button>
+                            <button onclick="setTarotFilter('wands')" id="filter-btn-wands" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">🔱 Lanças / Fogo (14)</button>
+                            <button onclick="setTarotFilter('cups')" id="filter-btn-cups" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">🍺 Hidromel / Água (14)</button>
+                            <button onclick="setTarotFilter('swords')" id="filter-btn-swords" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">⚔️ Espadas / Ar (14)</button>
+                            <button onclick="setTarotFilter('pentacles')" id="filter-btn-pentacles" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">💍 Draupnir / Terra (14)</button>
                         </div>
 
                         <div class="flex justify-center gap-2 mb-6">
-                            <button onclick="switchTarotMode('draw')" id="tarot-mode-draw" class="bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer">✨ Tiragem Oracular</button>
-                            <button onclick="switchTarotMode('gallery')" id="tarot-mode-gallery" class="theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer">🖼️ Galeria de Contemplação</button>
+                            <button onclick="switchTarotMode('draw')" id="tarot-mode-draw" class="bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer">✨ Tiragem das Nornas</button>
+                            <button onclick="switchTarotMode('gallery')" id="tarot-mode-gallery" class="theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer">🖼️ Grimório Pixel 16-Bit (78)</button>
                         </div>
                     </div>
 
-                    <div id="tarot-card-container" class="my-4 min-h-[420px] flex flex-col items-center justify-center transition-all">
-                        <div class="tarot-flip-wrapper is-flipped" onclick="this.classList.toggle('is-flipped')">
+                    <div id="tarot-search-wrap" class="hidden max-w-md mx-auto mb-3">
+                        <input id="tarot-search" type="search" oninput="setTarotQuery(this.value)" placeholder="Procurar carta, deus ou reino…" aria-label="Procurar carta" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs rounded-xl px-3 py-2">
+                    </div>
+
+                    <div id="tarot-card-container" class="my-4 min-h-[430px] flex flex-col items-center justify-center transition-all">
+                        <div class="tarot-flip-wrapper is-flipped cursor-pointer" onclick="this.classList.toggle('is-flipped')">
                             <div class="tarot-flip-inner">
                                 <div class="tarot-card-back pixel-card-vertical">
-                                    <div class="card-header-pixel">AWEN • 78 CARTAS</div>
+                                    <div class="card-header-pixel">YGGDRASIL • 16-BIT</div>
                                     <div class="card-art-box flex items-center justify-center">
-                                        <svg viewBox="0 0 32 32" class="w-32 h-32 pixel-svg">
-                                            <rect x="14" y="2" width="4" height="28" fill="#eab308"/>
-                                            <rect x="8" y="8" width="4" height="20" fill="#818cf8"/>
-                                            <rect x="4" y="16" width="4" height="12" fill="#6366f1"/>
-                                            <rect x="20" y="8" width="4" height="20" fill="#818cf8"/>
-                                            <rect x="24" y="16" width="4" height="12" fill="#6366f1"/>
-                                            <circle cx="16" cy="6" r="2" fill="#fef08a"/>
+                                        <svg viewBox="0 0 32 32" shape-rendering="crispEdges" class="w-36 h-36 pixel-svg">
+                                            <rect width="32" height="32" fill="#090d16"/>
+                                            <rect x="2" y="2" width="28" height="28" fill="none" stroke="#eab308" stroke-width="1"/>
+                                            <rect x="14" y="10" width="4" height="16" fill="#78350f"/>
+                                            <rect x="10" y="25" width="12" height="3" fill="#451a03"/>
+                                            <rect x="6" y="6" width="20" height="8" fill="#15803d"/>
+                                            <rect x="9" y="4" width="14" height="4" fill="#22c55e"/>
+                                            <rect x="15" y="12" width="2" height="12" fill="#38bdf8"/>
+                                            <circle cx="16" cy="8" r="2" fill="#fef08a"/>
                                         </svg>
                                     </div>
                                     <div class="card-footer-pixel">CLIQUE PARA VIRAR</div>
                                 </div>
                                 <div class="tarot-card-front pixel-card-vertical">
-                                    <div class="card-header-pixel">00 • O VIAJANTE</div>
+                                    <div class="card-header-pixel">00 • LOKI, O ANDARILHO</div>
                                     <div class="card-art-box flex items-center justify-center">
-                                        <svg viewBox="0 0 32 32" class="w-32 h-32 pixel-svg">
-                                            <rect x="4" y="4" width="24" height="24" fill="#090d16"/>
-                                            <rect x="10" y="6" width="12" height="10" fill="#34d399"/>
-                                            <rect x="8" y="16" width="16" height="12" fill="#10b981"/>
-                                            <rect x="26" y="2" width="2" height="28" fill="#d97706"/>
-                                            <rect x="6" y="8" width="4" height="4" fill="#f8fafc"/>
-                                            <circle cx="16" cy="11" r="2" fill="#065f46"/>
+                                        <svg viewBox="0 0 32 32" shape-rendering="crispEdges" class="w-36 h-36 pixel-svg">
+                                            <rect width="32" height="32" fill="#0f172a"/>
+                                            <rect x="9" y="3" width="2" height="6" fill="#facc15"/>
+                                            <rect x="21" y="3" width="2" height="6" fill="#facc15"/>
+                                            <rect x="11" y="7" width="10" height="3" fill="#eab308"/>
+                                            <rect x="11" y="10" width="10" height="7" fill="#fed7aa"/>
+                                            <rect x="13" y="12" width="2" height="2" fill="#10b981"/>
+                                            <rect x="17" y="12" width="2" height="2" fill="#10b981"/>
+                                            <rect x="8" y="17" width="16" height="12" fill="#065f46"/>
+                                            <rect x="12" y="17" width="8" height="12" fill="#10b981"/>
+                                            <rect x="24" y="11" width="4" height="5" fill="#f97316"/>
+                                            <rect x="25" y="9" width="2" height="3" fill="#fef08a"/>
                                         </svg>
                                     </div>
-                                    <div class="card-footer-pixel">TÍR NA NÓG</div>
+                                    <div class="card-footer-pixel">SALTO NO VAZIO (GINNUNGAGAP)</div>
                                 </div>
                             </div>
                         </div>
-                        <span class="theme-accent opacity-70 text-xs mt-5">Escolha uma tiragem (1, 3 ou 5 cartas) ou abra a galeria</span>
+                        <span class="theme-accent opacity-75 text-xs mt-5">Escolha uma tiragem (1, 3 ou 5 cartas) ou abra o Grimório Pixel 16-Bit</span>
                     </div>
 
                     <div id="tarot-save-bar" class="hidden mb-4">
                         <button onclick="saveLastReadingToJournal('tarot')" class="theme-inner hover:border-[var(--text-accent)] border text-xs theme-accent font-semibold py-2 px-4 rounded-xl transition cursor-pointer">
-                            📖 Guardar Leitura de Tarot no Diário
+                            📖 Guardar Leitura de Tarot Nórdico no Diário
                         </button>
                     </div>
 
+                    <div class="max-w-2xl mx-auto mt-6 text-left">
+                        <label for="tarot-question" class="text-xs theme-muted block mb-1">A sua pergunta (opcional)</label>
+                        <input id="tarot-question" type="text" maxlength="140" placeholder="O que preciso de compreender neste momento?" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs rounded-xl px-3 py-2.5">
+                    </div>
+
                     <div id="tarot-draw-actions" class="flex flex-col sm:flex-row gap-3 justify-center max-w-2xl mx-auto mt-6">
-                        <button onclick="drawTarotCard(1)" class="w-full bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold py-3.5 px-5 rounded-xl shadow-lg transition text-xs tracking-wider cursor-pointer">1 Carta (Conselho)</button>
-                        <button onclick="drawTarotCard(3)" class="w-full theme-inner theme-title font-semibold py-3.5 px-5 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs tracking-wider cursor-pointer">3 Cartas (Tríade Mítica)</button>
-                        <button onclick="drawTarotCard(5)" class="w-full theme-inner theme-title font-semibold py-3.5 px-5 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs tracking-wider cursor-pointer">5 Cartas (Cruz Céltica)</button>
+                        <button onclick="drawTarotCard(1)" class="w-full bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold py-3.5 px-5 rounded-xl shadow-lg transition text-xs tracking-wider cursor-pointer">1 Carta (Oráculo de Odin)</button>
+                        <button onclick="drawTarotCard(3)" class="w-full theme-inner theme-title font-semibold py-3.5 px-5 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs tracking-wider cursor-pointer">3 Cartas (Urd • Verdandi • Skuld)</button>
+                        <button onclick="drawTarotCard(5)" class="w-full theme-inner theme-title font-semibold py-3.5 px-5 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs tracking-wider cursor-pointer">5 Cartas (Cruz de Mjölnir)</button>
                     </div>
                 </div>
             </section>
@@ -390,42 +704,64 @@
                 </div>
             </section>
 
-            <!-- BÚSSOLA & GPS -->
+            <!-- BÚSSOLA & GPS ROTATIVA COM ELEMENTOS -->
             <section id="tab-compass" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl max-w-3xl mx-auto text-center space-y-6">
                     <div>
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🧭 Bússola & Portais Elementais</h2>
-                        <p class="text-xs lg:text-sm theme-muted mt-1">Alinhe-se com os quadrantes sagrados e atualize o cálculo solar local via GPS.</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🧭 Bússola & Portais Elementais Rotativos</h2>
+                        <p class="text-xs lg:text-sm theme-muted mt-1">O mostrador celta roda dinamicamente para orientar os pontos cardeais e os 4 elementos sagrados.</p>
                     </div>
 
                     <div id="gps-info" class="theme-inner border rounded-xl p-3.5 text-xs theme-accent max-w-md mx-auto shadow-inner">
-                        📍 Coordenadas GPS: A aguardar permissão...
+                        📍 GPS / Estado dos Sensores: A aguardar permissão...
                     </div>
 
-                    <div class="relative w-72 h-72 mx-auto theme-inner border-4 border-[var(--border-hover)] rounded-full flex items-center justify-center shadow-2xl overflow-hidden p-4">
-                        <svg class="absolute inset-0 w-full h-full opacity-40 pointer-events-none" viewBox="0 0 200 200">
-                            <circle cx="100" cy="100" r="90" fill="none" stroke="var(--text-accent)" stroke-width="1.5" stroke-dasharray="4 4" />
-                            <circle cx="100" cy="100" r="75" fill="none" stroke="var(--border-color)" stroke-width="1" />
-                        </svg>
+                    <!-- BÚSSOLA ROTATIVA (MOSTRADOR GIRA PARA O NORTE) -->
+                    <div class="relative w-72 h-72 mx-auto theme-inner border-4 border-[var(--border-hover)] rounded-full flex items-center justify-center shadow-2xl overflow-hidden p-2">
+                        
+                        <!-- Mostrador Giratório com Pontos e Elementos -->
+                        <div id="compass-dial" class="absolute inset-0 w-full h-full transition-transform duration-100 ease-out flex items-center justify-center pointer-events-none">
+                            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 300">
+                                <circle cx="150" cy="150" r="135" fill="none" stroke="var(--text-accent)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>
+                                <circle cx="150" cy="150" r="115" fill="none" stroke="var(--border-color)" stroke-width="1"/>
+                                
+                                <!-- Eixos N-S e E-W -->
+                                <line x1="150" y1="15" x2="150" y2="285" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="2 4"/>
+                                <line x1="15" y1="150" x2="285" y2="150" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="2 4"/>
 
-                        <div id="compass-needle" class="absolute w-4 h-56 transition-transform duration-150 flex items-center justify-center">
-                            <div class="w-2 h-28 bg-gradient-to-t from-transparent via-red-500 to-red-600 rounded-t-full -translate-y-14 shadow-lg"></div>
-                            <div class="w-2 h-28 bg-gradient-to-b from-transparent via-indigo-500 to-indigo-700 rounded-b-full translate-y-14 shadow-lg"></div>
-                            <div class="absolute w-5 h-5 rounded-full bg-[var(--bg-card)] border-2 border-[var(--text-accent)] shadow"></div>
+                                <!-- Textos e Elementos nos Pontos Cardeais -->
+                                <!-- NORTE (0°) - TERRA -->
+                                <text x="150" y="32" text-anchor="middle" font-size="14" font-weight="bold" fill="#f59e0b" font-family="Cinzel, serif">N</text>
+                                <text x="150" y="44" text-anchor="middle" font-size="8" fill="#fef08a" font-family="Inter, sans-serif">TERRA</text>
+
+                                <!-- LESTE (90°) - AR -->
+                                <text x="268" y="154" text-anchor="middle" font-size="14" font-weight="bold" fill="#38bdf8" font-family="Cinzel, serif">E</text>
+                                <text x="268" y="166" text-anchor="middle" font-size="8" fill="#bae6fd" font-family="Inter, sans-serif">AR</text>
+
+                                <!-- SUL (180°) - FOGO -->
+                                <text x="150" y="278" text-anchor="middle" font-size="14" font-weight="bold" fill="#ef4444" font-family="Cinzel, serif">S</text>
+                                <text x="150" y="266" text-anchor="middle" font-size="8" fill="#fca5a5" font-family="Inter, sans-serif">FOGO</text>
+
+                                <!-- OESTE (270°) - ÁGUA -->
+                                <text x="32" y="154" text-anchor="middle" font-size="14" font-weight="bold" fill="#3b82f6" font-family="Cinzel, serif">W</text>
+                                <text x="32" y="166" text-anchor="middle" font-size="8" fill="#93c5fd" font-family="Inter, sans-serif">ÁGUA</text>
+                            </svg>
                         </div>
 
-                        <span class="absolute top-3 text-xs font-bold text-amber-300 tracking-wider">NORTE</span>
-                        <span class="absolute bottom-3 text-xs font-bold text-blue-400 tracking-wider">OESTE</span>
-                        <span class="absolute left-3 text-xs font-bold text-amber-200 tracking-wider">LESTE</span>
-                        <span class="absolute right-3 text-xs font-bold text-red-400 tracking-wider">SUL</span>
+                        <!-- Agulha Fixa Estática no Topo do Ecrã -->
+                        <div class="absolute top-3 w-3 h-10 bg-red-600 rounded-t-full shadow-lg z-20 pointer-events-none"></div>
 
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <span id="heading-deg" class="text-xs font-bold theme-title bg-[var(--bg-card)]/95 px-3 py-1 rounded-full border border-[var(--border-color)] shadow">0°</span>
+                        <!-- Centro Digital com Azimute -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                            <div class="bg-[var(--bg-card)]/95 px-4 py-2 rounded-2xl border border-[var(--border-color)] shadow-xl text-center">
+                                <span id="heading-deg" class="text-lg font-bold theme-title tracking-wider block">0°</span>
+                                <span id="heading-cardinal" class="text-[9px] uppercase tracking-widest theme-accent block">Norte</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="flex flex-wrap justify-center gap-3">
-                        <button onclick="initGeoAndCompass()" class="bg-[var(--btn-primary)] hover:opacity-95 text-white font-bold py-3 px-8 rounded-xl text-xs lg:text-sm shadow-lg transition cursor-pointer">Ativar GPS & Sensores</button>
+                        <button onclick="initGeoAndCompass()" class="bg-[var(--btn-primary)] hover:opacity-95 text-white font-bold py-3 px-8 rounded-xl text-xs lg:text-sm shadow-lg transition cursor-pointer">Ativar GPS & Giroscópio</button>
                     </div>
 
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left pt-2">
@@ -434,7 +770,7 @@
                             <p class="text-[11px] theme-muted leading-snug">Estabilidade, corpo, ancestralidade e recursos materiais.</p>
                         </div>
                         <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
-                            <span class="text-[10px] uppercase font-bold text-amber-200">Leste (Ar)</span>
+                            <span class="text-[10px] uppercase font-bold text-sky-300">Leste (Ar)</span>
                             <p class="text-[11px] theme-muted leading-snug">Mente, inspiração poética, alento e novos começos.</p>
                         </div>
                         <div class="theme-inner border rounded-2xl p-3.5 space-y-1 shadow-sm">
@@ -445,6 +781,47 @@
                             <span class="text-[10px] uppercase font-bold text-blue-400">Oeste (Água)</span>
                             <p class="text-[11px] theme-muted leading-snug">Emoção, cura profunda, intuição e mundo espiritual.</p>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ALTAR DIGITAL INTERATIVO -->
+            <section id="tab-altar" class="tab-content hidden space-y-6">
+                <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl max-w-3xl mx-auto space-y-6 text-center">
+                    <div>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🔥 Altar Digital Interativo</h2>
+                        <p class="text-xs lg:text-sm theme-muted mt-1">Disponha simbolicamente os quatro elementos e acenda a chama do foco e da intenção.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div onclick="toggleAltarElement('earth')" id="altar-elem-earth" class="theme-inner border-2 border-[var(--border-color)] hover:border-amber-400 rounded-2xl p-5 cursor-pointer transition space-y-2">
+                            <span class="text-3xl">🪨</span>
+                            <h4 class="font-cinzel text-xs font-bold text-amber-300">Terra (Norte)</h4>
+                            <span id="altar-status-earth" class="text-[9px] uppercase tracking-wider theme-muted block">Inativo</span>
+                        </div>
+                        <div onclick="toggleAltarElement('air')" id="altar-elem-air" class="theme-inner border-2 border-[var(--border-color)] hover:border-sky-400 rounded-2xl p-5 cursor-pointer transition space-y-2">
+                            <span class="text-3xl">🪶</span>
+                            <h4 class="font-cinzel text-xs font-bold text-sky-300">Ar (Leste)</h4>
+                            <span id="altar-status-air" class="text-[9px] uppercase tracking-wider theme-muted block">Inativo</span>
+                        </div>
+                        <div onclick="toggleAltarElement('fire')" id="altar-elem-fire" class="theme-inner border-2 border-[var(--border-color)] hover:border-red-400 rounded-2xl p-5 cursor-pointer transition space-y-2">
+                            <span class="text-3xl">🕯️</span>
+                            <h4 class="font-cinzel text-xs font-bold text-red-400">Fogo (Sul)</h4>
+                            <span id="altar-status-fire" class="text-[9px] uppercase tracking-wider theme-muted block">Inativo</span>
+                        </div>
+                        <div onclick="toggleAltarElement('water')" id="altar-elem-water" class="theme-inner border-2 border-[var(--border-color)] hover:border-blue-400 rounded-2xl p-5 cursor-pointer transition space-y-2">
+                            <span class="text-3xl">💧</span>
+                            <h4 class="font-cinzel text-xs font-bold text-blue-400">Água (Oeste)</h4>
+                            <span id="altar-status-water" class="text-[9px] uppercase tracking-wider theme-muted block">Inativo</span>
+                        </div>
+                    </div>
+
+                    <div class="theme-inner border rounded-2xl p-6 space-y-3 text-left">
+                        <h3 class="font-cinzel text-sm font-bold theme-title">Intenção do Altar de Hoje</h3>
+                        <input id="altar-intent-input" type="text" placeholder="Ex: Gratidão pela clareza e força no trabalho..." class="w-full theme-card border rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[var(--text-accent)]">
+                        <button onclick="saveAltarToJournal()" class="w-full bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold py-3 rounded-xl transition shadow text-xs cursor-pointer">
+                            📖 Consagrar e Registar Altar no Diário
+                        </button>
                     </div>
                 </div>
             </section>
@@ -566,16 +943,6 @@
                             <span>Aceder ao Site Oficial OBOD</span> ↗
                         </a>
                     </div>
-
-                    <div class="theme-inner border rounded-2xl p-6 lg:p-8 text-center space-y-3 shadow-inner flex flex-col items-center justify-center">
-                        <svg class="awen-svg !w-14 !h-14 my-2" viewBox="0 0 100 100"><line x1="25" y1="85" x2="40" y2="20" /><line x1="50" y1="85" x2="50" y2="35" /><line x1="75" y1="85" x2="60" y2="20" /><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none" /></svg>
-                        <h3 class="font-cinzel text-lg font-bold theme-title">Invocação da Awen</h3>
-                        <p class="text-xs lg:text-sm theme-muted leading-relaxed max-w-lg mx-auto">Entoe <strong class="theme-accent">AH-OO-WEN</strong> em três expirações profundas, canalizando Fogo, Ar e Água através do símbolo sagrado Awen.</p>
-                        <div class="flex flex-wrap justify-center gap-3 mt-2">
-                            <button onclick="switchTab('grounding')" class="theme-card hover:border-[var(--text-accent)] border text-xs theme-title font-semibold py-3 px-5 rounded-xl transition cursor-pointer">🎵 Abrir Drone Vocal (432Hz)</button>
-                            <button onclick="registerAwenPractice()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs py-3 px-6 rounded-xl transition shadow cursor-pointer">Registar Prática no Diário</button>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -607,17 +974,6 @@
                             </div>
                             <a href="https://aoda.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 theme-card hover:border-[var(--text-accent)] text-white font-semibold text-xs py-2.5 px-4 rounded-xl border border-[var(--border-color)] transition">
                                 <span>Visitar AODA</span> ↗
-                            </a>
-                        </div>
-
-                        <div class="theme-inner border rounded-2xl p-5 space-y-3 flex flex-col justify-between hover:border-[var(--border-hover)] transition">
-                            <div class="space-y-1.5">
-                                <span class="text-[10px] uppercase tracking-widest theme-accent font-semibold">Recursos & Comunidade</span>
-                                <h3 class="font-cinzel text-base font-bold text-white">The Druid Network (TDN)</h3>
-                                <p class="text-xs theme-muted leading-relaxed">Organização educativa sem fins lucrativos dedicada a promover o druidismo como religião viva e filosofia ecológica na sociedade contemporânea.</p>
-                            </div>
-                            <a href="https://druidnetwork.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 theme-card hover:border-[var(--text-accent)] text-white font-semibold text-xs py-2.5 px-4 rounded-xl border border-[var(--border-color)] transition">
-                                <span>Visitar The Druid Network</span> ↗
                             </a>
                         </div>
                     </div>
@@ -711,13 +1067,14 @@
                 </div>
             </section>
 
-            <!-- DIÁRIO -->
+            <!-- DIÁRIO & POESIA BÁRDICA -->
             <section id="tab-journal" class="tab-content hidden space-y-6">
                 <div id="journal-lock-screen" class="hidden theme-card border rounded-3xl p-8 lg:p-12 shadow-2xl text-center max-w-md mx-auto space-y-5">
                     <div class="text-5xl">🔒</div>
                     <h2 class="font-cinzel text-xl font-bold theme-title">Santuário Escrito Protegido</h2>
                     <p class="text-xs theme-muted">Introduza o seu PIN de 4 dígitos para aceder ao Diário e ao Caderno de Poesia Bárdica.</p>
                     <input type="password" id="journal-pin-unlock-input" maxlength="4" placeholder="••••" class="w-36 mx-auto text-center tracking-[0.5em] text-xl font-bold theme-inner border rounded-xl p-3 text-white focus:outline-none focus:border-[var(--text-accent)]">
+                    <div id="pin-error-msg" class="text-red-400 text-xs hidden font-semibold">PIN incorreto. Tente novamente.</div>
                     <div>
                         <button onclick="unlockJournalWithPin()" class="bg-[var(--btn-primary)] hover:opacity-90 text-white font-bold py-2.5 px-8 rounded-xl text-xs shadow transition cursor-pointer">Desbloquear</button>
                     </div>
@@ -730,7 +1087,7 @@
                             <p class="text-xs theme-muted">Registos espirituais, sonhos, leituras oraculares e composição poética offline.</p>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="togglePinSettings()" class="theme-inner hover:border-[var(--text-accent)] border text-xs theme-title px-3 py-1.5 rounded-lg transition cursor-pointer" title="Configurar PIN de Privacidade">
+                            <button onclick="togglePinSettings()" class="theme-inner hover:border-[var(--text-accent)] border text-xs theme-title px-3 py-1.5 rounded-lg transition cursor-pointer" title="Configurar PIN">
                                 🔐 PIN
                             </button>
                             <span id="save-status" class="text-xs theme-accent italic bg-[var(--bg-inner)] px-3 py-1.5 rounded-lg border border-[var(--border-color)]">Guardado</span>
@@ -755,6 +1112,13 @@
                     </div>
 
                     <div id="journal-subtab-general" class="space-y-4">
+                        <div class="mb-3 space-y-2">
+                            <div class="flex items-center gap-3">
+                                <input id="journal-search" type="search" oninput="searchJournal(this.value)" placeholder="Pesquisar no diário…" aria-label="Pesquisar no diário" class="flex-1 bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs rounded-xl px-3 py-2">
+                                <span id="journal-wordcount" class="text-[11px] theme-muted whitespace-nowrap">0 palavras</span>
+                            </div>
+                            <div id="journal-search-results" class="hidden theme-inner border rounded-xl p-3 text-xs theme-muted max-h-40 overflow-y-auto"></div>
+                        </div>
                         <textarea id="journal-input" oninput="autoSaveJournal()" placeholder="Escreva reflexões, presságios, sonhos ou apontamentos rituais..." class="w-full h-80 lg:h-96 theme-inner border rounded-2xl p-5 text-white focus:outline-none focus:border-[var(--text-accent)] text-xs lg:text-sm leading-relaxed shadow-inner"></textarea>
                     </div>
 
@@ -881,7 +1245,7 @@
                     <span>📦</span> Descarregar .ZIP
                 </button>
                 <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-[#FFDD00] hover:bg-[#ffea5c] text-slate-950 font-bold text-xs py-2 px-4 rounded-xl shadow transition">
-                    <span>☕</span> Buy Me a Coffee
+                    <span>☕</span> Coffee
                 </a>
                 <a href="mailto:inoxllor+bard@gmail.com" class="flex items-center gap-2 theme-inner hover:border-[var(--text-accent)] border border-[var(--border-color)] theme-title font-bold text-xs py-2 px-4 rounded-xl shadow transition">
                     <span>✉️</span> Email
@@ -890,8 +1254,1506 @@
         </footer>
     </div>
 
-    <div id="toast-container" class="fixed bottom-16 lg:bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toast-container" role="status" aria-live="polite" class="fixed bottom-16 lg:bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <script src="script.js"></script>
+    <script>
+/**
+ * TAROT DA MITOLOGIA NÓRDICA 16-BIT (78 CARTAS COMPLETAS)
+ */
+const NORDIC_MAJOR_ARCANA = [
+    { id: 'M00', num: '00', suit: 'major', name: 'Loki, O Andarilho', title: 'O LOUCO', realm: 'GINNUNGAGAP', rune: 'ᚲ', upright: 'Salto de fé no desconhecido, astúcia criativa, liberdade fora das regras e início inesperado.', reversed: 'Imprudência cega, engano, caos sem direção ou fuga às consequências.', art: 'loki' },
+    { id: 'M01', num: 'I', suit: 'major', name: 'Odin, Senhor das Runas', title: 'O MAGO', realm: 'ASGARD • HLIÐSKJÁLF', rune: 'ᚨ', upright: 'Domínio da vontade, sabedoria rúnica, poder de manifestação e mestria sobre os meios disponíveis.', reversed: 'Manipulação, ilusão, talento desperdiçado ou arrogância intelectual.', art: 'odin' },
+    { id: 'M02', num: 'II', suit: 'major', name: 'Frigga, Tecelã do Wyrd', title: 'A SACERDOTISA', realm: 'FENSALIR', rune: 'ᛈ', upright: 'Intuição profunda, conhecimento oculto do destino (Wyrd), silêncio sagrado e visão interior.', reversed: 'Segredos reprimidos, desconexão intuitiva ou hesitação em ouvir a voz interior.', art: 'frigga' },
+    { id: 'M03', num: 'III', suit: 'major', name: 'Freyja, Senhora de Folkvangr', title: 'A IMPERATRIZ', realm: 'VANAHEIM', rune: 'ᛒ', upright: 'Abundância, fertilidade criativa, beleza sensual, magia Seiðr e nutrição da vida.', reversed: 'Dependência emocional, bloqueio criativo ou excesso de indulgência.', art: 'freyja' },
+    { id: 'M04', num: 'IV', suit: 'major', name: 'Tyr, Guardião da Lei', title: 'O IMPERADOR', realm: 'THINGVELLIR', rune: 'ᛏ', upright: 'Autoridade justa, honra inabalável, estrutura, disciplina e sacrifício pelo bem maior.', reversed: 'Tirania, rigidez excessiva, abuso de poder ou falta de estrutura.', art: 'tyr' },
+    { id: 'M05', num: 'V', suit: 'major', name: 'Mímir, Fonte da Sabedoria', title: 'O HIEROFANTE', realm: 'MÍMISBRUNNR', rune: 'ᛗ', upright: 'Tradição ancestral, ensinamento sagrado, conselho de um mentor e memória espiritual.', reversed: 'Dogmatismo cego, rebeldia contra tradições úteis ou conselhos falsos.', art: 'mimir' },
+    { id: 'M06', num: 'VI', suit: 'major', name: 'Sif & Thor, Laço Sagrado', title: 'OS ENAMORADOS', realm: 'BILSKIRNIR', rune: 'ᚷ', upright: 'União harmónica, escolha consciente alinhada com o coração, parceria e reciprocidade.', reversed: 'Desarmonia, indecisão afetiva ou conflito entre dever e desejo.', art: 'lovers' },
+    { id: 'M07', num: 'VII', suit: 'major', name: 'Carruagem de Tanngrisnir', title: 'O CARRO', realm: 'CÉUS DE MIDGARD', rune: 'ᚱ', upright: 'Vitória pela determinação, controlo de forças opostas, avanço imparável e conquista.', reversed: 'Falta de direção, agressividade descontrolada ou obstáculos na jornada.', art: 'chariot' },
+    { id: 'M08', num: 'VIII', suit: 'major', name: 'Fenrir & O Laço Gleipnir', title: 'A FORÇA', realm: 'LYNGVI', rune: 'ᚢ', upright: 'Coragem serena, domínio dos instintos primários, paciência e força interior indomável.', reversed: 'Fraqueza interior, dúvida, fúria reprimida ou medo de perder o controlo.', art: 'fenrir' },
+    { id: 'M09', num: 'IX', suit: 'major', name: 'Odin Peregrino (Vegtam)', title: 'O EREMITA', realm: 'CAMINHOS DE YGGDRASIL', rune: 'ᛁ', upright: 'Retiro espiritual, busca solitária pela verdade, lanterna interior e prudência.', reversed: 'Isolamento excessivo, solidão amarga ou recusa em aceitar ajuda.', art: 'hermit' },
+    { id: 'M10', num: 'X', suit: 'major', name: 'As Três Nornas do Poço', title: 'A RODA DO DESTINO', realm: 'URÐARBRUNNR', rune: 'ᛃ', upright: 'Ponto de viragem no tecido do Wyrd, ciclos inevitáveis, boa fortuna e evolução.', reversed: 'Resistência à mudança, atrasos cíclicos ou sensação de impotência.', art: 'norns' },
+    { id: 'M11', num: 'XI', suit: 'major', name: 'Forseti, Juiz de Glitnir', title: 'A JUSTIÇA', realm: 'GLITNIR', rune: 'ᛇ', upright: 'Equilíbrio, verdade cristalina, resolução justa de disputas e responsabilidade cármica.', reversed: 'Injustiça, parcialidade, negação da responsabilidade ou desequilíbrio.', art: 'forseti' },
+    { id: 'M12', num: 'XII', suit: 'major', name: 'O Sacrifício em Yggdrasil', title: 'O PENDURADO', realm: 'ÁRVORE DO MUNDO', rune: 'ᛟ', upright: 'Pausa sagrada, entrega do ego para alcançar iluminação, nova perspetiva e sacrifício voluntário.', reversed: 'Estagnação estéril, vitimismo ou resistência a soltar o que já cumpriu o seu ciclo.', art: 'hanged' },
+    { id: 'M13', num: 'XIII', suit: 'major', name: 'Hel, Senhora de Helheim', title: 'A MORTE', realm: 'HELHEIM', rune: 'ᚺ', upright: 'Transformação profunda, encerramento definitivo de um ciclo e renascimento inevitável.', reversed: 'Medo da mudança, apego ao passado ou estagnação dolorosa.', art: 'hel' },
+    { id: 'M14', num: 'XIV', suit: 'major', name: 'Idunn & As Maçãs Douradas', title: 'A TEMPERANÇA', realm: 'POMAR DE ASGARD', rune: 'ᛚ', upright: 'Alquimia interior, moderação, cura regenerativa, harmonia entre opostos e paciência.', reversed: 'Desequilíbrio, excessos, impaciência ou falta de propósito.', art: 'idunn' },
+    { id: 'M15', num: 'XV', suit: 'major', name: 'Surt, Senhor de Muspelheim', title: 'O DIABO', realm: 'MUSPELHEIM', rune: 'ᚦ', upright: 'Apego material, paixões ardentes, sombra interior que exige confronto e libertação.', reversed: 'Quebra de correntes, despertar da ilusão e recuperação da autonomia.', art: 'surt' },
+    { id: 'M16', num: 'XVI', suit: 'major', name: 'Ragnarök, Queda de Bifrost', title: 'A TORRE', realm: 'VIGRÍÐR', rune: 'ᚹ', upright: 'Ruptura súbita de estruturas falsas, revelação chocante e limpeza necessária para o novo mundo.', reversed: 'Medo do colapso inevitável, adiamento de crises ou resistência à verdade.', art: 'tower' },
+    { id: 'M17', num: 'XVII', suit: 'major', name: 'Aurvandil, Estrela da Manhã', title: 'A ESTRELA', realm: 'CÉU DE ÉLIVÁGAR', rune: 'ᛊ', upright: 'Esperança renovada, cura serena, inspiração celestial e confiança no caminho.', reversed: 'Desânimo passageiro, desconexão espiritual ou falta de fé.', art: 'star' },
+    { id: 'M18', num: 'XVIII', suit: 'major', name: 'Máni & O Lobo Hati', title: 'A LUA', realm: 'NOITE DE JOTUNHEIM', rune: 'ᛜ', upright: 'Mistérios do subconsciente, sonhos proféticos, ilusões noturnas e navegação pelo desconhecido.', reversed: 'Clarificação de medos, dissipação de enganos e emergência da verdade.', art: 'moon' },
+    { id: 'M19', num: 'XIX', suit: 'major', name: 'Sól & Baldr, Luz Radiante', title: 'O SOL', realm: 'BREIÐABLIK', rune: 'ᛞ', upright: 'Vitalidade plena, alegria pura, clareza, sucesso e bênção luminosa.', reversed: 'Nuvens passageiras sobre o otimismo ou excesso de vaidade.', art: 'sun' },
+    { id: 'M20', num: 'XX', suit: 'major', name: 'Heimdall & A Trompa Gjallarhorn', title: 'O JULGAMENTO', realm: 'HIMINBJÖRG', rune: 'ᛉ', upright: 'Chamado espiritual irrecusável, despertar da consciência, absolvição e renascimento.', reversed: 'Autocrítica severa, dúvida ou recusa em atender ao chamado interior.', art: 'heimdall' },
+    { id: 'M21', num: 'XXI', suit: 'major', name: 'Yggdrasil & Os Nove Mundos', title: 'O MUNDO', realm: 'COSMOS INTEGRADO', rune: 'ᛟ', upright: 'Plenitude, realização total de um grande ciclo, harmonia cósmica e mestria.', reversed: 'Ciclo quase concluído que pede um último passo de integração.', art: 'world' }
+];
+
+const NORDIC_SUITS = [
+    { key: 'wands', label: 'Lanças (Gungnir)', element: 'Fogo • Muspelheim', colorPrimary: '#f97316', colorSecondary: '#fef08a', bg: '#1c1008', theme: 'ação, vontade, coragem e fogo criativo' },
+    { key: 'cups', label: 'Hidromel (Odrerir)', element: 'Água • Vanaheim', colorPrimary: '#38bdf8', colorSecondary: '#bae6fd', bg: '#081826', theme: 'emoções, intuição, poesia e laços do coração' },
+    { key: 'swords', label: 'Espadas (Skofnung)', element: 'Ar • Niflheim', colorPrimary: '#94a3b8', colorSecondary: '#f8fafc', bg: '#0f172a', theme: 'mente, verdade cortante, estratégia e desafios' },
+    { key: 'pentacles', label: 'Draupnir (Ouro)', element: 'Terra • Midgard', colorPrimary: '#eab308', colorSecondary: '#fef08a', bg: '#181408', theme: 'prosperidade, corpo, ofício e manifestação material' }
+];
+
+const NORDIC_RANKS = [
+    { rank: 1, num: 'ÁS', title: 'Ás', upright: 'Semente pura e dom primordial de {theme}.', reversed: 'Bloqueio inicial ou energia dispersa em {theme}.' },
+    { rank: 2, num: 'II', title: 'Dois', upright: 'Equilíbrio dual, decisão e parceria em {theme}.', reversed: 'Indecisão, dualidade em conflito ou desequilíbrio.' },
+    { rank: 3, num: 'III', title: 'Três', upright: 'Expansão, colaboração frutífera e crescimento em {theme}.', reversed: 'Atrasos na colaboração ou dispersão de esforços.' },
+    { rank: 4, num: 'IV', title: 'Quatro', upright: 'Estabilidade, alicerce sólido e proteção em {theme}.', reversed: 'Estagnação, apego excessivo ou rigidez.' },
+    { rank: 5, num: 'V', title: 'Cinco', upright: 'Prova de força, conflito transformador e superação em {theme}.', reversed: 'Resolução de tensões, trégua e aprendizagem após a crise.' },
+    { rank: 6, num: 'VI', title: 'Seis', upright: 'Harmonia, vitória merecida e fluxo generoso em {theme}.', reversed: 'Nostalgia excessiva ou desequilíbrio entre dar e receber.' },
+    { rank: 7, num: 'VII', title: 'Sete', upright: 'Perseverança, defesa da posição e discernimento em {theme}.', reversed: 'Exaustão defensiva ou necessidade de reavaliar a estratégia.' },
+    { rank: 8, num: 'VIII', title: 'Oito', upright: 'Movimento rápido, mestria técnica e dedicação em {theme}.', reversed: 'Pressa precipitada, bloqueio de fluxo ou frustração.' },
+    { rank: 9, num: 'IX', title: 'Nove', upright: 'Resiliência final, plenitude individual e sabedoria em {theme}.', reversed: 'Fadiga antes da meta ou isolamento defensivo.' },
+    { rank: 10, num: 'X', title: 'Dez', upright: 'Culminação máxima do ciclo e legado duradouro em {theme}.', reversed: 'Sobrecarga de responsabilidades ou fim de um fardo.' },
+    { rank: 11, num: 'THRALL', title: 'Escudeiro', upright: 'Curiosidade jovem, mensagem importante e início de estudo em {theme}.', reversed: 'Imaturidade, notícias atrasadas ou falta de foco.' },
+    { rank: 12, num: 'VALK', title: 'Valquíria', upright: 'Avanço destemido, missão ativa e paixão em {theme}.', reversed: 'Impulsividade temerária ou estagnação na jornada.' },
+    { rank: 13, num: 'VÖLVA', title: 'Völva (Rainha)', upright: 'Mestria interior, intuição receptiva e soberania em {theme}.', reversed: 'Insegurança interior ou desequilíbrio emocional.' },
+    { rank: 14, num: 'JARL', title: 'Jarl (Rei)', upright: 'Liderança sábia, autoridade madura e domínio pleno em {theme}.', reversed: 'Autoritarismo, rigidez ou perda de visão estratégica.' }
+];
+
+const NORDIC_TAROT_DECK = (() => {
+    const deck = [...NORDIC_MAJOR_ARCANA];
+    NORDIC_SUITS.forEach(suit => {
+        NORDIC_RANKS.forEach(r => {
+            deck.push({
+                id: `${suit.key}_${r.rank}`,
+                num: r.num,
+                rank: r.rank,
+                suit: suit.key,
+                suitObj: suit,
+                name: `${r.title} de ${suit.label.split(' ')[0]}`,
+                title: `${r.title.toUpperCase()} • ${suit.label.split(' ')[0].toUpperCase()}`,
+                realm: suit.element.toUpperCase(),
+                upright: r.upright.replace('{theme}', suit.theme),
+                reversed: r.reversed.replace('{theme}', suit.theme)
+            });
+        });
+    });
+    return deck;
+})();
+
+function renderNordic16BitSVG(card) {
+    if (card.suit === 'major') {
+        const majorSprites = {
+            loki: `<rect width="32" height="32" fill="#090d16"/><rect x="9" y="3" width="2" height="6" fill="#facc15"/><rect x="21" y="3" width="2" height="6" fill="#facc15"/><rect x="11" y="7" width="10" height="3" fill="#eab308"/><rect x="11" y="10" width="10" height="7" fill="#fed7aa"/><rect x="13" y="12" width="2" height="2" fill="#10b981"/><rect x="17" y="12" width="2" height="2" fill="#10b981"/><rect x="8" y="17" width="16" height="12" fill="#065f46"/><rect x="12" y="17" width="8" height="12" fill="#10b981"/><rect x="24" y="10" width="4" height="5" fill="#f97316"/><rect x="25" y="8" width="2" height="3" fill="#fef08a"/>`,
+            odin: `<rect width="32" height="32" fill="#0b1120"/><rect x="9" y="5" width="14" height="3" fill="#3b82f6"/><rect x="11" y="8" width="10" height="7" fill="#fed7aa"/><rect x="13" y="10" width="2" height="2" fill="#0f172a"/><rect x="17" y="10" width="2" height="2" fill="#38bdf8"/><rect x="10" y="15" width="12" height="6" fill="#e2e8f0"/><rect x="8" y="18" width="16" height="12" fill="#1d4ed8"/><rect x="25" y="3" width="2" height="27" fill="#eab308"/><rect x="24" y="2" width="4" height="4" fill="#f8fafc"/><rect x="4" y="6" width="3" height="2" fill="#020617"/><rect x="4" y="11" width="3" height="2" fill="#020617"/>`,
+            frigga: `<rect width="32" height="32" fill="#130d24"/><rect x="12" y="5" width="8" height="3" fill="#fde047"/><rect x="11" y="8" width="10" height="7" fill="#fed7aa"/><rect x="9" y="15" width="14" height="14" fill="#6d28d9"/><rect x="13" y="15" width="6" height="14" fill="#c4b5fd"/><line x1="4" y1="6" x2="28" y2="26" stroke="#eab308" stroke-width="1"/><line x1="28" y1="6" x2="4" y2="26" stroke="#38bdf8" stroke-width="1"/>`,
+            freyja: `<rect width="32" height="32" fill="#1f0d1b"/><rect x="10" y="6" width="12" height="10" fill="#facc15"/><rect x="12" y="8" width="8" height="6" fill="#fed7aa"/><rect x="11" y="15" width="10" height="2" fill="#eab308"/><rect x="9" y="17" width="14" height="12" fill="#db2777"/><rect x="4" y="21" width="4" height="7" fill="#94a3b8"/><rect x="24" y="21" width="4" height="7" fill="#94a3b8"/>`,
+            tyr: `<rect width="32" height="32" fill="#1c0a0a"/><rect x="11" y="6" width="10" height="4" fill="#94a3b8"/><rect x="12" y="10" width="8" height="5" fill="#fed7aa"/><rect x="9" y="15" width="14" height="13" fill="#b91c1c"/><rect x="15" y="4" width="2" height="22" fill="#f8fafc"/><rect x="12" y="9" width="8" height="2" fill="#eab308"/>`,
+            mimir: `<rect width="32" height="32" fill="#071921"/><rect x="6" y="20" width="20" height="9" fill="#0284c7"/><rect x="9" y="18" width="14" height="3" fill="#7dd3fc"/><rect x="12" y="7" width="8" height="7" fill="#cbd5e1"/><rect x="11" y="13" width="10" height="5" fill="#f8fafc"/><rect x="14" y="9" width="1" height="2" fill="#38bdf8"/><rect x="17" y="9" width="1" height="2" fill="#38bdf8"/>`,
+            lovers: `<rect width="32" height="32" fill="#1a120b"/><rect x="6" y="9" width="7" height="7" fill="#fed7aa"/><rect x="5" y="16" width="9" height="12" fill="#dc2626"/><rect x="19" y="9" width="7" height="7" fill="#fed7aa"/><rect x="19" y="6" width="7" height="3" fill="#facc15"/><rect x="18" y="16" width="9" height="12" fill="#2563eb"/><rect x="14" y="12" width="4" height="4" fill="#f43f5e"/>`,
+            chariot: `<rect width="32" height="32" fill="#0c1426"/><rect x="4" y="16" width="6" height="8" fill="#cbd5e1"/><rect x="22" y="16" width="6" height="8" fill="#cbd5e1"/><rect x="10" y="14" width="12" height="10" fill="#b45309"/><rect x="13" y="8" width="6" height="6" fill="#dc2626"/><rect x="5" y="5" width="2" height="6" fill="#fef08a"/><rect x="25" y="7" width="2" height="6" fill="#fef08a"/>`,
+            fenrir: `<rect width="32" height="32" fill="#111827"/><rect x="7" y="11" width="18" height="12" fill="#374151"/><rect x="8" y="7" width="3" height="4" fill="#4b5563"/><rect x="21" y="7" width="3" height="4" fill="#4b5563"/><rect x="10" y="13" width="3" height="2" fill="#ef4444"/><rect x="19" y="13" width="3" height="2" fill="#ef4444"/><rect x="11" y="19" width="10" height="3" fill="#f8fafc"/><rect x="5" y="17" width="22" height="2" fill="#facc15"/>`,
+            hermit: `<rect width="32" height="32" fill="#060913"/><rect x="11" y="6" width="10" height="22" fill="#334155"/><rect x="13" y="9" width="6" height="5" fill="#fed7aa"/><rect x="6" y="4" width="2" height="24" fill="#92400e"/><rect x="23" y="13" width="4" height="5" fill="#fef08a"/><rect x="22" y="12" width="6" height="7" fill="none" stroke="#f59e0b" stroke-width="1"/>`,
+            norns: `<rect width="32" height="32" fill="#0f172a"/><rect x="4" y="11" width="6" height="15" fill="#0ea5e9"/><rect x="13" y="9" width="6" height="17" fill="#10b981"/><rect x="22" y="11" width="6" height="15" fill="#8b5cf6"/><line x1="4" y1="8" x2="28" y2="8" stroke="#facc15" stroke-width="2"/><line x1="7" y1="8" x2="16" y2="27" stroke="#eab308" stroke-width="1"/><line x1="25" y1="8" x2="16" y2="27" stroke="#eab308" stroke-width="1"/>`,
+            forseti: `<rect width="32" height="32" fill="#1e1b18"/><rect x="12" y="6" width="8" height="6" fill="#fed7aa"/><rect x="10" y="12" width="12" height="16" fill="#eab308"/><rect x="15" y="4" width="2" height="24" fill="#f8fafc"/><rect x="6" y="12" width="20" height="2" fill="#cbd5e1"/><rect x="5" y="14" width="4" height="3" fill="#38bdf8"/><rect x="23" y="14" width="4" height="3" fill="#38bdf8"/>`,
+            hanged: `<rect width="32" height="32" fill="#071510"/><rect x="14" y="2" width="4" height="28" fill="#78350f"/><rect x="6" y="4" width="20" height="4" fill="#15803d"/><rect x="13" y="8" width="6" height="12" fill="#2563eb"/><rect x="13" y="20" width="6" height="5" fill="#fed7aa"/><rect x="12" y="23" width="8" height="2" fill="#facc15"/>`,
+            hel: `<rect width="32" height="32" fill="#090d16"/><rect x="11" y="7" width="5" height="8" fill="#fed7aa"/><rect x="16" y="7" width="5" height="8" fill="#1e293b"/><rect x="17" y="9" width="2" height="2" fill="#38bdf8"/><rect x="13" y="9" width="2" height="2" fill="#10b981"/><rect x="9" y="15" width="7" height="14" fill="#334155"/><rect x="16" y="15" width="7" height="14" fill="#020617"/>`,
+            idunn: `<rect width="32" height="32" fill="#0a1f12"/><rect x="11" y="7" width="10" height="7" fill="#fed7aa"/><rect x="10" y="6" width="12" height="3" fill="#facc15"/><rect x="9" y="14" width="14" height="15" fill="#16a34a"/><rect x="13" y="17" width="6" height="4" fill="#92400e"/><rect x="14" y="15" width="2" height="2" fill="#facc15"/><rect x="17" y="15" width="2" height="2" fill="#ef4444"/>`,
+            surt: `<rect width="32" height="32" fill="#260707"/><rect x="10" y="6" width="12" height="8" fill="#dc2626"/><rect x="8" y="4" width="3" height="4" fill="#f97316"/><rect x="21" y="4" width="3" height="4" fill="#f97316"/><rect x="12" y="9" width="3" height="2" fill="#fef08a"/><rect x="17" y="9" width="3" height="2" fill="#fef08a"/><rect x="8" y="14" width="16" height="14" fill="#7f1d1d"/><rect x="25" y="3" width="3" height="25" fill="#facc15"/>`,
+            tower: `<rect width="32" height="32" fill="#0f0c1d"/><rect x="10" y="10" width="12" height="19" fill="#475569"/><rect x="11" y="6" width="10" height="4" fill="#64748b"/><polyline points="4,2 14,10 10,12 22,22" fill="none" stroke="#fef08a" stroke-width="2"/><rect x="13" y="13" width="6" height="5" fill="#f97316"/>`,
+            star: `<rect width="32" height="32" fill="#070d1f"/><rect x="15" y="4" width="2" height="10" fill="#fef08a"/><rect x="11" y="8" width="10" height="2" fill="#fef08a"/><rect x="13" y="6" width="6" height="6" fill="#fde047"/><rect x="4" y="23" width="24" height="7" fill="#0284c7"/><rect x="8" y="25" width="16" height="2" fill="#7dd3fc"/>`,
+            moon: `<rect width="32" height="32" fill="#060913"/><circle cx="16" cy="11" r="6" fill="#e2e8f0"/><circle cx="19" cy="10" r="5" fill="#060913"/><rect x="6" y="21" width="7" height="7" fill="#334155"/><rect x="19" y="21" width="7" height="7" fill="#475569"/><rect x="14" y="24" width="4" height="6" fill="#1e293b"/>`,
+            sun: `<rect width="32" height="32" fill="#1e1505"/><circle cx="16" cy="13" r="6" fill="#facc15"/><rect x="15" y="3" width="2" height="3" fill="#fef08a"/><rect x="15" y="20" width="2" height="3" fill="#fef08a"/><rect x="6" y="12" width="3" height="2" fill="#fef08a"/><rect x="23" y="12" width="3" height="2" fill="#fef08a"/><rect x="8" y="24" width="16" height="5" fill="#15803d"/>`,
+            heimdall: `<rect width="32" height="32" fill="#111827"/><rect x="11" y="6" width="10" height="8" fill="#f8fafc"/><rect x="13" y="8" width="6" height="5" fill="#fed7aa"/><rect x="9" y="14" width="14" height="14" fill="#e2e8f0"/><rect x="15" y="14" width="2" height="14" fill="#eab308"/><path d="M21,11 Q28,11 27,20 L24,20 Q24,14 21,14 Z" fill="#facc15"/>`,
+            world: `<rect width="32" height="32" fill="#06140e"/><circle cx="16" cy="16" r="12" fill="none" stroke="#22c55e" stroke-width="2"/><rect x="14" y="8" width="4" height="16" fill="#78350f"/><rect x="9" y="6" width="14" height="6" fill="#16a34a"/><rect x="10" y="23" width="12" height="3" fill="#92400e"/><circle cx="16" cy="16" r="2" fill="#facc15"/>`
+        };
+        return `<svg viewBox="0 0 32 32" shape-rendering="crispEdges" class="w-32 h-32 pixel-svg">${majorSprites[card.art] || majorSprites.world}</svg>`;
+    }
+
+    const s = card.suitObj;
+    const r = card.rank;
+    let glyph = '';
+
+    const drawItem = (x, y) => {
+        if (s.key === 'wands') {
+            return `<rect x="${x}" y="${y-3}" width="2" height="7" fill="${s.colorPrimary}"/><rect x="${x-1}" y="${y-4}" width="4" height="2" fill="${s.colorSecondary}"/>`;
+        } else if (s.key === 'cups') {
+            return `<rect x="${x-1}" y="${y-2}" width="4" height="3" fill="${s.colorPrimary}"/><rect x="${x}" y="${y+1}" width="2" height="2" fill="${s.colorSecondary}"/>`;
+        } else if (s.key === 'swords') {
+            return `<rect x="${x}" y="${y-4}" width="2" height="6" fill="${s.colorSecondary}"/><rect x="${x-1}" y="${y+1}" width="4" height="1" fill="#eab308"/><rect x="${x}" y="${y+2}" width="2" height="2" fill="#92400e"/>`;
+        } else {
+            return `<rect x="${x-1}" y="${y-2}" width="4" height="4" fill="none" stroke="${s.colorPrimary}" stroke-width="1.2"/><rect x="${x}" y="${y-1}" width="2" height="2" fill="${s.colorSecondary}"/>`;
+        }
+    };
+
+    if (r === 1) {
+        if (s.key === 'wands') glyph = `<rect x="15" y="4" width="2" height="24" fill="#b45309"/><polygon points="16,2 12,9 20,9" fill="${s.colorSecondary}"/><rect x="11" y="11" width="10" height="2" fill="${s.colorPrimary}"/>`;
+        if (s.key === 'cups') glyph = `<rect x="10" y="7" width="12" height="8" fill="${s.colorPrimary}"/><rect x="12" y="6" width="8" height="2" fill="#fef08a"/><rect x="14" y="15" width="4" height="7" fill="${s.colorSecondary}"/><rect x="11" y="22" width="10" height="3" fill="${s.colorPrimary}"/>`;
+        if (s.key === 'swords') glyph = `<rect x="15" y="3" width="2" height="19" fill="${s.colorSecondary}"/><rect x="10" y="21" width="12" height="2" fill="#eab308"/><rect x="15" y="23" width="2" height="5" fill="#78350f"/><circle cx="16" cy="28" r="2" fill="#eab308"/>`;
+        if (s.key === 'pentacles') glyph = `<circle cx="16" cy="16" r="9" fill="none" stroke="${s.colorPrimary}" stroke-width="3"/><circle cx="16" cy="16" r="5" fill="none" stroke="${s.colorSecondary}" stroke-width="1"/><rect x="15" y="5" width="2" height="22" fill="${s.colorSecondary}"/>`;
+    } else if (r >= 11) {
+        const crown = r === 14 ? `<rect x="11" y="4" width="10" height="3" fill="#facc15"/>` :
+                      r === 13 ? `<rect x="12" y="5" width="8" height="2" fill="#e2e8f0"/>` :
+                      r === 12 ? `<rect x="9" y="4" width="3" height="4" fill="#f8fafc"/><rect x="20" y="4" width="3" height="4" fill="#f8fafc"/>` :
+                                 `<rect x="12" y="6" width="8" height="2" fill="#94a3b8"/>`;
+        glyph = `
+            ${crown}
+            <rect x="12" y="7" width="8" height="6" fill="#fed7aa"/>
+            <rect x="9" y="13" width="14" height="14" fill="${s.colorPrimary}"/>
+            <rect x="13" y="13" width="6" height="14" fill="#1e293b"/>
+            ${drawItem(24, 15)}
+        `;
+    } else {
+        const coords = [
+            [11, 8], [20, 8], [11, 23], [20, 23],
+            [15, 15], [11, 15], [20, 15], [15, 7], [15, 24], [15, 11]
+        ];
+        for (let i = 0; i < r; i++) {
+            glyph += drawItem(coords[i][0], coords[i][1]);
+        }
+    }
+
+    return `
+        <svg viewBox="0 0 32 32" shape-rendering="crispEdges" class="w-32 h-32 pixel-svg">
+            <rect width="32" height="32" fill="${s.bg}"/>
+            <rect x="1" y="1" width="30" height="30" fill="none" stroke="${s.colorPrimary}" stroke-width="0.8" opacity="0.5"/>
+            ${glyph}
+        </svg>
+    `;
+}
+
+let activeTarotFilter = 'all';
+let activeTarotMode = 'draw';
+let lastTarotReading = [];
+
+function setTarotFilter(filter) {
+    activeTarotFilter = filter;
+    ['all', 'major', 'wands', 'cups', 'swords', 'pentacles'].forEach(f => {
+        const btn = document.getElementById(`filter-btn-${f}`);
+        if (!btn) return;
+        if (f === filter) {
+            btn.className = 'bg-[var(--btn-primary)] text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer';
+        } else {
+            btn.className = 'theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer';
+        }
+    });
+    if (activeTarotMode === 'gallery') renderTarotGallery();
+}
+
+function switchTarotMode(mode) {
+    activeTarotMode = mode;
+    const drawBtn = document.getElementById('tarot-mode-draw');
+    const galBtn = document.getElementById('tarot-mode-gallery');
+    const actionsBar = document.getElementById('tarot-draw-actions');
+
+    if (mode === 'draw') {
+        drawBtn.className = 'bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer';
+        galBtn.className = 'theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer';
+        if (actionsBar) actionsBar.classList.remove('hidden');
+        drawTarotCard(1);
+    } else {
+        galBtn.className = 'bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer';
+        drawBtn.className = 'theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer';
+        if (actionsBar) actionsBar.classList.add('hidden');
+        renderTarotGallery();
+    }
+}
+
+function getFilteredNordicDeck() {
+    if (activeTarotFilter === 'all') return NORDIC_TAROT_DECK;
+    return NORDIC_TAROT_DECK.filter(c => c.suit === activeTarotFilter);
+}
+
+function buildPixelCardHTML(card, isReversed = false, positionLabel = '') {
+    const svgHTML = renderNordic16BitSVG(card);
+    const orientationBadge = isReversed
+        ? `<span class="text-[9px] px-2 py-0.5 rounded bg-red-950/80 text-red-300 border border-red-700/50">Invertida</span>`
+        : `<span class="text-[9px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-700/50">Direita</span>`;
+    const meaning = isReversed ? card.reversed : card.upright;
+
+    return `
+        <div class="flex flex-col items-center max-w-[230px] mx-auto space-y-2.5">
+            ${positionLabel ? `<span class="text-[10px] uppercase tracking-widest theme-accent font-bold">${positionLabel}</span>` : ''}
+            <div class="tarot-flip-wrapper is-flipped cursor-pointer" onclick="this.classList.toggle('is-flipped')">
+                <div class="tarot-flip-inner">
+                    <div class="tarot-card-back pixel-card-vertical">
+                        <div class="card-header-pixel">YGGDRASIL • 16-BIT</div>
+                        <div class="card-art-box flex items-center justify-center">
+                            <svg viewBox="0 0 32 32" shape-rendering="crispEdges" class="w-28 h-28 pixel-svg">
+                                <rect width="32" height="32" fill="#090d16"/>
+                                <rect x="14" y="10" width="4" height="16" fill="#78350f"/>
+                                <rect x="6" y="6" width="20" height="8" fill="#15803d"/>
+                                <rect x="15" y="12" width="2" height="12" fill="#38bdf8"/>
+                            </svg>
+                        </div>
+                        <div class="card-footer-pixel">VIRAR CARTA</div>
+                    </div>
+                    <div class="tarot-card-front pixel-card-vertical">
+                        <div class="card-header-pixel">${card.num} • ${card.title}</div>
+                        <div class="card-art-box flex items-center justify-center ${isReversed ? 'rotate-180' : ''}">
+                            ${svgHTML}
+                        </div>
+                        <div class="card-footer-pixel">${card.realm}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-inner border rounded-xl p-3 text-center w-full space-y-1">
+                <div class="flex items-center justify-center gap-1.5">
+                    <strong class="font-cinzel text-xs theme-title">${card.name}</strong>
+                    ${orientationBadge}
+                </div>
+                <p class="text-[11px] theme-muted leading-snug">${meaning}</p>
+            </div>
+        </div>
+    `;
+}
+
+function drawTarotCard(count) {
+    if (activeTarotMode !== 'draw') switchTarotMode('draw');
+    const pool = [...getFilteredNordicDeck()];
+    const drawn = [];
+
+    for (let i = 0; i < count && pool.length > 0; i++) {
+        const idx = Math.floor(Math.random() * pool.length);
+        const card = pool.splice(idx, 1)[0];
+        const isReversed = Math.random() < 0.35;
+        drawn.push({ card, isReversed });
+    }
+
+    lastTarotReading = drawn;
+    const labels = count === 3
+        ? ['Urd (Passado)', 'Verdandi (Presente)', 'Skuld (Futuro)']
+        : count === 5
+        ? ['Centro (Situação)', 'Norte (Desafios)', 'Leste (Conselho)', 'Sul (Força)', 'Oeste (Desfecho)']
+        : ['Oráculo de Odin'];
+
+    const gridCols = count === 1 ? 'grid-cols-1' : count === 3 ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-5';
+    const container = document.getElementById('tarot-card-container');
+    container.innerHTML = `
+        <div class="grid ${gridCols} gap-5 w-full items-start justify-center">
+            ${drawn.map((item, i) => buildPixelCardHTML(item.card, item.isReversed, labels[i] || '')).join('')}
+        </div>
+    `;
+
+    const saveBar = document.getElementById('tarot-save-bar');
+    if (saveBar) saveBar.classList.remove('hidden');
+}
+
+function renderTarotGallery() {
+    const pool = getFilteredNordicDeck();
+    const container = document.getElementById('tarot-card-container');
+    container.innerHTML = `
+        <div class="w-full space-y-4">
+            <div class="text-xs theme-accent font-semibold">A exibir ${pool.length} cartas em Pixel Art 16-Bit (clique em qualquer carta para virar)</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-h-[650px] overflow-y-auto p-2">
+                ${pool.map(card => buildPixelCardHTML(card, false, '')).join('')}
+            </div>
+        </div>
+    `;
+}
+
+// 1. DADOS OGHAM
+const OGHAM_DATA = [
+    { symbol: "ᚁ", name: "Beith", tree: "Vidoeiro (Birch)", aicme: "Aicme Beithe", month: "24 Dez – 20 Jan", herb: "Casca de Vidoeiro & Dente-de-Leão", meaning: "Novos começos, purificação, renovação espiritual e limpeza de energias estagnadas." },
+    { symbol: "ᚂ", name: "Luis", tree: "Sorveira (Rowan)", aicme: "Aicme Beithe", month: "21 Jan – 17 Feb", herb: "Bagas de Sorveira & Verbena", meaning: "Proteção contra ilusões, despertar da visão interior e discernimento." },
+    { symbol: "ᚃ", name: "Fearn", tree: "Amieiro (Alder)", aicme: "Aicme Beithe", month: "18 Fev – 17 Mar", herb: "Folhas de Amieiro & Ulmeira", meaning: "Coragem para atravessar pontes entre mundos, resiliência e proteção espiritual." },
+    { symbol: "ᚄ", name: "Saille", tree: "Salgueiro (Willow)", aicme: "Aicme Beithe", month: "18 Mar – 14 Abr", herb: "Casca de Salgueiro & Artemísia", meaning: "Intuição lunar, fluidez emocional, sonhos proféticos e ciclos femininos." },
+    { symbol: "ᚅ", name: "Nion", tree: "Freixo (Ash)", aicme: "Aicme Beithe", month: "15 Abr – 12 Mai", herb: "Sementes de Freixo & Agrimónia", meaning: "Conexão entre o microcosmo e o macrocosmo (Yggdrasil / Árvore do Mundo), poder da palavra." },
+    { symbol: "ᚆ", name: "Huath", tree: "Espinheiro (Hawthorn)", aicme: "Aicme hÚatha", month: "13 Mai – 09 Jun", herb: "Flores de Espinheiro & Rosa Silvestre", meaning: "Cura do coração, paciência sagrada, proteção dos limiares e magia das fadas." },
+    { symbol: "ᚇ", name: "Duir", tree: "Carvalho (Oak)", aicme: "Aicme hÚatha", month: "10 Jun – 07 Jul", herb: "Bolota, Musgo de Carvalho & Viscum", meaning: "Força soberana, resistência, porta de entrada para os mistérios e nobreza de espírito." },
+    { symbol: "ᚈ", name: "Tinne", tree: "Azevinho (Holly)", aicme: "Aicme hÚatha", month: "08 Jul – 04 Ago", herb: "Folhas de Azevinho & Cardo Santo", meaning: "Justiça, equilíbrio das forças opostas, defesa honrada e liderança." },
+    { symbol: "ᚉ", name: "Coll", tree: "Aveleira (Hazel)", aicme: "Aicme hÚatha", month: "05 Ago – 01 Set", herb: "Avelãs & Sálvia", meaning: "Sabedoria inspirada, Awen poética, conhecimento concentrado e intuição criativa." },
+    { symbol: "ᚊ", name: "Quert", tree: "Macieira (Apple)", aicme: "Aicme hÚatha", month: "Equinócio / Avalon", herb: "Flor de Macieira & Camomila", meaning: "Beleza eterna, regeneração, escolhas do coração e imortalidade da alma." },
+    { symbol: "ᚋ", name: "Muin", tree: "Videira (Vine)", aicme: "Aicme Muine", month: "02 Set – 29 Set", herb: "Folha de Videira & Amora Silvestre", meaning: "Colheita interior, verdade revelada sem filtros, êxtase espiritual e profecia." },
+    { symbol: "ᚌ", name: "Gort", tree: "Hera (Ivy)", aicme: "Aicme Muine", month: "30 Set – 27 Out", herb: "Hera Terrestre & Alecrim", meaning: "Persistência na espiral da vida, superação de obstáculos e determinação." },
+    { symbol: "ᚍ", name: "Ngetal", tree: "Junco (Reed)", aicme: "Aicme Muine", month: "28 Out – 24 Nov", herb: "Raiz de Junco & Valeriana", meaning: "Ação direta, harmonia musical, alinhamento de propósito e cura profunda." },
+    { symbol: "ᚎ", name: "Straif", tree: "Abrunheiro (Blackthorn)", aicme: "Aicme Muine", month: "25 Nov – 23 Dez", herb: "Abrunhos & Absinto", meaning: "Confronto necessário com a sombra, disciplina rigorosa e transformação inevitável." },
+    { symbol: "ᚏ", name: "Ruis", tree: "Sabugueiro (Elder)", aicme: "Aicme Muine", month: "Fim de Ciclo / Solstício", herb: "Flor e Baga de Sabugueiro", meaning: "Fim de um ciclo e renascimento, regeneração profunda e sabedoria da Anciã." },
+    { symbol: "ᚐ", name: "Ailm", tree: "Abeto / Pinheiro (Fir)", aicme: "Aicme Ailme", month: "Solstício de Inverno", herb: "Agulhas de Pinheiro & Resina", meaning: "Visão elevada, clareza de horizonte, cura respiratória e perspetiva superior." },
+    { symbol: "ᚑ", name: "Onn", tree: "Tojo (Gorse)", aicme: "Aicme Ailme", month: "Equinócio de Primavera", herb: "Flores Douradas de Tojo & Calêndula", meaning: "Esperança luminosa, abundância solar, energia vital e otimismo." },
+    { symbol: "ᚒ", name: "Ur", tree: "Urze (Heather)", aicme: "Aicme Ailme", month: "Solstício de Verão", herb: "Flores de Urze & Lavanda", meaning: "Paixão pela vida, generosidade, cura emocional e abertura do coração." },
+    { symbol: "ᚓ", name: "Eadha", tree: "Álamos (Aspen)", aicme: "Aicme Ailme", month: "Equinócio de Outono", herb: "Folhas de Choupo & Erva-Cidreira", meaning: "Superação do medo, comunicação com os ancestrais e escuta do vento." },
+    { symbol: "ᚔ", name: "Ioho", tree: "Teixo (Yew)", aicme: "Aicme Ailme", month: "Samhain / Eternidade", herb: "Simbólico (Não ingerir)", meaning: "Imortalidade da alma, transformação ancestral, renascimento e eternidade." }
+];
+
+// 2. RUNAS
+const RUNES_DATA = [
+    { symbol: "ᚠ", name: "Fehu", meaning: "Prosperidade, energia vital, abundância em movimento e novos recursos." },
+    { symbol: "ᚢ", name: "Uruz", meaning: "Força primordial, saúde física, coragem indomável e vitalidade." },
+    { symbol: "ᚦ", name: "Thurisaz", meaning: "Proteção ativa, defesa, superação de obstáculos e despertar." },
+    { symbol: "ᚨ", name: "Ansuz", meaning: "Sabedoria divina, inspiração poética (Awen), comunicação e sinais." },
+    { symbol: "ᚱ", name: "Raidho", meaning: "Jornada espiritual, movimento certo, ritmo cósmico e evolução." },
+    { symbol: "ᚲ", name: "Kenaz", meaning: "Tocha interior, criatividade, iluminação técnica e clareza." },
+    { symbol: "ᚷ", name: "Gebo", meaning: "Troca sagrada, parceria equilibrada, generosidade e união." },
+    { symbol: "ᚹ", name: "Wunjo", meaning: "Alegria harmónica, realização, paz interior e fraternidade." },
+    { symbol: "ᚺ", name: "Hagalaz", meaning: "Ruptura purificadora, mudança inevitável e libertação de padrões." },
+    { symbol: "ᚾ", name: "Nauthiz", meaning: "Necessidade, resiliência na adversidade e fogo interior." },
+    { symbol: "ᛁ", name: "Isa", meaning: "Quietude, pausa contemplativa, concentração e clareza cristalina." },
+    { symbol: "ᛃ", name: "Jera", meaning: "Colheita justa, ciclos naturais do tempo e recompensa pelo esforço." },
+    { symbol: "ᛇ", name: "Eihwaz", meaning: "Teixo sagrado, eixo entre mundos, resistência e proteção profunda." },
+    { symbol: "ᛈ", name: "Perthro", meaning: "Mistério do destino (Wyrd), intuição, sincronicidade e revelação." },
+    { symbol: "ᛉ", name: "Algiz", meaning: "Proteção espiritual elevada, conexão com o sagrado e alerta." },
+    { symbol: "ᛊ", name: "Sowilo", meaning: "Sol vitorioso, força vital, clareza absoluta e sucesso." },
+    { symbol: "ᛏ", name: "Tiwaz", meaning: "Justiça, honra, sacrifício nobre e liderança íntegra." },
+    { symbol: "ᛒ", name: "Berkano", meaning: "Nascimento, fertilidade, nutrição maternal e crescimento suave." },
+    { symbol: "ᛖ", name: "Ehwaz", meaning: "Avanço conjunto, confiança mútua, lealdade e progresso." },
+    { symbol: "ᛗ", name: "Mannaz", meaning: "Humanidade, autoconhecimento, mente consciente e comunidade." },
+    { symbol: "ᛚ", name: "Laguz", meaning: "Águas profundas da intuição, sonhos, fluidez e cura emocional." },
+    { symbol: "ᛜ", name: "Ingwaz", meaning: "Semente latente, paz interior, gestação de novos projetos." },
+    { symbol: "ᛞ", name: "Dagaz", meaning: "Amanhecer, despertar súbito, transformação luminosa e equilíbrio." },
+    { symbol: "ᛟ", name: "Othala", meaning: "Herança ancestral, lar espiritual, raízes e sabedoria herdada." }
+];
+
+// 3. FESTIVAIS
+const FESTIVALS_DATA = {
+    1: { date: "21 de Dezembro", title: "Yule (Solstício de Inverno)", theme: "O renascimento da Luz na noite mais longa do ano.", ritual: "Acender a vela central do altar ao amanhecer, decorar com azevinho e pinheiro, honrar o retorno do Sol." },
+    2: { date: "1 de Fevereiro", title: "Imbolc (Festa de Brigid)", theme: "Primeiros sinais da primavera, purificação e chama da inspiração.", ritual: "Limpeza ritual do espaço sagrado, acender velas brancas e compor poesia em honra de Brigid." },
+    3: { date: "21 de Março", title: "Ostara (Equinócio de Primavera)", theme: "Equilíbrio perfeito entre luz e sombra; despertar da Terra.", ritual: "Plantar sementes com intenções claras, caminhar ao ar livre e celebrar o equilíbrio interior." },
+    4: { date: "1 de Maio", title: "Beltane (Fogo Sagrado)", theme: "Vitalidade plena, união sagrada da natureza e alegria criativa.", ritual: "Acender fogueira ou incenso floral, tecer fitas coloridas e abençoar projetos criativos." },
+    5: { date: "21 de Junho", title: "Litha (Solstício de Verão)", theme: "Apogeu da luz solar, abundância e poder vital.", ritual: "Colher ervas solares ao meio-dia, meditar sob a luz do sol e agradecer pela plenitude." },
+    6: { date: "1 de Agosto", title: "Lughnasadh (Primeira Colheita)", theme: "Gratidão pelos frutos do trabalho e partilha comunitária.", ritual: "Partilhar pão artesanal e frutas da época no altar, honrando os talentos e habilidades." },
+    7: { date: "21 de Setembro", title: "Mabon (Equinócio de Outono)", theme: "Segundo equilíbrio do ano, ação de graças e recolhimento sereno.", ritual: "Organizar um altar com folhas de outono, maçãs e bolotas; meditar sobre o equilíbrio alcançado." },
+    8: { date: "31 de Outubro", title: "Samhain (Ano Novo Druídico)", theme: "Portal entre os mundos, silêncio sagrado e honra aos ancestrais.", ritual: "Altar aos antepassados, vela na janela para guiar os espíritos amigos e libertação de ciclos passados." }
+};
+
+// 4. TRÍADES
+const TRIADS_DATA = [
+    "Três coisas que todo o Druida deve cultivar: Amor pela Natureza, Busca pela Verdade e Paz em todas as ações.",
+    "Três velas que iluminam toda a escuridão: A Verdade, a Natureza e o Conhecimento.",
+    "Três fundamentos da Sabedoria Bárdica: Ousadia na verdade, firmeza na justiça e gentileza no coração.",
+    "Três coisas que nunca retornam: A flecha disparada, a palavra proferida e a oportunidade perdida.",
+    "Três dons da Awen: Um olho que vê a natureza, um coração que sente a natureza e uma coragem que ousa seguir a natureza.",
+    "Três pilares da Paz no Grove: Escuta silenciosa, respeito mútuo e harmonia com a Terra."
+];
+
+let lastOghamReading = [];
+let lastRuneReading = [];
+let currentFestivalId = 8;
+let audioCtx = null;
+let activeSoundNode = null;
+let activeGainNode = null;
+let breathTimerInterval = null;
+let isBreathing = false;
+let medTotalSeconds = 15 * 60;
+let medRemainingSeconds = 15 * 60;
+let medInterval = null;
+let isMedRunning = false;
+let altarState = { earth: false, air: false, fire: false, water: false };
+
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(sec => sec.classList.add('hidden'));
+    const target = document.getElementById(`tab-${tabId}`);
+    if (target) target.classList.remove('hidden');
+
+    document.querySelectorAll('.nav-item, .bot-nav-item').forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.add('theme-muted');
+    });
+
+    ['desk', 'mob', 'bot'].forEach(prefix => {
+        const btn = document.getElementById(`${prefix}-nav-${tabId}`);
+        if (btn) {
+            btn.classList.add('active');
+            btn.classList.remove('theme-muted');
+        }
+    });
+
+    if (tabId === 'journal') checkJournalPinLock();
+}
+
+function changeTheme(themeName) {
+    const html = document.documentElement;
+    const body = document.getElementById('app-body');
+    ['theme-night', 'theme-forest', 'theme-stone', 'theme-autumn', 'theme-mist', 'theme-gold', 'theme-lantern', 'theme-parchment'].forEach(t => {
+        html.classList.remove(t);
+        body.classList.remove(t);
+    });
+    html.classList.add(themeName);
+    body.classList.add(themeName);
+    localStorage.setItem('druid_theme', themeName);
+
+    const dSel = document.getElementById('theme-selector-desktop');
+    const mSel = document.getElementById('theme-selector-mobile');
+    if (dSel) dSel.value = themeName;
+    if (mSel) mSel.value = themeName;
+}
+
+function toggleLanternMode() {
+    const current = localStorage.getItem('druid_theme') || 'theme-night';
+    if (current === 'theme-lantern') {
+        changeTheme('theme-night');
+        showToast('Modo Lanterna desativado.');
+    } else {
+        changeTheme('theme-lantern');
+        showToast('🏮 Modo Lanterna Ritual ativo.');
+    }
+}
+
+function updateAstronomy() {
+    const now = new Date();
+    const synodicMonth = 29.53058867;
+    const knownNewMoon = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+    const diffDays = (now - knownNewMoon) / 86400000;
+    const phaseAge = ((diffDays % synodicMonth) + synodicMonth) % synodicMonth;
+    const illumination = Math.round(((1 - Math.cos((2 * Math.PI * phaseAge) / synodicMonth)) / 2) * 100);
+
+    let phaseName = 'Lua Nova', icon = '🌑';
+    if (phaseAge < 1.85) { phaseName = 'Lua Nova'; icon = '🌑'; }
+    else if (phaseAge < 5.53) { phaseName = 'Lua Crescente'; icon = '🌒'; }
+    else if (phaseAge < 9.22) { phaseName = 'Quarto Crescente'; icon = '🌓'; }
+    else if (phaseAge < 12.91) { phaseName = 'Gibosa Crescente'; icon = '🌔'; }
+    else if (phaseAge < 16.61) { phaseName = 'Lua Cheia'; icon = '🌕'; }
+    else if (phaseAge < 20.30) { phaseName = 'Gibosa Minguante'; icon = '🌖'; }
+    else if (phaseAge < 23.99) { phaseName = 'Quarto Minguante'; icon = '🌗'; }
+    else if (phaseAge < 27.68) { phaseName = 'Lua Minguante'; icon = '🌘'; }
+
+    document.getElementById('moon-icon').textContent = icon;
+    document.getElementById('moon-phase-name').textContent = phaseName;
+    document.getElementById('moon-details').textContent = `Idade: ${phaseAge.toFixed(1)} dias • Iluminação: ${illumination}%`;
+    const topMoonIcon = document.getElementById('top-moon-icon');
+    const topMoonText = document.getElementById('top-moon-text');
+    if (topMoonIcon) topMoonIcon.textContent = icon;
+    if (topMoonText) topMoonText.textContent = `${phaseName} (${illumination}%)`;
+
+    const startOfYear = new Date(now.getFullYear(), 0, 0);
+    const dayOfYear = Math.floor((now - startOfYear) / 86400000);
+    const declination = 23.44 * Math.sin(((360 / 365) * (dayOfYear - 81)) * (Math.PI / 180));
+    const lat = parseFloat(localStorage.getItem('druid_lat') || '39.05');
+    const latRad = lat * (Math.PI / 180);
+    const decRad = declination * (Math.PI / 180);
+    const cosH = -Math.tan(latRad) * Math.tan(decRad);
+    const clampedCosH = Math.max(-1, Math.min(1, cosH));
+    const hourAngle = Math.acos(clampedCosH) * (180 / Math.PI);
+    const daylightHours = (2 * hourAngle) / 15;
+    const lon = parseFloat(localStorage.getItem('druid_lon') || '-8');
+    const B = (360 / 365) * (dayOfYear - 81) * (Math.PI / 180);
+    const eot = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+    const solarNoon = 12 - lon / 15 - now.getTimezoneOffset() / 60 - eot / 60;
+    const sunriseDec = solarNoon - daylightHours / 2;
+    const sunsetDec = solarNoon + daylightHours / 2;
+
+    const formatHours = (dec) => {
+        const h = Math.floor(dec);
+        const m = Math.round((dec - h) * 60);
+        return `${String(h).padStart(2, '0')}:${String(m === 60 ? 59 : m).padStart(2, '0')}`;
+    };
+
+    const srStr = formatHours(sunriseDec);
+    const ssStr = formatHours(sunsetDec);
+    const durH = Math.floor(daylightHours);
+    const durM = Math.round((daylightHours - durH) * 60);
+
+    document.getElementById('sunrise-time').textContent = `Nascer: ${srStr}`;
+    document.getElementById('sunset-time').textContent = `Pôr: ${ssStr}`;
+    document.getElementById('solar-duration').textContent = `Luz solar: ${durH}h ${durM}m`;
+    const curHour = now.getHours() + now.getMinutes() / 60;
+    document.getElementById('solar-status').textContent = (curHour >= sunriseDec && curHour <= sunsetDec) ? 'Sol Acima do Horizonte' : 'Período Noturno';
+    const topSun = document.getElementById('top-sun-text');
+    if (topSun) topSun.textContent = `${srStr} — ${ssStr}`;
+
+    const activeTree = getCelticTree(now);
+    document.getElementById('celtic-month-symbol').textContent = activeTree.symbol;
+    document.getElementById('celtic-month-title').textContent = `${activeTree.name} — ${activeTree.tree}`;
+    document.getElementById('celtic-month-desc').textContent = `${activeTree.meaning} Erva: ${activeTree.herb}.`;
+    const topTreeSym = document.getElementById('top-tree-symbol');
+    const topTreeTxt = document.getElementById('top-tree-text');
+    const mobSub = document.getElementById('mob-tree-subtitle');
+    if (topTreeSym) topTreeSym.textContent = activeTree.symbol;
+    if (topTreeTxt) topTreeTxt.textContent = `${activeTree.name} (${activeTree.tree.split(' ')[0]})`;
+    if (mobSub) mobSub.textContent = `Mês de ${activeTree.name} (${activeTree.symbol})`;
+}
+
+function drawOghamCard(count) {
+    const pool = [...OGHAM_DATA];
+    const drawn = [];
+    for (let i = 0; i < count; i++) {
+        const idx = Math.floor(Math.random() * pool.length);
+        drawn.push(pool.splice(idx, 1)[0]);
+    }
+    lastOghamReading = drawn;
+    const labels = count === 3 ? ['Raízes (Passado)', 'Tronco (Presente)', 'Copa (Futuro)']
+                 : count === 5 ? ['Centro (Espírito)', 'Norte (Terra)', 'Leste (Ar)', 'Sul (Fogo)', 'Oeste (Água)']
+                 : ['Mensagem do Bosque'];
+
+    const gridCols = count === 1 ? 'grid-cols-1 max-w-md mx-auto' : count === 3 ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-5';
+    document.getElementById('ogham-card').innerHTML = `
+        <div class="grid ${gridCols} gap-4 w-full">
+            ${drawn.map((item, i) => `
+                <div class="theme-card border rounded-2xl p-5 text-center space-y-2 shadow-lg">
+                    <span class="text-[10px] uppercase tracking-widest theme-accent font-bold block">${labels[i]}</span>
+                    <div class="text-5xl theme-accent font-bold py-1">${item.symbol}</div>
+                    <h3 class="font-cinzel text-lg font-bold text-white">${item.name}</h3>
+                    <div class="text-[11px] theme-title font-semibold">${item.tree}</div>
+                    <p class="text-xs theme-muted leading-relaxed">${item.meaning}</p>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    document.getElementById('ogham-save-bar').classList.remove('hidden');
+}
+
+function drawRunes(count) {
+    const pool = [...RUNES_DATA];
+    const drawn = [];
+    for (let i = 0; i < count; i++) {
+        const idx = Math.floor(Math.random() * pool.length);
+        drawn.push(pool.splice(idx, 1)[0]);
+    }
+    lastRuneReading = drawn;
+    const labels = count === 3 ? ['Passado (Urd)', 'Presente (Verdandi)', 'Futuro (Skuld)'] : ['Conselho Rúnico'];
+    const gridCols = count === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-1 md:grid-cols-3';
+
+    document.getElementById('rune-card').innerHTML = `
+        <div class="grid ${gridCols} gap-4 w-full">
+            ${drawn.map((r, i) => `
+                <div class="theme-card border rounded-2xl p-5 text-center space-y-2 shadow-lg">
+                    <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold block">${labels[i]}</span>
+                    <div class="text-5xl text-amber-300 font-bold py-1">${r.symbol}</div>
+                    <h3 class="font-cinzel text-lg font-bold text-white">${r.name}</h3>
+                    <p class="text-xs theme-muted leading-relaxed">${r.meaning}</p>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    document.getElementById('rune-save-bar').classList.remove('hidden');
+}
+
+function saveLastReadingToJournal(type) {
+    const nowStr = new Date().toLocaleString('pt-PT');
+    let entry = `\n--- [${nowStr}] `;
+    if (type === 'ogham' && lastOghamReading.length) {
+        entry += `ORÁCULO DE OGHAM ---\n` + lastOghamReading.map(o => `• ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`).join('\n');
+    } else if (type === 'tarot' && typeof lastTarotReading !== 'undefined' && lastTarotReading.length) {
+        entry += `TAROT NÓRDICO 16-BIT ---\n` + lastTarotReading.map(t => `• ${t.card.name} (${t.isReversed ? 'Invertida' : 'Direita'}): ${t.isReversed ? t.card.reversed : t.card.upright}`).join('\n');
+    } else if (type === 'runes' && lastRuneReading.length) {
+        entry += `ORÁCULO DE RUNAS ---\n` + lastRuneReading.map(r => `• ${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+    }
+    const area = document.getElementById('journal-input');
+    area.value = (area.value + entry + '\n').trimStart();
+    autoSaveJournal();
+    showToast('📖 Leitura guardada no Diário!');
+}
+
+function selectFestival(id) {
+    currentFestivalId = id;
+    const f = FESTIVALS_DATA[id];
+    if (!f) return;
+    document.getElementById('fest-date-badge').textContent = f.date;
+    document.getElementById('fest-name-title').textContent = f.title;
+    document.getElementById('fest-theme-desc').textContent = f.theme;
+    document.getElementById('fest-ritual-desc').innerHTML = `<strong>Prática Ritual:</strong> ${f.ritual}`;
+}
+
+function openFestivalInRitualBuilder() {
+    switchTab('ritual');
+    const loader = document.getElementById('rit-template-loader');
+    if (loader) {
+        loader.value = String(currentFestivalId);
+        loadFestivalRitualTemplate(String(currentFestivalId));
+    }
+}
+
+function loadFestivalRitualTemplate(id) {
+    const f = FESTIVALS_DATA[id];
+    if (!f) return;
+    document.getElementById('rit-title').value = `Cerimónia do Grove: ${f.title}`;
+    document.getElementById('rit-intent').value = f.theme;
+    document.getElementById('rit-blessing').value = f.ritual;
+    updateRitualPreview();
+}
+
+function updateRitualPreview() {
+    const title = document.getElementById('rit-title').value || 'Cerimónia Sagrada do Grove';
+    const peace = document.getElementById('rit-peace').value;
+    const intent = document.getElementById('rit-intent').value || 'Harmonia e conexão com a Terra';
+    const elem = document.getElementById('rit-elem').value;
+    const blessing = document.getElementById('rit-blessing').value || 'Partilhamos a água da fonte e o pão da terra.';
+    const words = document.getElementById('rit-words').value;
+
+    document.getElementById('ritual-preview').innerHTML = `
+        <h3 class="font-cinzel text-base font-bold theme-accent border-b border-[var(--border-color)] pb-2">${title}</h3>
+        <p><strong class="theme-title">1. Paz nos Quadrantes:</strong><br><span class="theme-muted">${peace}</span></p>
+        <p><strong class="theme-title">2. Intenção & Elemento (${elem}):</strong><br><span class="theme-muted">${intent}</span></p>
+        <p><strong class="theme-title">3. Partilha da Taça:</strong><br><span class="theme-muted">${blessing}</span></p>
+        <p><strong class="theme-title">4. Encerramento:</strong><br><span class="theme-muted">${words}</span></p>
+    `;
+}
+
+function saveRitualTemplate() {
+    updateRitualPreview();
+    const text = document.getElementById('ritual-preview').innerText;
+    const area = document.getElementById('journal-input');
+    area.value += `\n\n=== GUIÃO RITUAL (${new Date().toLocaleDateString('pt-PT')}) ===\n${text}\n`;
+    autoSaveJournal();
+    showToast('📜 Guião ritual guardado no Diário!');
+}
+
+// BÚSSOLA ROTATIVA DINÂMICA (MOSTRADOR GIRA PARA O NORTE)
+function initGeoAndCompass() {
+    const isFileProtocol = window.location.protocol === 'file:';
+    
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(pos => {
+            const { latitude, longitude } = pos.coords;
+            localStorage.setItem('druid_lat', latitude.toFixed(4));
+            localStorage.setItem('druid_lon', longitude.toFixed(4));
+            updateAstronomy();
+            document.getElementById('gps-info').textContent = `📍 GPS Ativo: ${latitude.toFixed(4)}° N, ${longitude.toFixed(4)}° E`;
+            updateAstronomy();
+        }, () => {
+            document.getElementById('gps-info').textContent = isFileProtocol 
+                ? '📍 Modo local (file://): Bússola interativa ativa (sem GPS).' 
+                : '📍 GPS indisponível.';
+        });
+    }
+
+    const getCardinal = (deg) => {
+        const arr = ['Norte', 'Norteste', 'Este', 'Sueste', 'Sul', 'Sudoeste', 'Oeste', 'Noroeste'];
+        return arr[Math.round(deg / 45) % 8];
+    };
+
+    const handleOrientation = (e) => {
+        const heading = e.webkitCompassHeading || (360 - (e.alpha || 0));
+        const deg = Math.round(heading % 360);
+        
+        // Rodar o mostrador inteiro para o Norte magnético
+        const dial = document.getElementById('compass-dial');
+        if (dial) dial.style.transform = `rotate(${-deg}deg)`;
+
+        const labelDeg = document.getElementById('heading-deg');
+        const labelCard = document.getElementById('heading-cardinal');
+        if (labelDeg) labelDeg.textContent = `${deg}°`;
+        if (labelCard) labelCard.textContent = getCardinal(deg);
+    };
+
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission().then(res => {
+            if (res === 'granted') window.addEventListener('deviceorientation', handleOrientation);
+        }).catch(() => {
+            showToast('⚠️ Permissão de sensores recusada.');
+        });
+    } else {
+        window.addEventListener('deviceorientationabsolute', handleOrientation);
+        window.addEventListener('deviceorientation', handleOrientation);
+        showToast(isFileProtocol ? '🧭 Modo de simulação local ativo na bússola.' : '🧭 Bússola ativa!');
+    }
+}
+
+function toggleAltarElement(elemKey) {
+    altarState[elemKey] = !altarState[elemKey];
+    const box = document.getElementById(`altar-elem-${elemKey}`);
+    const status = document.getElementById(`altar-status-${elemKey}`);
+    if (altarState[elemKey]) {
+        box.classList.remove('theme-inner');
+        box.classList.add('bg-amber-950/40', 'border-amber-400');
+        status.textContent = 'Ativo • Consagrado';
+        status.className = 'text-[9px] uppercase tracking-wider text-amber-300 font-bold block';
+    } else {
+        box.classList.add('theme-inner');
+        box.classList.remove('bg-amber-950/40', 'border-amber-400');
+        status.textContent = 'Inativo';
+        status.className = 'text-[9px] uppercase tracking-wider theme-muted block';
+    }
+}
+
+function saveAltarToJournal() {
+    const intent = document.getElementById('altar-intent-input').value.trim() || 'Meditação e alinhamento elemental';
+    const activeElems = Object.keys(altarState).filter(k => altarState[k]).join(', ') || 'Nenhum selecionado';
+    const area = document.getElementById('journal-input');
+    area.value += `\n\n--- ALTAR DIGITAL (${new Date().toLocaleString('pt-PT')}) ---\nIntenção: ${intent}\nElementos Ativos: ${activeElems}\n`;
+    autoSaveJournal();
+    showToast('🔥 Altar consagrado e registado no Diário!');
+}
+
+function drawRandomTriad() {
+    const t = TRIADS_DATA[Math.floor(Math.random() * TRIADS_DATA.length)];
+    document.getElementById('triad-text').textContent = `"${t}"`;
+}
+
+function registerAwenPractice() {
+    const area = document.getElementById('journal-input');
+    area.value += `\n[${new Date().toLocaleString('pt-PT')}] 🌿 Prática de Invocação da Awen (/|\) concluída.\n`;
+    autoSaveJournal();
+    showToast('🌿 Prática de Awen registada no Diário!');
+}
+
+function autoSaveJournal() {
+    localStorage.setItem('druid_journal', document.getElementById('journal-input').value);
+    document.getElementById('save-status').textContent = `Guardado às ${new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`;
+}
+
+function autoSaveBardic() {
+    const val = document.getElementById('bardic-input').value;
+    localStorage.setItem('druid_bardic', val);
+    const lines = val.split('\n').filter(l => l.trim().length > 0).length;
+    document.getElementById('bardic-line-count').textContent = `Versos: ${lines}`;
+    document.getElementById('bardic-triad-count').textContent = `Tríades completas: ${Math.floor(lines / 3)}`;
+    document.getElementById('save-status').textContent = `Guardado às ${new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`;
+}
+
+function switchJournalSubtab(sub) {
+    const gen = document.getElementById('journal-subtab-general');
+    const bar = document.getElementById('journal-subtab-bardic');
+    const bGen = document.getElementById('subtab-btn-general');
+    const bBar = document.getElementById('subtab-btn-bardic');
+    if (sub === 'general') {
+        gen.classList.remove('hidden');
+        bar.classList.add('hidden');
+        bGen.className = 'bg-[var(--btn-primary)] text-white text-xs font-semibold px-4 py-2 rounded-xl transition cursor-pointer';
+        bBar.className = 'theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-4 py-2 rounded-xl transition cursor-pointer';
+    } else {
+        bar.classList.remove('hidden');
+        gen.classList.add('hidden');
+        bBar.className = 'bg-[var(--btn-primary)] text-white text-xs font-semibold px-4 py-2 rounded-xl transition cursor-pointer';
+        bGen.className = 'theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-4 py-2 rounded-xl transition cursor-pointer';
+    }
+}
+
+function togglePinSettings() {
+    document.getElementById('pin-settings-box').classList.toggle('hidden');
+}
+
+function saveNewJournalPin() {
+    const pin = document.getElementById('new-pin-input').value.trim();
+    if (!/^\d{4}$/.test(pin)) {
+        showToast('⚠️ Introduza exatamente 4 dígitos numéricos.');
+        return;
+    }
+    localStorage.setItem('druid_journal_pin', pin);
+    document.getElementById('new-pin-input').value = '';
+    document.getElementById('pin-settings-box').classList.add('hidden');
+    showToast('🔐 PIN de proteção ativado!');
+}
+
+function removeJournalPin() {
+    localStorage.removeItem('druid_journal_pin');
+    document.getElementById('pin-settings-box').classList.add('hidden');
+    showToast('🔓 Proteção por PIN removida.');
+}
+
+function checkJournalPinLock() {
+    const savedPin = localStorage.getItem('druid_journal_pin');
+    const lockScreen = document.getElementById('journal-lock-screen');
+    const unlockedArea = document.getElementById('journal-unlocked-area');
+    if (savedPin && !sessionStorage.getItem('druid_pin_unlocked')) {
+        lockScreen.classList.remove('hidden');
+        unlockedArea.classList.add('hidden');
+    } else {
+        lockScreen.classList.add('hidden');
+        unlockedArea.classList.remove('hidden');
+    }
+}
+
+function unlockJournalWithPin() {
+    const input = document.getElementById('journal-pin-unlock-input').value;
+    const savedPin = localStorage.getItem('druid_journal_pin');
+    const errMsg = document.getElementById('pin-error-msg');
+    if (input === savedPin) {
+        sessionStorage.setItem('druid_pin_unlocked', '1');
+        document.getElementById('journal-pin-unlock-input').value = '';
+        if (errMsg) errMsg.classList.add('hidden');
+        checkJournalPinLock();
+        showToast('🔓 Santuário desbloqueado.');
+    } else {
+        if (errMsg) errMsg.classList.remove('hidden');
+        showToast('❌ PIN incorreto.');
+    }
+}
+
+function exportJournalTXT() {
+    const content = `=== DIÁRIO DRUÍDICO ===\n${document.getElementById('journal-input').value}\n\n=== CADERNO BÁRDICO ===\n${document.getElementById('bardic-input').value}`;
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `Diario_Druidico_${new Date().toISOString().slice(0, 10)}.txt`;
+    a.click();
+}
+
+function exportBackupJSON() {
+    const data = {
+        journal: localStorage.getItem('druid_journal') || '',
+        bardic: localStorage.getItem('druid_bardic') || '',
+        theme: localStorage.getItem('druid_theme') || 'theme-night',
+        readings: JSON.parse(localStorage.getItem('druid_readings') || '[]'),
+        exportedAt: new Date().toISOString()
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `Backup_Caminho_Druidico_${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    showToast('📦 Backup JSON exportado!');
+}
+
+function importBackupJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (data.journal !== undefined) {
+                localStorage.setItem('druid_journal', data.journal);
+                document.getElementById('journal-input').value = data.journal;
+            }
+            if (data.bardic !== undefined) {
+                localStorage.setItem('druid_bardic', data.bardic);
+                document.getElementById('bardic-input').value = data.bardic;
+                autoSaveBardic();
+            }
+            if (data.theme) changeTheme(data.theme);
+            if (Array.isArray(data.readings)) { localStorage.setItem('druid_readings', JSON.stringify(data.readings)); renderReadingLog(); }
+            showToast('✅ Backup restaurado com sucesso!');
+        } catch {
+            showToast('❌ Ficheiro JSON inválido.');
+        }
+    };
+    reader.readAsText(file);
+}
+
+function clearJournal() {
+    if (confirm('Tem a certeza de que pretende limpar todo o texto do Diário?')) {
+        document.getElementById('journal-input').value = '';
+        autoSaveJournal();
+    }
+}
+
+function initAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function stopAmbientSound() {
+    if (activeSoundNode) {
+        try { activeSoundNode.stop(); activeSoundNode.disconnect(); } catch {}
+        activeSoundNode = null;
+    }
+    if (activeGainNode) {
+        try { activeGainNode.disconnect(); } catch {}
+        activeGainNode = null;
+    }
+}
+
+function toggleAmbientSound(type) {
+    initAudio();
+    stopAmbientSound();
+    const duration = 5;
+    const sampleRate = audioCtx.sampleRate;
+    const bufferSize = sampleRate * duration;
+    const buffer = audioCtx.createBuffer(1, bufferSize, sampleRate);
+    const data = buffer.getChannelData(0);
+    let lastOut = 0;
+    for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        if (type === 'rain') {
+            data[i] = (lastOut + (0.05 * white)) / 1.05;
+            lastOut = data[i];
+            data[i] *= 0.8;
+        } else {
+            data[i] = (lastOut + (0.02 * white)) / 1.02;
+            lastOut = data[i];
+            data[i] *= 1.2;
+        }
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    noise.loop = true;
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+    noise.connect(gain);
+    gain.connect(audioCtx.destination);
+    noise.start(0);
+    activeSoundNode = noise;
+    activeGainNode = gain;
+    showToast(`🌿 Paisagem Sonora: ${type === 'rain' ? 'Chuva no Bosque' : 'Vento Ancestral'}`);
+}
+
+function toggleVocalDrone(freq, label) {
+    initAudio();
+    stopAmbientSound();
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0.14;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    activeSoundNode = osc;
+    activeGainNode = gain;
+    showToast(`🎵 Drone ativo: ${label}`);
+}
+
+function playSacredBell() {
+    initAudio();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(528, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.2);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 3.3);
+}
+
+function toggleBreathing() {
+    const btn = document.getElementById('btn-breath-toggle');
+    const circle = document.getElementById('breath-circle');
+    const action = document.getElementById('breath-action');
+    const timer = document.getElementById('breath-timer');
+
+    if (isBreathing) {
+        clearInterval(breathTimerInterval);
+        isBreathing = false;
+        btn.textContent = 'Iniciar Ciclo Respiratório';
+        circle.style.transform = 'scale(1)';
+        action.textContent = 'Respirar';
+        timer.textContent = '4';
+        return;
+    }
+
+    isBreathing = true;
+    btn.textContent = 'Parar Respiração';
+    const phases = [
+        { name: 'Inspirar', scale: 1.25 },
+        { name: 'Reter', scale: 1.25 },
+        { name: 'Expirar', scale: 0.92 },
+        { name: 'Pausa', scale: 0.92 }
+    ];
+    let phaseIdx = 0;
+    let sec = 4;
+    action.textContent = phases[0].name;
+    circle.style.transform = `scale(${phases[0].scale})`;
+
+    breathTimerInterval = setInterval(() => {
+        sec--;
+        if (sec <= 0) {
+            sec = 4;
+            phaseIdx = (phaseIdx + 1) % 4;
+            action.textContent = phases[phaseIdx].name;
+            circle.style.transform = `scale(${phases[phaseIdx].scale})`;
+        }
+        timer.textContent = sec;
+    }, 1000);
+}
+
+function setMeditationMinutes(mins) {
+    if (isMedRunning) toggleMeditationTimer();
+    medTotalSeconds = mins * 60;
+    medRemainingSeconds = medTotalSeconds;
+    updateMeditationDisplay();
+}
+
+function updateMeditationDisplay() {
+    const m = Math.floor(medRemainingSeconds / 60);
+    const s = medRemainingSeconds % 60;
+    document.getElementById('meditation-display').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+function toggleMeditationTimer() {
+    const btn = document.getElementById('btn-med-toggle');
+    if (isMedRunning) {
+        clearInterval(medInterval);
+        isMedRunning = false;
+        btn.textContent = '🔔 Retomar Meditação';
+        return;
+    }
+    playSacredBell();
+    isMedRunning = true;
+    btn.textContent = '⏸️ Pausar';
+    medInterval = setInterval(() => {
+        medRemainingSeconds--;
+        updateMeditationDisplay();
+        if (medRemainingSeconds <= 0) {
+            clearInterval(medInterval);
+            isMedRunning = false;
+            playSacredBell();
+            btn.textContent = '🔔 Iniciar Meditação';
+            document.getElementById('meditation-status').textContent = '✨ Jornada no Nemeton concluída em paz.';
+            showToast('🔔 Meditação concluída!');
+        }
+    }, 1000);
+}
+
+function resetMeditationTimer() {
+    if (isMedRunning) toggleMeditationTimer();
+    medRemainingSeconds = medTotalSeconds;
+    updateMeditationDisplay();
+}
+
+function renderHerbalList(filter = '') {
+    const list = document.getElementById('tree-list');
+    const q = filter.toLowerCase();
+    const filtered = OGHAM_DATA.filter(o =>
+        o.name.toLowerCase().includes(q) ||
+        o.tree.toLowerCase().includes(q) ||
+        o.herb.toLowerCase().includes(q) ||
+        o.meaning.toLowerCase().includes(q)
+    );
+    list.innerHTML = filtered.map(o => `
+        <div class="theme-inner border rounded-2xl p-4 space-y-2 hover:border-[var(--border-hover)] transition">
+            <div class="flex items-center justify-between">
+                <span class="text-3xl theme-accent font-bold">${o.symbol}</span>
+                <span class="text-[10px] uppercase tracking-wider theme-muted opacity-75">${o.aicme}</span>
+            </div>
+            <h3 class="font-cinzel text-base font-bold text-white">${o.name} • ${o.tree}</h3>
+            <p class="text-[11px] theme-accent font-semibold">🌿 Fitoterapia: ${o.herb}</p>
+            <p class="text-xs theme-muted leading-relaxed">${o.meaning}</p>
+        </div>
+    `).join('');
+}
+
+function filterHerbal() {
+    renderHerbalList(document.getElementById('herbal-search').value);
+}
+
+function showToast(msg) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'bg-slate-900/95 border border-indigo-500/50 text-white text-xs px-4 py-3 rounded-xl shadow-2xl backdrop-blur-md transition-opacity duration-300';
+    toast.textContent = msg;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 3200);
+}
+
+async function downloadProjectZip() {
+    if (typeof JSZip === 'undefined') {
+        showToast('⚠️ Biblioteca JSZip ainda a carregar.');
+        return;
+    }
+    showToast('📦 A empacotar ficheiro...');
+    const zip = new JSZip();
+    zip.file('caminho-druidico-pro-ultimate.html', document.documentElement.outerHTML);
+    const blob = await zip.generateAsync({ type: 'blob' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'caminho-druidico-pro-ultimate-standalone.zip';
+    a.click();
+    showToast('✅ Ficheiro .ZIP descarregado!');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('druid_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-parchment' : 'theme-night');
+    changeTheme(savedTheme);
+    updateAstronomy();
+    renderHerbalList();
+    selectFestival(8);
+    updateRitualPreview();
+
+    const jInput = document.getElementById('journal-input');
+    const bInput = document.getElementById('bardic-input');
+    if (jInput) jInput.value = localStorage.getItem('druid_journal') || '';
+    if (bInput) {
+        bInput.value = localStorage.getItem('druid_bardic') || '';
+        autoSaveBardic();
+    }
+});
+    </script>
+    <script>
+/* ============================================================
+   AJUSTES v2: novas funcionalidades
+   ============================================================ */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* --- Mês arbóreo correto (por data, não por índice do mês) --- */
+function getCelticTree(d) {
+    const md = (d.getMonth() + 1) * 100 + d.getDate();
+    const ranges = [[1224, 1231, 'Beith'], [101, 120, 'Beith'], [121, 217, 'Luis'], [218, 317, 'Fearn'], [318, 414, 'Saille'],
+        [415, 512, 'Nion'], [513, 609, 'Huath'], [610, 707, 'Duir'], [708, 804, 'Tinne'], [805, 901, 'Coll'],
+        [902, 929, 'Muin'], [930, 1027, 'Gort'], [1028, 1124, 'Ngetal'], [1125, 1223, 'Straif']];
+    const hit = ranges.find(r => md >= r[0] && md <= r[1]);
+    return OGHAM_DATA.find(o => o.name === (hit ? hit[2] : 'Beith')) || OGHAM_DATA[0];
+}
+
+/* --- Few do Dia (igual para todo o dia) --- */
+function renderDailyFew() {
+    const el = document.getElementById('daily-few');
+    if (!el) return;
+    const d = new Date();
+    const seed = ((d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate()) * 9301 + 49297) % 233280;
+    const o = OGHAM_DATA[seed % OGHAM_DATA.length];
+    el.innerHTML = `
+        <span class="text-5xl theme-accent font-bold leading-none" aria-hidden="true">${o.symbol}</span>
+        <div class="flex-1 min-w-0">
+            <p class="text-xs theme-muted">Few do dia</p>
+            <h3 class="font-cinzel text-base font-bold theme-title">${o.name} • ${o.tree}</h3>
+            <p class="text-xs theme-muted leading-relaxed mt-1">${o.meaning}</p>
+        </div>
+        <button onclick="dailyToJournal()" class="theme-card border text-xs theme-accent font-semibold py-2 px-3 rounded-xl cursor-pointer hover:border-[var(--text-accent)] transition">Guardar</button>`;
+    el.dataset.text = `FEW DO DIA: ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`;
+}
+function appendToJournal(text) {
+    const area = document.getElementById('journal-input');
+    area.value = (area.value + `\n--- [${new Date().toLocaleString('pt-PT')}] ${text}\n`).trimStart();
+    autoSaveJournal();
+    showToast('📖 Guardado no Diário!');
+}
+function dailyToJournal() { appendToJournal(document.getElementById('daily-few').dataset.text); }
+
+/* --- Histórico de leituras --- */
+function getReadingLog() { try { return JSON.parse(localStorage.getItem('druid_readings') || '[]'); } catch { return []; } }
+function recordReading(type) {
+    const lines = type === 'ogham' ? lastOghamReading.map(o => `${o.symbol} ${o.name}`)
+        : type === 'runes' ? lastRuneReading.map(r => `${r.symbol} ${r.name}`)
+        : lastTarotReading.map(t => `${t.card.name}${t.isReversed ? ' (inv.)' : ''}`);
+    if (!lines.length) return;
+    const log = getReadingLog();
+    log.unshift({ t: Date.now(), type, lines });
+    localStorage.setItem('druid_readings', JSON.stringify(log.slice(0, 30)));
+    renderReadingLog();
+}
+function renderReadingLog() {
+    const list = document.getElementById('history-list');
+    if (!list) return;
+    const log = getReadingLog();
+    const names = { ogham: 'Ogham', runes: 'Runas', tarot: 'Tarot' };
+    document.getElementById('history-count').textContent = log.length ? `(${log.length})` : '';
+    list.innerHTML = log.length ? log.map((r, i) => `
+        <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
+            <div class="min-w-0"><span class="theme-muted">${new Date(r.t).toLocaleString('pt-PT', { dateStyle: 'short', timeStyle: 'short' })} · ${names[r.type]}</span>
+            <div class="theme-title truncate">${esc(r.lines.join(' · '))}</div></div>
+            <button onclick="logToJournal(${i})" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
+        </div>`).join('') : '<p class="theme-muted">Ainda não fez nenhuma leitura. As suas tiragens aparecem aqui.</p>';
+}
+function logToJournal(i) { const r = getReadingLog()[i]; if (r) appendToJournal(`${r.type.toUpperCase()}: ${r.lines.join(' · ')}`); }
+function clearReadingLog() { if (confirm('Limpar o histórico de leituras?')) { localStorage.removeItem('druid_readings'); renderReadingLog(); } }
+['drawOghamCard:ogham', 'drawRunes:runes', 'drawTarotCard:tarot'].forEach(p => {
+    const [fn, type] = p.split(':'), orig = window[fn];
+    if (typeof orig === 'function') window[fn] = function (...a) { const r = orig.apply(this, a); recordReading(type); return r; };
+});
+
+/* --- PIN com hash (SHA-256 + sal) e limite de tentativas --- */
+async function pinHash(pin, salt) {
+    try {
+        const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + pin));
+        return [...new Uint8Array(h)].map(x => x.toString(16).padStart(2, '0')).join('');
+    } catch { let h = 5381; for (const c of salt + pin) h = ((h << 5) + h + c.charCodeAt(0)) >>> 0; return 'f' + h; }
+}
+async function saveNewJournalPin() {
+    const pin = document.getElementById('new-pin-input').value.trim();
+    if (!/^\d{4}$/.test(pin)) { showToast('⚠️ Introduza exatamente 4 dígitos numéricos.'); return; }
+    const salt = [...crypto.getRandomValues(new Uint8Array(8))].map(x => x.toString(16).padStart(2, '0')).join('');
+    localStorage.setItem('druid_journal_pin_h', salt + ':' + await pinHash(pin, salt));
+    localStorage.removeItem('druid_journal_pin');
+    document.getElementById('new-pin-input').value = '';
+    document.getElementById('pin-settings-box').classList.add('hidden');
+    showToast('🔐 PIN de proteção ativado!');
+}
+function removeJournalPin() {
+    localStorage.removeItem('druid_journal_pin');
+    localStorage.removeItem('druid_journal_pin_h');
+    document.getElementById('pin-settings-box').classList.add('hidden');
+    showToast('🔓 Proteção por PIN removida.');
+}
+function checkJournalPinLock() {
+    const has = localStorage.getItem('druid_journal_pin_h') || localStorage.getItem('druid_journal_pin');
+    const locked = has && !sessionStorage.getItem('druid_pin_unlocked');
+    document.getElementById('journal-lock-screen').classList.toggle('hidden', !locked);
+    document.getElementById('journal-unlocked-area').classList.toggle('hidden', !!locked);
+}
+let pinFails = 0, pinBlockedUntil = 0;
+async function unlockJournalWithPin() {
+    if (Date.now() < pinBlockedUntil) { showToast('⏳ Demasiadas tentativas. Aguarde 30 segundos.'); return; }
+    const input = document.getElementById('journal-pin-unlock-input').value;
+    const hashed = localStorage.getItem('druid_journal_pin_h'), legacy = localStorage.getItem('druid_journal_pin');
+    let ok = false;
+    if (hashed) { const [salt, h] = hashed.split(':'); ok = (await pinHash(input, salt)) === h; }
+    else if (legacy) { ok = input === legacy; if (ok) { localStorage.setItem('druid_journal_pin', input); document.getElementById('new-pin-input').value = input; await saveNewJournalPin(); } }
+    const err = document.getElementById('pin-error-msg');
+    if (ok) {
+        pinFails = 0;
+        sessionStorage.setItem('druid_pin_unlocked', '1');
+        document.getElementById('journal-pin-unlock-input').value = '';
+        if (err) err.classList.add('hidden');
+        checkJournalPinLock();
+        showToast('🔓 Santuário desbloqueado.');
+    } else {
+        if (++pinFails >= 5) { pinBlockedUntil = Date.now() + 30000; pinFails = 0; }
+        if (err) err.classList.remove('hidden');
+        showToast('❌ PIN incorreto.');
+    }
+}
+
+/* --- Diário: pesquisa e contagem de palavras --- */
+function searchJournal(q) {
+    const out = document.getElementById('journal-search-results');
+    q = q.trim().toLowerCase();
+    if (q.length < 2) { out.classList.add('hidden'); out.innerHTML = ''; return; }
+    const hits = document.getElementById('journal-input').value.split('\n').filter(l => l.toLowerCase().includes(q));
+    out.classList.remove('hidden');
+    out.innerHTML = hits.length ? hits.slice(0, 30).map(l => `<div class="py-1 border-b border-[var(--border-color)]">${esc(l)}</div>`).join('') : 'Sem resultados.';
+}
+function updateWordCount() {
+    const v = document.getElementById('journal-input').value.trim();
+    document.getElementById('journal-wordcount').textContent = `${v ? v.split(/\s+/).length : 0} palavras`;
+}
+const _autoSaveJournal = autoSaveJournal;
+autoSaveJournal = function () { _autoSaveJournal(); updateWordCount(); };
+
+/* --- Mini-player de som: volume, temporizador de sono, parar de qualquer separador --- */
+let soundKey = null, sleepTimeout = null;
+function ensureSoundBar() {
+    let bar = document.getElementById('sound-bar');
+    if (bar) return bar;
+    bar = document.createElement('div');
+    bar.id = 'sound-bar';
+    bar.innerHTML = `<span id="sound-label"></span>
+        <input id="sound-vol" type="range" min="0" max="0.8" step="0.02" aria-label="Volume" style="width:90px">
+        <select id="sound-sleep" aria-label="Temporizador de sono"><option value="0">Sem timer</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option></select>
+        <button onclick="stopSound()" aria-label="Parar som">Parar</button>`;
+    document.body.appendChild(bar);
+    document.getElementById('sound-vol').oninput = e => { if (activeGainNode) activeGainNode.gain.value = parseFloat(e.target.value); };
+    document.getElementById('sound-sleep').onchange = e => {
+        clearTimeout(sleepTimeout);
+        const m = parseInt(e.target.value, 10);
+        if (!m) return;
+        sleepTimeout = setTimeout(() => {
+            if (activeGainNode) activeGainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 20);
+            setTimeout(stopSound, 20500);
+        }, m * 60000);
+        showToast(`🌙 O som vai desvanecer em ${m} minutos.`);
+    };
+    return bar;
+}
+function showSoundBar(label) {
+    const bar = ensureSoundBar();
+    bar.style.display = 'flex';
+    document.getElementById('sound-label').textContent = label;
+    document.getElementById('sound-vol').value = activeGainNode ? activeGainNode.gain.value : 0.3;
+}
+function stopSound() {
+    stopAmbientSound(); soundKey = null; clearTimeout(sleepTimeout);
+    const bar = document.getElementById('sound-bar');
+    if (bar) { bar.style.display = 'none'; document.getElementById('sound-sleep').value = '0'; }
+}
+const _amb = toggleAmbientSound, _drone = toggleVocalDrone;
+toggleAmbientSound = function (t) {
+    if (soundKey === t) { stopSound(); return; }
+    _amb(t); soundKey = t; showSoundBar(t === 'rain' ? 'Chuva no bosque' : 'Vento ancestral');
+};
+toggleVocalDrone = function (f, label) {
+    if (soundKey === 'd' + f) { stopSound(); return; }
+    _drone(f, label); soundKey = 'd' + f; showSoundBar(label);
+};
+
+/* --- Meditação: ecrã sempre ligado --- */
+let wakeLock = null;
+const _medToggle = toggleMeditationTimer;
+toggleMeditationTimer = async function () {
+    _medToggle();
+    try {
+        if (isMedRunning && 'wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen');
+        else if (wakeLock) { await wakeLock.release(); wakeLock = null; }
+    } catch {}
+};
+setInterval(() => { if (wakeLock && !isMedRunning) { wakeLock.release().catch(() => {}); wakeLock = null; } }, 5000);
+
+/* --- Separador lembrado + hash na URL + aria-current --- */
+const _switchTab = switchTab;
+switchTab = function (id) {
+    _switchTab(id);
+    try { localStorage.setItem('druid_tab', id); } catch {}
+    if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    document.querySelectorAll('[aria-current]').forEach(e => e.removeAttribute('aria-current'));
+    ['desk', 'mob', 'bot'].forEach(p => { const b = document.getElementById(`${p}-nav-${id}`); if (b) b.setAttribute('aria-current', 'page'); });
+    const t = document.getElementById('tab-' + id);
+    if (t) { t.classList.remove('tab-in'); void t.offsetWidth; t.classList.add('tab-in'); }
+    window.scrollTo({ top: 0 });
+};
+window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (document.getElementById('tab-' + id)) switchTab(id); });
+
+/* --- Cor da barra do browser acompanha o tema --- */
+const _changeTheme = changeTheme;
+changeTheme = function (n) {
+    _changeTheme(n);
+    const c = getComputedStyle(document.body).getPropertyValue('--bg-header').trim();
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m && c) m.setAttribute('content', c);
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+    renderDailyFew();
+    renderReadingLog();
+    updateWordCount();
+    const id = location.hash.slice(1) || localStorage.getItem('druid_tab');
+    if (id && document.getElementById('tab-' + id)) switchTab(id);
+});
+
+    </script>
+    <script>
+/* ============================================================
+   TAROT v3: tiragens com significado por posição, revelação
+   carta a carta, síntese da leitura e pesquisa na galeria
+   ============================================================ */
+const TAROT_SPREADS = {
+    1: { name: 'Oráculo de Odin', cols: 'grid-cols-1 max-w-xs mx-auto', pos: [
+        ['Oráculo de Odin', 'O conselho central para este momento.']] },
+    3: { name: 'As Três Nornas', cols: 'grid-cols-1 md:grid-cols-3', pos: [
+        ['Urd (passado)', 'O que o trouxe até aqui.'],
+        ['Verdandi (presente)', 'O que se desenrola agora.'],
+        ['Skuld (futuro)', 'O que se está a formar.']] },
+    4: { name: 'Cruz de Odin', cols: 'grid-cols-2 lg:grid-cols-4', pos: [
+        ['Questão', 'O coração da pergunta.'],
+        ['Obstáculo', 'O que se interpõe no caminho.'],
+        ['Raiz', 'O que sustenta a situação por baixo.'],
+        ['Desfecho', 'Para onde tudo tende, se nada mudar.']] },
+    5: { name: 'Cruz Elemental', cols: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-5', pos: [
+        ['Centro (situação)', 'O tema que une todas as cartas.'],
+        ['Norte (desafios)', 'O que é preciso enraizar ou superar.'],
+        ['Leste (conselho)', 'A ideia ou palavra que deve ouvir.'],
+        ['Sul (força)', 'A energia e a coragem ao seu dispor.'],
+        ['Oeste (desfecho)', 'O que as emoções e o tempo trarão.']] },
+    9: { name: 'Os Nove Mundos', cols: 'grid-cols-1 sm:grid-cols-3', pos: [
+        ['Asgard', 'Ordem, propósito e autoridade.'],
+        ['Vanaheim', 'Abundância, fertilidade e prazer.'],
+        ['Álfheim', 'Inspiração, intuição e beleza.'],
+        ['Midgard', 'O quotidiano e o que é concreto.'],
+        ['Jotunheim', 'Forças brutas e desafios externos.'],
+        ['Svartálfheim', 'Talentos escondidos e ofício.'],
+        ['Muspelheim', 'Paixão, desejo e transformação.'],
+        ['Niflheim', 'O que está congelado ou por resolver.'],
+        ['Helheim', 'O que deve terminar para o novo nascer.']] }
+};
+let lastTarotMeta = { question: '', spread: '' };
+let tarotQuery = '';
+let skipRecord = false;
+
+/* --- Pesquisa na galeria --- */
+getFilteredNordicDeck = function () {
+    const base = activeTarotFilter === 'all' ? NORDIC_TAROT_DECK : NORDIC_TAROT_DECK.filter(c => c.suit === activeTarotFilter);
+    const q = tarotQuery.trim().toLowerCase();
+    return q.length < 2 ? base : base.filter(c => `${c.name} ${c.title} ${c.realm} ${c.upright}`.toLowerCase().includes(q));
+};
+function setTarotQuery(v) { tarotQuery = v; if (activeTarotMode === 'gallery') renderTarotGallery(); }
+const _switchTarotMode = switchTarotMode;
+switchTarotMode = function (m) {
+    _switchTarotMode(m);
+    document.getElementById('tarot-search-wrap').classList.toggle('hidden', m !== 'gallery');
+};
+
+/* --- Tiragem --- */
+drawTarotCard = function (count) {
+    if (activeTarotMode !== 'draw') { skipRecord = true; switchTarotMode('draw'); skipRecord = false; }
+    const spread = TAROT_SPREADS[count] || TAROT_SPREADS[1];
+    const pool = [...getFilteredNordicDeck()];
+    const drawn = [];
+    for (let i = 0; i < spread.pos.length && pool.length; i++) {
+        const card = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+        drawn.push({ card, isReversed: Math.random() < 0.35, pos: spread.pos[i][0] });
+    }
+    lastTarotReading = drawn;
+    lastTarotMeta = { question: (document.getElementById('tarot-question')?.value || '').trim(), spread: spread.name };
+
+    const slots = drawn.map((it, i) => {
+        let html = buildPixelCardHTML(it.card, it.isReversed, '')
+            .replace('tarot-flip-wrapper is-flipped cursor-pointer', 'tarot-flip-wrapper cursor-pointer')
+            .replace(`onclick="this.classList.toggle('is-flipped')"`, `onclick="flipTarot(this)" role="button" tabindex="0" aria-label="Revelar carta ${i + 1}"`)
+            .replace('theme-inner border rounded-xl p-3 text-center w-full space-y-1', 'tarot-meaning hidden theme-inner border rounded-xl p-3 text-center w-full space-y-1');
+        return `<div data-tarot-slot class="flex flex-col items-center gap-2">
+            <div class="text-center max-w-[230px]"><span class="text-xs font-semibold theme-accent">${spread.pos[i][0]}</span>
+            <p class="text-[11px] theme-muted leading-snug">${spread.pos[i][1]}</p></div>${html}</div>`;
+    }).join('');
+
+    document.getElementById('tarot-card-container').innerHTML = `
+        <div class="w-full space-y-5">
+            <div class="text-center"><h3 class="font-cinzel text-base font-bold theme-title">${spread.name}</h3>
+            ${lastTarotMeta.question ? `<p class="text-xs theme-muted mt-1">“${esc(lastTarotMeta.question)}”</p>` : ''}</div>
+            <div id="tarot-reveal-bar" class="flex items-center justify-center gap-3 text-xs theme-muted">
+                <span id="tarot-reveal-count"></span>
+                <button onclick="revealAllTarot()" class="theme-title">Revelar todas</button>
+            </div>
+            <div class="grid ${spread.cols} gap-5 w-full items-start justify-center">${slots}</div>
+            <div id="tarot-summary" class="hidden theme-inner border rounded-2xl p-4 max-w-2xl mx-auto text-left">
+                <p class="font-cinzel text-sm font-bold theme-title mb-1">Leitura de conjunto</p>
+                <p id="tarot-summary-text" class="text-xs theme-muted leading-relaxed"></p>
+                <p class="text-[11px] theme-muted opacity-70 mt-2">Leitura simbólica para reflexão pessoal, não uma previsão.</p>
+            </div>
+        </div>`;
+    document.getElementById('tarot-save-bar').classList.add('hidden');
+    updateTarotReveal();
+    if (!skipRecord) recordReading('tarot');
+};
+
+function flipTarot(el) {
+    el.classList.toggle('is-flipped');
+    const m = el.closest('[data-tarot-slot]')?.querySelector('.tarot-meaning');
+    if (m) m.classList.toggle('hidden', !el.classList.contains('is-flipped'));
+    updateTarotReveal();
+}
+document.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches?.('[data-tarot-slot] .tarot-flip-wrapper')) { e.preventDefault(); flipTarot(e.target); }
+});
+function revealAllTarot() {
+    document.querySelectorAll('#tarot-card-container [data-tarot-slot] .tarot-flip-wrapper').forEach(w => { if (!w.classList.contains('is-flipped')) flipTarot(w); });
+}
+function updateTarotReveal() {
+    const w = [...document.querySelectorAll('#tarot-card-container [data-tarot-slot] .tarot-flip-wrapper')];
+    if (!w.length) return;
+    const done = w.filter(x => x.classList.contains('is-flipped')).length;
+    document.getElementById('tarot-reveal-count').textContent = done === w.length ? 'Todas reveladas' : `${done} de ${w.length} reveladas. Toque numa carta para a virar.`;
+    document.getElementById('tarot-reveal-bar').querySelector('button').classList.toggle('hidden', done === w.length);
+    const all = done === w.length;
+    document.getElementById('tarot-summary').classList.toggle('hidden', !all || w.length < 2);
+    if (all) document.getElementById('tarot-summary-text').textContent = tarotSummary();
+    document.getElementById('tarot-save-bar').classList.toggle('hidden', !all);
+}
+
+/* --- Síntese: Arcanos Maiores, naipe dominante, cartas invertidas --- */
+function tarotSummary() {
+    const r = lastTarotReading, n = r.length, parts = [];
+    const maj = r.filter(x => x.card.suit === 'major').length;
+    const rev = r.filter(x => x.isReversed).length;
+    const suits = {};
+    r.forEach(x => { if (x.card.suitObj) suits[x.card.suit] = (suits[x.card.suit] || 0) + 1; });
+    const top = Object.entries(suits).sort((a, b) => b[1] - a[1])[0];
+    if (maj * 2 >= n) parts.push(`${maj} de ${n} cartas são Arcanos Maiores: a questão toca forças maiores do que o dia a dia.`);
+    else if (maj === 0) parts.push('Só Arcanos Menores: o assunto está ao alcance das suas escolhas quotidianas.');
+    if (top && top[1] >= 2) { const s = NORDIC_SUITS.find(x => x.key === top[0]); parts.push(`Naipe dominante: ${s.label} (${s.element}), que fala de ${s.theme}.`); }
+    if (rev * 2 > n) parts.push('A maioria saiu invertida: energia bloqueada, adiada ou ainda por assumir.');
+    else if (rev === 0) parts.push('Nenhuma carta invertida: a energia flui sem grandes resistências.');
+    return parts.length ? parts.join(' ') : 'Leitura equilibrada: nenhum tema domina, por isso leia as cartas uma a uma, posição a posição.';
+}
+
+/* --- Guardar e copiar --- */
+function tarotReadingText() {
+    const head = `TAROT NÓRDICO • ${lastTarotMeta.spread}${lastTarotMeta.question ? ` • “${lastTarotMeta.question}”` : ''}`;
+    return head + '\n' + lastTarotReading.map(t => `• ${t.pos}: ${t.card.name} (${t.isReversed ? 'invertida' : 'direita'}): ${t.isReversed ? t.card.reversed : t.card.upright}`).join('\n');
+}
+const _saveLastReading = saveLastReadingToJournal;
+saveLastReadingToJournal = function (type) {
+    if (type === 'tarot' && lastTarotReading.length) appendToJournal(tarotReadingText());
+    else _saveLastReading(type);
+};
+async function copyTarotReading() {
+    try { await navigator.clipboard.writeText(tarotReadingText()); showToast('📋 Leitura copiada!'); }
+    catch { showToast('⚠️ Não foi possível copiar. Use “Guardar no Diário”.'); }
+}
+
+/* --- Carta do dia (a mesma durante o dia inteiro) e botões extra --- */
+function drawDailyTarot() {
+    const d = new Date(), base = d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate();
+    const rnd = k => ((base * 9301 + k * 49297) % 233280) / 233280;
+    const deck = getFilteredNordicDeck();
+    if (!deck.length) return;
+    skipRecord = true; drawTarotCard(1); skipRecord = false;
+    lastTarotReading = [{ card: deck[Math.floor(rnd(1) * deck.length)], isReversed: rnd(2) < 0.35, pos: 'Carta do dia' }];
+    lastTarotMeta = { question: '', spread: 'Carta do dia' };
+    const slot = document.querySelector('#tarot-card-container [data-tarot-slot]');
+    const it = lastTarotReading[0];
+    slot.outerHTML = buildPixelCardHTML(it.card, it.isReversed, 'Carta do dia')
+        .replace('tarot-flip-wrapper is-flipped cursor-pointer', 'tarot-flip-wrapper cursor-pointer')
+        .replace(`onclick="this.classList.toggle('is-flipped')"`, `onclick="flipTarot(this)" role="button" tabindex="0" aria-label="Revelar a carta do dia"`)
+        .replace('theme-inner border rounded-xl p-3 text-center w-full space-y-1', 'tarot-meaning hidden theme-inner border rounded-xl p-3 text-center w-full space-y-1')
+        .replace('<div class="flex flex-col items-center max-w-[230px]', '<div data-tarot-slot class="flex flex-col items-center max-w-[230px]');
+    updateTarotReveal();
+    recordReading('tarot');
+}
+window.addEventListener('DOMContentLoaded', () => {
+    const actions = document.getElementById('tarot-draw-actions');
+    const btn = 'w-full theme-inner theme-title font-semibold py-3.5 px-4 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs cursor-pointer';
+    actions.className = 'grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mt-4';
+    actions.insertAdjacentHTML('beforeend', `
+        <button onclick="drawTarotCard(4)" class="${btn}">4 cartas (Cruz de Odin)</button>
+        <button onclick="drawTarotCard(9)" class="${btn}">9 cartas (Nove Mundos)</button>
+        <button onclick="drawDailyTarot()" class="${btn}">Carta do dia</button>`);
+    document.getElementById('tarot-save-bar').insertAdjacentHTML('beforeend',
+        ` <button onclick="copyTarotReading()" class="theme-inner hover:border-[var(--text-accent)] border text-xs theme-accent font-semibold py-2 px-4 rounded-xl transition cursor-pointer ml-2">📋 Copiar leitura</button>`);
+});
+
+    </script>
 </body>
 </html>
