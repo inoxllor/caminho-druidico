@@ -2,7 +2,7 @@
 <html lang="pt" class="theme-night">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Caminho Druídico Pro Ultimate • Edição OBOD & Tarot Nórdico 16-Bit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -97,9 +97,9 @@
     --bg-inner: #0d0303;
     --border-color: #3f1111;
     --border-hover: #dc2626;
-    --text-title: #fca5a5;
+    --text-title: #fecaca;
     --text-accent: #f87171;
-    --text-muted: #ef4444;
+    --text-muted: #fca5a5;
     --btn-primary: #991b1b;
 }
 
@@ -234,6 +234,27 @@ body {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
 }
+
+/* ============================================================
+   AJUSTES v2: acessibilidade, legibilidade e movimento
+   ============================================================ */
+:focus-visible { outline: 2px solid var(--text-accent); outline-offset: 2px; border-radius: 8px; }
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--btn-primary); color: #fff; padding: 8px 14px; border-radius: 10px; font-size: 13px; }
+.skip-link:focus { left: 8px; }
+html body .text-\[9px\] { font-size: 10.5px !important; }
+html body .text-\[10px\] { font-size: 11.5px !important; }
+html body .text-\[11px\] { font-size: 12px !important; }
+.tab-in { animation: tabIn .28s ease-out; }
+@keyframes tabIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)); }
+.nav-item[aria-current="page"], .bot-nav-item[aria-current="page"] { font-weight: 700; }
+#sound-bar { position: fixed; left: 12px; bottom: 76px; z-index: 55; display: none; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 14px; font-size: 12px; background: var(--bg-header); border: 1px solid var(--border-hover); box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+@media (min-width: 1024px) { #sound-bar { left: 304px; bottom: 20px; } }
+#sound-bar select, #sound-bar button { background: var(--bg-inner); border: 1px solid var(--border-color); border-radius: 8px; padding: 3px 8px; color: var(--text-title); cursor: pointer; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .tarot-flip-inner { transition: none !important; }
+}
     </style>
     <meta name="theme-color" content="#090d16">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -241,6 +262,7 @@ body {
     <meta name="apple-mobile-web-app-title" content="Caminho Druídico">
 </head>
 <body id="app-body" class="theme-night min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
+    <a href="#main" class="skip-link" onclick="event.preventDefault();document.getElementById('main').focus()">Saltar para o conteúdo</a>
 
     <!-- SIDEBAR DESKTOP -->
     <aside class="hidden lg:flex lg:flex-col lg:w-72 lg:fixed lg:inset-y-0 bg-[var(--bg-header)] border-r border-[var(--border-color)] z-40 shadow-2xl">
@@ -456,7 +478,7 @@ body {
             </div>
         </div>
 
-        <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 lg:py-8 space-y-6">
+        <main id="main" tabindex="-1" class="flex-1 outline-none max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 lg:py-8 space-y-6">
 
             <!-- ORÁCULO OGHAM -->
             <section id="tab-oracle" class="tab-content space-y-6">
@@ -465,6 +487,8 @@ body {
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">ᚁ Oráculo Sagrado de Ogham</h2>
                         <p class="text-xs lg:text-sm theme-muted mb-6">Conecte-se com os espíritos dos 20 Few (gravetos de árvores sagradas) da tradição celta.</p>
                     </div>
+
+                    <div id="daily-few" class="theme-inner border rounded-2xl p-4 text-left flex items-center gap-4 mb-4"></div>
 
                     <div id="ogham-card" class="theme-inner border rounded-2xl p-6 lg:p-8 my-4 min-h-[260px] flex flex-col items-center justify-center transition-all shadow-inner">
                         <span class="theme-accent opacity-60 text-xs lg:text-sm">Escolha o tipo de tiragem abaixo para revelar a mensagem dos Few</span>
@@ -482,6 +506,11 @@ body {
                         <button onclick="drawOghamCard(5)" class="w-full theme-inner theme-title font-semibold py-3.5 px-4 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs tracking-wider cursor-pointer">5 Few (Roda Elemental)</button>
                     </div>
                 </div>
+                <details id="reading-history" class="theme-card border rounded-2xl p-4 text-left">
+                    <summary class="cursor-pointer text-sm font-semibold theme-title">Histórico de leituras <span id="history-count" class="theme-muted text-xs font-normal"></span></summary>
+                    <div id="history-list" class="mt-3 space-y-2 text-xs"></div>
+                    <button onclick="clearReadingLog()" class="mt-3 text-xs theme-muted underline cursor-pointer">Limpar histórico</button>
+                </details>
             </section>
 
             <!-- BARALHO DE TAROT NÓRDICO 16-BIT (78 CARTAS) -->
@@ -1042,6 +1071,13 @@ body {
                     </div>
 
                     <div id="journal-subtab-general" class="space-y-4">
+                        <div class="mb-3 space-y-2">
+                            <div class="flex items-center gap-3">
+                                <input id="journal-search" type="search" oninput="searchJournal(this.value)" placeholder="Pesquisar no diário…" aria-label="Pesquisar no diário" class="flex-1 bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs rounded-xl px-3 py-2">
+                                <span id="journal-wordcount" class="text-[11px] theme-muted whitespace-nowrap">0 palavras</span>
+                            </div>
+                            <div id="journal-search-results" class="hidden theme-inner border rounded-xl p-3 text-xs theme-muted max-h-40 overflow-y-auto"></div>
+                        </div>
                         <textarea id="journal-input" oninput="autoSaveJournal()" placeholder="Escreva reflexões, presságios, sonhos ou apontamentos rituais..." class="w-full h-80 lg:h-96 theme-inner border rounded-2xl p-5 text-white focus:outline-none focus:border-[var(--text-accent)] text-xs lg:text-sm leading-relaxed shadow-inner"></textarea>
                     </div>
 
@@ -1177,7 +1213,7 @@ body {
         </footer>
     </div>
 
-    <div id="toast-container" class="fixed bottom-16 lg:bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toast-container" role="status" aria-live="polite" class="fixed bottom-16 lg:bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <script>
 /**
@@ -1637,8 +1673,12 @@ function updateAstronomy() {
     const clampedCosH = Math.max(-1, Math.min(1, cosH));
     const hourAngle = Math.acos(clampedCosH) * (180 / Math.PI);
     const daylightHours = (2 * hourAngle) / 15;
-    const sunriseDec = 12.45 - daylightHours / 2;
-    const sunsetDec = 12.45 + daylightHours / 2;
+    const lon = parseFloat(localStorage.getItem('druid_lon') || '-8');
+    const B = (360 / 365) * (dayOfYear - 81) * (Math.PI / 180);
+    const eot = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+    const solarNoon = 12 - lon / 15 - now.getTimezoneOffset() / 60 - eot / 60;
+    const sunriseDec = solarNoon - daylightHours / 2;
+    const sunsetDec = solarNoon + daylightHours / 2;
 
     const formatHours = (dec) => {
         const h = Math.floor(dec);
@@ -1659,8 +1699,7 @@ function updateAstronomy() {
     const topSun = document.getElementById('top-sun-text');
     if (topSun) topSun.textContent = `${srStr} — ${ssStr}`;
 
-    const treeIndex = now.getMonth() % 13;
-    const activeTree = OGHAM_DATA[treeIndex];
+    const activeTree = getCelticTree(now);
     document.getElementById('celtic-month-symbol').textContent = activeTree.symbol;
     document.getElementById('celtic-month-title').textContent = `${activeTree.name} — ${activeTree.tree}`;
     document.getElementById('celtic-month-desc').textContent = `${activeTree.meaning} Erva: ${activeTree.herb}.`;
@@ -1805,6 +1844,8 @@ function initGeoAndCompass() {
         navigator.geolocation.getCurrentPosition(pos => {
             const { latitude, longitude } = pos.coords;
             localStorage.setItem('druid_lat', latitude.toFixed(4));
+            localStorage.setItem('druid_lon', longitude.toFixed(4));
+            updateAstronomy();
             document.getElementById('gps-info').textContent = `📍 GPS Ativo: ${latitude.toFixed(4)}° N, ${longitude.toFixed(4)}° E`;
             updateAstronomy();
         }, () => {
@@ -1981,6 +2022,7 @@ function exportBackupJSON() {
         journal: localStorage.getItem('druid_journal') || '',
         bardic: localStorage.getItem('druid_bardic') || '',
         theme: localStorage.getItem('druid_theme') || 'theme-night',
+        readings: JSON.parse(localStorage.getItem('druid_readings') || '[]'),
         exportedAt: new Date().toISOString()
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -2008,6 +2050,7 @@ function importBackupJSON(event) {
                 autoSaveBardic();
             }
             if (data.theme) changeTheme(data.theme);
+            if (Array.isArray(data.readings)) { localStorage.setItem('druid_readings', JSON.stringify(data.readings)); renderReadingLog(); }
             showToast('✅ Backup restaurado com sucesso!');
         } catch {
             showToast('❌ Ficheiro JSON inválido.');
@@ -2258,6 +2301,237 @@ window.addEventListener('DOMContentLoaded', () => {
         autoSaveBardic();
     }
 });
+    </script>
+    <script>
+/* ============================================================
+   AJUSTES v2: novas funcionalidades
+   ============================================================ */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* --- Mês arbóreo correto (por data, não por índice do mês) --- */
+function getCelticTree(d) {
+    const md = (d.getMonth() + 1) * 100 + d.getDate();
+    const ranges = [[1224, 1231, 'Beith'], [101, 120, 'Beith'], [121, 217, 'Luis'], [218, 317, 'Fearn'], [318, 414, 'Saille'],
+        [415, 512, 'Nion'], [513, 609, 'Huath'], [610, 707, 'Duir'], [708, 804, 'Tinne'], [805, 901, 'Coll'],
+        [902, 929, 'Muin'], [930, 1027, 'Gort'], [1028, 1124, 'Ngetal'], [1125, 1223, 'Straif']];
+    const hit = ranges.find(r => md >= r[0] && md <= r[1]);
+    return OGHAM_DATA.find(o => o.name === (hit ? hit[2] : 'Beith')) || OGHAM_DATA[0];
+}
+
+/* --- Few do Dia (igual para todo o dia) --- */
+function renderDailyFew() {
+    const el = document.getElementById('daily-few');
+    if (!el) return;
+    const d = new Date();
+    const seed = ((d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate()) * 9301 + 49297) % 233280;
+    const o = OGHAM_DATA[seed % OGHAM_DATA.length];
+    el.innerHTML = `
+        <span class="text-5xl theme-accent font-bold leading-none" aria-hidden="true">${o.symbol}</span>
+        <div class="flex-1 min-w-0">
+            <p class="text-xs theme-muted">Few do dia</p>
+            <h3 class="font-cinzel text-base font-bold theme-title">${o.name} • ${o.tree}</h3>
+            <p class="text-xs theme-muted leading-relaxed mt-1">${o.meaning}</p>
+        </div>
+        <button onclick="dailyToJournal()" class="theme-card border text-xs theme-accent font-semibold py-2 px-3 rounded-xl cursor-pointer hover:border-[var(--text-accent)] transition">Guardar</button>`;
+    el.dataset.text = `FEW DO DIA: ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`;
+}
+function appendToJournal(text) {
+    const area = document.getElementById('journal-input');
+    area.value = (area.value + `\n--- [${new Date().toLocaleString('pt-PT')}] ${text}\n`).trimStart();
+    autoSaveJournal();
+    showToast('📖 Guardado no Diário!');
+}
+function dailyToJournal() { appendToJournal(document.getElementById('daily-few').dataset.text); }
+
+/* --- Histórico de leituras --- */
+function getReadingLog() { try { return JSON.parse(localStorage.getItem('druid_readings') || '[]'); } catch { return []; } }
+function recordReading(type) {
+    const lines = type === 'ogham' ? lastOghamReading.map(o => `${o.symbol} ${o.name}`)
+        : type === 'runes' ? lastRuneReading.map(r => `${r.symbol} ${r.name}`)
+        : lastTarotReading.map(t => `${t.card.name}${t.isReversed ? ' (inv.)' : ''}`);
+    if (!lines.length) return;
+    const log = getReadingLog();
+    log.unshift({ t: Date.now(), type, lines });
+    localStorage.setItem('druid_readings', JSON.stringify(log.slice(0, 30)));
+    renderReadingLog();
+}
+function renderReadingLog() {
+    const list = document.getElementById('history-list');
+    if (!list) return;
+    const log = getReadingLog();
+    const names = { ogham: 'Ogham', runes: 'Runas', tarot: 'Tarot' };
+    document.getElementById('history-count').textContent = log.length ? `(${log.length})` : '';
+    list.innerHTML = log.length ? log.map((r, i) => `
+        <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
+            <div class="min-w-0"><span class="theme-muted">${new Date(r.t).toLocaleString('pt-PT', { dateStyle: 'short', timeStyle: 'short' })} · ${names[r.type]}</span>
+            <div class="theme-title truncate">${esc(r.lines.join(' · '))}</div></div>
+            <button onclick="logToJournal(${i})" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
+        </div>`).join('') : '<p class="theme-muted">Ainda não fez nenhuma leitura. As suas tiragens aparecem aqui.</p>';
+}
+function logToJournal(i) { const r = getReadingLog()[i]; if (r) appendToJournal(`${r.type.toUpperCase()}: ${r.lines.join(' · ')}`); }
+function clearReadingLog() { if (confirm('Limpar o histórico de leituras?')) { localStorage.removeItem('druid_readings'); renderReadingLog(); } }
+['drawOghamCard:ogham', 'drawRunes:runes', 'drawTarotCard:tarot'].forEach(p => {
+    const [fn, type] = p.split(':'), orig = window[fn];
+    if (typeof orig === 'function') window[fn] = function (...a) { const r = orig.apply(this, a); recordReading(type); return r; };
+});
+
+/* --- PIN com hash (SHA-256 + sal) e limite de tentativas --- */
+async function pinHash(pin, salt) {
+    try {
+        const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + pin));
+        return [...new Uint8Array(h)].map(x => x.toString(16).padStart(2, '0')).join('');
+    } catch { let h = 5381; for (const c of salt + pin) h = ((h << 5) + h + c.charCodeAt(0)) >>> 0; return 'f' + h; }
+}
+async function saveNewJournalPin() {
+    const pin = document.getElementById('new-pin-input').value.trim();
+    if (!/^\d{4}$/.test(pin)) { showToast('⚠️ Introduza exatamente 4 dígitos numéricos.'); return; }
+    const salt = [...crypto.getRandomValues(new Uint8Array(8))].map(x => x.toString(16).padStart(2, '0')).join('');
+    localStorage.setItem('druid_journal_pin_h', salt + ':' + await pinHash(pin, salt));
+    localStorage.removeItem('druid_journal_pin');
+    document.getElementById('new-pin-input').value = '';
+    document.getElementById('pin-settings-box').classList.add('hidden');
+    showToast('🔐 PIN de proteção ativado!');
+}
+function removeJournalPin() {
+    localStorage.removeItem('druid_journal_pin');
+    localStorage.removeItem('druid_journal_pin_h');
+    document.getElementById('pin-settings-box').classList.add('hidden');
+    showToast('🔓 Proteção por PIN removida.');
+}
+function checkJournalPinLock() {
+    const has = localStorage.getItem('druid_journal_pin_h') || localStorage.getItem('druid_journal_pin');
+    const locked = has && !sessionStorage.getItem('druid_pin_unlocked');
+    document.getElementById('journal-lock-screen').classList.toggle('hidden', !locked);
+    document.getElementById('journal-unlocked-area').classList.toggle('hidden', !!locked);
+}
+let pinFails = 0, pinBlockedUntil = 0;
+async function unlockJournalWithPin() {
+    if (Date.now() < pinBlockedUntil) { showToast('⏳ Demasiadas tentativas. Aguarde 30 segundos.'); return; }
+    const input = document.getElementById('journal-pin-unlock-input').value;
+    const hashed = localStorage.getItem('druid_journal_pin_h'), legacy = localStorage.getItem('druid_journal_pin');
+    let ok = false;
+    if (hashed) { const [salt, h] = hashed.split(':'); ok = (await pinHash(input, salt)) === h; }
+    else if (legacy) { ok = input === legacy; if (ok) { localStorage.setItem('druid_journal_pin', input); document.getElementById('new-pin-input').value = input; await saveNewJournalPin(); } }
+    const err = document.getElementById('pin-error-msg');
+    if (ok) {
+        pinFails = 0;
+        sessionStorage.setItem('druid_pin_unlocked', '1');
+        document.getElementById('journal-pin-unlock-input').value = '';
+        if (err) err.classList.add('hidden');
+        checkJournalPinLock();
+        showToast('🔓 Santuário desbloqueado.');
+    } else {
+        if (++pinFails >= 5) { pinBlockedUntil = Date.now() + 30000; pinFails = 0; }
+        if (err) err.classList.remove('hidden');
+        showToast('❌ PIN incorreto.');
+    }
+}
+
+/* --- Diário: pesquisa e contagem de palavras --- */
+function searchJournal(q) {
+    const out = document.getElementById('journal-search-results');
+    q = q.trim().toLowerCase();
+    if (q.length < 2) { out.classList.add('hidden'); out.innerHTML = ''; return; }
+    const hits = document.getElementById('journal-input').value.split('\n').filter(l => l.toLowerCase().includes(q));
+    out.classList.remove('hidden');
+    out.innerHTML = hits.length ? hits.slice(0, 30).map(l => `<div class="py-1 border-b border-[var(--border-color)]">${esc(l)}</div>`).join('') : 'Sem resultados.';
+}
+function updateWordCount() {
+    const v = document.getElementById('journal-input').value.trim();
+    document.getElementById('journal-wordcount').textContent = `${v ? v.split(/\s+/).length : 0} palavras`;
+}
+const _autoSaveJournal = autoSaveJournal;
+autoSaveJournal = function () { _autoSaveJournal(); updateWordCount(); };
+
+/* --- Mini-player de som: volume, temporizador de sono, parar de qualquer separador --- */
+let soundKey = null, sleepTimeout = null;
+function ensureSoundBar() {
+    let bar = document.getElementById('sound-bar');
+    if (bar) return bar;
+    bar = document.createElement('div');
+    bar.id = 'sound-bar';
+    bar.innerHTML = `<span id="sound-label"></span>
+        <input id="sound-vol" type="range" min="0" max="0.8" step="0.02" aria-label="Volume" style="width:90px">
+        <select id="sound-sleep" aria-label="Temporizador de sono"><option value="0">Sem timer</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option></select>
+        <button onclick="stopSound()" aria-label="Parar som">Parar</button>`;
+    document.body.appendChild(bar);
+    document.getElementById('sound-vol').oninput = e => { if (activeGainNode) activeGainNode.gain.value = parseFloat(e.target.value); };
+    document.getElementById('sound-sleep').onchange = e => {
+        clearTimeout(sleepTimeout);
+        const m = parseInt(e.target.value, 10);
+        if (!m) return;
+        sleepTimeout = setTimeout(() => {
+            if (activeGainNode) activeGainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 20);
+            setTimeout(stopSound, 20500);
+        }, m * 60000);
+        showToast(`🌙 O som vai desvanecer em ${m} minutos.`);
+    };
+    return bar;
+}
+function showSoundBar(label) {
+    const bar = ensureSoundBar();
+    bar.style.display = 'flex';
+    document.getElementById('sound-label').textContent = label;
+    document.getElementById('sound-vol').value = activeGainNode ? activeGainNode.gain.value : 0.3;
+}
+function stopSound() {
+    stopAmbientSound(); soundKey = null; clearTimeout(sleepTimeout);
+    const bar = document.getElementById('sound-bar');
+    if (bar) { bar.style.display = 'none'; document.getElementById('sound-sleep').value = '0'; }
+}
+const _amb = toggleAmbientSound, _drone = toggleVocalDrone;
+toggleAmbientSound = function (t) {
+    if (soundKey === t) { stopSound(); return; }
+    _amb(t); soundKey = t; showSoundBar(t === 'rain' ? 'Chuva no bosque' : 'Vento ancestral');
+};
+toggleVocalDrone = function (f, label) {
+    if (soundKey === 'd' + f) { stopSound(); return; }
+    _drone(f, label); soundKey = 'd' + f; showSoundBar(label);
+};
+
+/* --- Meditação: ecrã sempre ligado --- */
+let wakeLock = null;
+const _medToggle = toggleMeditationTimer;
+toggleMeditationTimer = async function () {
+    _medToggle();
+    try {
+        if (isMedRunning && 'wakeLock' in navigator) wakeLock = await navigator.wakeLock.request('screen');
+        else if (wakeLock) { await wakeLock.release(); wakeLock = null; }
+    } catch {}
+};
+setInterval(() => { if (wakeLock && !isMedRunning) { wakeLock.release().catch(() => {}); wakeLock = null; } }, 5000);
+
+/* --- Separador lembrado + hash na URL + aria-current --- */
+const _switchTab = switchTab;
+switchTab = function (id) {
+    _switchTab(id);
+    try { localStorage.setItem('druid_tab', id); } catch {}
+    if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    document.querySelectorAll('[aria-current]').forEach(e => e.removeAttribute('aria-current'));
+    ['desk', 'mob', 'bot'].forEach(p => { const b = document.getElementById(`${p}-nav-${id}`); if (b) b.setAttribute('aria-current', 'page'); });
+    const t = document.getElementById('tab-' + id);
+    if (t) { t.classList.remove('tab-in'); void t.offsetWidth; t.classList.add('tab-in'); }
+    window.scrollTo({ top: 0 });
+};
+window.addEventListener('hashchange', () => { const id = location.hash.slice(1); if (document.getElementById('tab-' + id)) switchTab(id); });
+
+/* --- Cor da barra do browser acompanha o tema --- */
+const _changeTheme = changeTheme;
+changeTheme = function (n) {
+    _changeTheme(n);
+    const c = getComputedStyle(document.body).getPropertyValue('--bg-header').trim();
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m && c) m.setAttribute('content', c);
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+    renderDailyFew();
+    renderReadingLog();
+    updateWordCount();
+    const id = location.hash.slice(1) || localStorage.getItem('druid_tab');
+    if (id && document.getElementById('tab-' + id)) switchTab(id);
+});
+
     </script>
 </body>
 </html>
