@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Caminho Druídico Pro Ultimate • Edição OBOD & Tarot Nórdico 16-Bit</title>
+    <title>Caminho Druídico Pro Ultimate • Edição inspirada na OBOD & Tarot Nórdico 16-Bit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -305,7 +305,7 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
             </svg>
             <div>
                 <h1 class="font-cinzel text-lg font-bold theme-title tracking-wider leading-tight">CAMINHO DRUÍDICO</h1>
-                <p class="text-[10px] theme-accent uppercase tracking-widest mt-0.5">Edição OBOD • Pro</p>
+                <p class="text-[11px] theme-accent tracking-wide leading-snug mt-0.5">Edição inspirada na OBOD • Pro</p>
             </div>
         </div>
 
@@ -644,6 +644,21 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
                         <p class="text-xs lg:text-sm theme-muted mb-6">Consulte os símbolos ancestrais de sabedoria nórdica e germânica.</p>
                     </div>
 
+                    <div class="flex justify-center gap-2 mb-5">
+                        <button onclick="switchRuneMode('draw')" id="rune-mode-draw" aria-pressed="true" class="bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer">Tiragem rúnica</button>
+                        <button onclick="switchRuneMode('gallery')" id="rune-mode-gallery" aria-pressed="false" class="theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer">Todas as runas (24)</button>
+                    </div>
+
+                    <div id="rune-gallery" class="hidden text-left space-y-4">
+                        <p class="text-xs theme-muted text-center max-w-xl mx-auto">As 24 runas do Elder Futhark, com o significado direito e o invertido. Nove delas são simétricas e não se invertem; para essas mostra-se a sombra da runa.</p>
+                        <div class="flex flex-wrap items-center justify-center gap-2">
+                            <div id="rune-filters" class="flex flex-wrap justify-center gap-2"></div>
+                            <input id="rune-search" type="search" oninput="setRuneQuery(this.value)" placeholder="Procurar runa ou tema…" aria-label="Procurar runa" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs rounded-xl px-3 py-1.5 w-52">
+                        </div>
+                        <p id="rune-gallery-count" class="text-[11px] theme-muted text-center" aria-live="polite"></p>
+                        <div id="rune-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                    </div>
+
                     <div id="rune-card" class="theme-inner border rounded-2xl p-6 lg:p-8 my-4 min-h-[260px] flex flex-col items-center justify-center transition-all shadow-inner">
                         <span class="theme-accent opacity-60 text-xs lg:text-sm">Selecione uma tiragem rúnica</span>
                     </div>
@@ -654,7 +669,7 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
                         </button>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto mt-6">
+                    <div id="rune-draw-actions" class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto mt-6">
                         <button onclick="drawRunes(1)" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold py-3.5 px-6 rounded-xl shadow-lg transition text-xs lg:text-sm tracking-wider cursor-pointer">1 Runa (Conselho)</button>
                         <button onclick="drawRunes(3)" class="w-full theme-inner theme-title font-semibold py-3.5 px-6 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs lg:text-sm tracking-wider cursor-pointer">3 Runas (Passado / Presente / Futuro)</button>
                     </div>
@@ -2753,6 +2768,101 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tarot-save-bar').insertAdjacentHTML('beforeend',
         ` <button onclick="copyTarotReading()" class="theme-inner hover:border-[var(--text-accent)] border text-xs theme-accent font-semibold py-2 px-4 rounded-xl transition cursor-pointer ml-2">📋 Copiar leitura</button>`);
 });
+
+    </script>
+    <script>
+/* ============================================================
+   RUNAS v4: todas as 24 runas, com significado direito e invertido
+   ============================================================ */
+const RUNE_SHADOW = {
+    Fehu: 'Perdas, desperdício e recursos bloqueados; apego excessivo ao material.',
+    Uruz: 'Fraqueza, doença e oportunidades perdidas; força mal direcionada.',
+    Thurisaz: 'Vulnerabilidade e impulsividade; conflito desnecessário ao agir sem refletir.',
+    Ansuz: 'Mal-entendidos, conselhos enganosos e comunicação bloqueada ou manipuladora.',
+    Raidho: 'Atrasos, planos desfeitos e rigidez; uma viagem sem rumo.',
+    Kenaz: 'Bloqueio criativo, esgotamento e falta de clareza; a tocha que se apaga.',
+    Wunjo: 'Tristeza, alienação e conflito no grupo; alegria adiada.',
+    Perthro: 'Segredos que vêm à tona, estagnação e vícios; destino mal compreendido.',
+    Algiz: 'Falta de proteção, ligação espiritual cortada e avisos ignorados.',
+    Tiwaz: 'Injustiça, covardia e abuso de autoridade; energia bloqueada ou derrota.',
+    Berkano: 'Esterilidade, ansiedade familiar e abandono; ou excesso de proteção que sufoca.',
+    Ehwaz: 'Desconfiança, impaciência e progresso interrompido; parceria desequilibrada.',
+    Mannaz: 'Isolamento, autoengano e desconexão da comunidade.',
+    Laguz: 'Confusão, medo e bloqueio emocional; intuição ignorada.',
+    Othala: 'Perda de raízes, herança em conflito, apego ao passado ou exclusão.',
+    /* Runas simétricas: não têm forma invertida. Aqui fica a sua sombra. */
+    Gebo: 'Dependência, dívida emocional ou generosidade que espera retorno.',
+    Hagalaz: 'Destruição sem aprendizagem; resistência a uma mudança inevitável.',
+    Nauthiz: 'Privação prolongada e ressentimento; não ouvir as próprias necessidades.',
+    Isa: 'Estagnação, frieza e isolamento; paralisia prolongada.',
+    Jera: 'Impaciência; querer colher sem ter semeado, ou forçar um ciclo.',
+    Eihwaz: 'Confusão e autodestruição; evitar uma transformação necessária.',
+    Sowilo: 'Arrogância, ofuscamento e exaustão por excesso de exposição.',
+    Ingwaz: 'Sementes que não germinam; energia retida durante demasiado tempo.',
+    Dagaz: 'Mudança forçada demasiado cedo; um ciclo terminado sem equilíbrio.'
+};
+const RUNE_SYMMETRIC = ['Gebo', 'Hagalaz', 'Nauthiz', 'Isa', 'Jera', 'Eihwaz', 'Sowilo', 'Ingwaz', 'Dagaz'];
+const RUNE_AETTIR = { all: 'Todas', 0: 'Aett de Freyr', 1: 'Aett de Hagal', 2: 'Aett de Tyr' };
+let runeMode = 'draw', runeAett = 'all', runeQuery = '';
+
+function switchRuneMode(mode) {
+    runeMode = mode;
+    const gallery = mode === 'gallery';
+    ['rune-card', 'rune-save-bar', 'rune-draw-actions'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (gallery) el.classList.add('hidden');
+        else if (id !== 'rune-save-bar') el.classList.remove('hidden');
+    });
+    document.getElementById('rune-gallery').classList.toggle('hidden', !gallery);
+    [['draw', 'rune-mode-draw'], ['gallery', 'rune-mode-gallery']].forEach(([m, id]) => {
+        const b = document.getElementById(id), on = m === mode;
+        b.setAttribute('aria-pressed', on);
+        b.className = (on ? 'bg-[var(--btn-primary)] text-white font-bold' : 'theme-inner theme-title border border-[var(--border-color)] font-semibold') + ' text-xs px-4 py-2 rounded-xl transition cursor-pointer';
+    });
+    if (gallery) renderRuneGallery();
+}
+
+function setRuneAett(a) { runeAett = a; renderRuneGallery(); }
+function setRuneQuery(q) { runeQuery = q; renderRuneGallery(); }
+
+function renderRuneGallery() {
+    const q = runeQuery.trim().toLowerCase();
+    const list = RUNES_DATA.map((r, i) => ({ ...r, aett: Math.floor(i / 8), n: i + 1 }))
+        .filter(r => (runeAett === 'all' || r.aett === runeAett) &&
+            (q.length < 2 || `${r.name} ${r.meaning} ${RUNE_SHADOW[r.name] || ''}`.toLowerCase().includes(q)));
+
+    document.getElementById('rune-filters').innerHTML = Object.entries(RUNE_AETTIR).map(([k, label]) => {
+        const val = k === 'all' ? 'all' : Number(k), on = val === runeAett;
+        return `<button onclick="setRuneAett(${JSON.stringify(val)})" aria-pressed="${on}" class="${on ? 'bg-[var(--btn-primary)] text-white' : 'theme-inner theme-muted border border-[var(--border-color)]'} text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">${label}</button>`;
+    }).join('');
+
+    document.getElementById('rune-gallery-count').textContent = `${list.length} de ${RUNES_DATA.length} runas`;
+    document.getElementById('rune-gallery-grid').innerHTML = list.length ? list.map(r => {
+        const sym = RUNE_SYMMETRIC.includes(r.name);
+        return `
+        <article class="theme-inner border rounded-2xl p-4 text-left flex flex-col gap-3">
+            <header class="flex items-center gap-3">
+                <span class="text-4xl theme-accent font-bold leading-none" aria-hidden="true">${r.symbol}</span>
+                <div>
+                    <h3 class="font-cinzel text-base font-bold theme-title">${r.name}</h3>
+                    <p class="text-[11px] theme-muted">${RUNE_AETTIR[r.aett]} · runa ${r.n}</p>
+                </div>
+            </header>
+            <div>
+                <p class="text-[11px] font-semibold theme-accent mb-0.5">Direita</p>
+                <p class="text-xs theme-muted leading-relaxed">${r.meaning}</p>
+            </div>
+            <div class="border-t border-[var(--border-color)] pt-3">
+                <p class="text-[11px] font-semibold theme-accent mb-0.5">${sym ? 'Sem forma invertida' : 'Invertida'}</p>
+                ${sym ? '<p class="text-[11px] theme-muted opacity-80 mb-1">Runa simétrica: parece igual de cabeça para baixo. Fica a sombra da runa:</p>' : ''}
+                <p class="text-xs theme-muted leading-relaxed">${RUNE_SHADOW[r.name] || ''}</p>
+            </div>
+        </article>`;
+    }).join('') : '<p class="text-xs theme-muted col-span-full py-6">Nenhuma runa encontrada. Experimente outro nome ou limpe os filtros.</p>';
+}
+
+window.addEventListener('DOMContentLoaded', () => { switchRuneMode('draw'); });
 
     </script>
 </body>
