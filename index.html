@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Caminho Druídico Pro Ultimate • Edição OBOD & Tarot Nórdico 16-Bit</title>
+    <title>Caminho Druídico Pro Ultimate • Edição inspirada OBOD & Tarot Nórdico 16-Bit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -635,37 +635,43 @@ body {
                 </div>
             </section>
 
-            <!-- BÚSSOLA & GPS -->
+            <!-- BÚSSOLA & GPS (ESTILO MINIMALISTA BOBEK COMPASS) -->
             <section id="tab-compass" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-3xl p-6 lg:p-10 shadow-2xl max-w-3xl mx-auto text-center space-y-6">
                     <div>
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🧭 Bússola & Portais Elementais</h2>
-                        <p class="text-xs lg:text-sm theme-muted mt-1">Alinhe-se com os quadrantes sagrados, azimute de precisão e atualize o cálculo solar local via GPS.</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">🧭 Bússola &amp; Portais Elementais</h2>
+                        <p class="text-xs lg:text-sm theme-muted mt-1">Navegação de precisão limpa e alinhamento com os quadrantes sagrados.</p>
                     </div>
 
                     <div id="gps-info" class="theme-inner border rounded-xl p-3.5 text-xs theme-accent max-w-md mx-auto shadow-inner">
                         📍 Coordenadas GPS: A aguardar permissão...
                     </div>
 
-                    <div class="relative w-72 h-72 mx-auto theme-inner border-4 border-[var(--border-hover)] rounded-full flex items-center justify-center shadow-2xl overflow-hidden p-4">
-                        <svg class="absolute inset-0 w-full h-full opacity-40 pointer-events-none" viewBox="0 0 200 200">
-                            <circle cx="100" cy="100" r="90" fill="none" stroke="var(--text-accent)" stroke-width="1.5" stroke-dasharray="4 4" />
-                            <circle cx="100" cy="100" r="75" fill="none" stroke="var(--border-color)" stroke-width="1" />
+                    <div class="relative w-72 h-72 mx-auto theme-inner border-2 border-[var(--border-color)] rounded-full flex items-center justify-center shadow-2xl overflow-hidden p-4">
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 200 200">
+                            <!-- Marcações de azimute limpas estilo minimalista -->
+                            <circle cx="100" cy="100" r="92" fill="none" stroke="var(--border-color)" stroke-width="1" />
+                            <circle cx="100" cy="100" r="85" fill="none" stroke="var(--text-accent)" stroke-width="0.5" stroke-dasharray="2 6" />
+                            <line x1="100" y1="8" x2="100" y2="16" stroke="var(--text-accent)" stroke-width="2" />
+                            <line x1="100" y1="184" x2="100" y2="192" stroke="var(--border-color)" stroke-width="1.5" />
+                            <line x1="8" y1="100" x2="16" y2="100" stroke="var(--border-color)" stroke-width="1.5" />
+                            <line x1="184" y1="100" x2="192" y2="100" stroke="var(--border-color)" stroke-width="1.5" />
                         </svg>
 
-                        <div id="compass-needle" class="absolute w-4 h-56 transition-transform duration-150 flex items-center justify-center">
-                            <div class="w-2 h-28 bg-gradient-to-t from-transparent via-red-500 to-red-600 rounded-t-full -translate-y-14 shadow-lg"></div>
-                            <div class="w-2 h-28 bg-gradient-to-b from-transparent via-indigo-500 to-indigo-700 rounded-b-full translate-y-14 shadow-lg"></div>
-                            <div class="absolute w-5 h-5 rounded-full bg-[var(--bg-card)] border-2 border-[var(--text-accent)] shadow"></div>
+                        <div id="compass-needle" class="absolute w-3 h-52 transition-transform duration-100 flex items-center justify-center">
+                            <div class="w-1.5 h-26 bg-red-500 rounded-t-full -translate-y-13 shadow-md"></div>
+                            <div class="w-1.5 h-26 bg-slate-400 rounded-b-full translate-y-13 shadow-md"></div>
+                            <div class="absolute w-4 h-4 rounded-full bg-[var(--bg-card)] border-2 border-[var(--text-accent)] shadow"></div>
                         </div>
 
-                        <span id="label-north" class="absolute top-3 text-xs font-bold text-amber-300 tracking-wider transition-all">NORTE (Terra)</span>
-                        <span id="label-west" class="absolute bottom-3 text-xs font-bold text-blue-400 tracking-wider transition-all">OESTE (Água)</span>
-                        <span id="label-east" class="absolute left-3 text-xs font-bold text-amber-200 tracking-wider transition-all">LESTE (Ar)</span>
-                        <span id="label-south" class="absolute right-3 text-xs font-bold text-red-400 tracking-wider transition-all">SUL (Fogo)</span>
+                        <span class="absolute top-4 text-[11px] font-bold text-amber-300 tracking-widest">N</span>
+                        <span class="absolute bottom-4 text-[11px] font-bold text-blue-400 tracking-widest">S</span>
+                        <span class="absolute left-4 text-[11px] font-bold text-amber-200 tracking-widest">W</span>
+                        <span class="absolute right-4 text-[11px] font-bold text-red-400 tracking-widest">E</span>
 
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <span id="heading-deg" class="text-xs font-bold theme-title bg-[var(--bg-card)]/95 px-3 py-1 rounded-full border border-[var(--border-color)] shadow">0° N</span>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none space-y-0.5">
+                            <span id="heading-deg" class="text-xl font-bold theme-title tracking-tight">0°</span>
+                            <span id="heading-card" class="text-[10px] theme-accent font-semibold uppercase tracking-wider">Norte (Terra)</span>
                         </div>
                     </div>
 
@@ -1808,7 +1814,6 @@ function saveRitualTemplate() {
 function toggleAltarElement(quad) {
     altarState[quad] = !altarState[quad];
     const btn = document.getElementById(`altar-btn-${quad}`);
-    const box = document.getElementById(`quad-${quad}`);
     if (altarState[quad]) {
         btn.className = 'text-xs bg-emerald-950 text-emerald-300 border border-emerald-700/50 px-3 py-1 rounded-lg cursor-pointer';
         btn.textContent = 'Ativo';
@@ -1826,7 +1831,7 @@ function registerAltarBlessing() {
     showToast('🕯️ Bênção do altar registada no Diário!');
 }
 
-// BÚSSOLA & GPS COM PRECISÃO DE AZIMUTE E DESTAQUE DE QUADRANTES
+// BÚSSOLA MINIMALISTA (ESTILO BOBEK COMPASS)
 function initGeoAndCompass() {
     const isFileProtocol = window.location.protocol === 'file:';
     
@@ -1848,20 +1853,22 @@ function initGeoAndCompass() {
         const heading = e.webkitCompassHeading || (360 - (e.alpha || 0));
         const deg = Math.round(heading % 360);
         const needle = document.getElementById('compass-needle');
-        const label = document.getElementById('heading-deg');
+        const labelDeg = document.getElementById('heading-deg');
+        const labelCard = document.getElementById('heading-card');
         
-        let cardName = 'N';
-        if (deg >= 337.5 || deg < 22.5) cardName = 'N (Terra)';
-        else if (deg >= 22.5 && deg < 67.5) cardName = 'NNE';
-        else if (deg >= 67.5 && deg < 112.5) cardName = 'E (Ar)';
-        else if (deg >= 112.5 && deg < 157.5) cardName = 'ESE';
-        else if (deg >= 157.5 && deg < 202.5) cardName = 'S (Fogo)';
-        else if (deg >= 202.5 && deg < 247.5) cardName = 'SSW';
-        else if (deg >= 247.5 && deg < 292.5) cardName = 'W (Água)';
-        else cardName = 'WNW';
+        let cardName = 'Norte (Terra)';
+        if (deg >= 337.5 || deg < 22.5) cardName = 'Norte (Terra)';
+        else if (deg >= 22.5 && deg < 67.5) cardName = 'Nordeste';
+        else if (deg >= 67.5 && deg < 112.5) cardName = 'Leste (Ar)';
+        else if (deg >= 112.5 && deg < 157.5) cardName = 'Sudeste';
+        else if (deg >= 157.5 && deg < 202.5) cardName = 'Sul (Fogo)';
+        else if (deg >= 202.5 && deg < 247.5) cardName = 'Sudoeste';
+        else if (deg >= 247.5 && deg < 292.5) cardName = 'Oeste (Água)';
+        else cardName = 'Noroeste';
 
         if (needle) needle.style.transform = `rotate(${-deg}deg)`;
-        if (label) label.textContent = `${deg}° ${cardName}`;
+        if (labelDeg) labelDeg.textContent = `${deg}°`;
+        if (labelCard) labelCard.textContent = cardName;
 
         ['n', 'e', 's', 'w'].forEach(q => {
             const el = document.getElementById(`quad-${q}`);
