@@ -1,4 +1,5 @@
-<html lang="pt" class="theme-mist"><head>
+<!DOCTYPE html>
+<html lang="pt" class="theme-night"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Caminho Druídico Pro Ultimate • Edição inspirada na OBOD &amp; Tarot Nórdico 16-Bit</title>
@@ -236,26 +237,71 @@ body.zen-active main#main {
     max-width: 100% !important;
     padding: 2rem !important;
 }
+/* Alturas/posições partilhadas: a barra inferior só existe < 1024px */
+:root { --bnav-h: 64px; --fab-gap: 12px; }
+
 #zen-float-btn {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 9999;
+    right: 14px;
+    bottom: calc(var(--bnav-h) + var(--fab-gap) + env(safe-area-inset-bottom, 0px));
+    z-index: 45; /* abaixo da barra inferior (z-50) e dos toasts */
     background: var(--btn-primary);
     color: #fff;
-    padding: 12px 18px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
     border-radius: 9999px;
     font-size: 13px;
     font-weight: bold;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     border: 2px solid var(--border-hover);
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, bottom 0.2s ease;
 }
+#zen-float-btn .zen-label { display: none; }
 #zen-float-btn:hover { transform: scale(1.05); }
+body.zen-active #zen-float-btn {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: auto; padding: 0 16px; border-radius: 9999px;
+}
+body.zen-active #zen-float-btn .zen-label { display: inline; }
+@media (min-width: 1024px) {
+    #zen-float-btn {
+        right: 24px; bottom: 24px;
+        width: auto; height: auto; padding: 12px 18px;
+    }
+    #zen-float-btn .zen-label { display: inline; }
+    body.zen-active #zen-float-btn { bottom: 24px; padding: 12px 18px; }
+}
+
+/* Toasts: sempre acima do botão Zen e da barra inferior, com limite de ecrã */
+#toast-container {
+    position: fixed;
+    z-index: 60;
+    left: 12px; right: 12px;
+    bottom: calc(var(--bnav-h) + var(--fab-gap) + 56px + env(safe-area-inset-bottom, 0px));
+    display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+    pointer-events: none;
+}
+body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+.app-toast {
+    max-width: min(360px, 100%);
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(99, 102, 241, 0.5);
+    color: #fff; font-size: 12px; line-height: 1.4;
+    padding: 12px 16px; border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.45);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    transition: opacity .3s ease;
+}
+@media (min-width: 1024px) {
+    #toast-container { left: auto; right: 24px; bottom: 80px; }
+    body.zen-active #toast-container { bottom: 80px; }
+}
 
 :focus-visible { outline: 2px solid var(--text-accent); outline-offset: 2px; border-radius: 8px; }
 .skip-link { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--btn-primary); color: #fff; padding: 8px 14px; border-radius: 10px; font-size: 13px; }
@@ -263,20 +309,20 @@ body.zen-active main#main {
 .tab-in { animation: tabIn .28s ease-out; }
 @keyframes tabIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)); }
-#sound-bar { position: fixed; left: 12px; bottom: 76px; z-index: 55; display: none; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 14px; font-size: 12px; background: var(--bg-header); border: 1px solid var(--border-hover); box-shadow: 0 8px 24px rgba(0,0,0,.5); }
-@media (min-width: 1024px) { #sound-bar { left: 304px; bottom: 20px; } }
+#sound-bar { position: fixed; left: 12px; right: 70px; flex-wrap: wrap; bottom: calc(var(--bnav-h) + 12px + env(safe-area-inset-bottom, 0px)); z-index: 55; display: none; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 14px; font-size: 12px; background: var(--bg-header); border: 1px solid var(--border-hover); box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+@media (min-width: 1024px) { #sound-bar { left: 304px; right: auto; bottom: 20px; } }
 #sound-bar select, #sound-bar button { background: var(--bg-inner); border: 1px solid var(--border-color); border-radius: 8px; padding: 3px 8px; color: var(--text-title); cursor: pointer; }
     </style>
     <meta name="theme-color" content="#090d16">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.inset-x-0{left:0px;right:0px}.bottom-0{bottom:0px}.bottom-16{bottom:4rem}.right-6{right:1.5rem}.top-0{top:0px}.top-3{top:0.75rem}.z-40{z-index:40}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-4{margin-top:1rem;margin-bottom:1rem}.my-auto{margin-top:auto;margin-bottom:auto}.mt-0\.5{margin-top:0.125rem}.mb-1{margin-bottom:0.25rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mt-1{margin-top:0.25rem}.mt-1\.5{margin-top:0.375rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.block{display:block}.inline{display:inline}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-square{aspect-ratio:1 / 1}.\!h-5{height:1.25rem !important}.\!h-7{height:1.75rem !important}.h-10{height:2.5rem}.h-16{height:4rem}.h-36{height:9rem}.h-6{height:1.5rem}.h-72{height:18rem}.h-80{height:20rem}.h-full{height:100%}.h-28{height:7rem}.h-32{height:8rem}.max-h-40{max-height:10rem}.max-h-\[650px\]{max-height:650px}.min-h-screen{min-height:100vh}.min-h-\[200px\]{min-height:200px}.min-h-\[260px\]{min-height:260px}.min-h-\[340px\]{min-height:340px}.min-h-\[430px\]{min-height:430px}.min-h-\[50px\]{min-height:50px}.w-5{width:1.25rem}.w-full{width:100%}.\!w-5{width:1.25rem !important}.\!w-7{width:1.75rem !important}.w-24{width:6rem}.w-3{width:0.75rem}.w-36{width:9rem}.w-52{width:13rem}.w-72{width:18rem}.w-px{width:1px}.w-28{width:7rem}.w-32{width:8rem}.min-w-0{min-width:0px}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-6xl{max-width:72rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.max-w-xl{max-width:36rem}.max-w-\[230px\]{max-width:230px}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-3{gap:0.75rem}.gap-3\.5{gap:0.875rem}.gap-0\.5{gap:0.125rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-0\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.125rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.125rem * var(--tw-space-y-reverse))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.625rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.rounded-xl{border-radius:0.75rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded{border-radius:0.25rem}.rounded-t-full{border-top-left-radius:9999px;border-top-right-radius:9999px}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-\[var\(--border-color\)\]{border-color:var(--border-color)}.border-\[var\(--border-hover\)\]{border-color:var(--border-hover)}.border-amber-500\/30{border-color:rgb(245 158 11 / 0.3)}.border-indigo-500\/40{border-color:rgb(99 102 241 / 0.4)}.border-red-700\/50{border-color:rgb(185 28 28 / 0.5)}.border-red-800\/40{border-color:rgb(153 27 27 / 0.4)}.border-indigo-500\/50{border-color:rgb(99 102 241 / 0.5)}.border-emerald-700\/50{border-color:rgb(4 120 87 / 0.5)}.bg-\[var\(--bg-header\)\]{background-color:var(--bg-header)}.bg-\[\#FFDD00\]{--tw-bg-opacity:1;background-color:rgb(255 221 0 / var(--tw-bg-opacity, 1))}.bg-\[var\(--bg-inner\)\]{background-color:var(--bg-inner)}.bg-\[var\(--border-color\)\]{background-color:var(--border-color)}.bg-\[var\(--btn-primary\)\]{background-color:var(--btn-primary)}.bg-amber-500\/10{background-color:rgb(245 158 11 / 0.1)}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-indigo-950\/30{background-color:rgb(30 27 75 / 0.3)}.bg-red-600{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.bg-red-900\/60{background-color:rgb(127 29 29 / 0.6)}.bg-red-950\/60{background-color:rgb(69 10 10 / 0.6)}.bg-red-950\/70{background-color:rgb(69 10 10 / 0.7)}.bg-slate-900\/95{background-color:rgb(15 23 42 / 0.95)}.bg-emerald-950\/80{background-color:rgb(2 44 34 / 0.8)}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-5{padding:1.25rem}.p-8{padding:2rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.pb-20{padding-bottom:5rem}.pb-1{padding-bottom:0.25rem}.pt-1{padding-top:0.25rem}.pt-4{padding-top:1rem}.pb-2\.5{padding-bottom:0.625rem}.pb-3{padding-bottom:0.75rem}.pt-2{padding-top:0.5rem}.pt-3{padding-top:0.75rem}.pb-2{padding-bottom:0.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-6xl{font-size:3.75rem;line-height:1}.text-7xl{font-size:4.5rem;line-height:1}.text-\[9px\]{font-size:9px}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.font-medium{font-weight:500}.font-normal{font-weight:400}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.leading-relaxed{line-height:1.625}.leading-none{line-height:1}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.tracking-\[0\.5em\]{letter-spacing:0.5em}.text-\[var\(--text-title\)\]{color:var(--text-title)}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-emerald-200{--tw-text-opacity:1;color:rgb(167 243 208 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-red-200{--tw-text-opacity:1;color:rgb(254 202 202 / var(--tw-text-opacity, 1))}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-sky-300{--tw-text-opacity:1;color:rgb(125 211 252 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-white\/90{color:rgb(255 255 255 / 0.9)}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.opacity-50{opacity:0.5}.opacity-60{opacity:0.6}.opacity-70{opacity:0.7}.opacity-75{opacity:0.75}.opacity-80{opacity:0.8}.opacity-90{opacity:0.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.drop-shadow-2xl{--tw-drop-shadow:drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-100{transition-duration:100ms}.duration-300{transition-duration:300ms}.ease-out{transition-timing-function:cubic-bezier(0, 0, 0.2, 1)}.hover\:border-\[var\(--border-hover\)\]:hover{border-color:var(--border-hover)}.hover\:border-\[var\(--text-accent\)\]:hover{border-color:var(--text-accent)}.hover\:border-amber-400:hover{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.hover\:border-amber-500:hover{--tw-border-opacity:1;border-color:rgb(245 158 11 / var(--tw-border-opacity, 1))}.hover\:border-blue-400:hover{--tw-border-opacity:1;border-color:rgb(96 165 250 / var(--tw-border-opacity, 1))}.hover\:border-emerald-500:hover{--tw-border-opacity:1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1))}.hover\:border-indigo-500:hover{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.hover\:border-red-400:hover{--tw-border-opacity:1;border-color:rgb(248 113 113 / var(--tw-border-opacity, 1))}.hover\:border-red-500\/60:hover{border-color:rgb(239 68 68 / 0.6)}.hover\:border-sky-400:hover{--tw-border-opacity:1;border-color:rgb(56 189 248 / var(--tw-border-opacity, 1))}.hover\:bg-\[\#ffea5c\]:hover{--tw-bg-opacity:1;background-color:rgb(255 234 92 / var(--tw-bg-opacity, 1))}.hover\:bg-amber-500:hover{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-500:hover{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.hover\:bg-red-800\/70:hover{background-color:rgb(153 27 27 / 0.7)}.hover\:bg-red-900\/60:hover{background-color:rgb(127 29 29 / 0.6)}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:opacity-80:hover{opacity:0.8}.hover\:opacity-90:hover{opacity:0.9}.hover\:opacity-95:hover{opacity:0.95}.focus\:border-\[var\(--text-accent\)\]:focus{border-color:var(--text-accent)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 640px){.sm\:w-64{width:16rem}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:px-8{padding-left:2rem;padding-right:2rem}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:fixed{position:fixed}.lg\:inset-y-0{top:0px;bottom:0px}.lg\:bottom-6{bottom:1.5rem}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:mb-0{margin-bottom:0px}.lg\:flex{display:flex}.lg\:hidden{display:none}.lg\:h-80{height:20rem}.lg\:h-96{height:24rem}.lg\:w-72{width:18rem}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:flex-row{flex-direction:row}.lg\:flex-col{flex-direction:column}.lg\:p-10{padding:2.5rem}.lg\:p-12{padding:3rem}.lg\:p-8{padding:2rem}.lg\:py-8{padding-top:2rem;padding-bottom:2rem}.lg\:pb-0{padding-bottom:0px}.lg\:pl-72{padding-left:18rem}.lg\:text-2xl{font-size:1.5rem;line-height:2rem}.lg\:text-3xl{font-size:1.875rem;line-height:2.25rem}.lg\:text-base{font-size:1rem;line-height:1.5rem}.lg\:text-sm{font-size:0.875rem;line-height:1.25rem}}</style></head>
-<body id="app-body" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0 theme-mist">
+</head>
+<body id="app-body" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0 theme-night">
     <a href="#main" class="skip-link" onclick="event.preventDefault();document.getElementById('main').focus()">Saltar para o conteúdo</a>
 
     <!-- BOTÃO FLUTUANTE ZEN MODE -->
-    <button id="zen-float-btn" onclick="toggleZenMode()" title="Modo Ecrã Inteiro Imersivo">
-        <span>🧘 Zen Mode</span>
+    <button id="zen-float-btn" onclick="toggleZenMode()" title="Modo Ecrã Inteiro Imersivo" aria-label="Alternar Zen Mode" aria-pressed="false">
+        <span aria-hidden="true">🧘</span><span class="zen-label">Zen Mode</span>
     </button>
 
     <!-- SIDEBAR DESKTOP -->
@@ -463,7 +509,7 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
                     <span id="top-moon-icon" class="text-lg">🌒</span>
                     <div>
                         <span class="theme-muted opacity-70 block text-[10px] uppercase">Lua Atual</span>
-                        <strong id="top-moon-text" class="theme-title">Lua Crescente (21%)</strong>
+                        <strong id="top-moon-text" class="theme-title">Lua Crescente (22%)</strong>
                     </div>
                 </div>
                 <div class="h-6 w-px bg-[var(--border-color)]"></div>
@@ -540,37 +586,42 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
                     </div>
                 </div>
                 <details id="reading-history" class="theme-card border rounded-2xl p-4 text-left">
-                    <summary class="cursor-pointer text-sm font-semibold theme-title">Histórico de leituras <span id="history-count" class="theme-muted text-xs font-normal">(6)</span></summary>
+                    <summary class="cursor-pointer text-sm font-semibold theme-title">Histórico de leituras <span id="history-count" class="theme-muted text-xs font-normal">(7)</span></summary>
                     <div id="history-list" class="mt-3 space-y-2 text-xs">
+        <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
+            <div class="min-w-0"><span class="theme-muted">14/11/26, 10:57 · Runas</span>
+            <div class="theme-title truncate">ᚹ Wunjo</div></div>
+            <button onclick="logToJournal(0)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
+        </div>
         <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
             <div class="min-w-0"><span class="theme-muted">14/11/26, 10:28 · Runas</span>
             <div class="theme-title truncate">ᛇ Eihwaz</div></div>
-            <button onclick="logToJournal(0)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
+            <button onclick="logToJournal(1)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
         </div>
         <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
             <div class="min-w-0"><span class="theme-muted">14/11/26, 10:28 · Ogham</span>
             <div class="theme-title truncate">ᚅ Nion</div></div>
-            <button onclick="logToJournal(1)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
-        </div>
-        <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
-            <div class="min-w-0"><span class="theme-muted">13/11/26, 18:40 · Ogham</span>
-            <div class="theme-title truncate">ᚃ Fearn · ᚎ Straif · ᚅ Nion</div></div>
             <button onclick="logToJournal(2)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
         </div>
         <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
             <div class="min-w-0"><span class="theme-muted">13/11/26, 18:40 · Ogham</span>
-            <div class="theme-title truncate">ᚌ Gort</div></div>
+            <div class="theme-title truncate">ᚃ Fearn · ᚎ Straif · ᚅ Nion</div></div>
             <button onclick="logToJournal(3)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
+        </div>
+        <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
+            <div class="min-w-0"><span class="theme-muted">13/11/26, 18:40 · Ogham</span>
+            <div class="theme-title truncate">ᚌ Gort</div></div>
+            <button onclick="logToJournal(4)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
         </div>
         <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
             <div class="min-w-0"><span class="theme-muted">13/11/26, 18:08 · Runas</span>
             <div class="theme-title truncate">ᚨ Ansuz</div></div>
-            <button onclick="logToJournal(4)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
+            <button onclick="logToJournal(5)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
         </div>
         <div class="theme-inner border rounded-xl p-3 flex items-center justify-between gap-3">
             <div class="min-w-0"><span class="theme-muted">13/11/26, 18:08 · Tarot</span>
             <div class="theme-title truncate">Völva (Rainha) de Espadas</div></div>
-            <button onclick="logToJournal(5)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
+            <button onclick="logToJournal(6)" class="theme-accent font-semibold cursor-pointer whitespace-nowrap">Para o Diário</button>
         </div></div>
                     <button onclick="clearReadingLog()" class="mt-3 text-xs theme-muted underline cursor-pointer">Limpar histórico</button>
                 </details>
@@ -3729,21 +3780,373 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
                     </div>
 
                     <div class="flex justify-center gap-2 mb-5">
-                        <button onclick="switchRuneMode('draw')" id="rune-mode-draw" aria-pressed="true" class="bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer">Tiragem rúnica</button>
-                        <button onclick="switchRuneMode('gallery')" id="rune-mode-gallery" aria-pressed="false" class="theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer">Todas as runas (24)</button>
+                        <button onclick="switchRuneMode('draw')" id="rune-mode-draw" aria-pressed="false" class="theme-inner theme-title border border-[var(--border-color)] font-semibold text-xs px-4 py-2 rounded-xl transition cursor-pointer">Tiragem rúnica</button>
+                        <button onclick="switchRuneMode('gallery')" id="rune-mode-gallery" aria-pressed="true" class="bg-[var(--btn-primary)] text-white font-bold text-xs px-4 py-2 rounded-xl transition cursor-pointer">Todas as runas (24)</button>
                     </div>
 
-                    <div id="rune-gallery" class="hidden text-left space-y-4">
+                    <div id="rune-gallery" class="text-left space-y-4">
                         <p class="text-xs theme-muted text-center max-w-xl mx-auto">As 24 runas do Elder Futhark, com o significado direito e o invertido. Nove delas são simétricas e não se invertem; para essas mostra-se a sombra da runa.</p>
                         <div class="flex flex-wrap items-center justify-center gap-2">
-                            <div id="rune-filters" class="flex flex-wrap justify-center gap-2"></div>
+                            <div id="rune-filters" class="flex flex-wrap justify-center gap-2">
+        <button type="button" onclick="setRuneAett('all')" id="rune-aett-all" class="bg-[var(--btn-primary)] text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">
+            Todas (24)
+        </button>
+    
+        <button type="button" onclick="setRuneAett('Freyr')" id="rune-aett-Freyr" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">
+            Aett de Freyr (8)
+        </button>
+    
+        <button type="button" onclick="setRuneAett('Heimdall')" id="rune-aett-Heimdall" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">
+            Aett de Heimdall (8)
+        </button>
+    
+        <button type="button" onclick="setRuneAett('Tyr')" id="rune-aett-Tyr" class="theme-inner theme-muted border border-[var(--border-color)] text-[11px] font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">
+            Aett de Tyr (8)
+        </button>
+    </div>
                             <input id="rune-search" type="search" oninput="setRuneQuery(this.value)" placeholder="Procurar runa ou tema…" aria-label="Procurar runa" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-xs rounded-xl px-3 py-1.5 w-52">
                         </div>
-                        <p id="rune-gallery-count" class="text-[11px] theme-muted text-center" aria-live="polite"></p>
-                        <div id="rune-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                        <p id="rune-gallery-count" class="text-[11px] theme-muted text-center" aria-live="polite">A mostrar 24 de 24 runas</p>
+                        <div id="rune-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚠ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Freyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Fehu</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Prosperidade, energia vital, abundância em movimento e novos recursos.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Perda material, estagnação de recursos, ganância ou dispersão de energia.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚢ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Freyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Uruz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Força primordial, saúde física, coragem indomável e vitalidade.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Fraqueza passageira, oportunidade desperdiçada ou força mal direcionada.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚦ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Freyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Thurisaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Proteção ativa, defesa, superação de obstáculos e despertar.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Vulnerabilidade, reatividade impulsiva ou perigo de decisões precipitadas.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚨ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Freyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Ansuz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Sabedoria divina, inspiração poética (Awen), comunicação e sinais.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Mal-entendidos, bloqueio na expressão, ilusão ou conselhos enganadores.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚱ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Freyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Raidho</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Jornada espiritual, movimento certo, ritmo cósmico e evolução.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Atrasos no caminho, desorientação, rigidez ou interrupção de planos.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚲ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Freyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Kenaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Tocha interior, criatividade, iluminação técnica e clareza.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Falta de clareza, criatividade apagada, isolamento ou perda de foco.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚷ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Freyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Gebo</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Troca sagrada, parceria equilibrada, generosidade e união.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-indigo-300">Simétrica:</strong> desequilíbrio entre dar e receber, dívida emocional ou dependência.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚹ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Freyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Wunjo</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Alegria harmónica, realização, paz interior e fraternidade.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Desarmonia, tristeza passageira, alienação ou atraso na celebração.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚺ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Heimdall</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Hagalaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Ruptura purificadora, mudança inevitável e libertação de padrões.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-indigo-300">Simétrica:</strong> resistência dolorosa à mudança, crise súbita ou caos.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᚾ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Heimdall</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Nauthiz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Necessidade, resiliência na adversidade e fogo interior.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Privação extrema, impaciência, autolimitação ou desespero.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛁ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Heimdall</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Isa</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Quietude, pausa contemplativa, concentração e clareza cristalina.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-indigo-300">Simétrica:</strong> estagnação emocional, frieza, teimosia ou paralisia.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛃ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Heimdall</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Jera</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Colheita justa, ciclos naturais do tempo e recompensa pelo esforço.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-indigo-300">Simétrica:</strong> impaciência com os ciclos naturais ou repetição de erros.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛇ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Heimdall</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Eihwaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Teixo sagrado, eixo entre mundos, resistência e proteção profunda.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-indigo-300">Simétrica:</strong> medo da transformação, insegurança ou confusão de propósito.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛈ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Heimdall</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Perthro</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Mistério do destino (Wyrd), intuição, sincronicidade e revelação.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Segredos ocultos, desilusão, resistência ao desconhecido ou estagnação.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛉ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Heimdall</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Algiz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Proteção espiritual elevada, conexão com o sagrado e alerta.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Vulnerabilidade energética, descuido ou desconexão da intuição.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛊ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Heimdall</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Sowilo</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Sol vitorioso, força vital, clareza absoluta e sucesso.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-indigo-300">Simétrica:</strong> excesso de ego, exaustão por excesso de ação ou cegueira.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛏ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Tyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Tiwaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Justiça, honra, sacrifício nobre e liderança íntegra.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Injustiça, desmotivação, conflito mal resolvido ou falta de coragem.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛒ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Tyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Berkano</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Nascimento, fertilidade, nutrição maternal e crescimento suave.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Bloqueio criativo, tensões familiares ou dificuldade em iniciar algo novo.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛖ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Tyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Ehwaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Avanço conjunto, confiança mútua, lealdade e progresso.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Desconfiança, falta de sintonia em parcerias ou desejo de fuga.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛗ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Tyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Mannaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Humanidade, autoconhecimento, mente consciente e comunidade.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Isolamento social, egoísmo, autocrítica excessiva ou desconexão.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛚ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Tyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Laguz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Águas profundas da intuição, sonhos, fluidez e cura emocional.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Confusão emocional, medo do subconsciente ou bloqueio intuitivo.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛜ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Tyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Ingwaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Semente latente, paz interior, gestação de novos projetos.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-indigo-300">Simétrica:</strong> dispersão de energia antes da conclusão ou ansiedade.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛞ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Tyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Dagaz</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Amanhecer, despertar súbito, transformação luminosa e equilíbrio.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-indigo-300">Simétrica:</strong> dificuldade em encerrar um ciclo ou medo da mudança.
+            </p>
+        </div>
+    
+        <div class="theme-inner border rounded-2xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-4xl text-amber-300 font-bold leading-none">ᛟ</span>
+                    <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de Tyr</span>
+                </div>
+                <h3 class="font-cinzel text-base font-bold theme-title mt-2">Othala</h3>
+                <p class="text-xs theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> Herança ancestral, lar espiritual, raízes e sabedoria herdada.</p>
+            </div>
+            <p class="text-[11px] theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
+                <strong class="text-amber-300">Invertida:</strong> Conflitos familiares, apego excessivo ao passado ou sensação de desenraizamento.
+            </p>
+        </div>
+    </div>
                     </div>
 
-                    <div id="rune-card" class="theme-inner border rounded-2xl p-6 lg:p-8 my-4 min-h-[260px] flex flex-col items-center justify-center transition-all shadow-inner">
+                    <div id="rune-card" class="theme-inner border rounded-2xl p-6 lg:p-8 my-4 min-h-[260px] flex flex-col items-center justify-center transition-all shadow-inner hidden">
         <div class="grid grid-cols-1 max-w-md mx-auto gap-4 w-full">
             
                 <div class="theme-card border rounded-2xl p-5 text-center space-y-2 shadow-lg">
@@ -3762,7 +4165,7 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
                         </button>
                     </div>
 
-                    <div id="rune-draw-actions" class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto mt-6">
+                    <div id="rune-draw-actions" class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto mt-6 hidden">
                         <button onclick="drawRunes(1)" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold py-3.5 px-6 rounded-xl shadow-lg transition text-xs lg:text-sm tracking-wider cursor-pointer">1 Runa (Conselho)</button>
                         <button onclick="drawRunes(3)" class="w-full theme-inner theme-title font-semibold py-3.5 px-6 rounded-xl border border-[var(--border-color)] hover:border-[var(--border-hover)] transition text-xs lg:text-sm tracking-wider cursor-pointer">3 Runas (Passado / Presente / Futuro)</button>
                     </div>
@@ -3777,7 +4180,7 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
                         <div>
                             <div class="text-xs uppercase tracking-widest theme-accent font-semibold">Ciclo Lunar Atual</div>
                             <h2 id="moon-phase-name" class="font-cinzel text-2xl text-white font-bold mt-1">Lua Crescente</h2>
-                            <p id="moon-details" class="text-xs lg:text-sm theme-muted opacity-80 mt-1.5">Idade: 4.5 dias • Iluminação: 21%</p>
+                            <p id="moon-details" class="text-xs lg:text-sm theme-muted opacity-80 mt-1.5">Idade: 4.6 dias • Iluminação: 22%</p>
                         </div>
                     </div>
 
@@ -4188,7 +4591,7 @@ nav.fixed.bottom-0 { padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px)
                             <button onclick="togglePinSettings()" class="theme-inner hover:border-[var(--text-accent)] border text-xs theme-title px-3 py-1.5 rounded-lg transition cursor-pointer" title="Configurar PIN">
                                 🔐 PIN
                             </button>
-                            <span id="save-status" class="text-xs theme-accent italic bg-[var(--bg-inner)] px-3 py-1.5 rounded-lg border border-[var(--border-color)]">Guardado às 10:28</span>
+                            <span id="save-status" class="text-xs theme-accent italic bg-[var(--bg-inner)] px-3 py-1.5 rounded-lg border border-[var(--border-color)]">Guardado às 11:14</span>
                         </div>
                     </div>
 
@@ -4572,7 +4975,7 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-2xl p-5 text-w
         </footer>
     </div>
 
-    <div id="toast-container" role="status" aria-live="polite" class="fixed bottom-16 lg:bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"><div class="bg-slate-900/95 border border-indigo-500/50 text-white text-xs px-4 py-3 rounded-xl shadow-2xl backdrop-blur-md transition-opacity duration-300">📦 A empacotar ficheiro...</div></div>
+    <div id="toast-container" role="status" aria-live="polite"></div>
 
     <script>
 /**
@@ -4995,18 +5398,27 @@ function toggleLanternMode() {
     }
 }
 
-function toggleZenMode() {
-    document.body.classList.toggle('zen-active');
-    const active = document.body.classList.contains('zen-active');
+function setZenMode(active) {
+    document.body.classList.toggle('zen-active', active);
     const btn = document.getElementById('zen-float-btn');
-    if (active) {
-        btn.innerHTML = '✕ Sair Zen';
-        showToast('🧘 Zen Mode ativo (Ecrã Inteiro Imersivo)');
-    } else {
-        btn.innerHTML = '🧘 Zen Mode';
-        showToast('Modo normal restaurado.');
+    if (btn) {
+        btn.innerHTML = active
+            ? '<span aria-hidden="true">✕</span><span class="zen-label">Sair Zen</span>'
+            : '<span aria-hidden="true">🧘</span><span class="zen-label">Zen Mode</span>';
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        btn.setAttribute('aria-label', active ? 'Sair do Zen Mode' : 'Alternar Zen Mode');
     }
 }
+
+function toggleZenMode() {
+    const active = !document.body.classList.contains('zen-active');
+    setZenMode(active);
+    showToast(active ? '🧘 Zen Mode ativo (Ecrã Inteiro Imersivo)' : 'Modo normal restaurado.');
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('zen-active')) toggleZenMode();
+});
 
 // CÁLCULO EXATO DE SOLSTÍCIOS & EQUINÓCIOS POR GPS
 function calculateExactSolarFestivals() {
@@ -5780,16 +6192,25 @@ function filterHerbal() {
     renderHerbalList(document.getElementById('herbal-search').value);
 }
 
-function showToast(msg) {
+function showToast(msg, opts) {
     const container = document.getElementById('toast-container');
+    if (!container) return null;
+    const duration = (opts && opts.duration) || 3200;
+    // evita acumular toasts: no máximo 3 visíveis
+    while (container.children.length >= 3) container.firstElementChild.remove();
     const toast = document.createElement('div');
-    toast.className = 'bg-slate-900/95 border border-indigo-500/50 text-white text-xs px-4 py-3 rounded-xl shadow-2xl backdrop-blur-md transition-opacity duration-300';
+    toast.className = 'app-toast';
     toast.textContent = msg;
     container.appendChild(toast);
-    setTimeout(() => {
+    const dismiss = () => {
+        if (!toast.isConnected) return;
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 300);
-    }, 3200);
+    };
+    // timeout de segurança: nunca fica preso no ecrã
+    setTimeout(dismiss, duration);
+    toast.dismiss = dismiss;
+    return toast;
 }
 
 async function downloadProjectZip() {
@@ -5797,18 +6218,49 @@ async function downloadProjectZip() {
         showToast('⚠️ Biblioteca JSZip ainda a carregar.');
         return;
     }
-    showToast('📦 A empacotar ficheiro...');
-    const zip = new JSZip();
-    zip.file('caminho-druidico-pro-ultimate.html', document.documentElement.outerHTML);
-    const blob = await zip.generateAsync({ type: 'blob' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'caminho-druidico-pro-ultimate-standalone.zip';
-    a.click();
-    showToast('✅ Ficheiro .ZIP descarregado!');
+    const pending = showToast('📦 A empacotar ficheiro...', { duration: 15000 });
+    try {
+        // Trabalha sobre um clone limpo: sem toasts, sem estilos gerados pelo Tailwind
+        // em runtime e sem estado temporário (zen, etc.), para o ficheiro exportado ser limpo.
+        const clone = document.documentElement.cloneNode(true);
+        const tc = clone.querySelector('#toast-container');
+        if (tc) tc.innerHTML = '';
+        clone.querySelectorAll('style').forEach(s => {
+            if ((s.textContent || '').includes('tailwindcss v3')) s.remove();
+        });
+        const cb = clone.querySelector('body');
+        if (cb) cb.classList.remove('zen-active');
+        const zb = clone.querySelector('#zen-float-btn');
+        if (zb) {
+            zb.setAttribute('aria-pressed', 'false');
+            zb.innerHTML = '<span aria-hidden="true">🧘</span><span class="zen-label">Zen Mode</span>';
+        }
+        const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+
+        const zip = new JSZip();
+        zip.file('caminho-druidico-pro-ultimate.html', html);
+        const blob = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'caminho-druidico-pro-ultimate-standalone.zip';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        if (pending) pending.dismiss();
+        showToast('✅ Ficheiro .ZIP descarregado!');
+    } catch (err) {
+        console.error('Erro ao criar ZIP:', err);
+        if (pending) pending.dismiss();
+        showToast('⚠️ Não foi possível criar o .ZIP.');
+    }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    const _tc = document.getElementById('toast-container');
+    if (_tc) _tc.innerHTML = '';
+    setZenMode(false);
     const savedTheme = localStorage.getItem('druid_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-parchment' : 'theme-night');
     changeTheme(savedTheme);
     updateAstronomy();
