@@ -241,6 +241,95 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
 
 .breath-animation { transition: transform 4s ease-in-out, border-color 1s ease; }
 
+/* ---------- UI v12: ecrã Hoje, botões, alvos de toque ---------- */
+.h44 { min-height: 44px; }
+.minh96 { min-height: 96px; }
+.today-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+@media (min-width: 640px) { .today-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.today-chip { display: flex; align-items: center; gap: .6rem; min-height: 56px; padding: .55rem .7rem; text-align: left; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--r-md); cursor: pointer; transition: border-color .15s ease; min-width: 0; }
+.today-chip:hover { border-color: var(--border-hover); }
+.today-chip .tc-i { flex: 0 0 auto; width: 2rem; height: 2rem; display: grid; place-items: center; font-size: 1.35rem; line-height: 1; color: var(--text-accent); }
+.today-chip .tc-i .ic { width: 1.35rem; height: 1.35rem; }
+.today-chip .tc-glyph { font-family: 'Noto Sans Ogham', serif; font-size: 1.5rem; }
+.today-chip .tc-t { display: flex; flex-direction: column; min-width: 0; }
+.today-chip .t-lb { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); }
+.today-chip .t-v { font-size: 14px; font-weight: 600; color: var(--text-title); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.today-hero { border-color: color-mix(in srgb, var(--text-accent) 35%, var(--border-color)); }
+.oracle-pick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.oracle-pick button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .25rem; min-height: 64px; border-radius: var(--r-md); background: var(--bg-inner); border: 1px solid var(--border-color); color: var(--text-title); font-weight: 600; font-size: .9rem; cursor: pointer; transition: border-color .15s ease, background-color .15s ease; }
+.oracle-pick button:hover, .oracle-pick button:focus-visible { border-color: var(--text-accent); background: color-mix(in srgb, var(--text-accent) 8%, var(--bg-inner)); }
+.oracle-pick .op-glyph { font-family: 'Noto Sans Ogham', 'Noto Sans Runic', serif; font-size: 1.4rem; line-height: 1; color: var(--text-accent); }
+.oracle-pick .ic { width: 1.4rem; height: 1.4rem; color: var(--text-accent); }
+.btn-sec { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 1rem; border-radius: .6rem; background: var(--bg-inner); border: 1px solid var(--border-color); font-size: .875rem; font-weight: 600; cursor: pointer; transition: border-color .15s ease; }
+.btn-sec:hover { border-color: var(--border-hover); }
+.btn-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .25rem; margin-left: -.25rem; font-size: .875rem; font-weight: 600; color: var(--text-accent); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; background: none; border: 0; }
+.today-more > summary { list-style: none; display: flex; align-items: center; gap: .75rem; min-height: 56px; padding: .75rem 1rem; cursor: pointer; border-radius: inherit; }
+.today-more > summary::-webkit-details-marker { display: none; }
+.today-more > summary::after { content: ""; flex: 0 0 auto; width: .55rem; height: .55rem; margin-left: auto; border-right: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted); transform: rotate(45deg) translateY(-2px); transition: transform .2s ease; }
+.today-more[open] > summary::after { transform: rotate(-135deg) translateY(-2px); }
+.today-more > summary:focus-visible { outline: 2px solid var(--text-accent); outline-offset: 2px; }
+.today-more .tm-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: var(--text-title); white-space: nowrap; }
+.today-more .tm-hint { font-size: .8rem; color: var(--text-muted); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.today-more .tm-body { padding: 0 1rem 1rem; }
+@media (min-width: 1024px) { .today-more .tm-body { padding: 0 1.25rem 1.25rem; } .today-more > summary { padding: .75rem 1.25rem; } }
+.empty-invite { text-align: center; padding: .5rem 0; display: grid; gap: .75rem; }
+.empty-invite p { font-size: .875rem; color: var(--text-muted); }
+/* Cabeçalho móvel: botões com legenda */
+.hdr-actions { display: flex; gap: .4rem; }
+.hdr-btn { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 52px; height: 44px; padding: 0 .35rem; border-radius: var(--r-md); color: var(--text-title); background: var(--bg-inner); border: 1px solid var(--border-color); cursor: pointer; }
+.hdr-btn:hover { border-color: var(--border-hover); }
+.hdr-btn .ic { width: 1.1rem; height: 1.1rem; }
+.hdr-btn span { font-size: 9.5px; font-weight: 600; letter-spacing: .02em; color: var(--text-muted); line-height: 1; }
+/* Zen: no telemóvel o botão flutuante só aparece para SAIR do modo Zen */
+body:not(.zen-active) #zen-float-btn { display: none; }
+details.today-more { padding: 0 !important; }
+/* Ecrãs táteis: campos com ≥44px e texto a 16px (evita o zoom automático do iPhone ao tocar) */
+@media (pointer: coarse) {
+  input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), select { min-height: 44px; }
+  input, select, textarea { font-size: 16px !important; }
+}
+
+/* Seletor de secção dentro dos grupos (só telemóvel/tablet; no desktop a barra lateral já mostra tudo) */
+.subnav { display: flex; gap: .25rem; padding: .25rem; margin-bottom: .25rem; border-radius: .8rem; background: var(--bg-inner); border: 1px solid var(--border-color); }
+.subnav button { flex: 1 1 0; min-height: 44px; border-radius: .6rem; font-size: .875rem; font-weight: 600; color: var(--text-muted); background: transparent; border: 0; cursor: pointer; transition: background-color .15s ease, color .15s ease; }
+.subnav button[aria-selected="true"] { background: var(--btn-primary); color: var(--on-primary); }
+@media (min-width: 1024px) { .subnav { display: none; } }
+/* Boas-vindas e sugestão de lembrete */
+.onboard { max-width: 25rem; text-align: center; padding: 1.5rem 1.25rem 1.25rem; }
+.onboard::backdrop { background: rgba(5, 8, 16, .72); backdrop-filter: blur(3px); }
+.ob-step { display: grid; gap: .85rem; justify-items: center; }
+.ob-step[hidden] { display: none; }
+.ob-awen { width: 3.5rem; height: 3.5rem; color: var(--text-accent); }
+.ob-ic { width: 3.25rem; height: 3.25rem; border-radius: 999px; display: grid; place-items: center; background: color-mix(in srgb, var(--text-accent) 14%, var(--bg-inner)); color: var(--text-accent); }
+.ob-ic .ic { width: 1.6rem; height: 1.6rem; }
+.ob-dots { display: flex; gap: .4rem; justify-content: center; margin-bottom: 1rem; }
+.ob-dots i { width: .45rem; height: .45rem; border-radius: 999px; background: var(--border-hover); transition: width .2s ease; }
+.ob-dots i.on { width: 1.4rem; background: var(--text-accent); }
+.ob-themes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; width: 100%; }
+.ob-themes button { display: flex; flex-direction: column; align-items: center; gap: .35rem; padding: .5rem .25rem; min-height: 44px; border-radius: .7rem; border: 1px solid var(--border-color); background: var(--bg-inner); font-size: .75rem; font-weight: 600; color: var(--text-title); cursor: pointer; }
+.ob-themes button::before { content: ""; width: 2rem; height: 2rem; border-radius: 999px; background: linear-gradient(135deg, var(--sw) 50%, var(--sw2) 50%); box-shadow: 0 0 0 1px rgba(127,127,127,.35); }
+.ob-themes button[aria-checked="true"] { border-color: var(--text-accent); box-shadow: 0 0 0 1px var(--text-accent); }
+.ob-list { text-align: left; display: grid; gap: .6rem; font-size: .875rem; color: var(--text-muted); }
+.ob-list b { color: var(--text-title); }
+.ob-g { font-family: 'Noto Sans Ogham', 'Noto Sans Runic', serif; color: var(--text-accent); }
+.ob-nav { display: flex; justify-content: space-between; align-items: center; gap: .75rem; margin-top: 1.25rem; }
+.ob-primary { min-height: 44px; padding: 0 1.2rem; border-radius: .65rem; background: var(--btn-primary); color: var(--on-primary); font-weight: 700; font-size: .9rem; border: 0; cursor: pointer; }
+.ob-primary:disabled { opacity: .5; cursor: default; }
+.ob-skip { min-height: 44px; padding: 0 .5rem; background: none; border: 0; color: var(--text-muted); font-size: .875rem; text-decoration: underline; cursor: pointer; }
+.nudge { position: fixed; left: 12px; right: 12px; bottom: calc(var(--bnav-h, 64px) + 12px + env(safe-area-inset-bottom, 0px)); z-index: 60; max-width: 26rem; margin: 0 auto; padding: .9rem 1rem; border-radius: 1rem; background: var(--bg-card); border: 1px solid var(--text-accent); box-shadow: 0 14px 34px rgba(0,0,0,.45); display: grid; gap: .6rem; animation: tarot-deal .4s ease both; }
+.nudge[hidden] { display: none; }
+.nudge p { font-size: .875rem; color: var(--text-title); }
+.nudge-row { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.nudge-time { display: inline-flex; align-items: center; gap: .35rem; font-size: .875rem; color: var(--text-muted); }
+.nudge-time input { min-height: 44px; padding: 0 .5rem; border-radius: .5rem; background: var(--bg-inner); border: 1px solid var(--border-color); color: var(--text-title); }
+@media (min-width: 1024px) { .nudge { left: auto; right: 24px; bottom: 24px; } }
+/* Mapa lunar: barra de navegação numa só linha */
+.lunar-toolbar { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.lunar-toolbar #lunar-map-title { flex: 1 1 7rem; min-width: 7rem; white-space: nowrap; }
+@media (max-width: 400px) { .lunar-toolbar .lunar-today-btn { margin-left: auto; } }
+.lunar-toolbar .lunar-today-btn { padding: 0 .8rem; font-size: .875rem; color: var(--text-accent); }
+.lunar-toolbar .ic { width: 1.1rem; height: 1.1rem; }
+.lunar-nav-btn { min-height: 44px !important; min-width: 44px !important; }
 /* ---------- Cartas de Tarot — design "cartão dourado" (v11) ----------
    O cartão tem sempre papel escuro e moldura dourada (independente do tema),
    como uma carta física. A cor do naipe só aparece na face, nunca no verso. */
@@ -829,6 +918,11 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
             <symbol id="i-obod" viewBox="0 0 24 24"><path d="M7 20l3.5-12M12 20V10M17 20L13.5 8"/><circle cx="12" cy="5" r="1"/></symbol>
             <symbol id="i-altar" viewBox="0 0 24 24"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5.5 1.5 1.2 2.2 2 2.5C10.5 8.5 11 5.5 12 3z"/></symbol>
             <symbol id="i-ritual" viewBox="0 0 24 24"><path d="M8 4h10v13a3 3 0 0 1-3 3H7a2.5 2.5 0 0 1 0-5h8M8 4v11M11.5 8.5h3.5M11.5 11.5h3.5"/></symbol>
+            <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
+            <symbol id="i-library" viewBox="0 0 24 24"><path d="M4 4h3v16H4zM9 4h3v16H9zM14.2 4.6l2.9-.8 4 15.5-2.9.8z"/></symbol>
+            <symbol id="i-grove" viewBox="0 0 24 24"><path d="M12 3l3.5 6h-7zM12 9v4M5 10l2.8 5H2.2zM5 15v3M19 10l2.8 5h-5.6zM19 15v3M3 21h18"/></symbol>
+            <symbol id="i-forest" viewBox="0 0 24 24"><path d="M8 3l4 7H4zM8 10l5 8H3zM8 18v3M16.5 7l3.5 6h-7zM16.5 13l4 6h-8zM16.5 19v2"/></symbol>
+            <symbol id="i-oracles" viewBox="0 0 24 24"><rect x="3" y="6" width="8" height="13" rx="1.5" transform="rotate(-10 7 12.5)"/><rect x="11" y="4" width="8" height="13" rx="1.5" transform="rotate(8 15 10.5)"/><path d="M15 8.5v4M13 10.5h4"/></symbol>
             <symbol id="i-journal" viewBox="0 0 24 24"><path d="M5 19.5V4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5a1.5 1.5 0 0 0 0 3H19M9 7.5h6"/></symbol>
             <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></symbol>
             <symbol id="i-orgs" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></symbol>
@@ -866,7 +960,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
             <button type="button" onclick="switchTab('oracle')" id="desk-nav-oracle" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg>Ogham</button>
             <button type="button" onclick="switchTab('herbal')" id="desk-nav-herbal" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
             <button type="button" onclick="switchTab('triads')" id="desk-nav-triads" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
-            <button type="button" onclick="switchTab('library')" id="desk-nav-library" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Biblioteca</button>
+            <button type="button" onclick="switchTab('library')" id="desk-nav-library" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
             <div class="nav-group">Ciclos</div>
             <button type="button" onclick="switchTab('astro')" id="desk-nav-astro" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-astro"></use></svg>Astronomia</button>
             <button type="button" onclick="switchTab('wheel')" id="desk-nav-wheel" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-wheel"></use></svg>Roda do Ano</button>
@@ -896,14 +990,17 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                 <p id="mob-tree-subtitle" class="text-[11px] theme-accent uppercase tracking-wide truncate">&nbsp;</p>
             </div>
         </div>
-        <button type="button" onclick="toggleLanternMode()" class="icon-btn" aria-label="Alternar Lanterna Ritual" title="Lanterna Ritual"><svg class="ic" aria-hidden="true"><use href="#i-lantern"></use></svg></button>
+        <div class="hdr-actions">
+            <button type="button" onclick="toggleLanternMode()" class="hdr-btn" aria-label="Lanterna ritual: luz quente e suave" title="Lanterna ritual: luz quente e suave"><svg class="ic" aria-hidden="true"><use href="#i-lantern"></use></svg><span>Lanterna</span></button>
+            <button type="button" onclick="toggleZenMode()" class="hdr-btn" aria-label="Modo Zen: ecrã inteiro sem distrações" title="Modo Zen: ecrã inteiro sem distrações"><svg class="ic" aria-hidden="true"><use href="#i-zen"></use></svg><span>Zen</span></button>
+        </div>
     </header>
 
     <!-- BARRA INFERIOR MOBILE: 4 destinos + Mais -->
     <nav class="bottom-nav" aria-label="Navegação principal">
         <button type="button" onclick="switchTab('today')" id="bot-nav-today" class="bot-nav-item active" aria-current="page"><svg class="ic" aria-hidden="true"><use href="#i-today"></use></svg><span>Hoje</span></button>
-        <button type="button" onclick="switchTab('runes')" id="bot-nav-runes" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg><span>Runas</span></button>
-        <button type="button" onclick="switchTab('tarot')" id="bot-nav-tarot" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg><span>Tarot</span></button>
+        <button type="button" onclick="openNavGroup('oracles')" id="bot-nav-oracles" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-oracles"></use></svg><span>Oráculos</span></button>
+        <button type="button" onclick="openNavGroup('cycles')" id="bot-nav-cycles" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-astro"></use></svg><span>Ciclos</span></button>
         <button type="button" onclick="switchTab('journal')" id="bot-nav-journal" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-journal"></use></svg><span>Diário</span></button>
         <button type="button" onclick="openMore()" id="bot-nav-more" class="bot-nav-item theme-muted" aria-haspopup="dialog"><svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg><span>Mais</span></button>
     </nav>
@@ -917,9 +1014,11 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
         <div class="nav-group">Oráculos</div>
         <div class="sheet-grid">
             <button type="button" onclick="switchTab('oracle')" data-tab="oracle" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg>Ogham</button>
+            <button type="button" onclick="switchTab('runes')" data-tab="runes" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas</button>
+            <button type="button" onclick="switchTab('tarot')" data-tab="tarot" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg>Tarot nórdico</button>
             <button type="button" onclick="switchTab('herbal')" data-tab="herbal" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
             <button type="button" onclick="switchTab('triads')" data-tab="triads" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
-            <button type="button" onclick="switchTab('library')" data-tab="library" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Biblioteca</button>
+            <button type="button" onclick="switchTab('library')" data-tab="library" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
         </div>
         <div class="nav-group">Ciclos</div>
         <div class="sheet-grid">
@@ -937,13 +1036,13 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
         <div class="nav-group">Comunidade</div>
         <div class="sheet-grid">
             <button type="button" onclick="switchTab('orgs')" data-tab="orgs" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-orgs"></use></svg>Organizações</button>
-            <button type="button" onclick="switchTab('grove')" data-tab="grove" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Grove local</button>
+            <button type="button" onclick="switchTab('grove')" data-tab="grove" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-grove"></use></svg>Grove local</button>
             <button type="button" onclick="switchTab('about')" data-tab="about" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-about"></use></svg>Sobre & apoio</button>
         </div>
         <div class="nav-group">Prática rápida & ambiente</div>
         <div class="sheet-grid">
             <button type="button" onclick="registerAwenPractice();closeMore()" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Invocar Awen</button>
-            <button type="button" onclick="enterBosqueMode();closeMore()" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Modo Bosque</button>
+            <button type="button" onclick="enterBosqueMode();closeMore()" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-forest"></use></svg>Modo Bosque</button>
             <button type="button" onclick="toggleLanternMode()" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-lantern"></use></svg>Lanterna</button>
         </div>
         <label for="theme-selector-mobile" class="nav-group block">Ambiente visual</label>
@@ -974,6 +1073,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
             <div class="flex items-center gap-3">
                 <button type="button" onclick="toggleLanternMode()" id="btn-lantern-toggle" title="Modo Lanterna Ritual" class="theme-inner border hover:border-[var(--border-hover)] text-sm theme-title px-3 py-2 rounded-lg flex items-center gap-2 transition cursor-pointer"><svg class="ic" aria-hidden="true"><use href="#i-lantern"></use></svg>Lanterna</button>
                 <button type="button" onclick="registerAwenPractice()" class="theme-inner border hover:border-[var(--border-hover)] text-sm theme-title px-3 py-2 rounded-lg flex items-center gap-2 transition cursor-pointer"><svg class="ic theme-accent" aria-hidden="true"><use href="#i-obod"></use></svg>Invocar Awen</button>
+                <button type="button" onclick="toggleZenMode()" class="theme-inner border hover:border-[var(--border-hover)] text-sm theme-title px-3 py-2 rounded-lg flex items-center gap-2 transition cursor-pointer" title="Ecrã inteiro sem distrações"><svg class="ic theme-accent" aria-hidden="true"><use href="#i-zen"></use></svg>Modo Zen</button>
             </div>
         </div>
 
@@ -1079,11 +1179,11 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     <div class="max-w-xl mx-auto">
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo Sagrado de Ogham</h2>
                         <p class="mb-3"><button type="button" onclick="openReadingGuide('ogham')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button></p>
-                        <p class="text-sm lg:text-[15px] theme-muted mb-6">Conecte-se com os espíritos dos 20 Few (gravetos de árvores sagradas) da tradição celta.</p>
+                        <p class="text-sm lg:text-[15px] theme-muted mb-6">Conecte-se com os espíritos das 20 letras Ogham (feda, gravadas em varas de árvores sagradas) da tradição celta.</p>
                     </div>
 
                     <!-- Resultado em destaque (acima das opções de tiragem) -->
-                    <div id="ogham-card" class="draw-area mt-2 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha 1, 3 ou 5 Few para consultar o bosque.</p></div>
+                    <div id="ogham-card" class="draw-area mt-2 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha 1, 3 ou 5 letras para consultar o bosque.</p></div>
                     <div id="ogham-save-bar" class="hidden mt-4 flex flex-wrap justify-center gap-2">
                         <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
                         <button type="button" onclick="shareReading('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
@@ -1093,9 +1193,9 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-3xl mx-auto mt-6">
-                        <button type="button" onclick="drawOghamCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 Few · Conselho</button>
-                        <button type="button" onclick="drawOghamCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 Few · Tríade</button>
-                        <button type="button" onclick="drawOghamCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 Few · Roda Elemental</button>
+                        <button type="button" onclick="drawOghamCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 letra · Conselho</button>
+                        <button type="button" onclick="drawOghamCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 letras · Tríade</button>
+                        <button type="button" onclick="drawOghamCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 letras · Roda Elemental</button>
                         <button type="button" onclick="drawYesNo('ogham')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
                     </div>
                 </div>
@@ -1113,7 +1213,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
                             <div class="eyebrow">Alinhamento Natural &amp; Atmosférico</div>
-                            <h2 class="font-cinzel text-xl lg:text-2xl font-bold theme-title mt-1">Elemento Regente do Dia &amp; Meteorologia Local</h2>
+                            <h2 class="font-cinzel text-xl lg:text-2xl font-bold theme-title mt-1">Elemento do dia e clima</h2>
                         </div>
                         <button type="button" onclick="refreshWeatherAndElement(true)" class="bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm py-2 px-4 rounded-lg transition cursor-pointer shrink-0">
                             Atualizar GPS &amp; Clima
@@ -1263,12 +1363,12 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                             <h3 class="font-cinzel text-xl font-bold theme-title mt-1">Mapa lunar</h3>
                             <p class="text-sm theme-muted mt-1">Fases astronómicas reais (hora local) · navegue entre meses ou exporte o mapa</p>
                         </div>
-                        <div class="flex flex-wrap items-center gap-2">
+                        <div class="lunar-toolbar">
                             <button type="button" class="lunar-nav-btn" onclick="shiftLunarMap(-1)" aria-label="Mês anterior">‹</button>
-                            <span id="lunar-map-title" class="text-sm font-semibold theme-title capitalize min-w-[9rem] text-center">—</span>
+                            <span id="lunar-map-title" class="text-sm font-semibold theme-title capitalize text-center">—</span>
                             <button type="button" class="lunar-nav-btn" onclick="shiftLunarMap(1)" aria-label="Mês seguinte">›</button>
-                            <button type="button" onclick="resetLunarMap()" class="theme-inner border text-sm font-semibold theme-accent px-3 py-2 rounded-lg cursor-pointer hover:border-[var(--border-hover)] transition">Hoje</button>
-                            <button type="button" onclick="exportLunarMapPNG()" class="theme-inner border text-sm font-semibold theme-title px-3 py-2 rounded-lg cursor-pointer hover:border-[var(--border-hover)] transition" title="Exportar PNG">Exportar PNG</button>
+                            <button type="button" onclick="resetLunarMap()" class="lunar-nav-btn lunar-today-btn">Hoje</button>
+                            <button type="button" onclick="exportLunarMapPNG()" class="lunar-nav-btn" title="Exportar o mapa em PNG" aria-label="Exportar o mapa em PNG"><svg class="ic" aria-hidden="true"><use href="#i-download"></use></svg></button>
                         </div>
                     </div>
                     <div class="theme-inner border rounded-xl p-3 sm:p-4">
@@ -1290,7 +1390,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                 <div class="theme-card border rounded-2xl p-6 lg:p-8 space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                            <h3 class="font-cinzel text-xl font-bold theme-title">Calculadora de Solstícios &amp; Equinócios por GPS</h3>
+                            <h3 class="font-cinzel text-xl font-bold theme-title">Solstícios e equinócios</h3>
                             <p class="text-sm theme-muted">Momento exato calculado matematicamente (algoritmo de Jean Meeus) para a sua coordenada e ano civil atual.</p>
                         </div>
                         <button onclick="calculateExactSolarFestivals(); refreshWeatherAndElement(true);" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-bold text-sm py-2.5 px-4 rounded-lg transition cursor-pointer">
@@ -1403,94 +1503,106 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
             </section>
 
             <!-- HOJE (ECRÃ INICIAL) -->
-            <section id="tab-today" class="tab-content space-y-5 tab-in">
-                <div class="flex flex-wrap items-end justify-between gap-3">
-                    <div>
+            <section id="tab-today" class="tab-content space-y-4 tab-in">
+                <div class="flex items-end justify-between gap-3">
+                    <div class="min-w-0">
                         <p id="today-date" class="eyebrow">&nbsp;</p>
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mt-1">Hoje no caminho</h2>
                     </div>
-                    <div id="streak-badge" class="theme-inner border rounded-full px-3 py-1.5 text-sm font-semibold theme-accent flex items-center gap-2">
+                    <button type="button" id="streak-badge" onclick="switchTab('journal')" class="theme-inner border rounded-full px-3 h44 text-sm font-semibold theme-accent flex items-center gap-2 shrink-0 cursor-pointer" title="Dias seguidos de prática">
                         <span aria-hidden="true">&#128293;</span> <span id="streak-label">0 dias</span>
+                    </button>
+                </div>
+
+                <!-- Faixa compacta: Lua · Sol · Mês arbóreo · Próxima festa -->
+                <div id="today-panel" class="today-strip" aria-label="Resumo de hoje"></div>
+
+                <!-- Ação principal -->
+                <div class="today-hero theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
+                    <div>
+                        <h3 class="font-cinzel text-lg font-bold theme-title">Oráculo de hoje</h3>
+                        <p class="text-sm theme-muted">Escolha um oráculo e receba o conselho do dia.</p>
+                    </div>
+                    <div class="oracle-pick" role="group" aria-label="Escolher oráculo do dia">
+                        <button type="button" onclick="drawDailyOracle('ogham')"><span class="op-glyph" aria-hidden="true">ᚁ</span>Ogham</button>
+                        <button type="button" onclick="drawDailyOracle('rune')"><span class="op-glyph" aria-hidden="true">ᚠ</span>Runa</button>
+                        <button type="button" onclick="drawDailyOracle('tarot')"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg>Tarot</button>
+                    </div>
+                    <div id="daily-oracle" class="theme-inner border rounded-xl p-4 minh96 flex flex-col items-center justify-center text-center">
+                        <p class="text-sm theme-muted">O conselho do dia aparece aqui.</p>
+                    </div>
+                    <div id="daily-oracle-actions" class="hidden flex flex-wrap gap-2 justify-center">
+                        <button type="button" onclick="saveDailyOracleToJournal()" class="btn-sec theme-accent">Guardar no Diário</button>
+                        <button type="button" onclick="shareReading('daily')" class="btn-sec theme-title">Partilhar</button>
+                        <button type="button" onclick="interpretReading('daily')" class="btn-sec theme-accent">Interpretar</button>
                     </div>
                 </div>
-                <div id="today-panel" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" aria-label="Resumo de hoje"></div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div id="daily-few" class="theme-card border rounded-2xl p-4 lg:p-5 text-left flex items-center gap-4" data-text=""></div>
-                    <div id="today-element-weather" class="theme-card border rounded-2xl p-4 lg:p-5 text-left flex items-center gap-4"></div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
-                        <div class="flex items-center justify-between gap-2 flex-wrap">
-                            <h3 class="font-cinzel text-base font-bold theme-title">Oráculo de hoje</h3>
-                            <div class="flex gap-1.5">
-                                <button type="button" onclick="drawDailyOracle('rune')" class="text-xs theme-inner border px-2 py-1 rounded-lg theme-muted hover:border-[var(--border-hover)] cursor-pointer">Runa</button>
-                                <button type="button" onclick="drawDailyOracle('ogham')" class="text-xs theme-inner border px-2 py-1 rounded-lg theme-muted hover:border-[var(--border-hover)] cursor-pointer">Ogham</button>
-                                <button type="button" onclick="drawDailyOracle('tarot')" class="text-xs theme-inner border px-2 py-1 rounded-lg theme-muted hover:border-[var(--border-hover)] cursor-pointer">Tarot</button>
-                            </div>
-                        </div>
-                        <div id="daily-oracle" class="theme-inner border rounded-xl p-4 min-h-[120px] flex flex-col items-center justify-center text-center">
-                            <p class="text-sm theme-muted">Toque numa opção para receber o conselho do dia.</p>
-                        </div>
-                        <div id="daily-oracle-actions" class="hidden flex flex-wrap gap-2 justify-center">
-                            <button type="button" onclick="saveDailyOracleToJournal()" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)]">Guardar no Diário</button>
-                            <button type="button" onclick="shareReading('daily')" class="theme-inner border text-sm theme-title font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)]">Partilhar</button>
-                            <button type="button" onclick="interpretReading('daily')" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)]">Interpretar</button>
-                        </div>
-                    </div>
-                    <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
-                        <h3 class="font-cinzel text-base font-bold theme-title">Prompt do diário</h3>
-                        <p id="daily-prompt" class="text-sm theme-muted leading-relaxed italic">—</p>
-                        <button type="button" onclick="useDailyPrompt()" class="w-full py-2.5 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">Escrever a partir deste prompt</button>
-                        <div class="pt-2 border-t border-[var(--border-color)]">
-                            <h4 class="text-xs uppercase tracking-wider theme-muted mb-2">Tríade do dia</h4>
-                            <div id="daily-triad-box" class="theme-inner border rounded-lg p-3 text-sm theme-title leading-relaxed min-h-[60px]">Toque para revelar uma tríade.</div>
-                            <button type="button" onclick="drawDailyTriad()" class="mt-2 text-sm theme-accent font-semibold underline cursor-pointer">Nova tríade</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
-                    <h3 class="font-cinzel text-base font-bold theme-title">Prática de hoje</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                        <button type="button" onclick="registerAwenPractice()" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Invocar Awen</button>
-                        <button type="button" onclick="switchTab('altar')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Acender o altar</button>
-                        <button type="button" onclick="switchTab('grounding')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg>Meditar</button>
-                        <button type="button" onclick="switchTab('journal')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-pen"></use></svg>Escrever no diário</button>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
-                        <h3 class="font-cinzel text-base font-bold theme-title">Intenção da semana</h3>
-                        <p id="week-intention-display" class="text-sm theme-muted italic min-h-[2.5rem]">Ainda não definiu uma intenção.</p>
-                        <div class="flex gap-2">
-                            <input id="week-intention-input" type="text" maxlength="160" placeholder="Ex: Cultivar escuta e paciência…" class="flex-1 theme-inner border rounded-lg px-3 py-2 text-sm">
-                            <button type="button" onclick="saveWeekIntention()" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-semibold text-sm px-3 py-2 rounded-lg cursor-pointer">Guardar</button>
-                        </div>
-                    </div>
                     <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-2">
                         <h3 class="font-cinzel text-base font-bold theme-title">Conselho da Lua</h3>
                         <p id="lunar-counsel" class="text-sm theme-title leading-relaxed">—</p>
                         <p id="lunar-counsel-phase" class="text-xs theme-muted"></p>
                     </div>
-                </div>
-                <div id="festival-checklist-card" class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
-                    <div class="flex items-center justify-between gap-2 flex-wrap">
-                        <h3 class="font-cinzel text-base font-bold theme-title">Preparação: <span id="fest-check-name">—</span></h3>
-                        <div class="flex gap-2 items-center">
-                            <button type="button" onclick="switchTab('wheel')" class="text-sm theme-accent font-semibold underline cursor-pointer">Roda do Ano</button>
+                    <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
+                        <h3 class="font-cinzel text-base font-bold theme-title">Intenção da semana</h3>
+                        <p id="week-intention-display" class="text-sm theme-muted italic">Ainda não definiu uma intenção.</p>
+                        <div class="flex gap-2">
+                            <input id="week-intention-input" type="text" maxlength="160" placeholder="Ex: Cultivar escuta e paciência…" aria-label="Intenção da semana" class="flex-1 min-w-0 theme-inner border rounded-lg px-3 h44 text-sm">
+                            <button type="button" onclick="saveWeekIntention()" class="shrink-0 bg-[var(--btn-primary)] text-[var(--on-primary)] font-semibold text-sm px-4 h44 rounded-lg cursor-pointer">Guardar</button>
                         </div>
                     </div>
-                    <div id="fest-prep-steps" class="text-sm theme-muted space-y-1 mb-2"></div>
-                    <div id="fest-offerings" class="text-xs theme-muted mb-2"></div>
-                    <ul id="festival-checklist" class="space-y-2 text-sm"></ul>
                 </div>
-                <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
-                    <div class="flex items-center justify-between gap-2 flex-wrap">
-                        <h3 class="font-cinzel text-base font-bold theme-title">Estatísticas do mês</h3>
-                        <button type="button" onclick="renderMonthReview()" class="text-sm theme-accent font-semibold underline cursor-pointer">Atualizar</button>
+
+                <!-- Secções recolhíveis (o estado aberto/fechado fica memorizado) -->
+                <details class="today-more theme-card border rounded-2xl" data-key="signs">
+                    <summary><span class="tm-title">Sinais do dia</span><span class="tm-hint" id="tm-hint-signs">Letra Ogham e elemento</span></summary>
+                    <div class="tm-body grid grid-cols-1 lg:grid-cols-2 gap-3">
+                        <div id="daily-few" class="theme-inner border rounded-xl p-4 text-left flex items-center gap-4" data-text=""></div>
+                        <div id="today-element-weather" class="theme-inner border rounded-xl p-4 text-left flex items-center gap-4"></div>
                     </div>
-                    <div id="month-stats-bars" class="space-y-2"></div>
-                    <p id="month-review-text" class="text-sm theme-muted"></p>
-                </div>
+                </details>
+
+                <details class="today-more theme-card border rounded-2xl" data-key="journal">
+                    <summary><span class="tm-title">Diário e tríade</span><span class="tm-hint">Um prompt para escrever hoje</span></summary>
+                    <div class="tm-body space-y-3">
+                        <p id="daily-prompt" class="text-sm theme-muted leading-relaxed italic">—</p>
+                        <button type="button" onclick="useDailyPrompt()" class="w-full h44 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">Escrever a partir deste prompt</button>
+                        <div class="pt-3 border-t border-[var(--border-color)]">
+                            <h4 class="text-xs uppercase tracking-wider theme-muted mb-2">Tríade do dia</h4>
+                            <div id="daily-triad-box" class="theme-inner border rounded-lg p-3 text-sm theme-title leading-relaxed min-h-[60px]">Toque em «Nova tríade» para revelar uma.</div>
+                            <button type="button" onclick="drawDailyTriad()" class="btn-link mt-1">Nova tríade</button>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="today-more theme-card border rounded-2xl" data-key="practice">
+                    <summary><span class="tm-title">Prática de hoje</span><span class="tm-hint">Awen, altar, meditação, diário</span></summary>
+                    <div class="tm-body grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <button type="button" onclick="registerAwenPractice()" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Invocar Awen</button>
+                        <button type="button" onclick="switchTab('altar')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Acender o altar</button>
+                        <button type="button" onclick="switchTab('grounding')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg>Meditar</button>
+                        <button type="button" onclick="switchTab('journal')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-pen"></use></svg>Escrever no diário</button>
+                    </div>
+                </details>
+
+                <details id="festival-checklist-card" class="today-more theme-card border rounded-2xl" data-key="festival">
+                    <summary><span class="tm-title">Preparação: <span id="fest-check-name">—</span></span><span class="tm-hint">Lista para a próxima festa</span></summary>
+                    <div class="tm-body space-y-3">
+                        <div id="fest-prep-steps" class="text-sm theme-muted space-y-1"></div>
+                        <div id="fest-offerings" class="text-xs theme-muted"></div>
+                        <ul id="festival-checklist" class="space-y-2 text-sm"></ul>
+                        <button type="button" onclick="switchTab('wheel')" class="btn-link">Abrir a Roda do Ano</button>
+                    </div>
+                </details>
+
+                <details class="today-more theme-card border rounded-2xl" data-key="stats">
+                    <summary><span class="tm-title">Estatísticas do mês</span><span class="tm-hint" id="tm-hint-stats">—</span></summary>
+                    <div class="tm-body space-y-3">
+                        <div id="month-stats-bars" class="space-y-2"></div>
+                        <p id="month-review-text" class="text-sm theme-muted"></p>
+                    </div>
+                </details>
             </section>
 
             <!-- ALTAR DIGITAL INTERATIVO -->
@@ -2123,15 +2235,15 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                 <h3 class="font-cinzel font-bold theme-title text-base">Ogham — o bosque que fala</h3>
                 <div class="space-y-3">
                     <div class="theme-inner border rounded-lg p-3">
-                        <p class="font-semibold theme-accent">1 Few · Conselho</p>
+                        <p class="font-semibold theme-accent">1 letra · Conselho</p>
                         <p class="theme-muted">Uma árvore / letra guia para o dia ou a questão.</p>
                     </div>
                     <div class="theme-inner border rounded-lg p-3">
-                        <p class="font-semibold theme-accent">3 Few · Tríade</p>
+                        <p class="font-semibold theme-accent">3 letras · Tríade</p>
                         <p class="theme-muted">Três aspectos em diálogo (corpo, mente, espírito — ou passado, presente, futuro). Inspira-se nas tríades da tradição céltica.</p>
                     </div>
                     <div class="theme-inner border rounded-lg p-3">
-                        <p class="font-semibold theme-accent">5 Few · Roda Elemental</p>
+                        <p class="font-semibold theme-accent">5 letras · Roda Elemental</p>
                         <p class="theme-muted">Espalhamento amplo: centro + quatro direcções / elementos, semelhante à Cruz Elemental do Tarot.</p>
                     </div>
                     <div class="theme-inner border rounded-lg p-3">
@@ -3752,14 +3864,15 @@ function renderDailyFew() {
     const seed = ((d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate()) * 9301 + 49297) % 233280;
     const o = OGHAM_DATA[seed % OGHAM_DATA.length];
     el.innerHTML = `
-        <span class="text-5xl theme-glyph font-bold leading-none" aria-hidden="true">${o.symbol}</span>
+        <span class="text-5xl theme-glyph font-bold leading-none shrink-0" aria-hidden="true">${o.symbol}</span>
         <div class="flex-1 min-w-0">
-            <p class="text-sm theme-muted">Few do dia</p>
-            <h3 class="font-cinzel text-base font-bold theme-info-hl">${o.name} • ${o.tree}</h3>
+            <p class="text-sm theme-muted">Letra Ogham do dia</p>
+            <h3 class="text-base font-semibold theme-info-hl">${o.name} · ${o.tree}</h3>
             <p class="text-sm theme-muted leading-relaxed mt-1">${o.meaning}</p>
-        </div>
-        <button onclick="dailyToJournal()" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)] transition">Guardar</button>`;
-    el.dataset.text = `FEW DO DIA: ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`;
+            <button type="button" onclick="dailyToJournal()" class="btn-link">Guardar no Diário</button>
+        </div>`;
+    el.dataset.text = `LETRA OGHAM DO DIA: ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`;
+    const h = document.getElementById('tm-hint-signs'); if (h) h.textContent = `${o.symbol} ${o.name} · ${o.tree.split(' (')[0]}`;
 }
 function appendToJournal(text) {
     const area = document.getElementById('journal-input');
@@ -4099,12 +4212,11 @@ function bump() { const s = getS(); if (s.last !== day()) try { localStorage.set
 function renderToday() {
   const p = $('today-panel'); if (!p || !$('moon-icon')) return;
   const n = nextFestival(), s = streak(), e = window.esc || (x => x), ico = i => `<svg class="ic" aria-hidden="true"><use href="#i-${i}"></use></svg>`;
-  const c = (i, l, v, tab, x = '') => `<button type="button" class="today-tile ${x}" onclick="switchTab('${tab}')"><span class="t-ic" aria-hidden="true">${i}</span><span class="t-lb">${l}</span><span class="t-v">${v}</span></button>`;
-  p.innerHTML = c($('moon-icon').textContent, 'Lua', e($('moon-phase-name').textContent), 'astro', 'col-span-2 sm:col-span-1') +
+  const c = (i, l, v, tab) => `<button type="button" class="today-chip" onclick="switchTab('${tab}')"><span class="tc-i" aria-hidden="true">${i}</span><span class="tc-t"><span class="t-lb">${l}</span><span class="t-v">${v}</span></span></button>`;
+  p.innerHTML = c($('moon-icon').textContent, 'Lua', e($('moon-phase-name').textContent), 'astro') +
     c(ico('sun'), 'Sol', e($('top-sun-text').textContent), 'astro') +
-    c(e($('celtic-month-symbol').textContent), 'Mês arbóreo', e($('celtic-month-title').textContent.split(' — ')[0]), 'herbal') +
-    c(ico('wheel'), 'Próxima festa', `${n.name} · ${n.days === 0 ? 'hoje' : 'em ' + n.days + ' d'}`, 'wheel') +
-    c(ico('altar'), 'Sequência', `${s} dia${s === 1 ? '' : 's'}`, 'journal');
+    c(`<span class="tc-glyph">${e($('celtic-month-symbol').textContent)}</span>`, 'Mês arbóreo', e($('celtic-month-title').textContent.split(' — ')[0]), 'herbal') +
+    c(ico('wheel'), 'Próxima festa', `${n.name} · ${n.days === 0 ? 'hoje' : 'em ' + n.days + ' d'}`, 'wheel');
   const d = $('today-date'); if (d) d.textContent = new Date().toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long' });
 }
 
@@ -4184,7 +4296,7 @@ window.addEventListener('DOMContentLoaded', () => {
    ============================================================ */
 (() => {
 const $ = id => document.getElementById(id);
-const BOTTOM_TABS = ['today', 'runes', 'tarot', 'journal'];
+const BOTTOM_TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'journal'];
 
 // Folha "Mais" e diálogos: fecham ao tocar fora
 const sheet = $('more-sheet');
@@ -4422,8 +4534,8 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         if ($('daily-elem-desc')) $('daily-elem-desc').textContent = dayElem.quality;
 
-        let weatherSummary = 'Clima local sincronizado';
-        let weatherAssoc = 'Active o GPS para associar a meteorologia exata da sua localização.';
+        let weatherSummary = 'Sem dados de clima';
+        let weatherAssoc = 'Toque em «Atualizar GPS & Clima» (em Ciclos) para ver o tempo da sua localização.';
         let tempStr = '—°C';
         let wElemKey = dayElem.key;
 
@@ -4454,10 +4566,10 @@ window.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="flex-1 min-w-0">
                     <p class="text-sm theme-muted">Elemento do dia &amp; Clima</p>
-                    <h3 class="font-cinzel text-base font-bold theme-info-hl leading-snug">${dayElem.name} · ${tempStr} (${weatherSummary.split(' · ')[0]})</h3>
+                    <h3 class="text-base font-semibold theme-info-hl leading-snug">${dayElem.name}${weatherData && weatherData.current ? ` · ${tempStr} · ${weatherSummary.split(' · ')[0]}` : ''}</h3>
                     <p class="text-xs sm:text-sm theme-muted leading-relaxed mt-1">${weatherAssoc}</p>
                 </div>
-                <button type="button" onclick="switchTab('astro')" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)] transition shrink-0">Ciclos</button>
+                <button type="button" onclick="switchTab('astro')" class="btn-sec theme-accent shrink-0">Ciclos</button>
             `;
         }
     }
@@ -5036,7 +5148,7 @@ window.exportJournalPDF = async function () {
 function enhanceEmptyStates() {
   const configs = [
     { id: 'rune-card', glyph: 'ᚠ', msg: 'Escolha uma tiragem para consultar as runas.' },
-    { id: 'ogham-card', glyph: 'ᚁ', msg: 'Escolha 1, 3 ou 5 Few para consultar o bosque.' }
+    { id: 'ogham-card', glyph: 'ᚁ', msg: 'Escolha 1, 3 ou 5 letras para consultar o bosque.' }
   ];
   configs.forEach(({ id, glyph, msg }) => {
     const el = $(id);
@@ -5431,7 +5543,7 @@ window.renderMonthReview = function () {
   const log = typeof getReadingLog === 'function' ? getReadingLog() : [];
   const now = new Date();
   const ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
-  const monthLogs = log.filter(r => (r.date || r.at || '').startsWith(ym) || (r.ts && new Date(r.ts).toISOString().startsWith(ym)));
+  const monthLogs = log.filter(r => { const ts = r.t || r.ts; if (ts) { const d = new Date(ts); return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(); } return (r.date || r.at || '').startsWith(ym); });
   const byType = { runes: 0, ogham: 0, tarot: 0 };
   monthLogs.forEach(r => { if (byType[r.type] != null) byType[r.type]++; });
   const total = monthLogs.length || 1;
@@ -5451,6 +5563,13 @@ window.renderMonthReview = function () {
   const txt = $('month-review-text');
   if (txt) {
     txt.textContent = `Este mês: ${monthLogs.length} tiragens registadas · ${dreams} sonhos no caderno · sequência atual ${streakN} dia(s).`;
+  }
+  const hint = $('tm-hint-stats');
+  if (hint) hint.textContent = monthLogs.length ? `${monthLogs.length} ${monthLogs.length === 1 ? 'tiragem' : 'tiragens'} este mês` : 'Ainda sem tiragens';
+  if (!monthLogs.length && bars) {
+    bars.innerHTML = `<div class="empty-invite"><p>Ainda não há tiragens este mês. Cada tiragem que fizer aparece aqui.</p>
+      <div class="flex flex-wrap gap-2 justify-center"><button type="button" class="btn-sec theme-accent" onclick="switchTab('oracle')">Tirar Ogham</button><button type="button" class="btn-sec theme-accent" onclick="switchTab('tarot')">Tirar Tarot</button></div></div>`;
+    if (txt) txt.textContent = '';
   }
 };
 
@@ -5746,7 +5865,7 @@ window.openReadingGuide = function (section) {
         type: 'ogham',
         question: q,
         items: lastOghamReading.map((o, i) => ({
-          pos: ['Conselho', 'Tríade 1', 'Tríade 2', 'Tríade 3', 'Roda'][i] || `Few ${i + 1}`,
+          pos: ['Conselho', 'Tríade 1', 'Tríade 2', 'Tríade 3', 'Roda'][i] || `Letra ${i + 1}`,
           label: `${o.symbol} ${o.name}${o.tree ? ' (' + o.tree + ')' : ''}`,
           text: o.meaning
         }))
@@ -6218,6 +6337,178 @@ ${reading.items.map(it => `- ${it.pos}: ${it.label}\n  ${it.text}${it.art ? '\n 
   // Ao mudar para o Grimório e voltar, um ritual a meio é descartado
   const _stm = switchTarotMode;
   switchTarotMode = function (m) { if (m !== 'draw') state = null; _stm(m); };
+})();
+</script>
+<script>
+/* Secções recolhíveis do ecrã Hoje: memoriza o estado aberto/fechado */
+(() => {
+  document.querySelectorAll('details.today-more[data-key]').forEach(d => {
+    const k = 'druid_today_open_' + d.dataset.key;
+    try { if (localStorage.getItem(k) === '1') d.open = true; } catch {}
+    d.addEventListener('toggle', () => { try { localStorage.setItem(k, d.open ? '1' : '0'); } catch {} });
+  });
+})();
+</script>
+<script>
+/* Navegação em grupos: «Oráculos» (Ogham, Runas, Tarot) e «Ciclos» (Astronomia, Roda do Ano).
+   O botão da barra abre o último separador usado do grupo; no topo de cada um há um seletor. */
+(() => {
+  const GROUPS = {
+    oracles: { label: 'Oráculos', tabs: [['oracle', 'Ogham'], ['runes', 'Runas'], ['tarot', 'Tarot']] },
+    cycles: { label: 'Ciclos', tabs: [['astro', 'Astronomia'], ['wheel', 'Roda do Ano']] }
+  };
+  const groupOf = id => Object.keys(GROUPS).find(g => GROUPS[g].tabs.some(t => t[0] === id));
+  const last = g => { try { return localStorage.getItem('druid_last_' + g); } catch { return null; } };
+
+  window.openNavGroup = function (g) {
+    const tabs = GROUPS[g].tabs.map(t => t[0]);
+    const l = last(g);
+    switchTab(tabs.includes(l) ? l : tabs[0]);
+    scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  };
+
+  // Seletor no topo de cada separador do grupo
+  Object.entries(GROUPS).forEach(([g, def]) => {
+    def.tabs.forEach(([id]) => {
+      const sec = document.getElementById('tab-' + id);
+      if (!sec || sec.querySelector('.subnav')) return;
+      const nav = document.createElement('div');
+      nav.className = 'subnav';
+      nav.setAttribute('role', 'tablist');
+      nav.setAttribute('aria-label', def.label);
+      nav.innerHTML = def.tabs.map(([t, label]) => `<button type="button" role="tab" data-sub="${t}" aria-selected="${t === id}" onclick="switchTab('${t}')">${label}</button>`).join('');
+      sec.prepend(nav);
+    });
+  });
+
+  const _sw = switchTab;
+  switchTab = function (id) {
+    _sw(id);
+    const g = groupOf(id);
+    document.querySelectorAll('#bot-nav-oracles, #bot-nav-cycles').forEach(b => {
+      const on = b.id === 'bot-nav-' + g;
+      b.classList.toggle('active', on); b.classList.toggle('theme-muted', !on);
+      if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+    if (g) { try { localStorage.setItem('druid_last_' + g, id); } catch {} }
+  };
+  // Estado inicial (ex.: link com #tarot)
+  document.addEventListener('DOMContentLoaded', () => {
+    const cur = [...document.querySelectorAll('.tab-content')].find(s => !s.classList.contains('hidden'));
+    const id = cur && cur.id.replace('tab-', '');
+    const g = id && groupOf(id);
+    if (g) { const b = document.getElementById('bot-nav-' + g); b && (b.classList.add('active'), b.classList.remove('theme-muted')); }
+  });
+})();
+</script>
+<dialog id="onboard" class="modal onboard" aria-labelledby="ob-title">
+  <div class="ob-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+  <section class="ob-step" data-step="0">
+    <svg class="awen-svg ob-awen" viewBox="0 0 100 100" aria-hidden="true"><line x1="25" y1="85" x2="40" y2="20"></line><line x1="50" y1="85" x2="50" y2="35"></line><line x1="75" y1="85" x2="60" y2="20"></line><circle cx="50" cy="15" r="5" fill="currentColor"></circle><circle cx="32" cy="12" r="5" fill="currentColor"></circle><circle cx="68" cy="12" r="5" fill="currentColor"></circle></svg>
+    <h2 id="ob-title" class="font-cinzel text-xl font-bold theme-title">Bem-vindo ao Caminho Druídico</h2>
+    <p class="text-sm theme-muted">Um companheiro diário para a prática: oráculos, ciclos da Lua e do Sol, a Roda do Ano e um diário pessoal. Tudo fica guardado só neste dispositivo.</p>
+    <p class="text-sm font-semibold theme-title">Escolha o ambiente visual</p>
+    <div class="ob-themes" role="radiogroup" aria-label="Ambiente visual">
+      <button type="button" role="radio" data-theme="theme-night" style="--sw:#0f172a;--sw2:#818cf8">Noite</button>
+      <button type="button" role="radio" data-theme="theme-forest" style="--sw:#0c1f17;--sw2:#4ade80">Floresta</button>
+      <button type="button" role="radio" data-theme="theme-autumn" style="--sw:#1f130a;--sw2:#f59e0b">Outono</button>
+      <button type="button" role="radio" data-theme="theme-parchment" style="--sw:#f4f1e6;--sw2:#3f6212">Claro</button>
+    </div>
+    <p class="text-xs theme-muted">Pode mudar mais tarde em Mais › Ambiente visual.</p>
+  </section>
+  <section class="ob-step" data-step="1" hidden>
+    <div class="ob-ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-sun"></use></svg></div>
+    <h2 class="font-cinzel text-xl font-bold theme-title">Ciclos do seu lugar</h2>
+    <p class="text-sm theme-muted">Com a sua localização, o nascer e o pôr do Sol, os solstícios e o tempo ficam certos para onde está. A localização é usada só neste dispositivo.</p>
+    <button type="button" class="ob-primary" id="ob-loc" onclick="onboardLocate()">Usar a minha localização</button>
+    <p class="text-xs theme-muted" id="ob-loc-status">Sem localização, usamos Alenquer (Portugal) como referência.</p>
+  </section>
+  <section class="ob-step" data-step="2" hidden>
+    <div class="ob-ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-oracles"></use></svg></div>
+    <h2 class="font-cinzel text-xl font-bold theme-title">Três oráculos</h2>
+    <ul class="ob-list">
+      <li><b><span class="ob-g">ᚁ</span> Ogham</b> — as 20 letras das árvores sagradas celtas. Conselho ligado à natureza e às estações.</li>
+      <li><b><span class="ob-g">ᚠ</span> Runas</b> — o Futhark antigo. Forças e desafios em jogo.</li>
+      <li><b>Tarot nórdico</b> — 78 cartas com deuses e mundos da mitologia nórdica. Leituras mais detalhadas.</li>
+    </ul>
+    <p class="text-sm theme-muted">Encontra-os em <b>Oráculos</b>, na barra de baixo. Comece pelo <b>Oráculo de hoje</b>.</p>
+  </section>
+  <div class="ob-nav">
+    <button type="button" class="ob-skip" onclick="finishOnboard()">Saltar</button>
+    <button type="button" class="ob-primary" id="ob-next" onclick="onboardNext()">Continuar</button>
+  </div>
+</dialog>
+<div id="reminder-nudge" class="nudge" role="dialog" aria-live="polite" aria-label="Sugestão de lembrete" hidden>
+  <p><b>Boa primeira tiragem!</b> Quer um lembrete diário para a prática?</p>
+  <div class="nudge-row">
+    <label class="nudge-time">às <input id="nudge-time" type="time" value="09:00" aria-label="Hora do lembrete"></label>
+    <button type="button" class="ob-primary" onclick="acceptReminderNudge()">Ativar</button>
+    <button type="button" class="ob-skip" onclick="closeReminderNudge()">Agora não</button>
+  </div>
+</div>
+<script>
+/* Boas-vindas (1.ª visita) e sugestão de lembrete após a primeira tiragem */
+(() => {
+  const $ = id => document.getElementById(id);
+  const get = k => { try { return localStorage.getItem(k); } catch { return null; } };
+  const set = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+  const dlg = $('onboard');
+  let step = 0;
+
+  function show(n) {
+    step = n;
+    dlg.querySelectorAll('.ob-step').forEach(s => { s.hidden = +s.dataset.step !== n; });
+    dlg.querySelectorAll('.ob-dots i').forEach((d, i) => d.classList.toggle('on', i === n));
+    $('ob-next').textContent = n === 2 ? 'Começar' : 'Continuar';
+  }
+  function markTheme() {
+    const cur = get('druid_theme') || window.__theme || 'theme-night';
+    dlg.querySelectorAll('.ob-themes button').forEach(b => b.setAttribute('aria-checked', b.dataset.theme === cur));
+  }
+  dlg.querySelectorAll('.ob-themes button').forEach(b => b.addEventListener('click', () => {
+    if (typeof changeTheme === 'function') changeTheme(b.dataset.theme);
+    set('druid_theme', b.dataset.theme);
+    markTheme();
+  }));
+  window.onboardNext = () => (step < 2 ? show(step + 1) : finishOnboard());
+  window.finishOnboard = () => { set('druid_onboarded', '1'); if (dlg.open) dlg.close(); if (typeof switchTab === 'function') switchTab('today'); };
+  window.onboardLocate = () => {
+    const st = $('ob-loc-status');
+    if (!('geolocation' in navigator)) { st.textContent = 'Este dispositivo não permite obter a localização.'; return; }
+    st.textContent = 'A pedir a localização…';
+    try { if (typeof refreshWeatherAndElement === 'function') refreshWeatherAndElement(true); } catch {}
+    navigator.geolocation.getCurrentPosition(
+      () => { st.textContent = 'Localização ativa. Os ciclos já refletem o seu lugar.'; $('ob-loc').disabled = true; },
+      () => { st.textContent = 'Sem permissão. Pode ativar mais tarde em Ciclos › Atualizar GPS & Clima.'; },
+      { timeout: 10000, maximumAge: 3600000 });
+  };
+  dlg.addEventListener('cancel', () => set('druid_onboarded', '1'));
+  document.addEventListener('DOMContentLoaded', () => {
+    if (get('druid_onboarded')) return;
+    // Quem já usou a app (tem dados) não vê as boas-vindas
+    if (get('druid_readings') || get('druid_journal')) { set('druid_onboarded', '1'); return; }
+    markTheme(); show(0);
+    setTimeout(() => { try { dlg.showModal(); } catch {} }, 400);
+  });
+
+  // Lembrete: sugerido uma única vez, depois da primeira tiragem registada
+  const nudge = $('reminder-nudge');
+  window.closeReminderNudge = () => { nudge.hidden = true; set('druid_reminder_asked', '1'); };
+  window.acceptReminderNudge = () => {
+    const [h, m] = ($('nudge-time').value || '09:00').split(':').map(Number);
+    if (typeof schedulePracticeReminder === 'function') schedulePracticeReminder(h || 0, m || 0);
+    closeReminderNudge();
+  };
+  const _rec = recordReading;
+  recordReading = function (type) {
+    _rec(type);
+    try {
+      if (get('druid_reminder_asked')) return;
+      const cfg = JSON.parse(get('druid_reminder') || '{}');
+      if (cfg.on) return;
+      if (JSON.parse(get('druid_readings') || '[]').length >= 1) setTimeout(() => { nudge.hidden = false; }, 1200);
+    } catch {}
+  };
 })();
 </script>
 </body></html>
