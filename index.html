@@ -2133,21 +2133,78 @@ function exportTarotPDF() {
 // BÚSSOLA ROTATIVA DINÂMICA
 function initGeoAndCompass() {
     const isFileProtocol = window.location.protocol === 'file:';
+    const gpsInfoEl = document.getElementById('gps-info');
     
-    if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(pos => {
-            const { latitude, longitude } = pos.coords;
-            localStorage.setItem('druid_lat', latitude.toFixed(4));
-            localStorage.setItem('druid_lon', longitude.toFixed(4));
-            updateAstronomy();
-            document.getElementById('gps-info').textContent = `GPS ativo: ${Math.abs(latitude).toFixed(4)}° ${latitude >= 0 ? 'N' : 'S'}, ${Math.abs(longitude).toFixed(4)}° ${longitude >= 0 ? 'E' : 'O'}`;
-            updateAstronomy();
-        }, () => {
-            document.getElementById('gps-info').textContent = isFileProtocol 
-                ? 'Modo local (file://): Bússola interativa ativa (sem GPS).' 
-                : 'GPS indisponível.';
-        });
+    if (!('geolocation' in navigator)) {
+        if (gpsInfoEl) gpsInfoEl.textContent = 'Geolocalização não suportada neste navegador.';
+        showToast('Geolocalização não suportada.');
+        return;
     }
+
+    if (gpsInfoEl) gpsInfoEl.textContent = 'A obter sinal GPS de alta precisão...';
+    showToast('A procurar sinal GPS...');
+
+    const geoOptions = {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
+    };
+
+    navigator.geolocation.getCurrentPosition(async pos => {
+        const { latitude, longitude, accuracy } = pos.coords;
+        
+        // Validação de coordenadas
+        if (typeof latitude !== 'number' || typeof longitude !== 'number' || 
+            isNaN(latitude) || isNaN(longitude) || 
+            latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+            if (gpsInfoEl) gpsInfoEl.textContent = 'Erro: Coordenadas GPS inválidas.';
+            showToast('Coordenadas GPS inválidas detetadas.');
+            return;
+        }
+
+        // Limpeza de cache anterior de localização e clima
+        localStorage.removeItem('druid_weather_cache');
+        localStorage.setItem('druid_lat', latitude.toFixed(4));
+        localStorage.setItem('druid_lon', longitude.toFixed(4));
+
+        // Tentar geocodificação inversa para obter nome do local legível
+        let locLabel = `${Math.abs(latitude).toFixed(2)}° ${latitude >= 0 ? 'N' : 'S'}, ${Math.abs(longitude).toFixed(2)}° ${longitude >= 0 ? 'E' : 'O'}`;
+        try {
+            const revRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`, {
+                headers: { 'Accept-Language': 'pt' }
+            });
+            if (revRes.ok) {
+                const revData = await revRes.json();
+                if (revData && revData.address) {
+                    const city = revData.address.city || revData.address.town || revData.address.municipality || revData.address.village || revData.address.county;
+                    const country = revData.address.country_code ? revData.address.country_code.toUpperCase() : '';
+                    if (city) {
+                        locLabel = country ? `${city}, ${country}` : city;
+                    }
+                }
+            }
+        } catch (err) {
+            console.warn('Geocodificação inversa indisponível:', err);
+        }
+
+        localStorage.setItem('druid_loc_label', locLabel);
+        if (gpsInfoEl) gpsInfoEl.textContent = `GPS ativo (${locLabel}, precisão ~${Math.round(accuracy)}m)`;
+        showToast(`GPS sincronizado com sucesso (${locLabel})!`);
+
+        updateAstronomy();
+        if (typeof refreshWeatherAndElement === 'function') {
+            refreshWeatherAndElement(false);
+        }
+    }, err => {
+        console.warn('Erro de GPS:', err);
+        let errorMsg = 'Não foi possível obter a posição GPS.';
+        if (err.code === 1) errorMsg = 'Permissão de GPS recusada.';
+        else if (err.code === 2) errorMsg = 'Sinal GPS indisponível (timeout de 15s).';
+        else if (err.code === 3) errorMsg = 'Tempo limite esgotado ao procurar GPS.';
+        
+        if (gpsInfoEl) gpsInfoEl.textContent = isFileProtocol ? 'Modo local (file://): Bússola interativa ativa.' : errorMsg;
+        showToast(errorMsg);
+    }, geoOptions);
 
     const getCardinal = (deg) => {
         const arr = ['Norte', 'Nordeste', 'Leste', 'Sudeste', 'Sul', 'Sudoeste', 'Oeste', 'Noroeste'];
@@ -3378,21 +3435,60 @@ window.addEventListener('DOMContentLoaded', () => {
         const defaultLat = parseFloat(localStorage.getItem('druid_lat') || '39.0532');
         const defaultLon = parseFloat(localStorage.getItem('druid_lon') || '-9.0092');
 
-        if (askGps && 'geolocation' in navigator) {
-            navigator.geolocation.getCurrentPosition(pos => {
-                const lat = pos.coords.latitude;
-                const lon = pos.coords.longitude;
-                localStorage.setItem('druid_lat', lat.toFixed(4));
-                localStorage.setItem('druid_lon', lon.toFixed(4));
-                localStorage.setItem('druid_loc_label', `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? 'E' : 'O'}`);
+        if (askGps) {
+            if (!('geolocation' in navigator)) {
+                showToast('Geolocalização não suportada.');
+                fetchLocalWeather(defaultLat, defaultLon);
+                return;
+            }
+
+            showToast('A atualizar GPS e clima local...');
+            const geoOpts = {
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 0
+            };
+
+            navigator.geolocation.getCurrentPosition(async pos => {
+                const { latitude, longitude } = pos.coords;
+                if (typeof latitude !== 'number' || typeof longitude !== 'number' || 
+                    isNaN(latitude) || isNaN(longitude) || 
+                    latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+                    showToast('Coordenadas GPS inválidas. A usar padrão.');
+                    fetchLocalWeather(defaultLat, defaultLon);
+                    return;
+                }
+
+                // Limpeza de cache local de clima ao atualizar
+                localStorage.removeItem('druid_weather_cache');
+                localStorage.setItem('druid_lat', latitude.toFixed(4));
+                localStorage.setItem('druid_lon', longitude.toFixed(4));
+
+                let locLabel = `${Math.abs(latitude).toFixed(2)}°${latitude >= 0 ? 'N' : 'S'}, ${Math.abs(longitude).toFixed(2)}°${longitude >= 0 ? 'E' : 'O'}`;
+                try {
+                    const revRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`, {
+                        headers: { 'Accept-Language': 'pt' }
+                    });
+                    if (revRes.ok) {
+                        const revData = await revRes.json();
+                        if (revData && revData.address) {
+                            const city = revData.address.city || revData.address.town || revData.address.municipality || revData.address.village || revData.address.county;
+                            const country = revData.address.country_code ? revData.address.country_code.toUpperCase() : '';
+                            if (city) locLabel = country ? `${city}, ${country}` : city;
+                        }
+                    }
+                } catch (e) {}
+
+                localStorage.setItem('druid_loc_label', locLabel);
                 updateAstronomy();
                 updateAstronomyCharts();
-                fetchLocalWeather(lat, lon);
-                if (typeof showToast === 'function') showToast('Localização GPS e meteorologia atualizadas!');
-            }, () => {
+                fetchLocalWeather(latitude, longitude);
+                showToast(`GPS e Clima atualizados com sucesso (${locLabel})!`);
+            }, err => {
+                console.warn('Erro GPS ao atualizar:', err);
+                showToast('Falha no sinal GPS. A usar cache/coordenadas anteriores.');
                 fetchLocalWeather(defaultLat, defaultLon);
-                if (typeof showToast === 'function') showToast('A usar coordenadas guardadas para meteorologia.');
-            }, { timeout: 6000 });
+            }, geoOpts);
         } else {
             fetchLocalWeather(defaultLat, defaultLon);
         }
