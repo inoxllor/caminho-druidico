@@ -416,9 +416,35 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 .check-item input{margin-top:.2rem;accent-color:var(--btn-primary)}
 .check-item.done span{text-decoration:line-through;opacity:.55}
 #streak-badge{box-shadow:0 0 0 1px color-mix(in srgb,var(--text-accent) 20%,transparent)}
-.lunar-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;font-size:11px;border:1px solid var(--border-color);background:var(--bg-inner);cursor:default}
-.lunar-day.is-today{border-color:var(--text-accent);box-shadow:0 0 0 1px var(--text-accent)}
-.lunar-day .ld-phase{font-size:14px;line-height:1}
+/* Mapa lunar — layout autónomo (não depende de grid-cols-7) */
+.lunar-map-card{max-width:20rem;margin-left:auto;margin-right:auto}
+.lunar-map-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.5rem}
+.lunar-map-head h3{font-family:Cinzel,serif;font-size:.875rem;font-weight:700;color:var(--text-title);margin:0}
+.lunar-map-nav{display:flex;align-items:center;gap:.25rem}
+.lunar-map-nav button{background:var(--bg-inner);border:1px solid var(--border-color);border-radius:6px;color:var(--text-title);font-weight:600;font-size:.8rem;line-height:1;padding:.2rem .45rem;cursor:pointer}
+.lunar-map-nav button:hover{border-color:var(--border-hover)}
+.lunar-map-nav #lunar-map-title{display:inline-block;min-width:7.5rem;text-align:center;font-size:.7rem;font-weight:600;color:var(--text-title);text-transform:capitalize}
+.lunar-map-nav .lunar-map-today{border:none;background:transparent;color:var(--text-accent);font-size:.65rem;text-decoration:underline;padding:.15rem .25rem}
+.lunar-cal{width:100%}
+.lunar-cal-weekdays,.lunar-cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;width:100%}
+.lunar-cal-weekdays{margin-bottom:3px}
+.lunar-cal-weekdays span{text-align:center;font-size:.65rem;font-weight:600;color:var(--text-muted);line-height:1.4}
+.lunar-day{aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:6px;border:1px solid var(--border-color);background:var(--bg-inner);padding:2px 1px;box-sizing:border-box;min-width:0}
+.lunar-day.is-empty{border:none;background:transparent;visibility:hidden}
+.lunar-day.is-today{border-color:var(--text-accent);box-shadow:0 0 0 1px var(--text-accent);background:color-mix(in srgb,var(--text-accent) 12%,var(--bg-inner))}
+.lunar-day.is-full{border-color:var(--moon-color);background:color-mix(in srgb,var(--moon-color) 14%,var(--bg-inner))}
+.lunar-day.is-new{opacity:.92}
+.lunar-day .ld-phase{font-size:.75rem;line-height:1;display:block}
+.lunar-day .ld-num{font-size:.6rem;font-weight:600;color:var(--text-muted);line-height:1;display:block}
+.lunar-day.is-today .ld-num{color:var(--text-accent)}
+.lunar-map-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:.35rem .75rem;margin-top:.4rem;font-size:.65rem;color:var(--text-muted)}
+.lunar-map-legend .dot{display:inline-block;width:7px;height:7px;border-radius:999px;border:1px solid var(--text-accent);vertical-align:middle;margin-right:2px}
+@media (min-width:640px){
+  .lunar-map-card{max-width:22rem}
+  .lunar-day .ld-phase{font-size:.85rem}
+  .lunar-day .ld-num{font-size:.65rem}
+  .lunar-cal-weekdays span{font-size:.7rem}
+}
 .share-canvas-wrap{position:fixed;left:-9999px;top:0;pointer-events:none}
 @media (max-width:639px){
   .today-tile{min-height:96px}
@@ -855,6 +881,30 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                                 <div id="dusk-time" class="theme-card border rounded-lg px-2.5 py-1.5 theme-accent">Crepúsculo: —</div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- MAPA LUNAR DO MÊS -->
+                <div class="theme-card border rounded-2xl p-3 sm:p-4 lunar-map-card">
+                    <div class="lunar-map-head">
+                        <h3>Mapa lunar</h3>
+                        <div class="lunar-map-nav">
+                            <button type="button" onclick="shiftLunarMap(-1)" aria-label="Mês anterior">‹</button>
+                            <span id="lunar-map-title">—</span>
+                            <button type="button" onclick="shiftLunarMap(1)" aria-label="Mês seguinte">›</button>
+                            <button type="button" class="lunar-map-today" onclick="resetLunarMap()">Hoje</button>
+                        </div>
+                    </div>
+                    <div class="lunar-cal">
+                        <div class="lunar-cal-weekdays" aria-hidden="true">
+                            <span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span>
+                        </div>
+                        <div id="lunar-month-map" class="lunar-cal-grid" role="grid" aria-label="Mapa lunar do mês"></div>
+                    </div>
+                    <div class="lunar-map-legend">
+                        <span>🌑 Nova</span>
+                        <span>🌕 Cheia</span>
+                        <span><span class="dot"></span>Hoje</span>
                     </div>
                 </div>
 
@@ -3957,41 +4007,65 @@ window.shareReading = async function (type) {
 };
 
 // ——— Lunar month map (inject into astro tab if missing) ———
+let lunarMapOffset = 0; // months relative to current
+
 function ensureLunarMap() {
-  if ($('lunar-month-map')) return;
-  const astro = $('tab-astro');
-  if (!astro) return;
-  const card = document.createElement('div');
-  card.className = 'theme-card border rounded-2xl p-5 lg:p-8 space-y-4';
-  card.innerHTML = `
-    <div class="flex items-center justify-between gap-2">
-      <div>
-        <div class="eyebrow">Ciclo do mês</div>
-        <h3 class="font-cinzel text-xl font-bold theme-title mt-1">Mapa lunar</h3>
-      </div>
-      <button type="button" onclick="renderLunarMap()" class="text-sm theme-accent font-semibold underline cursor-pointer">Atualizar</button>
-    </div>
-    <div id="lunar-month-map" class="grid grid-cols-7 gap-1.5"></div>
-    <p class="text-xs theme-muted text-center">Fases aproximadas para o mês civil atual · o dia de hoje está realçado</p>`;
-  astro.appendChild(card);
-  renderLunarMap();
+  // HTML is now static in the page; just render
+  if ($('lunar-month-map')) renderLunarMap();
 }
+
+window.shiftLunarMap = function (delta) {
+  lunarMapOffset = (lunarMapOffset || 0) + delta;
+  renderLunarMap();
+};
+window.resetLunarMap = function () {
+  lunarMapOffset = 0;
+  renderLunarMap();
+};
+
 window.renderLunarMap = function () {
   const map = $('lunar-month-map');
   if (!map) return;
   const now = new Date();
-  const y = now.getFullYear(), m = now.getMonth();
+  const base = new Date(now.getFullYear(), now.getMonth() + (lunarMapOffset || 0), 1);
+  const y = base.getFullYear();
+  const m = base.getMonth();
   const daysInMonth = new Date(y, m + 1, 0).getDate();
+  // Monday-first: JS getDay() Sun=0..Sat=6 → Mon=0..Sun=6
+  const firstWeekday = (new Date(y, m, 1).getDay() + 6) % 7;
   const synodic = 29.53058867;
-  const knownNew = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+  const knownNew = Date.UTC(2000, 0, 6, 18, 14, 0);
   const icons = ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
+  const phaseClass = (idx) => {
+    if (idx === 0) return 'is-new';
+    if (idx === 4) return 'is-full';
+    return '';
+  };
+
+  const title = $('lunar-map-title');
+  if (title) {
+    title.textContent = base.toLocaleDateString('pt-PT', { month: 'long', year: 'numeric' });
+  }
+
   let html = '';
+  // Leading empty cells
+  for (let i = 0; i < firstWeekday; i++) {
+    html += '<div class="lunar-day is-empty" aria-hidden="true"></div>';
+  }
   for (let d = 1; d <= daysInMonth; d++) {
-    const dt = new Date(y, m, d, 12);
-    const age = (((dt - knownNew) / 86400000) % synodic + synodic) % synodic;
+    const dt = new Date(y, m, d, 12, 0, 0);
+    const age = (((dt.getTime() - knownNew) / 86400000) % synodic + synodic) % synodic;
     const idx = Math.min(7, Math.floor((age / synodic) * 8));
-    const isToday = d === now.getDate();
-    html += `<div class="lunar-day ${isToday ? 'is-today' : ''}" title="${d}/${m + 1}"><span class="ld-phase">${icons[idx]}</span><span class="theme-muted">${d}</span></div>`;
+    const isToday = lunarMapOffset === 0 && d === now.getDate() && m === now.getMonth() && y === now.getFullYear();
+    const cls = ['lunar-day', phaseClass(idx), isToday ? 'is-today' : ''].filter(Boolean).join(' ');
+    const label = `${d}/${m + 1}/${y} · ${icons[idx]}`;
+    html += `<div class="${cls}" role="gridcell" title="${label}" aria-label="${label}"><span class="ld-phase" aria-hidden="true">${icons[idx]}</span><span class="ld-num">${d}</span></div>`;
+  }
+  // Trailing empties to complete last week row
+  const total = firstWeekday + daysInMonth;
+  const trail = (7 - (total % 7)) % 7;
+  for (let i = 0; i < trail; i++) {
+    html += '<div class="lunar-day is-empty" aria-hidden="true"></div>';
   }
   map.innerHTML = html;
 };
