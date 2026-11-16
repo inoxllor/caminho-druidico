@@ -439,6 +439,68 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
 .tarot-badge.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, transparent); background: color-mix(in srgb, var(--ok) 10%, transparent); }
 .tarot-badge.rev { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 45%, transparent); background: color-mix(in srgb, var(--danger) 10%, transparent); }
 
+/* ---------- Ritual de baralhar (tarot) ---------- */
+.tr-toggle { display: flex; align-items: center; gap: .5rem; font-size: .8rem; color: var(--text-muted); cursor: pointer; user-select: none; }
+.tr-toggle input { width: 1rem; height: 1rem; accent-color: var(--text-accent); cursor: pointer; }
+.tr-stage { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+.tr-stage h3 { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: var(--text-title); }
+.tr-hint { font-size: .875rem; color: var(--text-muted); max-width: 30rem; min-height: 1.3em; }
+.tr-hint strong { color: var(--text-accent); font-weight: 600; }
+.tr-card.tarot-static { width: var(--cw, 92px); margin: 0; }
+.tr-card .tarot-card-back { position: absolute; inset: 0; }
+.tr-card .tc-back-hint, .tr-card .tc-back-label { display: none; }
+/* Baralho a ser baralhado */
+.tr-deck { position: relative; width: 132px; height: 216px; margin: .5rem auto 0; --cw: 132px; }
+.tr-deck .tr-card { position: absolute; left: 0; top: 0; }
+.tr-deck .tr-card:nth-child(1) { transform: translate(-3px, 6px); }
+.tr-deck .tr-card:nth-child(2) { transform: translate(-1.5px, 3px); }
+.tr-deck .tr-card:nth-child(4) { transform: translate(1.5px, -3px); }
+.tr-deck .tr-card:nth-child(5) { transform: translate(3px, -6px); }
+.tr-deck.is-shuffling .tr-card:nth-child(odd)  { animation: tr-riffle-l .62s cubic-bezier(.45, 0, .2, 1) 2; }
+.tr-deck.is-shuffling .tr-card:nth-child(even) { animation: tr-riffle-r .62s cubic-bezier(.45, 0, .2, 1) 2; }
+.tr-deck.is-shuffling .tr-card:nth-child(3) { animation-delay: .05s; }
+.tr-deck.is-shuffling .tr-card:nth-child(4) { animation-delay: .08s; }
+.tr-deck.is-shuffling .tr-card:nth-child(5) { animation-delay: .11s; }
+@keyframes tr-riffle-l { 0%, 100% { transform: none; } 45% { transform: translate(-58%, 4px) rotate(-11deg); } 60% { transform: translate(-58%, 4px) rotate(-11deg); z-index: 9; } }
+@keyframes tr-riffle-r { 0%, 100% { transform: none; } 45% { transform: translate(58%, -2px) rotate(11deg); } 60% { transform: translate(58%, -2px) rotate(11deg); } }
+.tr-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+.tr-btn { padding: .6rem 1rem; border-radius: .6rem; font-size: .875rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-inner); color: var(--text-title); transition: border-color .15s ease, opacity .15s ease; }
+.tr-btn:hover { border-color: var(--border-hover); }
+.tr-btn.primary { background: var(--btn-primary); color: var(--on-primary); border-color: transparent; }
+.tr-btn:disabled { opacity: .45; cursor: default; }
+.tr-skip { font-size: .8rem; color: var(--text-muted); text-decoration: underline; background: none; border: 0; cursor: pointer; }
+/* Leque */
+.tr-fan { position: relative; width: 100%; max-width: 46rem; margin: 0 auto; touch-action: manipulation; }
+.tr-fan .tr-pick {
+  position: absolute; padding: 0; border: 0; background: none; cursor: pointer;
+  transform-origin: 50% 120%;
+  transform: rotate(var(--rot));
+  transition: transform .25s cubic-bezier(.2, .9, .25, 1), filter .2s ease, opacity .35s ease;
+  animation: tr-spread .55s cubic-bezier(.2, .9, .25, 1) backwards;
+  animation-delay: calc(var(--i) * 18ms);
+  border-radius: 6.5%; outline: none;
+}
+@keyframes tr-spread { from { transform: translate(var(--dx), 24px) rotate(0deg); opacity: 0; } }
+.tr-fan .tr-pick:hover, .tr-fan .tr-pick:focus-visible { transform: translateY(-10px) rotate(var(--rot)); }
+.tr-fan .tr-pick:focus-visible .tarot-card-back { box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--text-accent); }
+.tr-fan .tr-pick.is-picked { transform: translateY(-26px) rotate(var(--rot)); filter: drop-shadow(0 0 10px rgba(214, 178, 94, .75)); z-index: 50; }
+.tr-fan .tr-pick .tr-badge {
+  position: absolute; z-index: 2; left: 50%; top: -6px; transform: translateX(-50%);
+  min-width: 1.5rem; height: 1.5rem; padding: 0 .3rem; border-radius: 999px;
+  display: none; align-items: center; justify-content: center;
+  font: 700 .75rem/1 'Inter', sans-serif; color: #141522; background: #f3dc9a; box-shadow: 0 0 0 2px #141522;
+}
+.tr-fan .tr-pick.is-picked .tr-badge { display: inline-flex; }
+.tr-fan.is-done .tr-pick:not(.is-picked) { opacity: 0; transform: translateY(30px) rotate(var(--rot)); pointer-events: none; }
+.tr-fan.is-done .tr-pick.is-picked { transform: translateY(-46px) rotate(0deg) scale(1.08); }
+.tr-progress { display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; }
+.tr-progress span { font-size: .72rem; padding: .2rem .55rem; border-radius: 999px; border: 1px solid var(--border-color); color: var(--text-muted); }
+.tr-progress span.is-on { border-color: var(--text-accent); color: var(--text-accent); background: color-mix(in srgb, var(--text-accent) 10%, transparent); }
+@media (prefers-reduced-motion: reduce) {
+  .tr-deck.is-shuffling .tr-card { animation: none !important; }
+  .tr-fan .tr-pick { animation: none; transition: none; }
+}
+
 /* Distribuição das cartas */
 @keyframes tarot-deal { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: none; } }
 [data-tarot-slot] { animation: tarot-deal .55s cubic-bezier(.2, .9, .25, 1) both; }
@@ -1000,6 +1062,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                                 <button type="button" onclick="drawTarotCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 cartas · Cruz Elemental</button>
                                 <button type="button" onclick="drawYesNo('tarot')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
                             </div>
+                            <label class="tr-toggle"><input type="checkbox" id="tarot-ritual-on" checked onchange="setTarotRitual(this.checked)"><span>Ritual de baralhar · escolher as cartas do leque</span></label>
                         </div>
                         <div id="tarot-search-wrap" class="hidden">
                             <input id="tarot-search" type="search" oninput="setTarotQuery(this.value)" placeholder="Procurar carta, deus ou reino…" aria-label="Procurar carta" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5">
@@ -2261,59 +2324,82 @@ const NORDIC_RANKS = [
 
 // Descrições detalhadas da arte pixel (Maiores + template para Menores)
 const TAROT_ART_DESC = {
-  loki: 'Figura esguia de Loki em tons verdes e dourados, um pé no vazio do Ginnungagap. O sorriso astuto e o capuz inclinado sugerem o primeiro passo antes de qualquer caminho marcado.',
-  odin: 'Odin de manto azul-escuro e chapéu de aba larga, de pé perante runas brilhantes. Um olho em sombra, o outro iluminado; Gungnir em diagonal como eixo da vontade.',
-  frigga: 'Frigga sentada entre teias prateadas do Wyrd, fuso em mãos. O fundo de Fensalir é sereno; véus e luas pequenas envolvem o silêncio da intuição.',
-  freyja: 'Freyja em vestes âmbar e rosa, rodeada de flores e gatos. O colar Brísingamen brilha ao peito; a postura aberta evoca fertilidade e magia Seiðr.',
-  tyr: 'Tyr ereto, uma mão em falta em sinal de sacrifício, a outra sobre a espada da lei. Cores sóbrias de pedra e ouro; o cenário lembra a assembleia do Thing.',
-  mimir: 'A cabeça sábia de Mímir junto à fonte, águas profundas em azul-noite. Runas flutuam na superfície; a composição transmite memória ancestral e conselho.',
-  lovers: 'Sif de cabelos dourados e Thor ao lado, unidos por um laço rúnico. Ao fundo, Bilskirnir; a imagem celebra escolha consciente e parceria.',
-  chariot: 'Dois bodes, Tanngrisnir e Tanngnjóstr, puxam a carruagem de Thor entre nuvens. Movimento diagonal forte; vitória pelo domínio das forças opostas.',
-  strength: 'Uma figura serena a acalmar um lobo ou urso com a mão aberta. Tons terrosos e dourados; a força surge da compostura, não da violência.',
-  hermit: 'Caminhante solitário com lanterna rúnica sob céu invernal. A neve e o manto cinza isolam a figura; a luz pequena guia a busca interior.',
-  wheel: 'Roda cósmica com os nove mundos sugeridos em arcos. No centro, um ponto dourado; criaturas do destino (como águia e serpente) orbitam a mudança cíclica.',
-  justice: 'Balança e gládio sob o olhar de uma figura de lei. Simetria rigorosa; o ouro e o azul frio falam de verdade e consequência.',
-  hanged: 'Figura suspensa de Yggdrasil, cabeça voltada para as raízes. A inversão é calma, quase meditativa; sacrifício voluntário para nova visão.',
-  death: 'Cavaleiro pálido ou figura de Hel a atravessar um campo sob céu lívido. Não há horror gratuito: há transição, terminações e espaço para o que nasce.',
-  temperance: 'Duas taças ou cornos a transvasar líquidos opostos — fogo e água, gelo e chama — numa figura centrada. Equilíbrio activo e alquimia interior.',
-  surt: 'Surt erguendo a espada de fogo em Muspelheim. Chamas em laranja e carmesim; correntes e calor opressivo sugerem paixão que pode libertar ou consumir.',
-  tower: 'Bifröst ou torre a desabar sob um raio. Pedras em queda e fogo no topo; a imagem é o colapso súbito de estruturas que já não sustentam a verdade.',
-  star: 'Figura ajoelhada junto a águas escuras, sob uma grande estrela de manhã. Tons azul-noite e amarelo pálido; a esperança é serena, não ruidosa.',
-  moon: 'Lua crescente no céu de Jotunheim; o lobo Hati em silhueta. Caminho entre duas torres ou rochas; o terreno da intuição, do sonho e da incerteza.',
-  sun: 'Disco solar radiante sobre prado verde; Baldr ou Sól no centro da luz. Cores abertas, sombra mínima; vitalidade e clareza sem ambiguidade.',
-  heimdall: 'Heimdall com Gjallarhorn, armadura clara e olhar no horizonte de Bifröst. O chamado do julgamento e do despertar ecoa na composição vertical.',
-  world: 'Yggdrasil vista de frente, raízes e ramos a fechar um círculo dos nove mundos. Ponto dourado no eixo; plenitude e integração do ciclo.'
+  loki: 'Loki de túnica verde-esmeralda e elmo dourado de dois chifres, olhos verdes e sorriso astuto, segurando uma pequena chama alaranjada à direita, contra o vazio escuro do Ginnungagap.',
+  odin: 'Odin de chapéu azul de aba larga, barba branca e manto azul, com um olho em sombra e o outro brilhante; à direita ergue Gungnir, a lança dourada de ponta branca, e à esquerda voam dois corvos negros.',
+  frigga: 'Frigga de cabelo dourado e vestes violeta, de pé, atravessada por dois fios do Wyrd — um azul e um dourado — que se cruzam em X à sua frente.',
+  freyja: 'Freyja de cabelo dourado e vestido rosa-magenta, com o colar Brísingamen dourado ao peito, ladeada por dois gatos cinzentos.',
+  tyr: 'Tyr de elmo cinzento com aro dourado e túnica vermelha, com uma espada branca erguida na vertical à frente do corpo, como eixo da lei.',
+  mimir: 'A cabeça de Mímir, pálida e de olhos azuis, repousa sobre a fonte: uma bacia de água azul com rebordo claro.',
+  lovers: 'Duas figuras lado a lado — Thor, de túnica vermelha, e Sif, de cabelo dourado e túnica azul — unidas por um pequeno coração vermelho entre ambas.',
+  chariot: 'A carruagem de Thor, em madeira castanha, com o deus de vermelho ao centro; dois bodes cinzentos, Tanngrisnir e Tanngnjóstr, um de cada lado, e dois relâmpagos dourados no céu.',
+  fenrir: 'A cabeça do lobo Fenrir, cinzenta, de orelhas erguidas, olhos vermelhos e presas brancas, atravessada por uma faixa dourada: o laço Gleipnir que o prende.',
+  hermit: 'Odin Peregrino de capa cinzenta, sozinho na noite, apoiado num cajado de madeira à esquerda e erguendo uma lanterna dourada à direita.',
+  norns: 'As três Nornas lado a lado — de azul, de verde e de violeta — sob um fio dourado horizontal, de onde descem dois fios que se unem em V aos pés da Norna central.',
+  forseti: 'Forseti de túnica dourada, com um bastão branco da lei erguido ao centro e uma barra de balança cinzenta com dois pratos azuis, um de cada lado.',
+  hanged: 'Figura suspensa de cabeça para baixo na Yggdrasil: copa verde em cima, tronco castanho, corpo de túnica azul. A inversão é calma, quase meditativa.',
+  hel: 'Hel com o rosto dividido ao meio — metade clara de olho verde, metade sombria de olho azul — e o corpo também partido em cinzento e negro.',
+  idunn: 'Idunn de cabelo dourado e vestido verde, segurando à frente um cesto castanho com duas maçãs, uma dourada e uma vermelha.',
+  surt: 'Surt, o gigante de fogo, de pele vermelha, chifres alaranjados e olhos amarelos, empunhando à direita uma espada dourada e flamejante.',
+  tower: 'Uma torre de pedra cinzenta atingida por um relâmpago amarelo em zigue-zague, com fogo alaranjado a irromper das paredes.',
+  star: 'Uma estrela dourada de quatro pontas brilha no céu noturno sobre águas azuis e serenas.',
+  moon: 'Lua crescente prateada no céu de Jotunheim; em baixo, duas rochas escuras e, entre elas, a pequena silhueta do lobo Hati.',
+  sun: 'Um sol dourado radiante, com quatro raios, ergue-se sobre um prado verde.',
+  heimdall: 'Heimdall de armadura branca e capuz claro, com uma faixa dourada ao centro, a soprar a trompa Gjallarhorn, curva e dourada, à direita.',
+  world: 'A Yggdrasil — copa verde, tronco e raízes castanhos — dentro de um anel verde que simboliza os nove mundos, com um ponto dourado no centro do eixo.'
 };
 
 function describeTarotArt(card) {
   if (card.artDesc) return card.artDesc;
   if (card.art && TAROT_ART_DESC[card.art]) return TAROT_ART_DESC[card.art];
   if (card.suit === 'major') return 'Ilustração pixel art nórdica dos Arcanos Maiores, com figura central e símbolos rúnicos.';
-  const suitLine = {
-    wands: 'Uma lança ou bastão flamejante em cenário de Muspelheim, em laranjas e ocres de fogo criativo.',
-    cups: 'Um cálice ou corno de hidromel em tons de água e prata, evocando emoção e poesia de Vanaheim.',
-    swords: 'Uma lâmina fria sob céu aberto, em azuis e cinzas, símbolo de mente, corte e verdade.',
-    pentacles: 'Um disco ou anel dourado (Draupnir) sobre terra fértil, falando de corpo, recurso e raiz.'
-  };
-  const rankLine = {
-    ace: 'No centro, a semente pura do elemento — o dom primordial ainda sem forma limitada.',
-    '2': 'Duas forças do mesmo naipe em diálogo ou tensão inicial.',
-    '3': 'Três focos em expansão: criação, colaboração ou primeira colheita simbólica.',
-    '4': 'Estrutura estável; quatro pontos que firmam o tema do naipe no mundo.',
-    '5': 'Instabilidade ou desafio; o campo visual sugere perda, conflito ou teste.',
-    '6': 'Movimento de passagem e partilha; o olhar é guiado em fluxo generoso.',
-    '7': 'Defesa ou perseverança; a figura resiste entre múltiplos estímulos.',
-    '8': 'Ritmo, ofício ou restrição; padrões repetidos no pixel art.',
-    '9': 'Quase a culminação: solidão fecunda, reserva ou vigília.',
-    '10': 'Ciclo completo do naipe: fardo ou plenitude, conforme a orientação.',
-    page: 'Figura jovem mensageira do elemento, com o símbolo do naipe em primeiro plano.',
-    knight: 'Cavaleiro em movimento, levando o tema do naipe com ímpeto.',
-    queen: 'Presença soberana que interioriza e nutre o elemento.',
-    king: 'Presença soberana que exterioriza e governa o elemento.'
-  };
-  const s = suitLine[card.suit] || 'Símbolo do naipe em estética pixel nórdica.';
-  const r = rankLine[card.rank] || rankLine[String(card.rank)] || 'Figura ou emblema do grau no naipe.';
-  return s + ' ' + r;
+  const SUIT = {
+    wands: { one: 'lança flamejante', many: 'lanças flamejantes', f: true, color: 'laranja', scene: 'em cenário de Muspelheim, em laranjas e ocres de fogo criativo' },
+    cups: { one: 'taça de hidromel', many: 'taças de hidromel', f: true, color: 'azul-celeste', scene: 'em tons de água e prata, evocando a emoção e a poesia de Vanaheim' },
+    swords: { one: 'espada de lâmina clara', many: 'espadas de lâmina clara', f: true, color: 'cinzento-azulado', scene: 'sob o céu frio de Niflheim, em azuis e cinzas' },
+    pentacles: { one: 'anel de ouro (Draupnir)', many: 'anéis de ouro (Draupnir)', f: false, color: 'dourado', scene: 'sobre a terra fértil de Midgard, em dourados e ocres' }
+  }[card.suit];
+  if (!SUIT) return 'Símbolo do naipe em estética pixel nórdica.';
+  const r = Number(card.rank);
+  if (r === 1) {
+    const aceArt = card.suit === 'pentacles'
+      ? 'Um único grande anel de ouro (Draupnir), atravessado por um eixo vertical,'
+      : `${SUIT.f ? 'Uma única' : 'Um único'} ${SUIT.one} grande, ${SUIT.f ? 'isolada' : 'isolado'} ao centro,`;
+    return `${aceArt} ${SUIT.scene}: a semente pura do elemento.`;
+  }
+  if (r >= 11) {
+    const court = {
+      11: ['Escudeiro', 'uma touca cinzenta', 'jovem mensageiro do elemento'],
+      12: ['Valquíria', 'um elmo de duas asas brancas', 'avanço destemido ao serviço do elemento'],
+      13: ['Völva', 'um diadema de prata', 'soberania que interioriza e nutre o elemento'],
+      14: ['Jarl', 'uma coroa dourada', 'soberania que exterioriza e governa o elemento']
+    }[r];
+    const art = SUIT.f ? 'uma' : 'um';
+    return `Figura de ${court[0] === 'Valquíria' || court[0] === 'Völva' ? 'uma' : 'um'} ${court[0]} com ${court[1]} e manto ${SUIT.color}, segurando à direita ${art} ${SUIT.one}, ${SUIT.scene}: ${court[2]}.`;
+  }
+  const NUM = { 2: SUIT.f ? 'Duas' : 'Dois', 3: 'Três', 4: 'Quatro', 5: 'Cinco', 6: 'Seis', 7: 'Sete', 8: 'Oito', 9: 'Nove', 10: 'Dez' }[r];
+  const LAYOUT = {
+    2: 'alinhad@s na vertical, um@ sobre @ outr@',
+    3: 'alinhad@s numa coluna central',
+    4: 'nos quatro cantos de um quadrado',
+    5: 'nos quatro cantos, com a quinta ao centro',
+    6: 'em duas colunas de três',
+    7: 'em duas colunas de três, com a sétima ao centro, acima',
+    8: 'em duas colunas de três, com duas ao centro',
+    9: 'em duas colunas de quatro, com a nona ao centro',
+    10: 'em duas colunas de quatro, com duas ao centro'
+  }[r].replace('um@', SUIT.f ? 'uma' : 'um').replace(/@/g, SUIT.f ? 'a' : 'o').replace('a quinta', SUIT.f ? 'a quinta' : 'o quinto').replace('a sétima', SUIT.f ? 'a sétima' : 'o sétimo').replace('a nona', SUIT.f ? 'a nona' : 'o nono').replace(/com duas ao centro/, SUIT.f ? 'com duas ao centro' : 'com dois ao centro');
+  const MEANING = {
+    2: 'Duas forças do mesmo naipe em diálogo ou tensão inicial.',
+    3: 'Expansão: criação, colaboração ou primeira colheita.',
+    4: 'Estrutura estável que firma o tema do naipe no mundo.',
+    5: 'Quatro cantos em tensão à volta de um centro disputado: conflito ou prova.',
+    6: 'Passagem e partilha; o olhar é guiado em fluxo generoso.',
+    7: 'Defesa ou perseverança: uma resiste acima das restantes.'.replace('uma resiste', SUIT.f ? 'uma resiste' : 'um resiste'),
+    8: 'Ritmo, ofício ou restrição em padrão repetido.',
+    9: 'Quase a culminação: plenitude individual, reserva ou vigília.',
+    10: 'Ciclo completo do naipe: fardo ou plenitude, conforme a orientação.'
+  }[r];
+  return `${NUM} ${SUIT.many} ${LAYOUT}, ${SUIT.scene}. ${MEANING}`;
 }
 
 const NORDIC_TAROT_DECK = (() => {
@@ -2372,17 +2458,27 @@ function renderNordic16BitSVG(card) {
     const r = card.rank;
     let glyph = '';
 
-    const drawItem = (x, y) => {
-        if (s.key === 'wands') {
-            return `<rect x="${x}" y="${y-3}" width="2" height="7" fill="${s.colorPrimary}"/><rect x="${x-1}" y="${y-4}" width="4" height="2" fill="${s.colorSecondary}"/>`;
-        } else if (s.key === 'cups') {
-            return `<rect x="${x-1}" y="${y-2}" width="4" height="3" fill="${s.colorPrimary}"/><rect x="${x}" y="${y+1}" width="2" height="2" fill="${s.colorSecondary}"/>`;
-        } else if (s.key === 'swords') {
-            return `<rect x="${x}" y="${y-4}" width="2" height="6" fill="${s.colorSecondary}"/><rect x="${x-1}" y="${y+1}" width="4" height="1" fill="#eab308"/><rect x="${x}" y="${y+2}" width="2" height="2" fill="#92400e"/>`;
-        } else {
-            return `<rect x="${x-1}" y="${y-2}" width="4" height="4" fill="none" stroke="${s.colorPrimary}" stroke-width="1.2"/><rect x="${x}" y="${y-1}" width="2" height="2" fill="${s.colorSecondary}"/>`;
-        }
+    // Símbolo centrado em (0,0), desenhado num grupo com escala para nunca se sobrepor
+    const itemShape = () => {
+        if (s.key === 'wands') return `<rect x="-1" y="-3" width="2" height="7" fill="${s.colorPrimary}"/><rect x="-2" y="-4" width="4" height="2" fill="${s.colorSecondary}"/>`;
+        if (s.key === 'cups') return `<rect x="-2" y="-3" width="4" height="3" fill="${s.colorPrimary}"/><rect x="-1" y="0" width="2" height="2" fill="${s.colorSecondary}"/><rect x="-2" y="2" width="4" height="1" fill="${s.colorPrimary}"/>`;
+        if (s.key === 'swords') return `<rect x="-1" y="-4" width="2" height="6" fill="${s.colorSecondary}"/><rect x="-2" y="2" width="4" height="1" fill="#eab308"/><rect x="-1" y="3" width="2" height="2" fill="#92400e"/>`;
+        return `<rect x="-2" y="-2" width="4" height="4" fill="none" stroke="${s.colorPrimary}" stroke-width="1.2"/><rect x="-1" y="-1" width="2" height="2" fill="${s.colorSecondary}"/>`;
     };
+    const drawItem = (x, y, k = 1) => `<g transform="translate(${x} ${y}) scale(${k})">${itemShape()}</g>`;
+    // Disposição de cartas de jogar: colunas x = 10 / 16 / 22
+    const PIPS = {
+        2: [[16, 9], [16, 23]],
+        3: [[16, 7], [16, 16], [16, 25]],
+        4: [[10, 9], [22, 9], [10, 23], [22, 23]],
+        5: [[10, 8], [22, 8], [10, 24], [22, 24], [16, 16]],
+        6: [[10, 7], [22, 7], [10, 16], [22, 16], [10, 25], [22, 25]],
+        7: [[10, 7], [22, 7], [10, 16], [22, 16], [10, 25], [22, 25], [16, 11.5]],
+        8: [[10, 7], [22, 7], [10, 16], [22, 16], [10, 25], [22, 25], [16, 11.5], [16, 20.5]],
+        9: [[10, 6], [22, 6], [10, 12.7], [22, 12.7], [10, 19.3], [22, 19.3], [10, 26], [22, 26], [16, 16]],
+        10: [[10, 6], [22, 6], [10, 12.7], [22, 12.7], [10, 19.3], [22, 19.3], [10, 26], [22, 26], [16, 9.3], [16, 22.7]]
+    };
+    const PIP_SCALE = { 2: 1, 3: 0.82, 4: 1, 5: 1, 6: 0.85, 7: 0.82, 8: 0.82, 9: 0.66, 10: 0.66 };
 
     if (r === 1) {
         if (s.key === 'wands') glyph = `<rect x="15" y="4" width="2" height="24" fill="#b45309"/><polygon points="16,2 12,9 20,9" fill="${s.colorSecondary}"/><rect x="11" y="11" width="10" height="2" fill="${s.colorPrimary}"/>`;
@@ -2399,22 +2495,15 @@ function renderNordic16BitSVG(card) {
             <rect x="12" y="7" width="8" height="6" fill="#fed7aa"/>
             <rect x="9" y="13" width="14" height="14" fill="${s.colorPrimary}"/>
             <rect x="13" y="13" width="6" height="14" fill="#1e293b"/>
-            ${drawItem(24, 15)}
+            ${drawItem(25, 18)}
         `;
     } else {
-        const coords = [
-            [11, 8], [20, 8], [11, 23], [20, 23],
-            [15, 15], [11, 15], [20, 15], [15, 7], [15, 24], [15, 11]
-        ];
-        for (let i = 0; i < r; i++) {
-            glyph += drawItem(coords[i][0], coords[i][1]);
-        }
+        (PIPS[r] || []).forEach(([x, y]) => { glyph += drawItem(x, y, PIP_SCALE[r]); });
     }
 
     return `
         <svg viewBox="0 0 32 32" shape-rendering="crispEdges" class="pixel-svg">
             <rect width="32" height="32" fill="${s.bg}"/>
-            <rect x="1" y="1" width="30" height="30" fill="none" stroke="${s.colorPrimary}" stroke-width="0.8" opacity="0.5"/>
             ${glyph}
         </svg>
     `;
@@ -2471,13 +2560,17 @@ function tarotSuitClass(card) {
 function tarotEsc(v) {
     return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
+function tarotArtBg(card) {
+    const m = renderNordic16BitSVG(card).match(/<rect width="32" height="32" fill="(#[0-9a-fA-F]{3,8})"/);
+    return m ? m[1] : '#0a0c14';
+}
 function tarotFaceInner(card, isReversed = false) {
     const isMajor = tarotSuitClass(card) === 'suit-major';
     const rune = card.rune || TAROT_SUIT_RUNE[card.suit] || 'ᛟ';
     const suitLabel = isMajor ? 'Arcano Maior' : (card.suitObj ? card.suitObj.label.split(' ')[0] : '');
     const realm = isMajor ? (card.realm || '') : (card.suitObj ? card.suitObj.element : card.realm || '');
     return `<div class="tc-top"><span class="tc-num">${tarotEsc(card.num || '')}</span><span class="tc-suit">${tarotEsc(suitLabel)}</span><span class="tc-rune" aria-hidden="true">${rune}</span></div>
-        <div class="card-art-box ${isReversed ? 'is-reversed' : ''}">${renderNordic16BitSVG(card).replace('<svg ', '<svg preserveAspectRatio="xMidYMid slice" ')}</div>
+        <div class="card-art-box ${isReversed ? 'is-reversed' : ''}" style="background:${tarotArtBg(card)}">${renderNordic16BitSVG(card).replace('<svg ', '<svg preserveAspectRatio="xMidYMid meet" ')}</div>
         <div class="tc-plate"><span class="tc-name">${tarotEsc(card.name || '')}</span><span class="tc-realm">${tarotEsc(realm)}</span></div>`;
 }
 const TAROT_BACK_HTML = `<div class="tarot-back-pattern" aria-hidden="true"></div>
@@ -3771,9 +3864,14 @@ drawTarotCard = function (count) {
     const spread = TAROT_SPREADS[count] || TAROT_SPREADS[1];
     const pool = [...getFilteredNordicDeck()];
     const drawn = [];
-    for (let i = 0; i < spread.pos.length && pool.length; i++) {
-        const card = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
-        drawn.push({ card, isReversed: Math.random() < 0.35, pos: spread.pos[i][0] });
+    const chosen = window.__tarotChosen; window.__tarotChosen = null; // cartas escolhidas no ritual de baralhar
+    if (chosen && chosen.length) {
+        chosen.slice(0, spread.pos.length).forEach((c, i) => drawn.push({ card: c.card, isReversed: c.isReversed, pos: spread.pos[i][0] }));
+    } else {
+        for (let i = 0; i < spread.pos.length && pool.length; i++) {
+            const card = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+            drawn.push({ card, isReversed: Math.random() < 0.35, pos: spread.pos[i][0] });
+        }
     }
     lastTarotReading = drawn;
     lastTarotMeta = { question: (document.getElementById('tarot-question')?.value || '').trim(), spread: spread.name };
@@ -5910,5 +6008,214 @@ ${reading.items.map(it => `- ${it.pos}: ${it.label}\n  ${it.text}${it.art ? '\n 
   }, 60000);
 })();
 
+</script>
+<script>
+/* ============================================================
+   Ritual de baralhar — o baralho é baralhado (Fisher–Yates com
+   gerador criptográfico), cortado e aberto em leque; a pessoa
+   escolhe as cartas, que são as que de facto estão nessas posições.
+   ============================================================ */
+(() => {
+  const $ = id => document.getElementById(id);
+  const KEY = 'druid_tarot_ritual';
+  const isOn = () => { try { return localStorage.getItem(KEY) !== 'off'; } catch { return true; } };
+  window.setTarotRitual = on => { try { localStorage.setItem(KEY, on ? 'on' : 'off'); } catch {} const c = $('tarot-ritual-on'); if (c) c.checked = !!on; };
+  document.addEventListener('DOMContentLoaded', () => { const c = $('tarot-ritual-on'); if (c) c.checked = isOn(); });
+
+  // Inteiro aleatório uniforme em [0, n) — crypto quando disponível
+  function randInt(n) {
+    if (window.crypto?.getRandomValues) {
+      const lim = Math.floor(0x100000000 / n) * n, b = new Uint32Array(1);
+      do { crypto.getRandomValues(b); } while (b[0] >= lim);
+      return b[0] % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+  const rand01 = () => randInt(1e6) / 1e6;
+  function shuffleDeck(deck) {
+    for (let i = deck.length - 1; i > 0; i--) { const j = randInt(i + 1); [deck[i], deck[j]] = [deck[j], deck[i]]; }
+    // Cada carta fica invertida com probabilidade de 35% (igual ao sorteio direto)
+    deck.forEach(d => { d.isReversed = rand01() < 0.35; });
+    return deck;
+  }
+  const vibrate = ms => { if (navigator.vibrate) try { navigator.vibrate(ms); } catch {} };
+  const back = () => `<div class="tarot-static tr-card"><div class="tarot-card-back">${TAROT_BACK_HTML}</div></div>`;
+  const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let state = null;
+  const _draw = drawTarotCard;
+
+  drawTarotCard = function (n) {
+    if (!isOn() || window.__tarotChosen) return _draw(n);
+    if (typeof activeTarotMode !== 'undefined' && activeTarotMode !== 'draw') { skipRecord = true; switchTarotMode('draw'); skipRecord = false; }
+    const spread = TAROT_SPREADS[n] || TAROT_SPREADS[1];
+    const pool = getFilteredNordicDeck();
+    if (pool.length < spread.pos.length) return _draw(n);
+    state = {
+      n, spread,
+      deck: pool.map(card => ({ card, isReversed: rand01() < 0.35 })),
+      shuffles: 0, picked: [],
+      question: ($('tarot-question')?.value || '').trim()
+    };
+    $('tarot-save-bar')?.classList.add('hidden');
+    renderShuffle();
+    shuffleNow();
+  };
+
+  function header() {
+    return `<h3>${esc(state.spread.name)}</h3>${state.question ? `<p class="text-sm theme-muted -mt-2">“${esc(state.question)}”</p>` : ''}`;
+  }
+
+  function renderShuffle() {
+    const c = $('tarot-card-container');
+    c.classList.remove('draw-area');
+    c.innerHTML = `<div class="tr-stage" id="tr-stage">
+      ${header()}
+      <p class="tr-hint" id="tr-hint">Respire fundo e concentre-se na pergunta enquanto o baralho é baralhado.</p>
+      <div class="tr-deck" id="tr-deck" aria-hidden="true">${back().repeat(5)}</div>
+      <div class="tr-actions">
+        <button type="button" class="tr-btn" id="tr-shuffle" onclick="tarotRitualShuffle()">Baralhar de novo</button>
+        <button type="button" class="tr-btn primary" id="tr-cut" onclick="tarotRitualCut()" disabled>Cortar e abrir o leque</button>
+      </div>
+      <button type="button" class="tr-skip" onclick="tarotRitualSkip()">Saltar o ritual e tirar ao acaso</button>
+    </div>`;
+  }
+
+  function shuffleNow() {
+    if (!state) return;
+    shuffleDeck(state.deck);
+    state.shuffles++;
+    const deck = $('tr-deck'), btns = [$('tr-shuffle'), $('tr-cut')];
+    btns.forEach(b => b && (b.disabled = true));
+    vibrate([10, 40, 10, 40, 10]);
+    const done = () => {
+      deck?.classList.remove('is-shuffling');
+      btns.forEach(b => b && (b.disabled = false));
+      const h = $('tr-hint');
+      if (h) h.innerHTML = `Baralhado <strong>${state.shuffles}×</strong>. Baralhe de novo quantas vezes sentir, depois corte o baralho.`;
+    };
+    if (!deck || reduced()) return done();
+    deck.classList.remove('is-shuffling'); void deck.offsetWidth; deck.classList.add('is-shuffling');
+    setTimeout(done, 1400);
+  }
+  window.tarotRitualShuffle = shuffleNow;
+
+  window.tarotRitualSkip = function () {
+    if (!state) return;
+    const st = state; state = null;
+    shuffleDeck(st.deck);
+    window.__tarotChosen = st.deck.slice(0, st.spread.pos.length);
+    _draw(st.n);
+  };
+
+  window.tarotRitualCut = function () {
+    if (!state) return;
+    // Corte: a parte de baixo passa para cima
+    const cut = 1 + randInt(state.deck.length - 1);
+    state.deck = state.deck.slice(cut).concat(state.deck.slice(0, cut));
+    vibrate(15);
+    renderFan();
+  };
+
+  function fanSize() { return innerWidth < 480 ? 13 : innerWidth < 900 ? 17 : 22; }
+
+  function renderFan() {
+    const c = $('tarot-card-container');
+    const k = Math.min(fanSize(), state.deck.length);
+    state.fan = state.deck.slice(0, k);
+    state.picked = [];
+    c.innerHTML = `<div class="tr-stage">
+      ${header()}
+      <p class="tr-hint" id="tr-hint" aria-live="polite"></p>
+      <div class="tr-progress" id="tr-progress">${state.spread.pos.map(p => `<span>${esc(p[0])}</span>`).join('')}</div>
+      <div class="tr-fan" id="tr-fan" role="group" aria-label="Leque de cartas viradas para baixo">
+        ${state.fan.map((_, i) => `<button type="button" class="tr-pick" data-i="${i}" aria-pressed="false" aria-label="Carta ${i + 1} de ${k}" onclick="tarotRitualPick(${i})"><span class="tr-badge"></span>${back()}</button>`).join('')}
+      </div>
+      <div class="tr-actions">
+        <button type="button" class="tr-btn" onclick="tarotRitualRestart()">Voltar a baralhar</button>
+      </div>
+    </div>`;
+    layoutFan();
+    updateFanUI();
+  }
+
+  function layoutFan() {
+    const fan = $('tr-fan');
+    if (!fan || !state?.fan) return;
+    const W = fan.clientWidth, k = state.fan.length;
+    const cw = Math.round(Math.max(56, Math.min(96, W / 5.2)));
+    const ch = Math.round(cw * 8.2 / 5);
+    const spreadDeg = innerWidth < 480 ? 40 : 54;
+    // Cantos de cada carta após rodar em torno do pivô (50%, 120%) — para o leque caber inteiro
+    const px = cw / 2, py = ch * 1.2;
+    const cornerX = deg => {
+      const a = deg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+      const xs = [[0, 0], [cw, 0], [0, ch], [cw, ch]].map(([x, y]) => px + (x - px) * c - (y - py) * s);
+      return [Math.min(...xs), Math.max(...xs)];
+    };
+    const [lMin] = cornerX(-spreadDeg / 2), [, rMax] = cornerX(spreadDeg / 2);
+    const usable = Math.max(cw, W - 12 - (rMax - lMin));
+    fan.style.height = (ch + 80) + 'px';
+    fan.querySelectorAll('.tr-pick').forEach((b, i) => {
+      const t = k === 1 ? 0 : i / (k - 1) - 0.5;
+      const x = W / 2 + t * usable;
+      b.style.setProperty('--cw', cw + 'px');
+      b.style.setProperty('--rot', (t * spreadDeg).toFixed(2) + 'deg');
+      b.style.setProperty('--dx', (W / 2 - x).toFixed(1) + 'px');
+      b.style.setProperty('--i', i);
+      b.style.left = (x - cw / 2).toFixed(1) + 'px';
+      b.style.top = (36 + t * t * 70).toFixed(1) + 'px';
+      b.style.width = cw + 'px'; b.style.height = ch + 'px';
+      b.style.zIndex = b.classList.contains('is-picked') ? 50 : i + 1;
+    });
+  }
+  let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(layoutFan, 120); });
+
+  function updateFanUI() {
+    const need = state.spread.pos.length, got = state.picked.length;
+    document.querySelectorAll('#tr-fan .tr-pick').forEach(b => {
+      const idx = state.picked.indexOf(+b.dataset.i);
+      b.classList.toggle('is-picked', idx >= 0);
+      b.setAttribute('aria-pressed', idx >= 0);
+      b.querySelector('.tr-badge').textContent = idx >= 0 ? idx + 1 : '';
+      b.style.zIndex = idx >= 0 ? 50 : +b.dataset.i + 1;
+    });
+    document.querySelectorAll('#tr-progress span').forEach((s, i) => s.classList.toggle('is-on', i < got));
+    const h = $('tr-hint');
+    if (h) h.innerHTML = got < need
+      ? `Escolha ${need === 1 ? 'uma carta' : need + ' cartas'} do leque, guiando-se pela intuição. ${need > 1 ? `Próxima: <strong>${esc(state.spread.pos[got][0])}</strong>.` : ''}`
+      : 'As cartas foram escolhidas…';
+  }
+
+  window.tarotRitualPick = function (i) {
+    if (!state || state.locked) return;
+    const at = state.picked.indexOf(i);
+    if (at >= 0) state.picked.splice(at, 1);           // tocar de novo desfaz a escolha
+    else if (state.picked.length < state.spread.pos.length) { state.picked.push(i); vibrate(12); }
+    updateFanUI();
+    if (state.picked.length === state.spread.pos.length) {
+      state.locked = true;
+      $('tr-fan')?.classList.add('is-done');
+      const st = state;
+      setTimeout(() => {
+        if (state !== st) return;
+        state = null;
+        window.__tarotChosen = st.picked.map(idx => st.fan[idx]);
+        _draw(st.n);
+        document.getElementById('tarot-card-container')?.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+      }, reduced() ? 150 : 900);
+    }
+  };
+
+  window.tarotRitualRestart = function () {
+    if (!state) return;
+    state.picked = []; state.locked = false; state.shuffles = 0;
+    renderShuffle(); shuffleNow();
+  };
+
+  // Ao mudar para o Grimório e voltar, um ritual a meio é descartado
+  const _stm = switchTarotMode;
+  switchTarotMode = function (m) { if (m !== 'draw') state = null; _stm(m); };
+})();
 </script>
 </body></html>
