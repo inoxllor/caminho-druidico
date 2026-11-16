@@ -439,6 +439,68 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
 .tarot-badge.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, transparent); background: color-mix(in srgb, var(--ok) 10%, transparent); }
 .tarot-badge.rev { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 45%, transparent); background: color-mix(in srgb, var(--danger) 10%, transparent); }
 
+/* ---------- Ritual de baralhar (tarot) ---------- */
+.tr-toggle { display: flex; align-items: center; gap: .5rem; font-size: .8rem; color: var(--text-muted); cursor: pointer; user-select: none; }
+.tr-toggle input { width: 1rem; height: 1rem; accent-color: var(--text-accent); cursor: pointer; }
+.tr-stage { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+.tr-stage h3 { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: var(--text-title); }
+.tr-hint { font-size: .875rem; color: var(--text-muted); max-width: 30rem; min-height: 1.3em; }
+.tr-hint strong { color: var(--text-accent); font-weight: 600; }
+.tr-card.tarot-static { width: var(--cw, 92px); margin: 0; }
+.tr-card .tarot-card-back { position: absolute; inset: 0; }
+.tr-card .tc-back-hint, .tr-card .tc-back-label { display: none; }
+/* Baralho a ser baralhado */
+.tr-deck { position: relative; width: 132px; height: 216px; margin: .5rem auto 0; --cw: 132px; }
+.tr-deck .tr-card { position: absolute; left: 0; top: 0; }
+.tr-deck .tr-card:nth-child(1) { transform: translate(-3px, 6px); }
+.tr-deck .tr-card:nth-child(2) { transform: translate(-1.5px, 3px); }
+.tr-deck .tr-card:nth-child(4) { transform: translate(1.5px, -3px); }
+.tr-deck .tr-card:nth-child(5) { transform: translate(3px, -6px); }
+.tr-deck.is-shuffling .tr-card:nth-child(odd)  { animation: tr-riffle-l .62s cubic-bezier(.45, 0, .2, 1) 2; }
+.tr-deck.is-shuffling .tr-card:nth-child(even) { animation: tr-riffle-r .62s cubic-bezier(.45, 0, .2, 1) 2; }
+.tr-deck.is-shuffling .tr-card:nth-child(3) { animation-delay: .05s; }
+.tr-deck.is-shuffling .tr-card:nth-child(4) { animation-delay: .08s; }
+.tr-deck.is-shuffling .tr-card:nth-child(5) { animation-delay: .11s; }
+@keyframes tr-riffle-l { 0%, 100% { transform: none; } 45% { transform: translate(-58%, 4px) rotate(-11deg); } 60% { transform: translate(-58%, 4px) rotate(-11deg); z-index: 9; } }
+@keyframes tr-riffle-r { 0%, 100% { transform: none; } 45% { transform: translate(58%, -2px) rotate(11deg); } 60% { transform: translate(58%, -2px) rotate(11deg); } }
+.tr-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+.tr-btn { padding: .6rem 1rem; border-radius: .6rem; font-size: .875rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-inner); color: var(--text-title); transition: border-color .15s ease, opacity .15s ease; }
+.tr-btn:hover { border-color: var(--border-hover); }
+.tr-btn.primary { background: var(--btn-primary); color: var(--on-primary); border-color: transparent; }
+.tr-btn:disabled { opacity: .45; cursor: default; }
+.tr-skip { font-size: .8rem; color: var(--text-muted); text-decoration: underline; background: none; border: 0; cursor: pointer; }
+/* Leque */
+.tr-fan { position: relative; width: 100%; max-width: 46rem; margin: 0 auto; touch-action: manipulation; }
+.tr-fan .tr-pick {
+  position: absolute; padding: 0; border: 0; background: none; cursor: pointer;
+  transform-origin: 50% 120%;
+  transform: rotate(var(--rot));
+  transition: transform .25s cubic-bezier(.2, .9, .25, 1), filter .2s ease, opacity .35s ease;
+  animation: tr-spread .55s cubic-bezier(.2, .9, .25, 1) backwards;
+  animation-delay: calc(var(--i) * 18ms);
+  border-radius: 6.5%; outline: none;
+}
+@keyframes tr-spread { from { transform: translate(var(--dx), 24px) rotate(0deg); opacity: 0; } }
+.tr-fan .tr-pick:hover, .tr-fan .tr-pick:focus-visible { transform: translateY(-10px) rotate(var(--rot)); }
+.tr-fan .tr-pick:focus-visible .tarot-card-back { box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--text-accent); }
+.tr-fan .tr-pick.is-picked { transform: translateY(-26px) rotate(var(--rot)); filter: drop-shadow(0 0 10px rgba(214, 178, 94, .75)); z-index: 50; }
+.tr-fan .tr-pick .tr-badge {
+  position: absolute; z-index: 2; left: 50%; top: -6px; transform: translateX(-50%);
+  min-width: 1.5rem; height: 1.5rem; padding: 0 .3rem; border-radius: 999px;
+  display: none; align-items: center; justify-content: center;
+  font: 700 .75rem/1 'Inter', sans-serif; color: #141522; background: #f3dc9a; box-shadow: 0 0 0 2px #141522;
+}
+.tr-fan .tr-pick.is-picked .tr-badge { display: inline-flex; }
+.tr-fan.is-done .tr-pick:not(.is-picked) { opacity: 0; transform: translateY(30px) rotate(var(--rot)); pointer-events: none; }
+.tr-fan.is-done .tr-pick.is-picked { transform: translateY(-46px) rotate(0deg) scale(1.08); }
+.tr-progress { display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; }
+.tr-progress span { font-size: .72rem; padding: .2rem .55rem; border-radius: 999px; border: 1px solid var(--border-color); color: var(--text-muted); }
+.tr-progress span.is-on { border-color: var(--text-accent); color: var(--text-accent); background: color-mix(in srgb, var(--text-accent) 10%, transparent); }
+@media (prefers-reduced-motion: reduce) {
+  .tr-deck.is-shuffling .tr-card { animation: none !important; }
+  .tr-fan .tr-pick { animation: none; transition: none; }
+}
+
 /* Distribuição das cartas */
 @keyframes tarot-deal { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: none; } }
 [data-tarot-slot] { animation: tarot-deal .55s cubic-bezier(.2, .9, .25, 1) both; }
@@ -1000,6 +1062,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                                 <button type="button" onclick="drawTarotCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 cartas · Cruz Elemental</button>
                                 <button type="button" onclick="drawYesNo('tarot')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
                             </div>
+                            <label class="tr-toggle"><input type="checkbox" id="tarot-ritual-on" checked onchange="setTarotRitual(this.checked)"><span>Ritual de baralhar · escolher as cartas do leque</span></label>
                         </div>
                         <div id="tarot-search-wrap" class="hidden">
                             <input id="tarot-search" type="search" oninput="setTarotQuery(this.value)" placeholder="Procurar carta, deus ou reino…" aria-label="Procurar carta" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5">
@@ -3801,9 +3864,14 @@ drawTarotCard = function (count) {
     const spread = TAROT_SPREADS[count] || TAROT_SPREADS[1];
     const pool = [...getFilteredNordicDeck()];
     const drawn = [];
-    for (let i = 0; i < spread.pos.length && pool.length; i++) {
-        const card = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
-        drawn.push({ card, isReversed: Math.random() < 0.35, pos: spread.pos[i][0] });
+    const chosen = window.__tarotChosen; window.__tarotChosen = null; // cartas escolhidas no ritual de baralhar
+    if (chosen && chosen.length) {
+        chosen.slice(0, spread.pos.length).forEach((c, i) => drawn.push({ card: c.card, isReversed: c.isReversed, pos: spread.pos[i][0] }));
+    } else {
+        for (let i = 0; i < spread.pos.length && pool.length; i++) {
+            const card = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+            drawn.push({ card, isReversed: Math.random() < 0.35, pos: spread.pos[i][0] });
+        }
     }
     lastTarotReading = drawn;
     lastTarotMeta = { question: (document.getElementById('tarot-question')?.value || '').trim(), spread: spread.name };
@@ -5940,5 +6008,214 @@ ${reading.items.map(it => `- ${it.pos}: ${it.label}\n  ${it.text}${it.art ? '\n 
   }, 60000);
 })();
 
+</script>
+<script>
+/* ============================================================
+   Ritual de baralhar — o baralho é baralhado (Fisher–Yates com
+   gerador criptográfico), cortado e aberto em leque; a pessoa
+   escolhe as cartas, que são as que de facto estão nessas posições.
+   ============================================================ */
+(() => {
+  const $ = id => document.getElementById(id);
+  const KEY = 'druid_tarot_ritual';
+  const isOn = () => { try { return localStorage.getItem(KEY) !== 'off'; } catch { return true; } };
+  window.setTarotRitual = on => { try { localStorage.setItem(KEY, on ? 'on' : 'off'); } catch {} const c = $('tarot-ritual-on'); if (c) c.checked = !!on; };
+  document.addEventListener('DOMContentLoaded', () => { const c = $('tarot-ritual-on'); if (c) c.checked = isOn(); });
+
+  // Inteiro aleatório uniforme em [0, n) — crypto quando disponível
+  function randInt(n) {
+    if (window.crypto?.getRandomValues) {
+      const lim = Math.floor(0x100000000 / n) * n, b = new Uint32Array(1);
+      do { crypto.getRandomValues(b); } while (b[0] >= lim);
+      return b[0] % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+  const rand01 = () => randInt(1e6) / 1e6;
+  function shuffleDeck(deck) {
+    for (let i = deck.length - 1; i > 0; i--) { const j = randInt(i + 1); [deck[i], deck[j]] = [deck[j], deck[i]]; }
+    // Cada carta fica invertida com probabilidade de 35% (igual ao sorteio direto)
+    deck.forEach(d => { d.isReversed = rand01() < 0.35; });
+    return deck;
+  }
+  const vibrate = ms => { if (navigator.vibrate) try { navigator.vibrate(ms); } catch {} };
+  const back = () => `<div class="tarot-static tr-card"><div class="tarot-card-back">${TAROT_BACK_HTML}</div></div>`;
+  const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let state = null;
+  const _draw = drawTarotCard;
+
+  drawTarotCard = function (n) {
+    if (!isOn() || window.__tarotChosen) return _draw(n);
+    if (typeof activeTarotMode !== 'undefined' && activeTarotMode !== 'draw') { skipRecord = true; switchTarotMode('draw'); skipRecord = false; }
+    const spread = TAROT_SPREADS[n] || TAROT_SPREADS[1];
+    const pool = getFilteredNordicDeck();
+    if (pool.length < spread.pos.length) return _draw(n);
+    state = {
+      n, spread,
+      deck: pool.map(card => ({ card, isReversed: rand01() < 0.35 })),
+      shuffles: 0, picked: [],
+      question: ($('tarot-question')?.value || '').trim()
+    };
+    $('tarot-save-bar')?.classList.add('hidden');
+    renderShuffle();
+    shuffleNow();
+  };
+
+  function header() {
+    return `<h3>${esc(state.spread.name)}</h3>${state.question ? `<p class="text-sm theme-muted -mt-2">“${esc(state.question)}”</p>` : ''}`;
+  }
+
+  function renderShuffle() {
+    const c = $('tarot-card-container');
+    c.classList.remove('draw-area');
+    c.innerHTML = `<div class="tr-stage" id="tr-stage">
+      ${header()}
+      <p class="tr-hint" id="tr-hint">Respire fundo e concentre-se na pergunta enquanto o baralho é baralhado.</p>
+      <div class="tr-deck" id="tr-deck" aria-hidden="true">${back().repeat(5)}</div>
+      <div class="tr-actions">
+        <button type="button" class="tr-btn" id="tr-shuffle" onclick="tarotRitualShuffle()">Baralhar de novo</button>
+        <button type="button" class="tr-btn primary" id="tr-cut" onclick="tarotRitualCut()" disabled>Cortar e abrir o leque</button>
+      </div>
+      <button type="button" class="tr-skip" onclick="tarotRitualSkip()">Saltar o ritual e tirar ao acaso</button>
+    </div>`;
+  }
+
+  function shuffleNow() {
+    if (!state) return;
+    shuffleDeck(state.deck);
+    state.shuffles++;
+    const deck = $('tr-deck'), btns = [$('tr-shuffle'), $('tr-cut')];
+    btns.forEach(b => b && (b.disabled = true));
+    vibrate([10, 40, 10, 40, 10]);
+    const done = () => {
+      deck?.classList.remove('is-shuffling');
+      btns.forEach(b => b && (b.disabled = false));
+      const h = $('tr-hint');
+      if (h) h.innerHTML = `Baralhado <strong>${state.shuffles}×</strong>. Baralhe de novo quantas vezes sentir, depois corte o baralho.`;
+    };
+    if (!deck || reduced()) return done();
+    deck.classList.remove('is-shuffling'); void deck.offsetWidth; deck.classList.add('is-shuffling');
+    setTimeout(done, 1400);
+  }
+  window.tarotRitualShuffle = shuffleNow;
+
+  window.tarotRitualSkip = function () {
+    if (!state) return;
+    const st = state; state = null;
+    shuffleDeck(st.deck);
+    window.__tarotChosen = st.deck.slice(0, st.spread.pos.length);
+    _draw(st.n);
+  };
+
+  window.tarotRitualCut = function () {
+    if (!state) return;
+    // Corte: a parte de baixo passa para cima
+    const cut = 1 + randInt(state.deck.length - 1);
+    state.deck = state.deck.slice(cut).concat(state.deck.slice(0, cut));
+    vibrate(15);
+    renderFan();
+  };
+
+  function fanSize() { return innerWidth < 480 ? 13 : innerWidth < 900 ? 17 : 22; }
+
+  function renderFan() {
+    const c = $('tarot-card-container');
+    const k = Math.min(fanSize(), state.deck.length);
+    state.fan = state.deck.slice(0, k);
+    state.picked = [];
+    c.innerHTML = `<div class="tr-stage">
+      ${header()}
+      <p class="tr-hint" id="tr-hint" aria-live="polite"></p>
+      <div class="tr-progress" id="tr-progress">${state.spread.pos.map(p => `<span>${esc(p[0])}</span>`).join('')}</div>
+      <div class="tr-fan" id="tr-fan" role="group" aria-label="Leque de cartas viradas para baixo">
+        ${state.fan.map((_, i) => `<button type="button" class="tr-pick" data-i="${i}" aria-pressed="false" aria-label="Carta ${i + 1} de ${k}" onclick="tarotRitualPick(${i})"><span class="tr-badge"></span>${back()}</button>`).join('')}
+      </div>
+      <div class="tr-actions">
+        <button type="button" class="tr-btn" onclick="tarotRitualRestart()">Voltar a baralhar</button>
+      </div>
+    </div>`;
+    layoutFan();
+    updateFanUI();
+  }
+
+  function layoutFan() {
+    const fan = $('tr-fan');
+    if (!fan || !state?.fan) return;
+    const W = fan.clientWidth, k = state.fan.length;
+    const cw = Math.round(Math.max(56, Math.min(96, W / 5.2)));
+    const ch = Math.round(cw * 8.2 / 5);
+    const spreadDeg = innerWidth < 480 ? 40 : 54;
+    // Cantos de cada carta após rodar em torno do pivô (50%, 120%) — para o leque caber inteiro
+    const px = cw / 2, py = ch * 1.2;
+    const cornerX = deg => {
+      const a = deg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+      const xs = [[0, 0], [cw, 0], [0, ch], [cw, ch]].map(([x, y]) => px + (x - px) * c - (y - py) * s);
+      return [Math.min(...xs), Math.max(...xs)];
+    };
+    const [lMin] = cornerX(-spreadDeg / 2), [, rMax] = cornerX(spreadDeg / 2);
+    const usable = Math.max(cw, W - 12 - (rMax - lMin));
+    fan.style.height = (ch + 80) + 'px';
+    fan.querySelectorAll('.tr-pick').forEach((b, i) => {
+      const t = k === 1 ? 0 : i / (k - 1) - 0.5;
+      const x = W / 2 + t * usable;
+      b.style.setProperty('--cw', cw + 'px');
+      b.style.setProperty('--rot', (t * spreadDeg).toFixed(2) + 'deg');
+      b.style.setProperty('--dx', (W / 2 - x).toFixed(1) + 'px');
+      b.style.setProperty('--i', i);
+      b.style.left = (x - cw / 2).toFixed(1) + 'px';
+      b.style.top = (36 + t * t * 70).toFixed(1) + 'px';
+      b.style.width = cw + 'px'; b.style.height = ch + 'px';
+      b.style.zIndex = b.classList.contains('is-picked') ? 50 : i + 1;
+    });
+  }
+  let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(layoutFan, 120); });
+
+  function updateFanUI() {
+    const need = state.spread.pos.length, got = state.picked.length;
+    document.querySelectorAll('#tr-fan .tr-pick').forEach(b => {
+      const idx = state.picked.indexOf(+b.dataset.i);
+      b.classList.toggle('is-picked', idx >= 0);
+      b.setAttribute('aria-pressed', idx >= 0);
+      b.querySelector('.tr-badge').textContent = idx >= 0 ? idx + 1 : '';
+      b.style.zIndex = idx >= 0 ? 50 : +b.dataset.i + 1;
+    });
+    document.querySelectorAll('#tr-progress span').forEach((s, i) => s.classList.toggle('is-on', i < got));
+    const h = $('tr-hint');
+    if (h) h.innerHTML = got < need
+      ? `Escolha ${need === 1 ? 'uma carta' : need + ' cartas'} do leque, guiando-se pela intuição. ${need > 1 ? `Próxima: <strong>${esc(state.spread.pos[got][0])}</strong>.` : ''}`
+      : 'As cartas foram escolhidas…';
+  }
+
+  window.tarotRitualPick = function (i) {
+    if (!state || state.locked) return;
+    const at = state.picked.indexOf(i);
+    if (at >= 0) state.picked.splice(at, 1);           // tocar de novo desfaz a escolha
+    else if (state.picked.length < state.spread.pos.length) { state.picked.push(i); vibrate(12); }
+    updateFanUI();
+    if (state.picked.length === state.spread.pos.length) {
+      state.locked = true;
+      $('tr-fan')?.classList.add('is-done');
+      const st = state;
+      setTimeout(() => {
+        if (state !== st) return;
+        state = null;
+        window.__tarotChosen = st.picked.map(idx => st.fan[idx]);
+        _draw(st.n);
+        document.getElementById('tarot-card-container')?.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+      }, reduced() ? 150 : 900);
+    }
+  };
+
+  window.tarotRitualRestart = function () {
+    if (!state) return;
+    state.picked = []; state.locked = false; state.shuffles = 0;
+    renderShuffle(); shuffleNow();
+  };
+
+  // Ao mudar para o Grimório e voltar, um ritual a meio é descartado
+  const _stm = switchTarotMode;
+  switchTarotMode = function (m) { if (m !== 'draw') state = null; _stm(m); };
+})();
 </script>
 </body></html>
