@@ -569,6 +569,16 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 #share-card-canvas{position:fixed;left:-9999px;top:0}
 .reminder-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
 
+
+/* Guia de tiragem */
+.guide-modal{max-width:min(36rem,94vw);width:100%;padding:1.25rem 1.35rem;border-radius:1rem;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-title)}
+.guide-modal::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
+.guide-tabs{display:flex;flex-wrap:wrap;gap:.35rem}
+.guide-tab{background:var(--bg-inner);border:1px solid var(--border-color);color:var(--text-muted);font-size:12px;font-weight:600;padding:.35rem .65rem;border-radius:8px;cursor:pointer}
+.guide-tab.active{background:var(--btn-primary);color:var(--on-primary);border-color:transparent}
+.guide-panels{max-height:min(60vh,28rem);overflow:auto;padding-right:.25rem}
+.guide-panel h3{margin-bottom:.4rem}
+
 </style>
 </head>
 <body id="app-body" data-design-version="10" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
@@ -748,6 +758,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                         <div class="seg" role="group" aria-label="Modo">
                             <button type="button" onclick="switchRuneMode('draw')" id="rune-mode-draw" aria-pressed="true" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Tiragem rúnica</button>
                             <button type="button" onclick="switchRuneMode('gallery')" id="rune-mode-gallery" aria-pressed="false" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todas as runas (24)</button>
+                            <button type="button" onclick="openReadingGuide('runes')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button>
                         </div>
                     </div>
 
@@ -756,6 +767,8 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     <div id="rune-save-bar" class="hidden mt-4 flex flex-wrap justify-center gap-2">
                         <button type="button" onclick="saveLastReadingToJournal('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
                         <button type="button" onclick="shareReading('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
+                        <button type="button" onclick="interpretReading('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Interpretar</button>
+                        <button type="button" onclick="interpretReading('runes',{deep:true})" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Aprofundar IA</button>
                         <button type="button" onclick="drawRunes(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
                     </div>
 
@@ -787,6 +800,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                         <div class="seg" role="group" aria-label="Modo">
                             <button type="button" onclick="switchTarotMode('draw')" id="tarot-mode-draw" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Tiragem das Nornas</button>
                             <button type="button" onclick="switchTarotMode('gallery')" id="tarot-mode-gallery" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Grimório (78 cartas)</button>
+                            <button type="button" onclick="openReadingGuide('tarot')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button>
                         </div>
                     </div>
 
@@ -796,6 +810,8 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     <div id="tarot-save-bar" class="hidden mt-5 flex flex-wrap justify-center gap-2">
                         <button type="button" onclick="saveLastReadingToJournal('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
                         <button type="button" onclick="shareReading('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
+                        <button type="button" onclick="interpretReading('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Interpretar</button>
+                        <button type="button" onclick="interpretReading('tarot',{deep:true})" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Aprofundar IA</button>
                         <button type="button" onclick="exportTarotPDF()" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Exportar PDF</button>
                         <button type="button" onclick="drawTarotCard(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
                     </div>
@@ -831,6 +847,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                 <div class="theme-card border rounded-2xl p-5 lg:p-10 text-center">
                     <div class="max-w-xl mx-auto">
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo Sagrado de Ogham</h2>
+                        <p class="mb-3"><button type="button" onclick="openReadingGuide('ogham')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button></p>
                         <p class="text-sm lg:text-[15px] theme-muted mb-6">Conecte-se com os espíritos dos 20 Few (gravetos de árvores sagradas) da tradição celta.</p>
                     </div>
 
@@ -839,6 +856,8 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     <div id="ogham-save-bar" class="hidden mt-4 flex flex-wrap justify-center gap-2">
                         <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
                         <button type="button" onclick="shareReading('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
+                        <button type="button" onclick="interpretReading('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Interpretar</button>
+                        <button type="button" onclick="interpretReading('ogham',{deep:true})" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Aprofundar IA</button>
                         <button type="button" onclick="drawOghamCard(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
                     </div>
 
@@ -1178,6 +1197,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                         <div id="daily-oracle-actions" class="hidden flex flex-wrap gap-2 justify-center">
                             <button type="button" onclick="saveDailyOracleToJournal()" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)]">Guardar no Diário</button>
                             <button type="button" onclick="shareReading('daily')" class="theme-inner border text-sm theme-title font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)]">Partilhar</button>
+                            <button type="button" onclick="interpretReading('daily')" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)]">Interpretar</button>
                         </div>
                     </div>
                     <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
@@ -1768,6 +1788,141 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
         <div class="flex justify-end"><button type="button" class="icon-btn" onclick="this.closest('dialog').close()" aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-close"></use></svg></button></div>
         <div id="tarot-detail-body" class="space-y-4 text-center"></div>
     </dialog>
+
+    
+    <dialog id="ai-interpret-dialog" class="modal guide-modal" aria-labelledby="ai-interpret-title">
+        <div class="flex items-start justify-between gap-3 mb-3">
+            <div>
+                <p class="eyebrow" id="ai-interpret-eyebrow">Interpretação</p>
+                <h2 id="ai-interpret-title" class="font-cinzel text-xl font-bold theme-title">Leitura guiada</h2>
+            </div>
+            <button type="button" class="icon-btn" onclick="this.closest('dialog').close()" aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-close"></use></svg></button>
+        </div>
+        <div id="ai-interpret-body" class="guide-panels text-left text-sm leading-relaxed space-y-3 theme-title"></div>
+        <div class="mt-4 flex flex-wrap gap-2 justify-end">
+            <button type="button" onclick="saveInterpretationToJournal()" class="theme-inner border text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer">Guardar no Diário</button>
+            <button type="button" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer" onclick="this.closest('dialog').close()">Fechar</button>
+        </div>
+    </dialog>
+
+    <!-- GUIA DE TIRAGEM -->
+    <dialog id="reading-guide" class="modal guide-modal" aria-labelledby="reading-guide-title">
+        <div class="flex items-start justify-between gap-3 mb-3">
+            <div>
+                <p class="eyebrow">Prática oracular</p>
+                <h2 id="reading-guide-title" class="font-cinzel text-xl font-bold theme-title">Guia de tiragem</h2>
+            </div>
+            <button type="button" class="icon-btn" onclick="this.closest('dialog').close()" aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-close"></use></svg></button>
+        </div>
+        <div class="guide-tabs seg mb-4" role="tablist">
+            <button type="button" class="guide-tab active" data-guide="prep" onclick="showGuidePanel('prep')">Preparar</button>
+            <button type="button" class="guide-tab" data-guide="tarot" onclick="showGuidePanel('tarot')">Tarot</button>
+            <button type="button" class="guide-tab" data-guide="runes" onclick="showGuidePanel('runes')">Runas</button>
+            <button type="button" class="guide-tab" data-guide="ogham" onclick="showGuidePanel('ogham')">Ogham</button>
+            <button type="button" class="guide-tab" data-guide="read" onclick="showGuidePanel('read')">Ler o resultado</button>
+        </div>
+        <div id="guide-panels" class="guide-panels text-left space-y-3 text-sm leading-relaxed">
+            <div class="guide-panel" data-panel="prep">
+                <h3 class="font-cinzel font-bold theme-title text-base">Antes de tirar</h3>
+                <ol class="list-decimal pl-5 space-y-2 theme-title">
+                    <li><strong>Centre-se.</strong> Três respirações lentas ou um momento no altar digital bastam.</li>
+                    <li><strong>Formule a pergunta</strong> de forma aberta (“O que preciso de compreender…?”) em vez de exigir um “sim” rígido — salvo no modo Sim/Não.</li>
+                    <li><strong>Escolha o sistema</strong> que ressoa: Tarot (narrativa rica), Runas (conselho directo), Ogham (natureza e ciclos).</li>
+                    <li><strong>Aceite a primeira tiragem.</strong> Repetir até “gostar” enfraquece o diálogo com o oráculo.</li>
+                </ol>
+                <p class="theme-muted mt-3">Dica: registe a pergunta no campo do Tarot ou no Diário antes de tocar em “tirar”.</p>
+            </div>
+            <div class="guide-panel hidden" data-panel="tarot">
+                <h3 class="font-cinzel font-bold theme-title text-base">Tarot nórdico — tiragens</h3>
+                <div class="space-y-3">
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">1 carta · Oráculo de Odin</p>
+                        <p class="theme-muted">Conselho único e claro para o momento. Ideal para perguntas focadas ou prática diária.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">3 cartas · As Três Nornas</p>
+                        <ul class="theme-muted mt-1 space-y-1">
+                            <li><strong>Urd (Passado)</strong> — raízes, causas, o que já foi tecido.</li>
+                            <li><strong>Verdandi (Presente)</strong> — o fio que está a ser tecido agora.</li>
+                            <li><strong>Skuld (Futuro)</strong> — tendência se nada mudar; não é sentença fixa.</li>
+                        </ul>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">5 cartas · Cruz Elemental</p>
+                        <ul class="theme-muted mt-1 space-y-1">
+                            <li><strong>Centro</strong> — situação / tema.</li>
+                            <li><strong>Norte (Terra)</strong> — desafios a enraizar.</li>
+                            <li><strong>Leste (Ar)</strong> — conselho, ideia a ouvir.</li>
+                            <li><strong>Sul (Fogo)</strong> — força e energia disponível.</li>
+                            <li><strong>Oeste (Água)</strong> — desfecho emocional / o que o tempo traz.</li>
+                        </ul>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Sim / Não</p>
+                        <p class="theme-muted">Resposta polar com uma carta de apoio. Use quando precisar de decisão rápida; confirme depois com uma tiragem de 3 se o tema for importante.</p>
+                    </div>
+                </div>
+                <p class="theme-muted mt-2">Cartas invertidas: leia o sentido “invertido” como bloqueio, excesso ou interiorização do tema — não como “má sorte”.</p>
+            </div>
+            <div class="guide-panel hidden" data-panel="runes">
+                <h3 class="font-cinzel font-bold theme-title text-base">Runas (Elder Futhark)</h3>
+                <div class="space-y-3">
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">1 runa · Conselho</p>
+                        <p class="theme-muted">Uma força a honrar ou um aviso a escutar. Excelente para o oráculo de hoje.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">3 runas · Passado / Presente / Futuro</p>
+                        <p class="theme-muted">Mesma lógica das Nornas: origem → estado actual → direcção. Leia as três em conjunto, não isoladas.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Sim / Não</p>
+                        <p class="theme-muted">Resposta directa com a runa como comentário. Útil para escolhas binárias simples.</p>
+                    </div>
+                </div>
+                <p class="theme-muted mt-2">As 24 runas estão no grimório rúnico. Toque numa runa na galeria para rever o significado.</p>
+            </div>
+            <div class="guide-panel hidden" data-panel="ogham">
+                <h3 class="font-cinzel font-bold theme-title text-base">Ogham — o bosque que fala</h3>
+                <div class="space-y-3">
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">1 Few · Conselho</p>
+                        <p class="theme-muted">Uma árvore / letra guia para o dia ou a questão.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">3 Few · Tríade</p>
+                        <p class="theme-muted">Três aspectos em diálogo (corpo, mente, espírito — ou passado, presente, futuro). Inspira-se nas tríades da tradição céltica.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">5 Few · Roda Elemental</p>
+                        <p class="theme-muted">Espalhamento amplo: centro + quatro direcções / elementos, semelhante à Cruz Elemental do Tarot.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Sim / Não</p>
+                        <p class="theme-muted">Decisão rápida com o few como nuance natural do “sim” ou “não”.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="guide-panel hidden" data-panel="read">
+                <h3 class="font-cinzel font-bold theme-title text-base">Como ler o resultado</h3>
+                <ol class="list-decimal pl-5 space-y-2 theme-title">
+                    <li><strong>Observe a imagem</strong> antes de ler o texto. O que a arte evoca em si?</li>
+                    <li><strong>Leia o significado</strong> (e a descrição da imagem no Tarot) sem forçar encaixe imediato.</li>
+                    <li><strong>Ligue à pergunta.</strong> “De que forma isto fala ao que perguntei?”</li>
+                    <li><strong>Nas tiragens múltiplas,</strong> procure o fio comum: uma palavra, um elemento ou uma tensão que se repete.</li>
+                    <li><strong>Feche o círculo:</strong> agradeça, guarde no Diário, e escolha uma acção pequena e concreta.</li>
+                </ol>
+                <div class="theme-inner border rounded-lg p-3 mt-3">
+                    <p class="font-semibold theme-accent">Ética rápida</p>
+                    <p class="theme-muted">Não use oráculos para diagnosticar saúde, violar a privacidade de terceiros ou substituir ajuda profissional. O oráculo orienta — você decide.</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2 justify-end">
+            <button type="button" class="theme-inner border text-sm font-semibold px-4 py-2 rounded-lg cursor-pointer" onclick="this.closest('dialog').close()">Fechar</button>
+        </div>
+    </dialog>
+
 
     <div id="toast-container" role="status" aria-live="polite"></div>
 
@@ -5142,6 +5297,289 @@ document.addEventListener('DOMContentLoaded', () => {
     about.appendChild(div);
   }
 });
+})();
+</script>
+
+
+<script>
+/* Guia de tiragem */
+window.showGuidePanel = function (id) {
+  document.querySelectorAll('#reading-guide .guide-panel').forEach(p => {
+    p.classList.toggle('hidden', p.getAttribute('data-panel') !== id);
+  });
+  document.querySelectorAll('#reading-guide .guide-tab').forEach(t => {
+    t.classList.toggle('active', t.getAttribute('data-guide') === id);
+  });
+};
+window.openReadingGuide = function (section) {
+  const dlg = document.getElementById('reading-guide');
+  if (!dlg) return;
+  const map = { tarot: 'tarot', runes: 'runes', ogham: 'ogham', prep: 'prep', read: 'read' };
+  showGuidePanel(map[section] || 'prep');
+  if (typeof dlg.showModal === 'function') dlg.showModal();
+  else dlg.setAttribute('open', '');
+};
+</script>
+
+
+<script>
+/* ============================================================
+   Interpretação híbrida: local + API opcional (OpenAI-compatible)
+   ============================================================ */
+(() => {
+  const $ = id => document.getElementById(id);
+  const esc = window.esc || (s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));
+  let lastInterpretationText = '';
+
+  const CFG_KEY = 'druid_ai_config';
+  function getAIConfig() {
+    try { return JSON.parse(localStorage.getItem(CFG_KEY) || '{}'); } catch { return {}; }
+  }
+  function setAIConfig(c) {
+    try { localStorage.setItem(CFG_KEY, JSON.stringify(c)); } catch {}
+  }
+
+  function collectReading(type) {
+    const q = ($('tarot-question') && type === 'tarot') ? $('tarot-question').value.trim() : '';
+    if (type === 'runes' && typeof lastRuneReading !== 'undefined' && lastRuneReading?.length) {
+      return {
+        type: 'runes',
+        question: q,
+        items: lastRuneReading.map((r, i) => ({
+          pos: ['Conselho', 'Passado', 'Presente', 'Futuro'][i] || `Posição ${i + 1}`,
+          label: `${r.symbol} ${r.name}`,
+          text: r.meaning
+        }))
+      };
+    }
+    if (type === 'ogham' && typeof lastOghamReading !== 'undefined' && lastOghamReading?.length) {
+      return {
+        type: 'ogham',
+        question: q,
+        items: lastOghamReading.map((o, i) => ({
+          pos: ['Conselho', 'Tríade 1', 'Tríade 2', 'Tríade 3', 'Roda'][i] || `Few ${i + 1}`,
+          label: `${o.symbol} ${o.name}${o.tree ? ' (' + o.tree + ')' : ''}`,
+          text: o.meaning
+        }))
+      };
+    }
+    if (type === 'tarot' && typeof lastTarotReading !== 'undefined' && lastTarotReading?.length) {
+      return {
+        type: 'tarot',
+        question: q || (typeof lastTarotMeta !== 'undefined' ? lastTarotMeta.question : '') || '',
+        items: lastTarotReading.map((t, i) => ({
+          pos: t.pos || ['Oráculo', 'Urd', 'Verdandi', 'Skuld'][i] || `Carta ${i + 1}`,
+          label: `${t.card?.name || ''}${t.isReversed ? ' (invertida)' : ''}`,
+          text: t.isReversed ? (t.card?.reversed || '') : (t.card?.upright || ''),
+          art: t.card?.artDesc || ''
+        }))
+      };
+    }
+    if (type === 'daily' && typeof lastDailyOracle === 'string' && lastDailyOracle) {
+      return { type: 'daily', question: '', items: [{ pos: 'Oráculo de hoje', label: 'Símbolo do dia', text: lastDailyOracle }] };
+    }
+    return null;
+  }
+
+  // ——— Local heuristic engine ———
+  function localInterpret(reading) {
+    const n = reading.items.length;
+    const lines = [];
+    const q = reading.question;
+
+    lines.push(q
+      ? `À luz da pergunta «${q}», esta tiragem sugere o seguinte.`
+      : `Esta tiragem oferece um espelho do momento presente.`);
+
+    // Per card
+    reading.items.forEach((it, i) => {
+      lines.push(`\n${it.pos} — ${it.label}\n${it.text}`);
+      if (it.art) lines.push(`Imagem: ${it.art}`);
+    });
+
+    // Synthesis by count
+    lines.push('\n— Síntese —');
+    if (n === 1) {
+      lines.push(`O núcleo da mensagem concentra-se em «${reading.items[0].label}». Trate este símbolo como um conselho único: uma qualidade a cultivar ou um aviso a respeitar nas próximas decisões.`);
+    } else if (n === 3) {
+      const [a, b, c] = reading.items;
+      lines.push(`O fio entre ${a.label}, ${b.label} e ${c.label} descreve uma passagem: o que veio de ${a.pos.toLowerCase()} condiciona o ${b.pos.toLowerCase()}, e aponta para ${c.pos.toLowerCase()} se nada for conscientemente redireccionado.`);
+      lines.push('Pergunte-se: que hábito do “passado” ainda alimenta o presente — e que pequena acção hoje deslocaria o “futuro”?');
+    } else if (n >= 5) {
+      lines.push('Na cruz ou roda elemental, leia primeiro o centro (a situação). Depois cruze desafio (norte/terra) com conselho (leste/ar); a força (sul/fogo) diz com que energia actuar, e o oeste/água indica o tom emocional do desfecho.');
+      lines.push('Procure uma palavra que se repita em espírito entre as posições — esse é muitas vezes o verdadeiro tema.');
+    } else {
+      lines.push('Leia as peças em diálogo, não isoladas. O sentido emerge da relação entre elas.');
+    }
+
+    // Keywords heuristic
+    const blob = reading.items.map(i => i.text).join(' ').toLowerCase();
+    const tips = [];
+    if (/protec|defesa|alerta|limite/.test(blob)) tips.push('Há um pedido de fronteira ou protecção: diga não onde for preciso.');
+    if (/colheita|abund|recompensa|sucesso/.test(blob)) tips.push('Algo amadureceu: reconheça e colha sem precipitação.');
+    if (/mudança|ruptura|libert|transform/.test(blob)) tips.push('A mudança já está em curso; resistir gasta mais do que atravessar.');
+    if (/silêncio|pausa|quiet|espera/.test(blob)) tips.push('O momento pede pausa contemplativa mais do que acção forçada.');
+    if (/união|parceria|laço|amor/.test(blob)) tips.push('A relação — consigo ou com outros — é parte central da resposta.');
+    if (tips.length) {
+      lines.push('\n— Notas práticas —');
+      tips.slice(0, 3).forEach(t => lines.push('• ' + t));
+    }
+
+    lines.push('\n— Fecho —');
+    lines.push('Escolha uma acção pequena e concreta nas próximas 24 horas que honre esta leitura. Depois, se quiser, registe no Diário.');
+
+    return {
+      mode: 'local',
+      title: 'Interpretação local',
+      text: lines.join('\n')
+    };
+  }
+
+  // ——— OpenAI-compatible API ———
+  async function apiInterpret(reading) {
+    const cfg = getAIConfig();
+    if (!cfg.apiKey || !cfg.apiKey.trim()) {
+      throw new Error('Configure a chave API em Sobre → Interpretação IA.');
+    }
+    const base = (cfg.baseUrl || 'https://api.openai.com/v1').replace(/\/$/, '');
+    const model = cfg.model || 'gpt-4o-mini';
+
+    const system = `És um intérprete experiente de oráculos (Tarot nórdico, Runas Elder Futhark e Ogham), com linguagem clara em português europeu.
+Não decides o destino: orientas com respeito, praticidade e profundidade simbólica.
+Estrutura a resposta em: 1) Síntese (4-6 frases), 2) Leitura posição a posição (breve), 3) Conselho prático (2-3 acções), 4) Pergunta de reflexão final.
+Evita fatalismo e diagnósticos médicos/legais.`;
+
+    const user = `Sistema: ${reading.type}
+Pergunta: ${reading.question || '(não formulada)'}
+Tiragem:
+${reading.items.map(it => `- ${it.pos}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}`).join('\n')}`;
+
+    const res = await fetch(base + '/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + cfg.apiKey.trim()
+      },
+      body: JSON.stringify({
+        model,
+        temperature: 0.7,
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: user }
+        ]
+      })
+    });
+    if (!res.ok) {
+      const errText = await res.text().catch(() => '');
+      throw new Error('API ' + res.status + (errText ? ': ' + errText.slice(0, 180) : ''));
+    }
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content || data.choices?.[0]?.text || '';
+    if (!text) throw new Error('Resposta vazia da API.');
+    return { mode: 'api', title: 'Interpretação IA', text: text.trim() };
+  }
+
+  function showInterpretation(result) {
+    lastInterpretationText = result.text;
+    const dlg = $('ai-interpret-dialog');
+    const body = $('ai-interpret-body');
+    const eye = $('ai-interpret-eyebrow');
+    const title = $('ai-interpret-title');
+    if (eye) eye.textContent = result.mode === 'api' ? 'IA · aprofundamento' : 'Motor local · offline';
+    if (title) title.textContent = result.title;
+    if (body) {
+      const html = result.text
+        .split(/\n\n+/).map(para => {
+          const lines = para.split('\n').map(l => esc(l)).join('<br>');
+          return `<p>${lines}</p>`;
+        }).join('');
+      body.innerHTML = html;
+    }
+    if (dlg?.showModal) dlg.showModal();
+    else if (dlg) dlg.setAttribute('open', '');
+  }
+
+  window.interpretReading = async function (type, opts = {}) {
+    const reading = collectReading(type);
+    if (!reading || !reading.items.length) {
+      showToast('Não há tiragem activa para interpretar.');
+      return;
+    }
+    const deep = !!(opts && opts.deep);
+    try {
+      if (deep) {
+        showToast('A consultar a IA…');
+        const result = await apiInterpret(reading);
+        showInterpretation(result);
+      } else {
+        const result = localInterpret(reading);
+        showInterpretation(result);
+      }
+    } catch (e) {
+      console.error(e);
+      // fallback to local if API fails
+      const local = localInterpret(reading);
+      local.text = 'Não foi possível usar a IA (' + (e.message || e) + ').\n\nSegue-se a interpretação local:\n\n' + local.text;
+      local.title = 'Interpretação local (fallback)';
+      showInterpretation(local);
+      showToast('IA indisponível — mostrou-se a leitura local.');
+    }
+  };
+
+  window.saveInterpretationToJournal = function () {
+    if (!lastInterpretationText) return;
+    const block = `\n--- Interpretação (${new Date().toLocaleString('pt-PT')}) ---\n${lastInterpretationText}\n`;
+    if (typeof appendToJournal === 'function') appendToJournal(block);
+    else {
+      const area = $('journal-input');
+      if (area) {
+        area.value = (area.value + block).trimStart();
+        if (typeof autoSaveJournal === 'function') autoSaveJournal();
+      }
+    }
+    showToast('Interpretação guardada no Diário.');
+  };
+
+  window.saveAIConfig = function () {
+    const apiKey = $('ai-api-key')?.value?.trim() || '';
+    const baseUrl = $('ai-base-url')?.value?.trim() || 'https://api.openai.com/v1';
+    const model = $('ai-model')?.value?.trim() || 'gpt-4o-mini';
+    setAIConfig({ apiKey, baseUrl, model });
+    showToast(apiKey ? 'Configuração IA guardada neste dispositivo.' : 'Chave removida — só interpretação local.');
+  };
+
+  function injectAISettings() {
+    const host = $('profile-panel') || $('tab-about');
+    if (!host || $('ai-config-box')) return;
+    const cfg = getAIConfig();
+    const box = document.createElement('div');
+    box.id = 'ai-config-box';
+    box.className = 'theme-card border rounded-2xl p-5 space-y-3 mt-4';
+    box.innerHTML = `
+      <h3 class="font-cinzel text-lg font-bold theme-title">Interpretação IA (opcional)</h3>
+      <p class="text-sm theme-muted">A interpretação local funciona sempre offline. Para «Aprofundar IA», use uma API compatível com OpenAI (a chave fica só neste browser).</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="sm:col-span-2">
+          <label class="text-xs theme-muted block mb-1" for="ai-api-key">Chave API</label>
+          <input id="ai-api-key" type="password" autocomplete="off" placeholder="sk-…" class="w-full theme-inner border rounded-lg px-3 py-2 text-sm" value="${esc(cfg.apiKey || '')}">
+        </div>
+        <div>
+          <label class="text-xs theme-muted block mb-1" for="ai-base-url">Base URL</label>
+          <input id="ai-base-url" type="url" placeholder="https://api.openai.com/v1" class="w-full theme-inner border rounded-lg px-3 py-2 text-sm" value="${esc(cfg.baseUrl || 'https://api.openai.com/v1')}">
+        </div>
+        <div>
+          <label class="text-xs theme-muted block mb-1" for="ai-model">Modelo</label>
+          <input id="ai-model" type="text" placeholder="gpt-4o-mini" class="w-full theme-inner border rounded-lg px-3 py-2 text-sm" value="${esc(cfg.model || 'gpt-4o-mini')}">
+        </div>
+      </div>
+      <button type="button" onclick="saveAIConfig()" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-semibold text-sm px-4 py-2 rounded-lg cursor-pointer">Guardar configuração IA</button>
+      <p class="text-xs theme-muted">A chave nunca é enviada para os servidores desta app — só para o endpoint que indicar, quando usar «Aprofundar IA».</p>`;
+    host.appendChild(box);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(injectAISettings, 400);
+  });
 })();
 </script>
 
