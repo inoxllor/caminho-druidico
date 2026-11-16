@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt" class="theme-forest"><head>
+<html lang="pt" class="theme-night"><head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Oráculos de Ogham, Tarot Nórdico e Runas, Roda do Ano, astronomia e diário druídico."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2306110c'/%3E%3Cpath d='M25 85L40 25M50 85V38M75 85L60 25' stroke='%236ee7b7' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+    <meta name="description" content="Oráculos de Ogham, Tarot Nórdico e Runas, Roda do Ano, astronomia e diário druídico."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23080c14'/%3E%3Cpath d='M25 85L40 25M50 85V38M75 85L60 25' stroke='%23a5b4fc' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
     <title>Caminho Druídico Pro Ultimate • Edição inspirada na OBOD &amp; Tarot Nórdico 16-Bit</title>
-    <meta name="theme-color" content="#0a1a13">
+    <meta name="theme-color" content="#0c1220">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <script>(function(){var t='theme-forest';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-forest')}catch(e){}document.documentElement.className=t;window.__theme=t})()</script>
+    <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t})()</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:wght@400;500;600;700&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet">
@@ -37,21 +37,8 @@ dialog{padding:0}
    CAMINHO DRUÍDICO • TOKENS, TEMAS & COMPONENTES
    ============================================================ */
 
-/* ---------- Tokens (por omissão: Floresta Profunda) — v8.1 ---------- */
-:root, .theme-forest {
-    --bg-body: #06110c; --bg-header: #0a1a13; --bg-card: #0f2419; --bg-inner: #07140e;
-    --border-color: #1a3a28; --border-hover: #34d399;
-    --text-title: #ecfdf5; --text-accent: #6ee7b7; --text-muted: #8fb8a3;
-    --glyph-highlight: #fbbf24; --info-highlight: #a7f3d0;
-    --moon-color: #f8fafc; --sun-color: #fbbf24;
-    --btn-primary: #059669; --on-primary: #ffffff;
-    --elem-earth: #fbbf24; --elem-air: #a7f3d0; --elem-fire: #f87171; --elem-water: #5eead4;
-    --ok: #6ee7b7; --danger: #fca5a5;
-    --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
-    --bnav-h: 64px; --fab-gap: 12px;
-    color-scheme: dark;
-}
-.theme-night {
+/* ---------- Tokens (por omissão: Noite Mística) — v9.1 ---------- */
+:root, .theme-night {
     --bg-body: #080c14; --bg-header: #0c1220; --bg-card: #121a2c; --bg-inner: #0a101c;
     --border-color: #1c2738; --border-hover: #7c86f5;
     --text-title: #f1f5f9; --text-accent: #a5b4fc; --text-muted: #8b9bb4;
@@ -59,6 +46,19 @@ dialog{padding:0}
     --moon-color: #f8fafc; --sun-color: #fbbf24;
     --btn-primary: #4f46e5; --on-primary: #ffffff;
     --elem-earth: #fbbf24; --elem-air: #7dd3fc; --elem-fire: #f87171; --elem-water: #60a5fa;
+    --ok: #6ee7b7; --danger: #fca5a5;
+    --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+    --bnav-h: 64px; --fab-gap: 12px;
+    color-scheme: dark;
+}
+.theme-forest {
+    --bg-body: #06110c; --bg-header: #0a1a13; --bg-card: #0f2419; --bg-inner: #07140e;
+    --border-color: #1a3a28; --border-hover: #34d399;
+    --text-title: #ecfdf5; --text-accent: #6ee7b7; --text-muted: #8fb8a3;
+    --glyph-highlight: #fbbf24; --info-highlight: #a7f3d0;
+    --moon-color: #f8fafc; --sun-color: #fbbf24;
+    --btn-primary: #059669; --on-primary: #ffffff;
+    --elem-earth: #fbbf24; --elem-air: #a7f3d0; --elem-fire: #f87171; --elem-water: #5eead4;
     --ok: #6ee7b7; --danger: #fca5a5;
 }
 .theme-stone {
@@ -399,9 +399,36 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}#scroll-progress{transition:none}}
 
+/* ===== v9: animações, estados vazios, compacto ===== */
+@keyframes revealIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+.reveal-in{animation:revealIn .45s var(--ease-out) both}
+.reveal-stagger > *{animation:revealIn .4s var(--ease-out) both}
+.reveal-stagger > *:nth-child(1){animation-delay:.05s}
+.reveal-stagger > *:nth-child(2){animation-delay:.12s}
+.reveal-stagger > *:nth-child(3){animation-delay:.19s}
+.reveal-stagger > *:nth-child(4){animation-delay:.26s}
+.reveal-stagger > *:nth-child(5){animation-delay:.33s}
+.draw-area:has(> p:only-child){border:1px dashed var(--border-color);border-radius:var(--r-md);padding:1.5rem;background:color-mix(in srgb,var(--bg-inner) 60%,transparent)}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;padding:1.5rem;text-align:center}
+.empty-state .empty-glyph{font-size:2.75rem;line-height:1;color:var(--text-accent);opacity:.45}
+.check-item{display:flex;align-items:flex-start;gap:.6rem;padding:.45rem .6rem;border-radius:var(--r-sm);cursor:pointer;transition:background .15s}
+.check-item:hover{background:color-mix(in srgb,var(--text-accent) 8%,transparent)}
+.check-item input{margin-top:.2rem;accent-color:var(--btn-primary)}
+.check-item.done span{text-decoration:line-through;opacity:.55}
+#streak-badge{box-shadow:0 0 0 1px color-mix(in srgb,var(--text-accent) 20%,transparent)}
+.lunar-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;font-size:11px;border:1px solid var(--border-color);background:var(--bg-inner);cursor:default}
+.lunar-day.is-today{border-color:var(--text-accent);box-shadow:0 0 0 1px var(--text-accent)}
+.lunar-day .ld-phase{font-size:14px;line-height:1}
+.share-canvas-wrap{position:fixed;left:-9999px;top:0;pointer-events:none}
+@media (max-width:639px){
+  .today-tile{min-height:96px}
+  .theme-card.rounded-2xl{padding:1rem}
+  h2.font-cinzel.text-2xl{font-size:1.35rem}
+  .draw-area{min-height:140px!important}
+}
 </style>
 </head>
-<body id="app-body" data-design-version="8" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
+<body id="app-body" data-design-version="9" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
     <a href="#main" class="skip-link" onclick="event.preventDefault();document.getElementById('main').focus()">Saltar para o conteúdo</a>
 
         <!-- ÍCONES (traço, mesma linguagem do Awen) -->
@@ -472,7 +499,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
         </nav>
         <div class="p-4 border-t border-[var(--border-color)] zen-hide">
             <label for="theme-selector-desktop" class="text-[11px] uppercase tracking-widest theme-muted block mb-1">Ambiente visual</label>
-            <select id="theme-selector-desktop" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 cursor-pointer"><option value="theme-forest">Floresta Profunda</option><option value="theme-night">Noite Mística</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
+            <select id="theme-selector-desktop" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 cursor-pointer"><option value="theme-night">Noite Mística</option><option value="theme-forest">Floresta Profunda</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
         </div>
     </aside>
 
@@ -533,7 +560,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
             <button type="button" onclick="toggleLanternMode()" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-lantern"></use></svg>Lanterna</button>
         </div>
         <label for="theme-selector-mobile" class="nav-group block">Ambiente visual</label>
-        <select id="theme-selector-mobile" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] rounded-lg px-3 py-2.5 cursor-pointer"><option value="theme-forest">Floresta Profunda</option><option value="theme-night">Noite Mística</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
+        <select id="theme-selector-mobile" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] rounded-lg px-3 py-2.5 cursor-pointer"><option value="theme-night">Noite Mística</option><option value="theme-forest">Floresta Profunda</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
     </dialog>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -579,13 +606,16 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 
                     <!-- Resultado em destaque (acima das opções de tiragem) -->
                     <div id="rune-card" class="draw-area mt-6 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha uma tiragem para consultar as runas.</p></div>
-                    <div id="rune-save-bar" class="hidden mt-4">
-                        <button type="button" onclick="saveLastReadingToJournal('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
+                    <div id="rune-save-bar" class="hidden mt-4 flex flex-wrap justify-center gap-2">
+                        <button type="button" onclick="saveLastReadingToJournal('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
+                        <button type="button" onclick="shareReading('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
+                        <button type="button" onclick="drawRunes(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
                     </div>
 
-                    <div id="rune-draw-actions" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto mt-6">
+                    <div id="rune-draw-actions" class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mt-6">
                         <button type="button" onclick="drawRunes(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 runa · Conselho</button>
-                        <button type="button" onclick="drawRunes(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 runas · Passado, presente, futuro</button>
+                        <button type="button" onclick="drawRunes(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 runas · Passado / Presente / Futuro</button>
+                        <button type="button" onclick="drawYesNo('runes')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
                     </div>
 
                     <div id="rune-gallery" class="hidden text-left space-y-4 mt-6">
@@ -617,8 +647,10 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     <div id="tarot-card-container" class="mt-6 min-h-[200px] flex flex-col items-center justify-center"></div>
 
                     <div id="tarot-save-bar" class="hidden mt-5 flex flex-wrap justify-center gap-2">
-                        <button type="button" onclick="saveLastReadingToJournal('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
-                        <button type="button" onclick="exportTarotPDF()" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Exportar tiragem (PDF)</button>
+                        <button type="button" onclick="saveLastReadingToJournal('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
+                        <button type="button" onclick="shareReading('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
+                        <button type="button" onclick="exportTarotPDF()" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Exportar PDF</button>
+                        <button type="button" onclick="drawTarotCard(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
                     </div>
 
                     <div class="max-w-2xl mx-auto mt-6 text-left space-y-4">
@@ -633,10 +665,11 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                                 <label for="tarot-question" class="text-sm theme-muted block mb-2">A sua pergunta (opcional)</label>
                                 <input id="tarot-question" type="text" maxlength="140" placeholder="O que preciso de compreender neste momento?" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5">
                             </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                 <button type="button" onclick="drawTarotCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 carta · Oráculo de Odin</button>
                                 <button type="button" onclick="drawTarotCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 cartas · As Três Nornas</button>
                                 <button type="button" onclick="drawTarotCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 cartas · Cruz Elemental</button>
+                                <button type="button" onclick="drawYesNo('tarot')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
                             </div>
                         </div>
                         <div id="tarot-search-wrap" class="hidden">
@@ -656,14 +689,17 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 
                     <!-- Resultado em destaque (acima das opções de tiragem) -->
                     <div id="ogham-card" class="draw-area mt-2 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha 1, 3 ou 5 Few para consultar o bosque.</p></div>
-                    <div id="ogham-save-bar" class="hidden mt-4">
-                        <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
+                    <div id="ogham-save-bar" class="hidden mt-4 flex flex-wrap justify-center gap-2">
+                        <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
+                        <button type="button" onclick="shareReading('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
+                        <button type="button" onclick="drawOghamCard(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mt-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-3xl mx-auto mt-6">
                         <button type="button" onclick="drawOghamCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 Few · Conselho</button>
                         <button type="button" onclick="drawOghamCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 Few · Tríade</button>
                         <button type="button" onclick="drawOghamCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 Few · Roda Elemental</button>
+                        <button type="button" onclick="drawYesNo('ogham')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
                     </div>
                 </div>
                 <details id="reading-history" class="theme-card border rounded-xl p-4 text-left">
@@ -940,20 +976,64 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 
             <!-- HOJE (ECRÃ INICIAL) -->
             <section id="tab-today" class="tab-content space-y-5 tab-in">
-                <div>
-                    <p id="today-date" class="eyebrow">&nbsp;</p>
-                    <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mt-1">Hoje no caminho</h2>
+                <div class="flex flex-wrap items-end justify-between gap-3">
+                    <div>
+                        <p id="today-date" class="eyebrow">&nbsp;</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mt-1">Hoje no caminho</h2>
+                    </div>
+                    <div id="streak-badge" class="theme-inner border rounded-full px-3 py-1.5 text-sm font-semibold theme-accent flex items-center gap-2">
+                        <span aria-hidden="true">&#128293;</span> <span id="streak-label">0 dias</span>
+                    </div>
                 </div>
                 <div id="today-panel" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" aria-label="Resumo de hoje"></div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div id="daily-few" class="theme-card border rounded-2xl p-4 lg:p-5 text-left flex items-center gap-4" data-text=""></div>
                     <div id="today-element-weather" class="theme-card border rounded-2xl p-4 lg:p-5 text-left flex items-center gap-4"></div>
                 </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <h3 class="font-cinzel text-base font-bold theme-title">Oráculo de hoje</h3>
+                            <div class="flex gap-1.5">
+                                <button type="button" onclick="drawDailyOracle('rune')" class="text-xs theme-inner border px-2 py-1 rounded-lg theme-muted hover:border-[var(--border-hover)] cursor-pointer">Runa</button>
+                                <button type="button" onclick="drawDailyOracle('ogham')" class="text-xs theme-inner border px-2 py-1 rounded-lg theme-muted hover:border-[var(--border-hover)] cursor-pointer">Ogham</button>
+                                <button type="button" onclick="drawDailyOracle('tarot')" class="text-xs theme-inner border px-2 py-1 rounded-lg theme-muted hover:border-[var(--border-hover)] cursor-pointer">Tarot</button>
+                            </div>
+                        </div>
+                        <div id="daily-oracle" class="theme-inner border rounded-xl p-4 min-h-[120px] flex flex-col items-center justify-center text-center">
+                            <p class="text-sm theme-muted">Toque numa opção para receber o conselho do dia.</p>
+                        </div>
+                        <div id="daily-oracle-actions" class="hidden flex flex-wrap gap-2 justify-center">
+                            <button type="button" onclick="saveDailyOracleToJournal()" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)]">Guardar no Diário</button>
+                            <button type="button" onclick="shareReading('daily')" class="theme-inner border text-sm theme-title font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)]">Partilhar</button>
+                        </div>
+                    </div>
+                    <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
+                        <h3 class="font-cinzel text-base font-bold theme-title">Prompt do diário</h3>
+                        <p id="daily-prompt" class="text-sm theme-muted leading-relaxed italic">—</p>
+                        <button type="button" onclick="useDailyPrompt()" class="w-full py-2.5 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">Escrever a partir deste prompt</button>
+                        <div class="pt-2 border-t border-[var(--border-color)]">
+                            <h4 class="text-xs uppercase tracking-wider theme-muted mb-2">Tríade do dia</h4>
+                            <div id="daily-triad-box" class="theme-inner border rounded-lg p-3 text-sm theme-title leading-relaxed min-h-[60px]">Toque para revelar uma tríade.</div>
+                            <button type="button" onclick="drawDailyTriad()" class="mt-2 text-sm theme-accent font-semibold underline cursor-pointer">Nova tríade</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
                     <h3 class="font-cinzel text-base font-bold theme-title">Prática de hoje</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                        <button type="button" onclick="registerAwenPractice()" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Invocar Awen</button><button type="button" onclick="switchTab('altar')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Acender o altar</button><button type="button" onclick="switchTab('grounding')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg>Meditar</button><button type="button" onclick="switchTab('journal')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-pen"></use></svg>Escrever no diário</button>
+                        <button type="button" onclick="registerAwenPractice()" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Invocar Awen</button>
+                        <button type="button" onclick="switchTab('altar')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Acender o altar</button>
+                        <button type="button" onclick="switchTab('grounding')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg>Meditar</button>
+                        <button type="button" onclick="switchTab('journal')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-pen"></use></svg>Escrever no diário</button>
                     </div>
+                </div>
+                <div id="festival-checklist-card" class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-cinzel text-base font-bold theme-title">Checklist: <span id="fest-check-name">—</span></h3>
+                        <button type="button" onclick="switchTab('wheel')" class="text-sm theme-accent font-semibold underline cursor-pointer">Roda do Ano</button>
+                    </div>
+                    <ul id="festival-checklist" class="space-y-2 text-sm"></ul>
                 </div>
             </section>
 
@@ -997,6 +1077,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     <div class="max-w-xl mx-auto space-y-1">
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">A Roda do Ano Céltica</h2>
                         <p class="text-sm lg:text-[15px] theme-muted">Os 8 festivais sagrados da Terra. Escolha um festival para revelar a sua essência; o anel tracejado marca o próximo.</p>
+                        <button type="button" onclick="exportFestivalsICS()" class="mt-2 theme-inner border text-sm font-semibold py-2 px-4 rounded-lg cursor-pointer hover:border-[var(--border-hover)] transition">Exportar festivais para o calendário (.ics)</button>
                     </div>
                     <div class="relative w-full max-w-md mx-auto aspect-square">
                         <svg class="w-full h-full" viewBox="0 0 400 400" role="group" aria-label="Roda do Ano">
@@ -1279,6 +1360,7 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                     <div class="flex flex-wrap gap-3 justify-between items-center pt-3 border-t border-[var(--border-color)]">
                         <div class="flex flex-wrap gap-2.5">
                             <button onclick="exportJournalTXT()" class="theme-inner theme-title border text-sm font-semibold py-2.5 px-4 rounded-lg transition hover:border-[var(--border-hover)] cursor-pointer">Exportar TXT</button>
+                            <button onclick="exportJournalPDF()" class="theme-inner theme-title border text-sm font-semibold py-2.5 px-4 rounded-lg transition hover:border-[var(--border-hover)] cursor-pointer">Exportar PDF</button>
                             <button onclick="exportBackupJSON()" class="theme-inner theme-title border text-sm font-semibold py-2.5 px-4 rounded-lg transition hover:border-[var(--border-hover)] cursor-pointer">Backup JSON</button>
                             <label class="theme-inner theme-title border text-sm font-semibold py-2.5 px-4 rounded-lg transition cursor-pointer hover:border-[var(--border-hover)]">
                                 Importar Backup <input type="file" id="import-json-file" accept=".json" onchange="importBackupJSON(event)" class="hidden">
@@ -1788,6 +1870,10 @@ const TRIADS_DATA = [
 
 let lastOghamReading = [];
 let lastRuneReading = [];
+window.RUNES_DATA = RUNES_DATA;
+window.OGHAM_DATA = OGHAM_DATA;
+window.NORDIC_TAROT_DECK = NORDIC_TAROT_DECK;
+window.TRIADS_DATA = TRIADS_DATA;
 let currentFestivalId = 8;
 let audioCtx = null;
 let activeSoundNode = null;
@@ -1839,9 +1925,9 @@ function changeTheme(themeName) {
 }
 
 function toggleLanternMode() {
-    const current = localStorage.getItem('druid_theme') || 'theme-forest';
+    const current = localStorage.getItem('druid_theme') || 'theme-night';
     if (current === 'theme-lantern') {
-        changeTheme(localStorage.getItem('druid_theme_prev') || 'theme-forest');
+        changeTheme(localStorage.getItem('druid_theme_prev') || 'theme-night');
         showToast('Modo Lanterna desativado.');
     } else {
         localStorage.setItem('druid_theme_prev', current);
@@ -2463,7 +2549,7 @@ function exportBackupJSON() {
     const data = {
         journal: localStorage.getItem('druid_journal') || '',
         bardic: localStorage.getItem('druid_bardic') || '',
-        theme: localStorage.getItem('druid_theme') || 'theme-forest',
+        theme: localStorage.getItem('druid_theme') || 'theme-night',
         readings: JSON.parse(localStorage.getItem('druid_readings') || '[]'),
         exportedAt: new Date().toISOString()
     };
@@ -2768,7 +2854,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const _tc = document.getElementById('toast-container');
     if (_tc) _tc.innerHTML = '';
     setZenMode(false);
-    const savedTheme = localStorage.getItem('druid_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-parchment' : 'theme-forest');
+    const savedTheme = localStorage.getItem('druid_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-parchment' : 'theme-night');
     changeTheme(savedTheme);
     updateAstronomy();
     calculateExactSolarFestivals();
@@ -3160,7 +3246,7 @@ function renderToday() {
 
 // Tema: cor da barra do browser no telemóvel
 const _ct = changeTheme;
-changeTheme = function (t) { _ct(t); const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = getComputedStyle(document.body).getPropertyValue('--bg-header').trim() || '#0a1a13'; };
+changeTheme = function (t) { _ct(t); const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = getComputedStyle(document.body).getPropertyValue('--bg-header').trim() || '#0c1220'; };
 
 // Sons: o segundo toque pára; ecrã sempre ligado em meditação/Zen
 let amb = null, wl = null;
@@ -3221,7 +3307,7 @@ downloadProjectZip = async function () {
 
 window.addEventListener('DOMContentLoaded', () => {
   activeTarotMode = 'draw'; activeRuneMode = 'draw';
-  renderRuneGallery(); calculateExactSolarFestivals(); changeTheme(window.__theme || 'theme-forest'); renderToday();
+  renderRuneGallery(); calculateExactSolarFestivals(); changeTheme(window.__theme || 'theme-night'); renderToday();
   setInterval(() => { updateAstronomy(); renderToday(); }, 6e4);
 });
 })();
@@ -3635,6 +3721,495 @@ window.addEventListener('DOMContentLoaded', () => {
   addEventListener('resize', updateScrollUI, { passive: true });
   if (topBtn) topBtn.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
   document.addEventListener('DOMContentLoaded', updateScrollUI);
+})();
+</script>
+
+<script>
+/* ============================================================
+   v9 — Expansão: oráculo diário, prompts, checklist, partilha,
+   sim/não, mapa lunar, estatísticas, perfil, offline, .ics
+   ============================================================ */
+(() => {
+const $ = id => document.getElementById(id);
+const esc = window.esc || (s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));
+const todayKey = () => new Date().toLocaleDateString('sv');
+let lastDailyOracle = null;
+
+const PROMPTS = [
+  'O que a árvore deste mês te pede para soltar?',
+  'Que semente queres plantar nesta fase da Lua?',
+  'Onde sentiste a presença dos ancestrais hoje?',
+  'Que fronteira precisas de honrar ou atravessar?',
+  'Qual foi o sinal mais subtil que a natureza te deu?',
+  'O que a tua intuição sussurrou e a mente ignorou?',
+  'Como podes servir o teu grove (interno ou externo) esta semana?',
+  'Que hábito antigo já não te serve no caminho?',
+  'Onde está a água estagnada na tua vida — e como a podes fazer fluir?',
+  'Que gratidão simples podes oferecer à Terra agora?'
+];
+
+const FEST_CHECKS = {
+  Yule: ['Preparar altar com sempre-vivas e velas', 'Reflectir sobre o ano que termina', 'Fazer uma intenções para o retorno da luz', 'Partilhar uma refeição ou brinde simbólico'],
+  Imbolc: ['Acender uma vela a Brigid', 'Limpar e abençoar o espaço de prática', 'Escrever uma intenção de renovação', 'Oferecer leite ou água à terra'],
+  Ostara: ['Observar o equilíbrio dia/noite', 'Plantar sementes (reais ou simbólicas)', 'Fazer uma caminhada ao ar livre', 'Registar o que quer fazer crescer'],
+  Beltane: ['Acender uma chama sagrada (mesmo digital)', 'Celebrar a vitalidade do corpo', 'Criar ou cantar algo novo', 'Honrar a união de polaridades'],
+  Litha: ['Saudar o nascer ou o pôr do sol', 'Fazer uma oferta de flores ou ervas', 'Meditar na plenitude do ano', 'Registar o que está em pleno florescimento'],
+  Lughnasadh: ['Agradecer a primeira colheita', 'Partilhar pão ou fruta com alguém', 'Avaliar o progresso das intenções de primavera', 'Oferecer algo feito com as próprias mãos'],
+  Mabon: ['Fazer um inventário de gratidão', 'Equilibrar dar e receber', 'Preparar o espaço para o recolher', 'Honrar os ancestrais da colheita'],
+  Samhain: ['Acender uma vela pelos antepassados', 'Fazer um pequeno altar de memória', 'Escrever o que queres deixar para trás', 'Caminhar em silêncio ao entardecer']
+};
+
+// ——— Streak badge ———
+function updateStreakBadge() {
+  const s = typeof streak === 'function' ? streak() : 0;
+  const el = $('streak-label');
+  if (el) el.textContent = `${s} dia${s === 1 ? '' : 's'}`;
+}
+
+// ——— Daily prompt ———
+function setDailyPrompt() {
+  const el = $('daily-prompt');
+  if (!el) return;
+  const seed = parseInt(todayKey().replace(/-/g, ''), 10);
+  el.textContent = PROMPTS[seed % PROMPTS.length];
+}
+window.useDailyPrompt = function () {
+  const p = $('daily-prompt')?.textContent || '';
+  switchTab('journal');
+  const area = $('journal-input');
+  if (area) {
+    area.value = (area.value + `\n\n--- Prompt (${new Date().toLocaleDateString('pt-PT')}) ---\n${p}\n\n`).trimStart();
+    if (typeof autoSaveJournal === 'function') autoSaveJournal();
+    area.focus();
+  }
+  showToast('Prompt inserido no Diário.');
+};
+
+// ——— Daily triad ———
+window.drawDailyTriad = function () {
+  const box = $('daily-triad-box');
+  if (!box || !window.TRIADS_DATA?.length) return;
+  const t = TRIADS_DATA[Math.floor(Math.random() * TRIADS_DATA.length)];
+  box.textContent = `"${t}"`;
+  box.classList.add('reveal-in');
+  if (navigator.vibrate) try { navigator.vibrate(12); } catch {}
+};
+
+// ——— Daily oracle ———
+window.drawDailyOracle = function (type) {
+  const box = $('daily-oracle');
+  const actions = $('daily-oracle-actions');
+  if (!box) return;
+  let html = '', text = '';
+  if (type === 'rune' && ((typeof RUNES_DATA !== 'undefined' && RUNES_DATA?.length) || window.RUNES_DATA?.length)) {
+    const r = RUNES_DATA[Math.floor(Math.random() * RUNES_DATA.length)];
+    html = `<div class="reveal-in space-y-2"><div class="text-5xl theme-glyph">${r.symbol}</div><h4 class="font-cinzel text-lg font-bold theme-info-hl">${esc(r.name)}</h4><p class="text-sm theme-muted">${esc(r.meaning)}</p></div>`;
+    text = `RUNA DO DIA: ${r.symbol} ${r.name} — ${r.meaning}`;
+  } else if (type === 'ogham' && ((typeof OGHAM_DATA !== 'undefined' && OGHAM_DATA?.length) || window.OGHAM_DATA?.length)) {
+    const o = OGHAM_DATA[Math.floor(Math.random() * OGHAM_DATA.length)];
+    html = `<div class="reveal-in space-y-2"><div class="text-5xl theme-glyph">${o.symbol}</div><h4 class="font-cinzel text-lg font-bold theme-info-hl">${esc(o.name)} · ${esc(o.tree)}</h4><p class="text-sm theme-muted">${esc(o.meaning)}</p></div>`;
+    text = `OGHAM DO DIA: ${o.symbol} ${o.name} (${o.tree}) — ${o.meaning}`;
+  } else if (type === 'tarot' && ((typeof NORDIC_TAROT_DECK !== 'undefined' && NORDIC_TAROT_DECK?.length) || window.NORDIC_TAROT_DECK?.length)) {
+    const c = NORDIC_TAROT_DECK[Math.floor(Math.random() * NORDIC_TAROT_DECK.length)];
+    const rev = Math.random() < 0.3;
+    const meaning = rev ? c.reversed : c.upright;
+    html = `<div class="reveal-in space-y-2"><h4 class="font-cinzel text-lg font-bold theme-info-hl">${esc(c.name)}${rev ? ' (inv.)' : ''}</h4><p class="text-xs theme-muted">${esc(c.title || '')}</p><p class="text-sm theme-muted">${esc(meaning)}</p></div>`;
+    text = `TAROT DO DIA: ${c.name}${rev ? ' (invertida)' : ''} — ${meaning}`;
+  } else {
+    html = `<p class="text-sm theme-muted">Dados do oráculo indisponíveis.</p>`;
+  }
+  box.innerHTML = html;
+  lastDailyOracle = text;
+  if (actions) actions.classList.remove('hidden');
+  try { localStorage.setItem('druid_daily_oracle', JSON.stringify({ day: todayKey(), type, text })); } catch {}
+  if (navigator.vibrate) try { navigator.vibrate(18); } catch {}
+};
+window.saveDailyOracleToJournal = function () {
+  if (!lastDailyOracle) return;
+  if (typeof appendToJournal === 'function') appendToJournal(lastDailyOracle);
+  else {
+    const area = $('journal-input');
+    if (area) { area.value += `\n--- [${new Date().toLocaleString('pt-PT')}] ${lastDailyOracle}\n`; if (typeof autoSaveJournal === 'function') autoSaveJournal(); }
+  }
+  showToast('Oráculo do dia guardado no Diário!');
+};
+
+// ——— Festival checklist ———
+function renderFestivalChecklist() {
+  const n = typeof nextFestival === 'function' ? nextFestival() : (window.__druid?.nextFestival?.() || null);
+  if (!n) return;
+  const nameEl = $('fest-check-name');
+  const list = $('festival-checklist');
+  if (!nameEl || !list) return;
+  nameEl.textContent = `${n.name}${n.days === 0 ? ' (hoje)' : ' · em ' + n.days + 'd'}`;
+  const items = FEST_CHECKS[n.name] || ['Preparar o altar', 'Reflectir sobre o tema do festival', 'Registar intenções no diário', 'Honrar os elementos'];
+  const key = `druid_fest_check_${n.name}_${new Date().getFullYear()}`;
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem(key) || '{}'); } catch {}
+  list.innerHTML = items.map((label, i) => `
+    <li class="check-item ${done[i] ? 'done' : ''}" data-i="${i}">
+      <input type="checkbox" ${done[i] ? 'checked' : ''} aria-label="${esc(label)}">
+      <span>${esc(label)}</span>
+    </li>`).join('');
+  list.querySelectorAll('.check-item').forEach(li => {
+    const cb = li.querySelector('input');
+    cb.addEventListener('change', () => {
+      done[li.dataset.i] = cb.checked;
+      li.classList.toggle('done', cb.checked);
+      try { localStorage.setItem(key, JSON.stringify(done)); } catch {}
+    });
+  });
+}
+
+// ——— Yes / No ———
+window.drawYesNo = function (system) {
+  try {
+    const leanYes = Math.random() < 0.5;
+    const answer = leanYes ? 'Sim' : 'Não';
+    const runes = (typeof RUNES_DATA !== 'undefined' && RUNES_DATA) || window.RUNES_DATA;
+    const ogham = (typeof OGHAM_DATA !== 'undefined' && OGHAM_DATA) || window.OGHAM_DATA;
+    const tarot = (typeof NORDIC_TAROT_DECK !== 'undefined' && NORDIC_TAROT_DECK) || window.NORDIC_TAROT_DECK;
+
+    if (system === 'runes') {
+      if (!runes || !runes.length) { showToast('Dados de runas indisponíveis.'); return; }
+      const r = runes[Math.floor(Math.random() * runes.length)];
+      lastRuneReading = [r];
+      const el = document.getElementById('rune-card');
+      if (el) el.innerHTML = `<div class="reveal-in max-w-md mx-auto theme-inner border rounded-xl p-5 text-center space-y-2">
+        <span class="text-[11px] uppercase tracking-widest theme-accent font-bold">Resposta: ${answer}</span>
+        <div class="text-5xl theme-glyph">${r.symbol}</div>
+        <h3 class="font-cinzel text-lg font-bold theme-info-hl">${esc(r.name)}</h3>
+        <p class="text-sm theme-muted">${esc(r.meaning)}</p>
+      </div>`;
+      document.getElementById('rune-save-bar')?.classList.remove('hidden');
+      if (typeof switchRuneMode === 'function') try { switchRuneMode('draw'); } catch(e) {}
+    } else if (system === 'ogham') {
+      if (!ogham || !ogham.length) { showToast('Dados de Ogham indisponíveis.'); return; }
+      const o = ogham[Math.floor(Math.random() * ogham.length)];
+      lastOghamReading = [o];
+      const el = document.getElementById('ogham-card');
+      if (el) el.innerHTML = `<div class="reveal-in max-w-md mx-auto theme-inner border rounded-xl p-5 text-center space-y-2">
+        <span class="text-[11px] uppercase tracking-widest theme-accent font-bold">Resposta: ${answer}</span>
+        <div class="text-5xl theme-glyph">${o.symbol}</div>
+        <h3 class="font-cinzel text-lg font-bold theme-info-hl">${esc(o.name)}</h3>
+        <p class="text-sm theme-muted">${esc(o.meaning)}</p>
+      </div>`;
+      document.getElementById('ogham-save-bar')?.classList.remove('hidden');
+    } else if (system === 'tarot') {
+      if (!tarot || !tarot.length) { showToast('Dados de Tarot indisponíveis.'); return; }
+      if (typeof switchTarotMode === 'function') try { switchTarotMode('draw'); } catch(e) {}
+      const c = tarot[Math.floor(Math.random() * tarot.length)];
+      const rev = Math.random() < 0.35;
+      lastTarotReading = [{ card: c, isReversed: rev, pos: 'Sim / Não' }];
+      lastTarotMeta = { question: 'Sim ou Não?', spread: 'Sim / Não' };
+      const el = document.getElementById('tarot-card-container');
+      if (el) {
+        el.classList.remove('draw-area');
+        el.innerHTML = '<div class="reveal-in max-w-md mx-auto theme-inner border rounded-xl p-5 text-center space-y-2">'
+          + '<span class="text-[11px] uppercase tracking-widest theme-accent font-bold">Resposta: ' + answer + '</span>'
+          + '<h3 class="font-cinzel text-lg font-bold theme-info-hl">' + esc(c.name) + (rev ? ' (inv.)' : '') + '</h3>'
+          + '<p class="text-sm theme-muted">' + esc(rev ? c.reversed : c.upright) + '</p>'
+          + '</div>';
+      }
+      document.getElementById('tarot-save-bar')?.classList.remove('hidden');
+    } else {
+      showToast('Sistema de oráculo desconhecido.');
+      return;
+    }
+    if (navigator.vibrate) try { navigator.vibrate(15); } catch {}
+  } catch (err) {
+    console.error('drawYesNo', err);
+    showToast('Erro ao gerar resposta Sim/Não.');
+  }
+};
+
+// ——— Share reading (text + optional image via canvas) ———
+window.shareReading = async function (type) {
+  let title = 'Caminho Druídico', body = '';
+  if (type === 'daily' && lastDailyOracle) { body = lastDailyOracle; title = 'Oráculo de hoje'; }
+  else if (type === 'runes' && lastRuneReading?.length) {
+    body = lastRuneReading.map(r => `${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+    title = 'Tiragem de Runas';
+  } else if (type === 'ogham' && lastOghamReading?.length) {
+    body = lastOghamReading.map(o => `${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`).join('\n');
+    title = 'Tiragem de Ogham';
+  } else if (type === 'tarot' && lastTarotReading?.length) {
+    body = lastTarotReading.map(t => `${t.pos}: ${t.card.name}${t.isReversed ? ' (inv.)' : ''} — ${t.isReversed ? t.card.reversed : t.card.upright}`).join('\n');
+    title = lastTarotMeta?.spread || 'Tiragem de Tarot';
+  } else {
+    showToast('Nenhuma tiragem ativa para partilhar.');
+    return;
+  }
+  const text = `${title}\n\n${body}\n\n— Caminho Druídico`;
+  try {
+    if (navigator.share) {
+      await navigator.share({ title, text });
+      showToast('Partilhado!');
+      return;
+    }
+  } catch (e) { if (e.name === 'AbortError') return; }
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('Texto copiado para a área de transferência.');
+  } catch {
+    showToast('Não foi possível partilhar automaticamente.');
+  }
+};
+
+// ——— Lunar month map (inject into astro tab if missing) ———
+function ensureLunarMap() {
+  if ($('lunar-month-map')) return;
+  const astro = $('tab-astro');
+  if (!astro) return;
+  const card = document.createElement('div');
+  card.className = 'theme-card border rounded-2xl p-5 lg:p-8 space-y-4';
+  card.innerHTML = `
+    <div class="flex items-center justify-between gap-2">
+      <div>
+        <div class="eyebrow">Ciclo do mês</div>
+        <h3 class="font-cinzel text-xl font-bold theme-title mt-1">Mapa lunar</h3>
+      </div>
+      <button type="button" onclick="renderLunarMap()" class="text-sm theme-accent font-semibold underline cursor-pointer">Atualizar</button>
+    </div>
+    <div id="lunar-month-map" class="grid grid-cols-7 gap-1.5"></div>
+    <p class="text-xs theme-muted text-center">Fases aproximadas para o mês civil atual · o dia de hoje está realçado</p>`;
+  astro.appendChild(card);
+  renderLunarMap();
+}
+window.renderLunarMap = function () {
+  const map = $('lunar-month-map');
+  if (!map) return;
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth();
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const synodic = 29.53058867;
+  const knownNew = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+  const icons = ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
+  let html = '';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dt = new Date(y, m, d, 12);
+    const age = (((dt - knownNew) / 86400000) % synodic + synodic) % synodic;
+    const idx = Math.min(7, Math.floor((age / synodic) * 8));
+    const isToday = d === now.getDate();
+    html += `<div class="lunar-day ${isToday ? 'is-today' : ''}" title="${d}/${m + 1}"><span class="ld-phase">${icons[idx]}</span><span class="theme-muted">${d}</span></div>`;
+  }
+  map.innerHTML = html;
+};
+
+// ——— Export festivals as .ics ———
+window.exportFestivalsICS = function () {
+  const y = new Date().getFullYear();
+  const names = ['Yule','Imbolc','Ostara','Beltane','Litha','Lughnasadh','Mabon','Samhain'];
+  const dates = [];
+  if (window.__druid?.solarEvent) {
+    const se = window.__druid.solarEvent;
+    dates.push([y, 11, 21, 'Yule'], [y, 1, 1, 'Imbolc'],
+      ...[[0,'Ostara'],[1,'Litha'],[2,'Mabon'],[3,'Yule']].map(([k, n]) => {
+        const d = se(y, k); return [d.getFullYear(), d.getMonth(), d.getDate(), n];
+      }),
+      [y, 4, 1, 'Beltane'], [y, 7, 1, 'Lughnasadh'], [y, 9, 31, 'Samhain']);
+  }
+  const uniq = {};
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Caminho Druidico//PT'];
+  const add = (Y, M, D, title) => {
+    const key = `${title}-${Y}`;
+    if (uniq[key]) return;
+    uniq[key] = 1;
+    const ds = `${Y}${String(M + 1).padStart(2, '0')}${String(D).padStart(2, '0')}`;
+    lines.push('BEGIN:VEVENT', `DTSTART;VALUE=DATE:${ds}`, `DTEND;VALUE=DATE:${ds}`, `SUMMARY:${title} — Roda do Ano`, 'END:VEVENT');
+  };
+  // Fixed + approximate
+  [[0,1,'Imbolc'],[4,1,'Beltane'],[7,1,'Lughnasadh'],[9,31,'Samhain'],[11,21,'Yule']].forEach(([mo, da, n]) => add(y, mo, da, n));
+  if (window.__druid?.solarEvent) {
+    [[0,'Ostara'],[1,'Litha'],[2,'Mabon'],[3,'Yule']].forEach(([k, n]) => {
+      const d = window.__druid.solarEvent(y, k);
+      add(d.getFullYear(), d.getMonth(), d.getDate(), n);
+    });
+  }
+  lines.push('END:VCALENDAR');
+  const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `Roda_do_Ano_${y}.ics`;
+  a.click();
+  showToast('Calendário .ics exportado!');
+};
+
+// ——— Statistics ———
+window.showReadingStats = function () {
+  const log = typeof getReadingLog === 'function' ? getReadingLog() : [];
+  const byType = { ogham: 0, runes: 0, tarot: 0 };
+  log.forEach(r => { if (byType[r.type] !== undefined) byType[r.type]++; });
+  const s = typeof streak === 'function' ? streak() : 0;
+  const msg = `Estatísticas\n\nSequência: ${s} dia(s)\nTiragens no histórico: ${log.length}\n· Runas: ${byType.runes}\n· Ogham: ${byType.ogham}\n· Tarot: ${byType.tarot}`;
+  showToast(`Runas ${byType.runes} · Ogham ${byType.ogham} · Tarot ${byType.tarot} · Sequência ${s}d`);
+  console.info(msg);
+};
+
+// ——— Profile (local) ———
+window.saveProfile = function () {
+  const name = $('profile-name')?.value?.trim() || '';
+  const grove = $('profile-grove')?.value?.trim() || '';
+  const grade = $('profile-grade')?.value || '';
+  try { localStorage.setItem('druid_profile', JSON.stringify({ name, grove, grade })); } catch {}
+  showToast('Perfil guardado localmente.');
+};
+function loadProfile() {
+  try {
+    const p = JSON.parse(localStorage.getItem('druid_profile') || '{}');
+    if ($('profile-name')) $('profile-name').value = p.name || '';
+    if ($('profile-grove')) $('profile-grove').value = p.grove || '';
+    if ($('profile-grade')) $('profile-grade').value = p.grade || '';
+  } catch {}
+}
+
+// ——— Journal PDF (via jsPDF if available) ———
+window.exportJournalPDF = async function () {
+  try {
+    if (typeof loadLib === 'function') await loadLib('jspdf');
+  } catch {}
+  if (typeof window.jspdf === 'undefined') {
+    // Fallback: download as text
+    if (typeof exportJournalTXT === 'function') { exportJournalTXT(); return; }
+    showToast('jsPDF indisponível — use exportar TXT.');
+    return;
+  }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFont('Helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.text('Diário Druídico', 20, 20);
+  doc.setFont('Helvetica', 'normal');
+  doc.setFontSize(10);
+  const text = ($('journal-input')?.value || '') + '\n\n' + ($('bardic-input')?.value || '');
+  const lines = doc.splitTextToSize(text, 170);
+  let y = 30;
+  lines.forEach(line => {
+    if (y > 280) { doc.addPage(); y = 20; }
+    doc.text(line, 20, y);
+    y += 5;
+  });
+  doc.save(`Diario_Druidico_${todayKey()}.pdf`);
+  showToast('Diário exportado em PDF!');
+};
+
+// ——— Enhance empty states after draws ———
+function enhanceEmptyStates() {
+  const configs = [
+    { id: 'rune-card', glyph: 'ᚠ', msg: 'Escolha uma tiragem para consultar as runas.' },
+    { id: 'ogham-card', glyph: 'ᚁ', msg: 'Escolha 1, 3 ou 5 Few para consultar o bosque.' }
+  ];
+  configs.forEach(({ id, glyph, msg }) => {
+    const el = $(id);
+    if (el && el.querySelector('p') && el.children.length === 1) {
+      el.innerHTML = `<div class="empty-state"><span class="empty-glyph" aria-hidden="true">${glyph}</span><p class="text-sm theme-muted">${msg}</p></div>`;
+    }
+  });
+  const tarot = $('tarot-card-container');
+  if (tarot && !tarot.children.length) {
+    tarot.innerHTML = `<div class="empty-state"><span class="empty-glyph" aria-hidden="true">✦</span><p class="text-sm theme-muted">Formule a pergunta, se quiser, e escolha uma tiragem.</p></div>`;
+    tarot.classList.add('draw-area');
+  }
+}
+
+// ——— Wrap draw functions for reveal animation ———
+['drawRunes', 'drawOghamCard', 'drawTarotCard'].forEach(fn => {
+  const orig = window[fn];
+  if (typeof orig !== 'function') return;
+  window[fn] = function (...args) {
+    const r = orig.apply(this, args);
+    requestAnimationFrame(() => {
+      const sel = fn === 'drawRunes' ? '#rune-card' : fn === 'drawOghamCard' ? '#ogham-card' : '#tarot-card-container';
+      const root = document.querySelector(sel);
+      if (root) {
+        root.classList.remove('reveal-in');
+        void root.offsetWidth;
+        root.classList.add('reveal-in');
+        const grid = root.querySelector('.grid');
+        if (grid) grid.classList.add('reveal-stagger');
+      }
+      if (navigator.vibrate) try { navigator.vibrate(10); } catch {}
+    });
+    return r;
+  };
+});
+
+// ——— Auto daily oracle from cache ———
+function restoreDailyOracle() {
+  try {
+    const cached = JSON.parse(localStorage.getItem('druid_daily_oracle') || 'null');
+    if (cached && cached.day === todayKey() && cached.text) {
+      lastDailyOracle = cached.text;
+      const box = $('daily-oracle');
+      if (box) box.innerHTML = `<div class="reveal-in"><p class="text-sm theme-title leading-relaxed">${esc(cached.text)}</p></div>`;
+      $('daily-oracle-actions')?.classList.remove('hidden');
+    }
+  } catch {}
+}
+
+// ——— Inject profile + tools into About if present ———
+function enhanceAbout() {
+  const about = $('tab-about');
+  if (!about || $('profile-panel')) return;
+  const panel = document.createElement('div');
+  panel.id = 'profile-panel';
+  panel.className = 'theme-card border rounded-2xl p-5 lg:p-8 space-y-4 mt-6';
+  panel.innerHTML = `
+    <h3 class="font-cinzel text-xl font-bold theme-title">Perfil local</h3>
+    <p class="text-sm theme-muted">Dados guardados só neste dispositivo.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div><label class="text-xs theme-muted block mb-1" for="profile-name">Nome</label>
+        <input id="profile-name" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm" placeholder="O seu nome"></div>
+      <div><label class="text-xs theme-muted block mb-1" for="profile-grove">Grove / círculo</label>
+        <input id="profile-grove" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm" placeholder="Opcional"></div>
+      <div><label class="text-xs theme-muted block mb-1" for="profile-grade">Grau OBOD</label>
+        <select id="profile-grade" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm">
+          <option value="">—</option><option>Bardo</option><option>Ovate</option><option>Druida</option><option>Amigo da Ordem</option>
+        </select></div>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" onclick="saveProfile()" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-semibold text-sm py-2 px-4 rounded-lg cursor-pointer">Guardar perfil</button>
+      <button type="button" onclick="showReadingStats()" class="theme-inner border text-sm font-semibold py-2 px-4 rounded-lg cursor-pointer">Ver estatísticas</button>
+      <button type="button" onclick="exportFestivalsICS()" class="theme-inner border text-sm font-semibold py-2 px-4 rounded-lg cursor-pointer">Exportar festivais (.ics)</button>
+      <button type="button" onclick="exportJournalPDF()" class="theme-inner border text-sm font-semibold py-2 px-4 rounded-lg cursor-pointer">Diário em PDF</button>
+    </div>`;
+  about.appendChild(panel);
+  loadProfile();
+}
+
+
+// ——— Offline (opcional, silencioso) ———
+function registerOffline() {
+  if (!('serviceWorker' in navigator) || location.protocol === 'file:') return;
+  try {
+    // Registro mínimo sem template aninhado (evita quebrar o script)
+    const sw = "const C='druid-v9';self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('fetch',e=>{e.respondWith(caches.open(C).then(async c=>{try{const r=await fetch(e.request);if(e.request.method==='GET'&&r.ok)c.put(e.request,r.clone());return r;}catch{return (await c.match(e.request))||new Response('Offline',{status:503});}}));});";
+    const blob = new Blob([sw], { type: 'application/javascript' });
+    const url = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(url).catch(() => {});
+  } catch (e) {}
+}
+
+// ——— Init ———
+const _origRenderToday = typeof renderToday === 'function' ? renderToday : null;
+if (_origRenderToday) {
+  window.renderToday = function () {
+    _origRenderToday();
+    updateStreakBadge();
+    renderFestivalChecklist();
+  };
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  try { setDailyPrompt(); } catch (e) {}
+  try { updateStreakBadge(); } catch (e) {}
+  try { renderFestivalChecklist(); } catch (e) {}
+  try { restoreDailyOracle(); } catch (e) {}
+  try { enhanceEmptyStates(); } catch (e) {}
+  try { ensureLunarMap(); } catch (e) {}
+  try { enhanceAbout(); } catch (e) {}
+  try { registerOffline(); } catch (e) {}
+});
 })();
 </script>
 
