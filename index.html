@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt" class="theme-night"><head>
+<html lang="pt" class="theme-forest"><head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Oráculos de Ogham, Tarot Nórdico e Runas, Roda do Ano, astronomia e diário druídico."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23090d16'/%3E%3Cpath d='M25 85L40 25M50 85V38M75 85L60 25' stroke='%23818cf8' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+    <meta name="description" content="Oráculos de Ogham, Tarot Nórdico e Runas, Roda do Ano, astronomia e diário druídico."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2306110c'/%3E%3Cpath d='M25 85L40 25M50 85V38M75 85L60 25' stroke='%236ee7b7' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
     <title>Caminho Druídico Pro Ultimate • Edição inspirada na OBOD &amp; Tarot Nórdico 16-Bit</title>
-    <meta name="theme-color" content="#090d16">
+    <meta name="theme-color" content="#0a1a13">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t})()</script>
+    <script>(function(){var t='theme-forest';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-forest')}catch(e){}document.documentElement.className=t;window.__theme=t})()</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:wght@400;500;600;700&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet">
@@ -37,72 +37,90 @@ dialog{padding:0}
    CAMINHO DRUÍDICO • TOKENS, TEMAS & COMPONENTES
    ============================================================ */
 
-/* ---------- Tokens (por omissão: Noite Mística) ---------- */
-:root, .theme-night {
-    --bg-body: #090d16; --bg-header: #0d1322; --bg-card: #121a2d; --bg-inner: #0b111e;
-    --border-color: #1e293b; --border-hover: #6366f1;
-    --text-title: #f8fafc; --text-accent: #818cf8; --text-muted: #94a3b8;
-    --glyph-highlight: #facc15; --info-highlight: #fde047;
-    --btn-primary: #4f46e5; --on-primary: #ffffff;
-    --elem-earth: #fbbf24; --elem-air: #7dd3fc; --elem-fire: #f87171; --elem-water: #60a5fa;
+/* ---------- Tokens (por omissão: Floresta Profunda) — v8.1 ---------- */
+:root, .theme-forest {
+    --bg-body: #06110c; --bg-header: #0a1a13; --bg-card: #0f2419; --bg-inner: #07140e;
+    --border-color: #1a3a28; --border-hover: #34d399;
+    --text-title: #ecfdf5; --text-accent: #6ee7b7; --text-muted: #8fb8a3;
+    --glyph-highlight: #fbbf24; --info-highlight: #a7f3d0;
+    --moon-color: #f8fafc; --sun-color: #fbbf24;
+    --btn-primary: #059669; --on-primary: #ffffff;
+    --elem-earth: #fbbf24; --elem-air: #a7f3d0; --elem-fire: #f87171; --elem-water: #5eead4;
     --ok: #6ee7b7; --danger: #fca5a5;
     --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
     --bnav-h: 64px; --fab-gap: 12px;
     color-scheme: dark;
 }
-.theme-forest {
-    --bg-body: #07120c; --bg-header: #0b1c13; --bg-card: #10261a; --bg-inner: #08150e;
-    --border-color: #1b3b29; --border-hover: #10b981;
-    --text-title: #ecfdf5; --text-accent: #34d399; --text-muted: #9db8a8;
-    --glyph-highlight: #fbbf24; --info-highlight: #fde68a;
-    --btn-primary: #047857; --on-primary: #ffffff;
+.theme-night {
+    --bg-body: #080c14; --bg-header: #0c1220; --bg-card: #121a2c; --bg-inner: #0a101c;
+    --border-color: #1c2738; --border-hover: #7c86f5;
+    --text-title: #f1f5f9; --text-accent: #a5b4fc; --text-muted: #8b9bb4;
+    --glyph-highlight: #fbbf24; --info-highlight: #c7d2fe;
+    --moon-color: #f8fafc; --sun-color: #fbbf24;
+    --btn-primary: #4f46e5; --on-primary: #ffffff;
+    --elem-earth: #fbbf24; --elem-air: #7dd3fc; --elem-fire: #f87171; --elem-water: #60a5fa;
+    --ok: #6ee7b7; --danger: #fca5a5;
 }
 .theme-stone {
-    --bg-body: #121316; --bg-header: #181a1e; --bg-card: #202329; --bg-inner: #14161a;
-    --border-color: #32363f; --border-hover: #9ca3af;
-    --text-title: #f3f4f6; --text-accent: #d1d5db; --text-muted: #9ca3af;
-    --glyph-highlight: #38bdf8; --info-highlight: #7dd3fc;
-    --btn-primary: #4b5563; --on-primary: #ffffff;
+    --bg-body: #101214; --bg-header: #16191e; --bg-card: #1e2229; --bg-inner: #13161b;
+    --border-color: #2e333c; --border-hover: #94a3b8;
+    --text-title: #f1f5f9; --text-accent: #cbd5e1; --text-muted: #94a3b8;
+    --glyph-highlight: #38bdf8; --info-highlight: #bae6fd;
+    --moon-color: #f1f5f9; --sun-color: #fde68a;
+    --btn-primary: #475569; --on-primary: #ffffff;
+    --elem-earth: #fbbf24; --elem-air: #7dd3fc; --elem-fire: #f87171; --elem-water: #60a5fa;
+    --ok: #6ee7b7; --danger: #fca5a5;
 }
 .theme-autumn {
-    --bg-body: #160e08; --bg-header: #21150c; --bg-card: #2b1c10; --bg-inner: #181009;
-    --border-color: #452c19; --border-hover: #f59e0b;
-    --text-title: #fffbeb; --text-accent: #fbbf24; --text-muted: #c8b391;
-    --glyph-highlight: #fb7185; --info-highlight: #fda4af;
+    --bg-body: #140d08; --bg-header: #1e140c; --bg-card: #281a10; --bg-inner: #16100a;
+    --border-color: #3f2a18; --border-hover: #f59e0b;
+    --text-title: #fffbeb; --text-accent: #fcd34d; --text-muted: #c4a574;
+    --glyph-highlight: #fb7185; --info-highlight: #fed7aa;
+    --moon-color: #fef3c7; --sun-color: #fbbf24;
     --btn-primary: #d97706; --on-primary: #1c1203;
+    --elem-earth: #fbbf24; --elem-air: #fcd34d; --elem-fire: #f87171; --elem-water: #fdba74;
+    --ok: #86efac; --danger: #fca5a5;
 }
 .theme-mist {
-    --bg-body: #0b141a; --bg-header: #101d26; --bg-card: #162733; --bg-inner: #0c171f;
-    --border-color: #233c4d; --border-hover: #38bdf8;
-    --text-title: #f0f9ff; --text-accent: #7dd3fc; --text-muted: #a3bccb;
-    --glyph-highlight: #c084fc; --info-highlight: #e9d5ff;
-    --btn-primary: #0369a1; --on-primary: #ffffff;
+    --bg-body: #0a1218; --bg-header: #0e1a22; --bg-card: #142430; --bg-inner: #0b151c;
+    --border-color: #1e3645; --border-hover: #38bdf8;
+    --text-title: #f0f9ff; --text-accent: #7dd3fc; --text-muted: #94b0c2;
+    --glyph-highlight: #c084fc; --info-highlight: #e0f2fe;
+    --moon-color: #f0f9ff; --sun-color: #fde68a;
+    --btn-primary: #0284c7; --on-primary: #ffffff;
+    --elem-earth: #fbbf24; --elem-air: #7dd3fc; --elem-fire: #f87171; --elem-water: #67e8f9;
+    --ok: #6ee7b7; --danger: #fca5a5;
 }
 .theme-gold {
-    --bg-body: #171307; --bg-header: #221c0b; --bg-card: #2d250f; --bg-inner: #1a1508;
-    --border-color: #4a3d18; --border-hover: #eab308;
-    --text-title: #fefce8; --text-accent: #facc15; --text-muted: #cbbf8f;
-    --glyph-highlight: #34d399; --info-highlight: #6ee7b7;
+    --bg-body: #151108; --bg-header: #1f1a0c; --bg-card: #2a2310; --bg-inner: #18140a;
+    --border-color: #453a18; --border-hover: #eab308;
+    --text-title: #fefce8; --text-accent: #fde047; --text-muted: #c4b57a;
+    --glyph-highlight: #4ade80; --info-highlight: #fef08a;
+    --moon-color: #fefce8; --sun-color: #facc15;
     --btn-primary: #ca8a04; --on-primary: #1a1404;
+    --elem-earth: #fbbf24; --elem-air: #fde68a; --elem-fire: #f87171; --elem-water: #5eead4;
+    --ok: #86efac; --danger: #fca5a5;
 }
-/* Lanterna: tudo em vermelho para preservar a visão noturna */
+/* Lanterna: monocromático vermelho para preservar visão noturna */
 .theme-lantern {
-    --bg-body: #090202; --bg-header: #120404; --bg-card: #1a0606; --bg-inner: #0d0303;
-    --border-color: #3f1111; --border-hover: #dc2626;
-    --text-title: #fecaca; --text-accent: #f87171; --text-muted: #d98d8d;
-    --glyph-highlight: #fb923c; --info-highlight: #fdba74;
-    --btn-primary: #991b1b; --on-primary: #fee2e2;
+    --bg-body: #0a0202; --bg-header: #120404; --bg-card: #1a0707; --bg-inner: #0d0303;
+    --border-color: #3b1212; --border-hover: #ef4444;
+    --text-title: #fecaca; --text-accent: #f87171; --text-muted: #d4a0a0;
+    --glyph-highlight: #fb923c; --info-highlight: #fecaca;
+    --moon-color: #fecaca; --sun-color: #fb923c;
+    --btn-primary: #b91c1c; --on-primary: #fee2e2;
     --elem-earth: #fb923c; --elem-air: #fecaca; --elem-fire: #ef4444; --elem-water: #fda4af;
     --ok: #fca5a5; --danger: #f87171;
 }
 .theme-parchment {
-    --bg-body: #eceee6; --bg-header: #e1e6d9; --bg-card: #fafbf6; --bg-inner: #f0f2e9;
-    --border-color: #c5cdb8; --border-hover: #2f6b45;
-    --text-title: #17261c; --text-accent: #2b6342; --text-muted: #475549;
-    --glyph-highlight: #b45309; --info-highlight: #92400e;
+    --bg-body: #eef0e6; --bg-header: #e4e8db; --bg-card: #fafbf7; --bg-inner: #f2f4eb;
+    --border-color: #c2cbb5; --border-hover: #2f6b45;
+    --text-title: #15231c; --text-accent: #1f5c3a; --text-muted: #4a5c4f;
+    --glyph-highlight: #b45309; --info-highlight: #365314;
+    --moon-color: #1e293b; --sun-color: #b45309;
     --btn-primary: #2f6b45; --on-primary: #ffffff;
-    --elem-earth: #8a5a06; --elem-air: #0b6a94; --elem-fire: #b42318; --elem-water: #1d4ed8;
-    --ok: #1f6b3f; --danger: #b42318;
+    --elem-earth: #92400e; --elem-air: #0c6a94; --elem-fire: #b91c1c; --elem-water: #1d4ed8;
+    --ok: #166534; --danger: #b91c1c;
     color-scheme: light;
 }
 
@@ -305,9 +323,85 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
   .lg\:col-span-6{grid-column:span 6/span 6}
 }
 
-    </style>
+    
+
+/* ============================================================
+   DESIGN PRO v8 - refinamento visual, hierarquia, temas e usabilidade
+   ============================================================ */
+:root{
+  --shadow-sm:0 4px 16px rgba(0,0,0,.12);
+  --shadow-md:0 12px 32px rgba(0,0,0,.18);
+  --shadow-glow:0 0 0 1px color-mix(in srgb,var(--text-accent) 20%,transparent),0 14px 36px color-mix(in srgb,var(--text-accent) 12%,transparent);
+  --ease-out:cubic-bezier(.22,1,.36,1);
+}
+html{scroll-behavior:smooth;scrollbar-color:var(--border-hover) var(--bg-body)}
+body{
+  background:
+    radial-gradient(circle at 78% -8%,color-mix(in srgb,var(--text-accent) 14%,transparent),transparent 36rem),
+    radial-gradient(circle at 6% 108%,color-mix(in srgb,var(--glyph-highlight) 8%,transparent),transparent 30rem),
+    var(--bg-body);
+  min-height:100dvh;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.14;
+  background-image:linear-gradient(color-mix(in srgb,var(--text-muted) 14%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--text-muted) 11%,transparent) 1px,transparent 1px);
+  background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 70%);
+}
+html.theme-parchment body::before{opacity:.07}
+::selection{background:color-mix(in srgb,var(--text-accent) 32%,transparent);color:var(--text-title)}
+.theme-card{
+  box-shadow:var(--shadow-sm);position:relative;
+  background:linear-gradient(155deg,color-mix(in srgb,var(--bg-card) 92%,var(--text-title) 4%),var(--bg-card));
+}
+.theme-parchment .theme-card{
+  background:linear-gradient(155deg,color-mix(in srgb,var(--bg-card) 96%,#fff 4%),var(--bg-card));
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+.theme-card.rounded-2xl{overflow:clip}
+.theme-card.rounded-2xl::before{
+  content:"";position:absolute;inset:0 0 auto;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--text-accent) 55%,transparent),transparent);
+}
+.theme-inner{background:color-mix(in srgb,var(--bg-inner) 96%,transparent)}
+.sidebar{box-shadow:10px 0 36px rgba(0,0,0,.14)}
+.nav-item{position:relative;overflow:hidden}
+.nav-item::before{content:"";position:absolute;left:0;top:18%;bottom:18%;width:3px;border-radius:0 4px 4px 0;background:var(--text-accent);transform:scaleY(0);transition:transform .2s var(--ease-out)}
+.nav-item.active::before{transform:scaleY(1)}
+.nav-item.active{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--text-accent) 20%,transparent)}
+.app-header,.bottom-nav{box-shadow:0 6px 24px rgba(0,0,0,.12)}
+.bottom-nav{box-shadow:0 -6px 24px rgba(0,0,0,.14)}
+button,a,select,input,textarea{touch-action:manipulation}
+button,.quick,.today-tile,.sheet-item,.icon-btn,a[class]{transition:transform .18s var(--ease-out),border-color .18s ease,background-color .18s ease,color .18s ease,box-shadow .18s ease,opacity .18s ease}
+button:active,.quick:active,.today-tile:active,.sheet-item:active,.icon-btn:active{transform:scale(.975)}
+@media (hover:hover){
+  .today-tile:hover,.quick:hover,.sheet-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+  .theme-card.rounded-2xl:hover{border-color:color-mix(in srgb,var(--border-hover) 55%,var(--border-color));box-shadow:var(--shadow-md)}
+}
+.today-tile{min-height:118px;justify-content:space-between;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.today-tile .t-ic{width:38px;height:38px;justify-content:center;border-radius:12px;background:color-mix(in srgb,var(--text-accent) 14%,transparent)}
+.today-tile .t-v{line-height:1.25}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem}
+.eyebrow::before{content:"";width:18px;height:1px;background:currentColor;opacity:.7}
+input,textarea,select{transition:border-color .18s ease,box-shadow .18s ease,background-color .18s ease}
+input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--text-accent) 18%,transparent);outline:none}
+.modal,.sheet{box-shadow:0 28px 72px rgba(0,0,0,.42)}
+.app-toast{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:var(--shadow-glow);animation:toastPro .32s var(--ease-out)}
+@keyframes toastPro{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+#zen-float-btn{box-shadow:0 10px 28px color-mix(in srgb,var(--btn-primary) 38%,rgba(0,0,0,.32))}
+#scroll-progress{position:fixed;left:0;top:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--text-accent),var(--glyph-highlight));box-shadow:0 0 12px var(--text-accent);pointer-events:none;transition:width .08s linear}
+#back-to-top{position:fixed;right:14px;bottom:calc(var(--bnav-h) + 68px + env(safe-area-inset-bottom,0px));z-index:44;width:44px;height:44px;border-radius:999px;background:var(--bg-header);border:1px solid var(--border-hover);color:var(--text-accent);box-shadow:var(--shadow-md);display:grid;place-items:center;opacity:0;visibility:hidden;transform:translateY(10px);transition:.22s var(--ease-out)}
+#back-to-top.is-visible{opacity:1;visibility:visible;transform:none}
+#back-to-top svg{width:20px;height:20px}
+@media (min-width:1024px){#back-to-top{right:24px;bottom:82px}main#main{padding-top:2.2rem}}
+@media (max-width:639px){
+  main#main{padding-top:1.25rem}.theme-card.rounded-2xl{border-radius:18px}.today-tile{min-height:108px;padding:.75rem}
+  .sheet-grid{grid-template-columns:1fr 1fr}.sheet-item{padding:.7rem;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}#scroll-progress{transition:none}}
+
+</style>
 </head>
-<body id="app-body" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
+<body id="app-body" data-design-version="8" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
     <a href="#main" class="skip-link" onclick="event.preventDefault();document.getElementById('main').focus()">Saltar para o conteúdo</a>
 
         <!-- ÍCONES (traço, mesma linguagem do Awen) -->
@@ -378,7 +472,7 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
         </nav>
         <div class="p-4 border-t border-[var(--border-color)] zen-hide">
             <label for="theme-selector-desktop" class="text-[11px] uppercase tracking-widest theme-muted block mb-1">Ambiente visual</label>
-            <select id="theme-selector-desktop" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 cursor-pointer"><option value="theme-night">Noite Mística</option><option value="theme-forest">Floresta Profunda</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
+            <select id="theme-selector-desktop" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 cursor-pointer"><option value="theme-forest">Floresta Profunda</option><option value="theme-night">Noite Mística</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
         </div>
     </aside>
 
@@ -439,7 +533,7 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
             <button type="button" onclick="toggleLanternMode()" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-lantern"></use></svg>Lanterna</button>
         </div>
         <label for="theme-selector-mobile" class="nav-group block">Ambiente visual</label>
-        <select id="theme-selector-mobile" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] rounded-lg px-3 py-2.5 cursor-pointer"><option value="theme-night">Noite Mística</option><option value="theme-forest">Floresta Profunda</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
+        <select id="theme-selector-mobile" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] rounded-lg px-3 py-2.5 cursor-pointer"><option value="theme-forest">Floresta Profunda</option><option value="theme-night">Noite Mística</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
     </dialog>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -483,13 +577,15 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                         </div>
                     </div>
 
-                    <div id="rune-draw-actions" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto mt-6">
-                        <button type="button" onclick="drawRunes(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 runa · Conselho</button>
-                        <button type="button" onclick="drawRunes(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 runas · Passado, presente, futuro</button>
-                    </div>
+                    <!-- Resultado em destaque (acima das opções de tiragem) -->
                     <div id="rune-card" class="draw-area mt-6 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha uma tiragem para consultar as runas.</p></div>
                     <div id="rune-save-bar" class="hidden mt-4">
                         <button type="button" onclick="saveLastReadingToJournal('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
+                    </div>
+
+                    <div id="rune-draw-actions" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto mt-6">
+                        <button type="button" onclick="drawRunes(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 runa · Conselho</button>
+                        <button type="button" onclick="drawRunes(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 runas · Passado, presente, futuro</button>
                     </div>
 
                     <div id="rune-gallery" class="hidden text-left space-y-4 mt-6">
@@ -517,6 +613,14 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                         </div>
                     </div>
 
+                    <!-- Resultado em destaque (acima das opções de tiragem) -->
+                    <div id="tarot-card-container" class="mt-6 min-h-[200px] flex flex-col items-center justify-center"></div>
+
+                    <div id="tarot-save-bar" class="hidden mt-5 flex flex-wrap justify-center gap-2">
+                        <button type="button" onclick="saveLastReadingToJournal('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
+                        <button type="button" onclick="exportTarotPDF()" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Exportar tiragem (PDF)</button>
+                    </div>
+
                     <div class="max-w-2xl mx-auto mt-6 text-left space-y-4">
                         <div>
                             <span class="text-sm theme-muted block mb-2">Baralho</span>
@@ -539,13 +643,6 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                             <input id="tarot-search" type="search" oninput="setTarotQuery(this.value)" placeholder="Procurar carta, deus ou reino…" aria-label="Procurar carta" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5">
                         </div>
                     </div>
-
-                    <div id="tarot-card-container" class="mt-6 min-h-[200px] flex flex-col items-center justify-center"></div>
-
-                    <div id="tarot-save-bar" class="hidden mt-5 flex flex-wrap justify-center gap-2">
-                        <button type="button" onclick="saveLastReadingToJournal('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
-                        <button type="button" onclick="exportTarotPDF()" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Exportar tiragem (PDF)</button>
-                    </div>
                 </div>
             </section>
 
@@ -556,14 +653,17 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo Sagrado de Ogham</h2>
                         <p class="text-sm lg:text-[15px] theme-muted mb-6">Conecte-se com os espíritos dos 20 Few (gravetos de árvores sagradas) da tradição celta.</p>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
+
+                    <!-- Resultado em destaque (acima das opções de tiragem) -->
+                    <div id="ogham-card" class="draw-area mt-2 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha 1, 3 ou 5 Few para consultar o bosque.</p></div>
+                    <div id="ogham-save-bar" class="hidden mt-4">
+                        <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mt-6">
                         <button type="button" onclick="drawOghamCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 Few · Conselho</button>
                         <button type="button" onclick="drawOghamCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 Few · Tríade</button>
                         <button type="button" onclick="drawOghamCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 Few · Roda Elemental</button>
-                    </div>
-                    <div id="ogham-card" class="draw-area mt-6 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha 1, 3 ou 5 Few para consultar o bosque.</p></div>
-                    <div id="ogham-save-bar" class="hidden mt-4">
-                        <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
                     </div>
                 </div>
                 <details id="reading-history" class="theme-card border rounded-xl p-4 text-left">
@@ -629,8 +729,8 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                             <svg id="lunar-cycle-svg" viewBox="0 0 320 175" class="w-full max-w-sm h-auto" role="img" aria-label="Gráfico do Ciclo Lunar">
                                 <defs>
                                     <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%" stop-color="var(--glyph-highlight)" stop-opacity="0.35"/>
-                                        <stop offset="100%" stop-color="var(--glyph-highlight)" stop-opacity="0"/>
+                                        <stop offset="0%" stop-color="var(--moon-color)" stop-opacity="0.4"/>
+                                        <stop offset="100%" stop-color="var(--moon-color)" stop-opacity="0"/>
                                     </radialGradient>
                                 </defs>
                                 <!-- Órbita -->
@@ -639,17 +739,18 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                                 <line x1="82" y1="88" x2="238" y2="88" stroke="var(--border-color)" stroke-width="1" opacity="0.6"/>
                                 <line x1="160" y1="14" x2="160" y2="162" stroke="var(--border-color)" stroke-width="1" opacity="0.6"/>
                                 <!-- Marcadores das 4 fases principais -->
-                                <circle cx="160" cy="150" r="7" fill="#090d16" stroke="var(--text-muted)" stroke-width="1.5"/>
+                                <circle cx="160" cy="150" r="7" fill="var(--bg-body)" stroke="var(--text-muted)" stroke-width="1.5"/>
                                 <text x="160" y="170" text-anchor="middle" font-size="9.5" fill="var(--text-muted)">Lua Nova (0d)</text>
 
-                                <path d="M 222 81 A 7 7 0 0 1 222 95 Z" fill="var(--text-title)"/>
+                                <path d="M 222 81 A 7 7 0 0 1 222 95 Z" fill="var(--moon-color)"/>
                                 <circle cx="222" cy="88" r="7" fill="none" stroke="var(--text-muted)" stroke-width="1.2"/>
                                 <text x="234" y="91" text-anchor="start" font-size="9.5" fill="var(--text-muted)">Q. Cresc. (7.4d)</text>
 
-                                <circle cx="160" cy="26" r="7" fill="var(--glyph-highlight)"/>
-                                <text x="160" y="11" text-anchor="middle" font-size="9.5" fill="var(--info-highlight)" font-weight="bold">Lua Cheia (14.8d)</text>
+                                <!-- Lua Cheia: branca/prateada (não amarela) -->
+                                <circle cx="160" cy="26" r="7" fill="var(--moon-color)"/>
+                                <text x="160" y="11" text-anchor="middle" font-size="9.5" fill="var(--moon-color)" font-weight="bold">Lua Cheia (14.8d)</text>
 
-                                <path d="M 98 81 A 7 7 0 0 0 98 95 Z" fill="var(--text-title)"/>
+                                <path d="M 98 81 A 7 7 0 0 0 98 95 Z" fill="var(--moon-color)"/>
                                 <circle cx="98" cy="88" r="7" fill="none" stroke="var(--text-muted)" stroke-width="1.2"/>
                                 <text x="86" y="91" text-anchor="end" font-size="9.5" fill="var(--text-muted)">Q. Ming. (22.1d)</text>
 
@@ -659,7 +760,7 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
 
                                 <!-- Posição atual da Lua na órbita (atualizada via JS) -->
                                 <circle id="lunar-orbit-halo" cx="160" cy="150" r="16" fill="url(#moonGlow)"/>
-                                <circle id="lunar-orbit-dot" cx="160" cy="150" r="6.5" fill="var(--glyph-highlight)" stroke="var(--bg-body)" stroke-width="1.5"/>
+                                <circle id="lunar-orbit-dot" cx="160" cy="150" r="6.5" fill="var(--moon-color)" stroke="var(--bg-body)" stroke-width="1.5"/>
                             </svg>
                             <div id="lunar-next-milestones" class="w-full grid grid-cols-2 gap-2 pt-2 border-t border-[var(--border-color)] text-xs text-center">
                                 <div class="theme-card border rounded-lg py-1.5 px-2"><span class="theme-muted block">Próxima Lua Cheia</span><strong id="next-full-moon" class="theme-info-hl">—</strong></div>
@@ -684,8 +785,8 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                             <svg id="solar-arc-svg" viewBox="0 0 320 150" class="w-full max-w-sm h-auto" role="img" aria-label="Gráfico do Arco Solar Diurno">
                                 <defs>
                                     <linearGradient id="daySkyGrad" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="var(--glyph-highlight)" stop-opacity="0.28"/>
-                                        <stop offset="100%" stop-color="var(--glyph-highlight)" stop-opacity="0.02"/>
+                                        <stop offset="0%" stop-color="var(--sun-color)" stop-opacity="0.3"/>
+                                        <stop offset="100%" stop-color="var(--sun-color)" stop-opacity="0.02"/>
                                     </linearGradient>
                                 </defs>
                                 <!-- Área diurna sob o arco -->
@@ -696,19 +797,19 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                                 <text x="160" y="125" text-anchor="middle" font-size="9" fill="var(--text-accent)">ZÉNITE SOLAR</text>
                                 <text x="300" y="125" text-anchor="end" font-size="9" fill="var(--text-muted)">OESTE (Pôr)</text>
 
-                                <!-- Arco tracejado noturno inferior e arco diurno superior -->
-                                <path d="M 35 112 A 125 90 0 0 1 285 112" fill="none" stroke="var(--glyph-highlight)" stroke-width="2.5"/>
+                                <!-- Arco diurno (dourado) e arco noturno -->
+                                <path d="M 35 112 A 125 90 0 0 1 285 112" fill="none" stroke="var(--sun-color)" stroke-width="2.5"/>
                                 <path d="M 35 112 Q 160 148 285 112" fill="none" stroke="var(--border-color)" stroke-width="1.5" stroke-dasharray="3 3"/>
 
                                 <!-- Pontos Nascer / Meio-dia / Pôr -->
                                 <circle cx="35" cy="112" r="4" fill="var(--elem-air)"/>
-                                <circle cx="160" cy="22" r="4" fill="var(--glyph-highlight)"/>
+                                <circle cx="160" cy="22" r="4" fill="var(--sun-color)"/>
                                 <circle cx="285" cy="112" r="4" fill="var(--elem-fire)"/>
 
                                 <!-- Posição atual do Sol -->
-                                <circle id="solar-sun-halo" cx="160" cy="22" r="13" fill="var(--glyph-highlight)" opacity="0.25"/>
-                                <circle id="solar-sun-dot" cx="160" cy="22" r="6" fill="var(--glyph-highlight)" stroke="var(--bg-body)" stroke-width="1.5"/>
-                                <text id="solar-progress-label" x="160" y="143" text-anchor="middle" font-size="9.5" fill="var(--info-highlight)" font-weight="bold">Progresso Solar: —</text>
+                                <circle id="solar-sun-halo" cx="160" cy="22" r="13" fill="var(--sun-color)" opacity="0.28"/>
+                                <circle id="solar-sun-dot" cx="160" cy="22" r="6" fill="var(--sun-color)" stroke="var(--bg-body)" stroke-width="1.5"/>
+                                <text id="solar-progress-label" x="160" y="143" text-anchor="middle" font-size="9.5" fill="var(--sun-color)" font-weight="bold">Progresso Solar: —</text>
                             </svg>
 
                             <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-semibold pt-2 border-t border-[var(--border-color)]">
@@ -1738,9 +1839,9 @@ function changeTheme(themeName) {
 }
 
 function toggleLanternMode() {
-    const current = localStorage.getItem('druid_theme') || 'theme-night';
+    const current = localStorage.getItem('druid_theme') || 'theme-forest';
     if (current === 'theme-lantern') {
-        changeTheme(localStorage.getItem('druid_theme_prev') || 'theme-night');
+        changeTheme(localStorage.getItem('druid_theme_prev') || 'theme-forest');
         showToast('Modo Lanterna desativado.');
     } else {
         localStorage.setItem('druid_theme_prev', current);
@@ -2362,7 +2463,7 @@ function exportBackupJSON() {
     const data = {
         journal: localStorage.getItem('druid_journal') || '',
         bardic: localStorage.getItem('druid_bardic') || '',
-        theme: localStorage.getItem('druid_theme') || 'theme-night',
+        theme: localStorage.getItem('druid_theme') || 'theme-forest',
         readings: JSON.parse(localStorage.getItem('druid_readings') || '[]'),
         exportedAt: new Date().toISOString()
     };
@@ -2667,7 +2768,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const _tc = document.getElementById('toast-container');
     if (_tc) _tc.innerHTML = '';
     setZenMode(false);
-    const savedTheme = localStorage.getItem('druid_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-parchment' : 'theme-night');
+    const savedTheme = localStorage.getItem('druid_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'theme-parchment' : 'theme-forest');
     changeTheme(savedTheme);
     updateAstronomy();
     calculateExactSolarFestivals();
@@ -3059,7 +3160,7 @@ function renderToday() {
 
 // Tema: cor da barra do browser no telemóvel
 const _ct = changeTheme;
-changeTheme = function (t) { _ct(t); const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = getComputedStyle(document.body).getPropertyValue('--bg-header').trim() || '#090d16'; };
+changeTheme = function (t) { _ct(t); const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = getComputedStyle(document.body).getPropertyValue('--bg-header').trim() || '#0a1a13'; };
 
 // Sons: o segundo toque pára; ecrã sempre ligado em meditação/Zen
 let amb = null, wl = null;
@@ -3120,7 +3221,7 @@ downloadProjectZip = async function () {
 
 window.addEventListener('DOMContentLoaded', () => {
   activeTarotMode = 'draw'; activeRuneMode = 'draw';
-  renderRuneGallery(); calculateExactSolarFestivals(); changeTheme(window.__theme || 'theme-night'); renderToday();
+  renderRuneGallery(); calculateExactSolarFestivals(); changeTheme(window.__theme || 'theme-forest'); renderToday();
   setInterval(() => { updateAstronomy(); renderToday(); }, 6e4);
 });
 })();
@@ -3505,6 +3606,35 @@ window.addEventListener('DOMContentLoaded', () => {
         renderElementAndWeather(null);
         refreshWeatherAndElement(false);
     });
+})();
+</script>
+
+
+<div id="scroll-progress" aria-hidden="true"></div>
+<button id="back-to-top" type="button" aria-label="Voltar ao topo" title="Voltar ao topo">
+  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+</button>
+
+
+<script>
+/* Design Pro v7: progresso de leitura, regresso ao topo e microinterações */
+(() => {
+  const progress = document.getElementById('scroll-progress');
+  const topBtn = document.getElementById('back-to-top');
+  let ticking = false;
+  function updateScrollUI(){
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    const y = Math.max(0, scrollY || document.documentElement.scrollTop || 0);
+    if (progress) progress.style.width = Math.min(100, (y / max) * 100) + '%';
+    if (topBtn) topBtn.classList.toggle('is-visible', y > 520);
+    ticking = false;
+  }
+  addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(updateScrollUI); ticking = true; }
+  }, { passive: true });
+  addEventListener('resize', updateScrollUI, { passive: true });
+  if (topBtn) topBtn.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+  document.addEventListener('DOMContentLoaded', updateScrollUI);
 })();
 </script>
 
