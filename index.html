@@ -42,6 +42,7 @@ dialog{padding:0}
     --bg-body: #090d16; --bg-header: #0d1322; --bg-card: #121a2d; --bg-inner: #0b111e;
     --border-color: #1e293b; --border-hover: #6366f1;
     --text-title: #f8fafc; --text-accent: #818cf8; --text-muted: #94a3b8;
+    --glyph-highlight: #facc15; --info-highlight: #fde047;
     --btn-primary: #4f46e5; --on-primary: #ffffff;
     --elem-earth: #fbbf24; --elem-air: #7dd3fc; --elem-fire: #f87171; --elem-water: #60a5fa;
     --ok: #6ee7b7; --danger: #fca5a5;
@@ -53,30 +54,35 @@ dialog{padding:0}
     --bg-body: #07120c; --bg-header: #0b1c13; --bg-card: #10261a; --bg-inner: #08150e;
     --border-color: #1b3b29; --border-hover: #10b981;
     --text-title: #ecfdf5; --text-accent: #34d399; --text-muted: #9db8a8;
+    --glyph-highlight: #fbbf24; --info-highlight: #fde68a;
     --btn-primary: #047857; --on-primary: #ffffff;
 }
 .theme-stone {
     --bg-body: #121316; --bg-header: #181a1e; --bg-card: #202329; --bg-inner: #14161a;
     --border-color: #32363f; --border-hover: #9ca3af;
     --text-title: #f3f4f6; --text-accent: #d1d5db; --text-muted: #9ca3af;
+    --glyph-highlight: #38bdf8; --info-highlight: #7dd3fc;
     --btn-primary: #4b5563; --on-primary: #ffffff;
 }
 .theme-autumn {
     --bg-body: #160e08; --bg-header: #21150c; --bg-card: #2b1c10; --bg-inner: #181009;
     --border-color: #452c19; --border-hover: #f59e0b;
     --text-title: #fffbeb; --text-accent: #fbbf24; --text-muted: #c8b391;
+    --glyph-highlight: #fb7185; --info-highlight: #fda4af;
     --btn-primary: #d97706; --on-primary: #1c1203;
 }
 .theme-mist {
     --bg-body: #0b141a; --bg-header: #101d26; --bg-card: #162733; --bg-inner: #0c171f;
     --border-color: #233c4d; --border-hover: #38bdf8;
     --text-title: #f0f9ff; --text-accent: #7dd3fc; --text-muted: #a3bccb;
+    --glyph-highlight: #c084fc; --info-highlight: #e9d5ff;
     --btn-primary: #0369a1; --on-primary: #ffffff;
 }
 .theme-gold {
     --bg-body: #171307; --bg-header: #221c0b; --bg-card: #2d250f; --bg-inner: #1a1508;
     --border-color: #4a3d18; --border-hover: #eab308;
     --text-title: #fefce8; --text-accent: #facc15; --text-muted: #cbbf8f;
+    --glyph-highlight: #34d399; --info-highlight: #6ee7b7;
     --btn-primary: #ca8a04; --on-primary: #1a1404;
 }
 /* Lanterna: tudo em vermelho para preservar a visão noturna */
@@ -84,6 +90,7 @@ dialog{padding:0}
     --bg-body: #090202; --bg-header: #120404; --bg-card: #1a0606; --bg-inner: #0d0303;
     --border-color: #3f1111; --border-hover: #dc2626;
     --text-title: #fecaca; --text-accent: #f87171; --text-muted: #d98d8d;
+    --glyph-highlight: #fb923c; --info-highlight: #fdba74;
     --btn-primary: #991b1b; --on-primary: #fee2e2;
     --elem-earth: #fb923c; --elem-air: #fecaca; --elem-fire: #ef4444; --elem-water: #fda4af;
     --ok: #fca5a5; --danger: #f87171;
@@ -92,6 +99,7 @@ dialog{padding:0}
     --bg-body: #eceee6; --bg-header: #e1e6d9; --bg-card: #fafbf6; --bg-inner: #f0f2e9;
     --border-color: #c5cdb8; --border-hover: #2f6b45;
     --text-title: #17261c; --text-accent: #2b6342; --text-muted: #475549;
+    --glyph-highlight: #b45309; --info-highlight: #92400e;
     --btn-primary: #2f6b45; --on-primary: #ffffff;
     --elem-earth: #8a5a06; --elem-air: #0b6a94; --elem-fire: #b42318; --elem-water: #1d4ed8;
     --ok: #1f6b3f; --danger: #b42318;
@@ -114,6 +122,9 @@ body, .font-cinzel { font-family: 'Inter', 'Noto Sans Ogham', 'Noto Sans Runic',
 .theme-title { color: var(--text-title); }
 .theme-accent { color: var(--text-accent); }
 .theme-muted { color: var(--text-muted); }
+.theme-glyph { color: var(--glyph-highlight); text-shadow: 0 0 18px color-mix(in srgb, var(--glyph-highlight) 32%, transparent); }
+.theme-info-hl { color: var(--info-highlight); }
+.badge-hl { color: var(--info-highlight); background: color-mix(in srgb, var(--glyph-highlight) 12%, var(--bg-inner)); border-color: color-mix(in srgb, var(--glyph-highlight) 42%, transparent); }
 .c-earth { color: var(--elem-earth); } .c-air { color: var(--elem-air); }
 .c-fire { color: var(--elem-fire); } .c-water { color: var(--elem-water); }
 .c-ok { color: var(--ok); } .c-danger { color: var(--danger); }
@@ -284,6 +295,16 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
 @media (pointer:coarse){button:not(.nav-item){min-height:44px}}
 @media (min-width:1536px){main#main{max-width:80rem}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+    
+/* Correções de grelha, alinhamento e dimensões para Elemento Regente & Meteorologia */
+.w-12{width:3rem}.h-12{height:3rem}.w-14{width:3.5rem}.h-14{height:3.5rem}
+.items-baseline{align-items:baseline}.items-stretch{align-items:stretch}
+.inline-block{display:inline-block}
+.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (min-width:1024px){
+  .lg\:col-span-6{grid-column:span 6/span 6}
+}
+
     </style>
 </head>
 <body id="app-body" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
@@ -336,9 +357,9 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
         <nav class="flex-1 overflow-y-auto px-3 py-3" aria-label="Secções">
             <button type="button" onclick="switchTab('today')" id="desk-nav-today" class="nav-item active" aria-current="page"><svg class="ic" aria-hidden="true"><use href="#i-today"></use></svg>Hoje</button>
             <div class="nav-group">Oráculos</div>
-            <button type="button" onclick="switchTab('oracle')" id="desk-nav-oracle" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg>Ogham</button>
-            <button type="button" onclick="switchTab('tarot')" id="desk-nav-tarot" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg>Tarot nórdico</button>
             <button type="button" onclick="switchTab('runes')" id="desk-nav-runes" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas</button>
+            <button type="button" onclick="switchTab('tarot')" id="desk-nav-tarot" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg>Tarot nórdico</button>
+            <button type="button" onclick="switchTab('oracle')" id="desk-nav-oracle" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg>Ogham</button>
             <button type="button" onclick="switchTab('herbal')" id="desk-nav-herbal" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
             <button type="button" onclick="switchTab('triads')" id="desk-nav-triads" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
             <div class="nav-group">Ciclos</div>
@@ -376,7 +397,7 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
     <!-- BARRA INFERIOR MOBILE: 4 destinos + Mais -->
     <nav class="bottom-nav" aria-label="Navegação principal">
         <button type="button" onclick="switchTab('today')" id="bot-nav-today" class="bot-nav-item active" aria-current="page"><svg class="ic" aria-hidden="true"><use href="#i-today"></use></svg><span>Hoje</span></button>
-        <button type="button" onclick="switchTab('oracle')" id="bot-nav-oracle" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg><span>Ogham</span></button>
+        <button type="button" onclick="switchTab('runes')" id="bot-nav-runes" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg><span>Runas</span></button>
         <button type="button" onclick="switchTab('tarot')" id="bot-nav-tarot" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg><span>Tarot</span></button>
         <button type="button" onclick="switchTab('journal')" id="bot-nav-journal" class="bot-nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-journal"></use></svg><span>Diário</span></button>
         <button type="button" onclick="openMore()" id="bot-nav-more" class="bot-nav-item theme-muted" aria-haspopup="dialog"><svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg><span>Mais</span></button>
@@ -390,7 +411,7 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
         </div>
         <div class="nav-group">Oráculos</div>
         <div class="sheet-grid">
-            <button type="button" onclick="switchTab('runes')" data-tab="runes" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas</button>
+            <button type="button" onclick="switchTab('oracle')" data-tab="oracle" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg>Ogham</button>
             <button type="button" onclick="switchTab('herbal')" data-tab="herbal" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
             <button type="button" onclick="switchTab('triads')" data-tab="triads" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
         </div>
@@ -429,17 +450,17 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
             <div class="flex items-center gap-6 text-sm">
                 <button type="button" onclick="switchTab('astro')" class="flex items-center gap-2 text-left cursor-pointer">
                     <span id="top-moon-icon" class="text-lg" aria-hidden="true">🌓</span>
-                    <span><span class="theme-muted block text-[11px] uppercase tracking-wide">Lua atual</span><strong id="top-moon-text" class="theme-title font-semibold">—</strong></span>
+                    <span><span class="theme-muted block text-[11px] uppercase tracking-wide">Lua atual</span><strong id="top-moon-text" class="theme-info-hl font-semibold">—</strong></span>
                 </button>
                 <div class="h-6 w-px bg-[var(--border-color)]"></div>
                 <button type="button" onclick="switchTab('astro')" class="flex items-center gap-2 text-left cursor-pointer">
                     <svg class="ic ic-lg theme-accent" aria-hidden="true"><use href="#i-sun"></use></svg>
-                    <span><span class="theme-muted block text-[11px] uppercase tracking-wide">Ciclo solar</span><strong id="top-sun-text" class="theme-title font-semibold">—</strong></span>
+                    <span><span class="theme-muted block text-[11px] uppercase tracking-wide">Ciclo solar</span><strong id="top-sun-text" class="theme-info-hl font-semibold">—</strong></span>
                 </button>
                 <div class="h-6 w-px bg-[var(--border-color)]"></div>
                 <button type="button" onclick="switchTab('herbal')" class="flex items-center gap-2 text-left cursor-pointer">
-                    <span id="top-tree-symbol" class="text-lg theme-accent font-bold" aria-hidden="true">ᚍ</span>
-                    <span><span class="theme-muted block text-[11px] uppercase tracking-wide">Mês arbóreo celta</span><strong id="top-tree-text" class="theme-title font-semibold">—</strong></span>
+                    <span id="top-tree-symbol" class="text-xl theme-glyph font-bold" aria-hidden="true">ᚍ</span>
+                    <span><span class="theme-muted block text-[11px] uppercase tracking-wide">Mês arbóreo celta</span><strong id="top-tree-text" class="theme-info-hl font-semibold">—</strong></span>
                 </button>
             </div>
             <div class="flex items-center gap-3">
@@ -450,28 +471,37 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
 
         <main id="main" tabindex="-1" class="flex-1 outline-none max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 lg:py-8 space-y-6">
 
-            <!-- ORÁCULO OGHAM -->
-            <section id="tab-oracle" class="tab-content space-y-6 tab-in hidden">
+            <!-- ORÁCULO DE RUNAS -->
+            <section id="tab-runes" class="tab-content space-y-6 tab-in hidden">
                 <div class="theme-card border rounded-2xl p-5 lg:p-10 text-center">
                     <div class="max-w-xl mx-auto">
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo Sagrado de Ogham</h2>
-                        <p class="text-sm lg:text-[15px] theme-muted mb-6">Conecte-se com os espíritos dos 20 Few (gravetos de árvores sagradas) da tradição celta.</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo de Runas (Elder Futhark)</h2>
+                        <p class="text-sm lg:text-[15px] theme-muted mb-5">Consulte os símbolos ancestrais de sabedoria nórdica e germânica.</p>
+                        <div class="seg" role="group" aria-label="Modo">
+                            <button type="button" onclick="switchRuneMode('draw')" id="rune-mode-draw" aria-pressed="true" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Tiragem rúnica</button>
+                            <button type="button" onclick="switchRuneMode('gallery')" id="rune-mode-gallery" aria-pressed="false" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todas as runas (24)</button>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
-                        <button type="button" onclick="drawOghamCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 Few · Conselho</button>
-                        <button type="button" onclick="drawOghamCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 Few · Tríade</button>
-                        <button type="button" onclick="drawOghamCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 Few · Roda Elemental</button>
+
+                    <div id="rune-draw-actions" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto mt-6">
+                        <button type="button" onclick="drawRunes(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 runa · Conselho</button>
+                        <button type="button" onclick="drawRunes(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 runas · Passado, presente, futuro</button>
                     </div>
-                    <div id="ogham-card" class="draw-area mt-6 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha 1, 3 ou 5 Few para consultar o bosque.</p></div>
-                    <div id="ogham-save-bar" class="hidden mt-4">
-                        <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
+                    <div id="rune-card" class="draw-area mt-6 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha uma tiragem para consultar as runas.</p></div>
+                    <div id="rune-save-bar" class="hidden mt-4">
+                        <button type="button" onclick="saveLastReadingToJournal('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
+                    </div>
+
+                    <div id="rune-gallery" class="hidden text-left space-y-4 mt-6">
+                        <p class="text-sm theme-muted text-center max-w-xl mx-auto">As 24 runas do Elder Futhark, com o significado direito e o invertido. Nove delas são simétricas e não se invertem; para essas mostra-se a sombra da runa.</p>
+                        <div class="flex flex-wrap items-center justify-center gap-2">
+                            <div id="rune-filters" class="flex flex-wrap justify-center gap-2"></div>
+                            <input id="rune-search" type="search" oninput="setRuneQuery(this.value)" placeholder="Procurar runa ou tema…" aria-label="Procurar runa" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 w-56">
+                        </div>
+                        <p id="rune-gallery-count" class="text-xs theme-muted text-center" aria-live="polite"></p>
+                        <div id="rune-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                     </div>
                 </div>
-                <details id="reading-history" class="theme-card border rounded-xl p-4 text-left">
-                    <summary class="cursor-pointer text-sm font-semibold theme-title">Histórico de leituras <span id="history-count" class="theme-muted text-sm font-normal">(2)</span></summary>
-                    <div id="history-list" class="mt-3 space-y-2 text-sm"></div>
-                    <button onclick="clearReadingLog()" class="mt-3 text-sm theme-muted underline cursor-pointer">Limpar histórico</button>
-                </details>
             </section>
 
             <!-- BARALHO DE TAROT NÓRDICO 16-BIT (78 CARTAS) -->
@@ -519,65 +549,174 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                 </div>
             </section>
 
-            <!-- ORÁCULO DE RUNAS -->
-            <section id="tab-runes" class="tab-content space-y-6 tab-in hidden">
+            <!-- ORÁCULO OGHAM -->
+            <section id="tab-oracle" class="tab-content space-y-6 tab-in hidden">
                 <div class="theme-card border rounded-2xl p-5 lg:p-10 text-center">
                     <div class="max-w-xl mx-auto">
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo de Runas (Elder Futhark)</h2>
-                        <p class="text-sm lg:text-[15px] theme-muted mb-5">Consulte os símbolos ancestrais de sabedoria nórdica e germânica.</p>
-                        <div class="seg" role="group" aria-label="Modo">
-                            <button type="button" onclick="switchRuneMode('draw')" id="rune-mode-draw" aria-pressed="true" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Tiragem rúnica</button>
-                            <button type="button" onclick="switchRuneMode('gallery')" id="rune-mode-gallery" aria-pressed="false" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todas as runas (24)</button>
-                        </div>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo Sagrado de Ogham</h2>
+                        <p class="text-sm lg:text-[15px] theme-muted mb-6">Conecte-se com os espíritos dos 20 Few (gravetos de árvores sagradas) da tradição celta.</p>
                     </div>
-
-                    <div id="rune-draw-actions" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto mt-6">
-                        <button type="button" onclick="drawRunes(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 runa · Conselho</button>
-                        <button type="button" onclick="drawRunes(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 runas · Passado, presente, futuro</button>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
+                        <button type="button" onclick="drawOghamCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 Few · Conselho</button>
+                        <button type="button" onclick="drawOghamCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 Few · Tríade</button>
+                        <button type="button" onclick="drawOghamCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 Few · Roda Elemental</button>
                     </div>
-                    <div id="rune-card" class="draw-area mt-6 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha uma tiragem para consultar as runas.</p></div>
-                    <div id="rune-save-bar" class="hidden mt-4">
-                        <button type="button" onclick="saveLastReadingToJournal('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
-                    </div>
-
-                    <div id="rune-gallery" class="hidden text-left space-y-4 mt-6">
-                        <p class="text-sm theme-muted text-center max-w-xl mx-auto">As 24 runas do Elder Futhark, com o significado direito e o invertido. Nove delas são simétricas e não se invertem; para essas mostra-se a sombra da runa.</p>
-                        <div class="flex flex-wrap items-center justify-center gap-2">
-                            <div id="rune-filters" class="flex flex-wrap justify-center gap-2"></div>
-                            <input id="rune-search" type="search" oninput="setRuneQuery(this.value)" placeholder="Procurar runa ou tema…" aria-label="Procurar runa" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 w-56">
-                        </div>
-                        <p id="rune-gallery-count" class="text-xs theme-muted text-center" aria-live="polite"></p>
-                        <div id="rune-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                    <div id="ogham-card" class="draw-area mt-6 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha 1, 3 ou 5 Few para consultar o bosque.</p></div>
+                    <div id="ogham-save-bar" class="hidden mt-4">
+                        <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar leitura no Diário</button>
                     </div>
                 </div>
+                <details id="reading-history" class="theme-card border rounded-xl p-4 text-left">
+                    <summary class="cursor-pointer text-sm font-semibold theme-title">Histórico de leituras <span id="history-count" class="theme-muted text-sm font-normal">(2)</span></summary>
+                    <div id="history-list" class="mt-3 space-y-2 text-sm"></div>
+                    <button onclick="clearReadingLog()" class="mt-3 text-sm theme-muted underline cursor-pointer">Limpar histórico</button>
+                </details>
             </section>
 
             <!-- ASTRONOMIA, SOLSTÍCIOS & HORAS MÁGICAS OBOD -->
             <section id="tab-astro" class="tab-content space-y-6 tab-in hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="theme-card border rounded-2xl p-5 lg:p-8 flex items-center gap-5">
-                        <div id="moon-icon" class="text-6xl select-none" aria-hidden="true">🌓</div>
+                <!-- ELEMENTO DO DIA & METEOROLOGIA LOCAL -->
+                <div class="theme-card border rounded-2xl p-5 lg:p-8 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                            <div class="eyebrow">Ciclo lunar atual</div>
-                            <h2 id="moon-phase-name" class="font-cinzel text-2xl theme-title font-bold mt-1">—</h2>
-                            <p id="moon-details" class="text-sm lg:text-[15px] theme-muted mt-1.5"></p>
+                            <div class="eyebrow">Alinhamento Natural &amp; Atmosférico</div>
+                            <h2 class="font-cinzel text-xl lg:text-2xl font-bold theme-title mt-1">Elemento Regente do Dia &amp; Meteorologia Local</h2>
+                        </div>
+                        <button type="button" onclick="refreshWeatherAndElement(true)" class="bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm py-2 px-4 rounded-lg transition cursor-pointer shrink-0">
+                            Atualizar GPS &amp; Clima
+                        </button>
+                    </div>
+                    <div id="daily-element-weather-card" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+                        <div class="theme-inner border rounded-xl p-4 lg:p-5 flex items-start sm:items-center gap-4">
+                            <div id="daily-elem-icon-box" class="w-14 h-14 rounded-xl border border-[var(--border-color)] flex items-center justify-center shrink-0 theme-card">
+                                <svg class="ic ic-xl theme-glyph" aria-hidden="true"><use id="daily-elem-use" href="#i-earth"></use></svg>
+                            </div>
+                            <div class="space-y-1.5 min-w-0 flex-1">
+                                <span id="daily-elem-badge" class="text-[11px] uppercase tracking-widest font-bold px-2 py-0.5 rounded border badge-hl inline-block">Elemento do Dia</span>
+                                <h3 id="daily-elem-title" class="font-cinzel text-base sm:text-lg font-bold theme-info-hl leading-snug">—</h3>
+                                <p id="daily-elem-desc" class="text-xs sm:text-sm theme-muted leading-relaxed">A calcular regência elemental do dia...</p>
+                            </div>
+                        </div>
+                        <div class="theme-inner border rounded-xl p-4 lg:p-5 flex flex-col justify-between space-y-2">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <span class="text-[11px] uppercase tracking-widest theme-accent font-semibold">Meteorologia &amp; Ressonância</span>
+                                <span id="weather-loc-badge" class="text-[11px] theme-muted px-2 py-0.5 rounded theme-card border">Alenquer / GPS Padrão</span>
+                            </div>
+                            <div class="flex flex-wrap items-baseline gap-2.5">
+                                <span id="weather-temp" class="font-cinzel text-2xl font-bold theme-info-hl">—°C</span>
+                                <span id="weather-cond" class="text-sm font-semibold theme-title">A sincronizar atmosfera...</span>
+                            </div>
+                            <p id="weather-elem-assoc" class="text-xs sm:text-sm theme-muted leading-relaxed">Associação elemental da meteorologia atual ao seu rito e contemplação.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICOS CICLO LUNAR & ARCO SOLAR (ESTILO DRUID PATH PRO) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- CICLO LUNAR COM GRÁFICO SINÓDICO -->
+                    <div class="theme-card border rounded-2xl p-5 lg:p-8 flex flex-col justify-between space-y-5">
+                        <div class="flex items-center justify-between gap-4">
+                            <div>
+                                <div class="eyebrow">Ciclo Lunar Sinódico (29.53d)</div>
+                                <h2 id="moon-phase-name" class="font-cinzel text-2xl theme-info-hl font-bold mt-1">—</h2>
+                                <p id="moon-details" class="text-sm theme-muted mt-1"></p>
+                            </div>
+                            <div id="moon-icon" class="text-5xl select-none" aria-hidden="true">🌓</div>
+                        </div>
+
+                        <!-- Gráfico SVG do Ciclo Lunar -->
+                        <div class="theme-inner border rounded-xl p-4 flex flex-col items-center">
+                            <svg id="lunar-cycle-svg" viewBox="0 0 320 175" class="w-full max-w-sm h-auto" role="img" aria-label="Gráfico do Ciclo Lunar">
+                                <defs>
+                                    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="var(--glyph-highlight)" stop-opacity="0.35"/>
+                                        <stop offset="100%" stop-color="var(--glyph-highlight)" stop-opacity="0"/>
+                                    </radialGradient>
+                                </defs>
+                                <!-- Órbita -->
+                                <circle cx="160" cy="88" r="62" fill="none" stroke="var(--border-color)" stroke-width="1.5" stroke-dasharray="4 4"/>
+                                <!-- Eixos -->
+                                <line x1="82" y1="88" x2="238" y2="88" stroke="var(--border-color)" stroke-width="1" opacity="0.6"/>
+                                <line x1="160" y1="14" x2="160" y2="162" stroke="var(--border-color)" stroke-width="1" opacity="0.6"/>
+                                <!-- Marcadores das 4 fases principais -->
+                                <circle cx="160" cy="150" r="7" fill="#090d16" stroke="var(--text-muted)" stroke-width="1.5"/>
+                                <text x="160" y="170" text-anchor="middle" font-size="9.5" fill="var(--text-muted)">Lua Nova (0d)</text>
+
+                                <path d="M 222 81 A 7 7 0 0 1 222 95 Z" fill="var(--text-title)"/>
+                                <circle cx="222" cy="88" r="7" fill="none" stroke="var(--text-muted)" stroke-width="1.2"/>
+                                <text x="234" y="91" text-anchor="start" font-size="9.5" fill="var(--text-muted)">Q. Cresc. (7.4d)</text>
+
+                                <circle cx="160" cy="26" r="7" fill="var(--glyph-highlight)"/>
+                                <text x="160" y="11" text-anchor="middle" font-size="9.5" fill="var(--info-highlight)" font-weight="bold">Lua Cheia (14.8d)</text>
+
+                                <path d="M 98 81 A 7 7 0 0 0 98 95 Z" fill="var(--text-title)"/>
+                                <circle cx="98" cy="88" r="7" fill="none" stroke="var(--text-muted)" stroke-width="1.2"/>
+                                <text x="86" y="91" text-anchor="end" font-size="9.5" fill="var(--text-muted)">Q. Ming. (22.1d)</text>
+
+                                <!-- Terra no centro -->
+                                <circle cx="160" cy="88" r="14" fill="color-mix(in srgb, var(--elem-water) 25%, var(--bg-card))" stroke="var(--elem-water)" stroke-width="1.5"/>
+                                <text x="160" y="91" text-anchor="middle" font-size="8.5" fill="var(--text-title)" font-weight="bold">TERRA</text>
+
+                                <!-- Posição atual da Lua na órbita (atualizada via JS) -->
+                                <circle id="lunar-orbit-halo" cx="160" cy="150" r="16" fill="url(#moonGlow)"/>
+                                <circle id="lunar-orbit-dot" cx="160" cy="150" r="6.5" fill="var(--glyph-highlight)" stroke="var(--bg-body)" stroke-width="1.5"/>
+                            </svg>
+                            <div id="lunar-next-milestones" class="w-full grid grid-cols-2 gap-2 pt-2 border-t border-[var(--border-color)] text-xs text-center">
+                                <div class="theme-card border rounded-lg py-1.5 px-2"><span class="theme-muted block">Próxima Lua Cheia</span><strong id="next-full-moon" class="theme-info-hl">—</strong></div>
+                                <div class="theme-card border rounded-lg py-1.5 px-2"><span class="theme-muted block">Próxima Lua Nova</span><strong id="next-new-moon" class="theme-info-hl">—</strong></div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="theme-card border rounded-2xl p-5 lg:p-8 space-y-4">
-                        <div class="flex items-center gap-5">
-                            <svg class="ic ic-hero theme-accent" aria-hidden="true"><use href="#i-sun"></use></svg>
+                    <!-- CICLO SOLAR COM GRÁFICO DE ARCO DIURNO E HORAS MÁGICAS -->
+                    <div class="theme-card border rounded-2xl p-5 lg:p-8 flex flex-col justify-between space-y-5">
+                        <div class="flex items-center justify-between gap-4">
                             <div>
-                                <div class="eyebrow">Ciclo solar & horas mágicas</div>
-                                <h2 id="solar-status" class="font-cinzel text-xl theme-title font-bold mt-1">—</h2>
-                                <p id="solar-duration" class="text-sm lg:text-[15px] theme-muted mt-1.5"></p>
+                                <div class="eyebrow">Arco Solar &amp; Horas Mágicas</div>
+                                <h2 id="solar-status" class="font-cinzel text-xl theme-info-hl font-bold mt-1">—</h2>
+                                <p id="solar-duration" class="text-sm theme-muted mt-1"></p>
                             </div>
+                            <svg class="ic ic-xl theme-glyph" aria-hidden="true"><use href="#i-sun"></use></svg>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm font-semibold">
-                            <div id="dawn-time" class="theme-inner border rounded-lg px-3 py-2 theme-accent">Alvorecer: —</div>
-                            <div id="sunrise-time" class="theme-inner border rounded-lg px-3 py-2 theme-title">Nascer: —</div>
-                            <div id="sunset-time" class="theme-inner border rounded-lg px-3 py-2 theme-title">Pôr: —</div>
-                            <div id="dusk-time" class="theme-inner border rounded-lg px-3 py-2 theme-accent">Crepúsculo: —</div>
+
+                        <!-- Gráfico SVG do Arco Solar (Dia vs Noite) -->
+                        <div class="theme-inner border rounded-xl p-4 flex flex-col items-center">
+                            <svg id="solar-arc-svg" viewBox="0 0 320 150" class="w-full max-w-sm h-auto" role="img" aria-label="Gráfico do Arco Solar Diurno">
+                                <defs>
+                                    <linearGradient id="daySkyGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="var(--glyph-highlight)" stop-opacity="0.28"/>
+                                        <stop offset="100%" stop-color="var(--glyph-highlight)" stop-opacity="0.02"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Área diurna sob o arco -->
+                                <path d="M 35 112 A 125 90 0 0 1 285 112 Z" fill="url(#daySkyGrad)"/>
+                                <!-- Linha do Horizonte -->
+                                <line x1="15" y1="112" x2="305" y2="112" stroke="var(--border-hover)" stroke-width="1.5"/>
+                                <text x="20" y="125" font-size="9" fill="var(--text-muted)">LESTE (Nascer)</text>
+                                <text x="160" y="125" text-anchor="middle" font-size="9" fill="var(--text-accent)">ZÉNITE SOLAR</text>
+                                <text x="300" y="125" text-anchor="end" font-size="9" fill="var(--text-muted)">OESTE (Pôr)</text>
+
+                                <!-- Arco tracejado noturno inferior e arco diurno superior -->
+                                <path d="M 35 112 A 125 90 0 0 1 285 112" fill="none" stroke="var(--glyph-highlight)" stroke-width="2.5"/>
+                                <path d="M 35 112 Q 160 148 285 112" fill="none" stroke="var(--border-color)" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+                                <!-- Pontos Nascer / Meio-dia / Pôr -->
+                                <circle cx="35" cy="112" r="4" fill="var(--elem-air)"/>
+                                <circle cx="160" cy="22" r="4" fill="var(--glyph-highlight)"/>
+                                <circle cx="285" cy="112" r="4" fill="var(--elem-fire)"/>
+
+                                <!-- Posição atual do Sol -->
+                                <circle id="solar-sun-halo" cx="160" cy="22" r="13" fill="var(--glyph-highlight)" opacity="0.25"/>
+                                <circle id="solar-sun-dot" cx="160" cy="22" r="6" fill="var(--glyph-highlight)" stroke="var(--bg-body)" stroke-width="1.5"/>
+                                <text id="solar-progress-label" x="160" y="143" text-anchor="middle" font-size="9.5" fill="var(--info-highlight)" font-weight="bold">Progresso Solar: —</text>
+                            </svg>
+
+                            <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-semibold pt-2 border-t border-[var(--border-color)]">
+                                <div id="dawn-time" class="theme-card border rounded-lg px-2.5 py-1.5 theme-accent">Alvorecer: —</div>
+                                <div id="sunrise-time" class="theme-card border rounded-lg px-2.5 py-1.5 theme-info-hl">Nascer: —</div>
+                                <div id="sunset-time" class="theme-card border rounded-lg px-2.5 py-1.5 theme-info-hl">Pôr: —</div>
+                                <div id="dusk-time" class="theme-card border rounded-lg px-2.5 py-1.5 theme-accent">Crepúsculo: —</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -587,38 +726,38 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
                             <h3 class="font-cinzel text-xl font-bold theme-title">Calculadora de Solstícios &amp; Equinócios por GPS</h3>
-                            <p class="text-sm theme-muted">Momento exato calculado matematicamente para a sua coordenada e ano civil atual.</p>
+                            <p class="text-sm theme-muted">Momento exato calculado matematicamente (algoritmo de Jean Meeus) para a sua coordenada e ano civil atual.</p>
                         </div>
-                        <button onclick="calculateExactSolarFestivals()" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-bold text-sm py-2.5 px-4 rounded-lg transition cursor-pointer">
+                        <button onclick="calculateExactSolarFestivals(); refreshWeatherAndElement(true);" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-bold text-sm py-2.5 px-4 rounded-lg transition cursor-pointer">
                             Calcular para a minha GPS
                         </button>
                     </div>
                     <div id="exact-festivals-result" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
                         <div class="theme-inner border rounded-lg p-3 text-sm space-y-1">
                             <span class="theme-accent font-bold block">Equinócio de Primavera</span>
-                            <strong id="eq-spring" class="theme-title">2026-03-20 15:33</strong>
+                            <strong id="eq-spring" class="theme-info-hl">2026-03-20 15:33</strong>
                         </div>
                         <div class="theme-inner border rounded-lg p-3 text-sm space-y-1">
                             <span class="theme-accent font-bold block">Solstício de Verão (Litha)</span>
-                            <strong id="sol-summer" class="theme-title">2026-06-21 09:13</strong>
+                            <strong id="sol-summer" class="theme-info-hl">2026-06-21 09:13</strong>
                         </div>
                         <div class="theme-inner border rounded-lg p-3 text-sm space-y-1">
                             <span class="theme-accent font-bold block">Equinócio de Outono (Mabon)</span>
-                            <strong id="eq-autum" class="theme-title">2026-09-22 18:54</strong>
+                            <strong id="eq-autum" class="theme-info-hl">2026-09-22 18:54</strong>
                         </div>
                         <div class="theme-inner border rounded-lg p-3 text-sm space-y-1">
                             <span class="theme-accent font-bold block">Solstício de Inverno (Yule)</span>
-                            <strong id="sol-winter" class="theme-title">2026-12-21 15:20</strong>
+                            <strong id="sol-winter" class="theme-info-hl">2026-12-21 15:20</strong>
                         </div>
                     </div>
                 </div>
 
                 <div class="theme-card border rounded-2xl p-6 lg:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
                     <div class="flex items-center gap-5">
-                        <div id="celtic-month-symbol" class="text-6xl theme-accent font-bold select-none">ᚍ</div>
+                        <div id="celtic-month-symbol" class="text-6xl theme-glyph font-bold select-none">ᚍ</div>
                         <div>
                             <span class="text-[11px] uppercase tracking-widest theme-accent font-semibold">Calendário Arbóreo Celta (Beth-Luis-Nion)</span>
-                            <h3 id="celtic-month-title" class="font-cinzel text-xl lg:text-2xl theme-title font-bold mt-1">Ngetal — Junco (Reed)</h3>
+                            <h3 id="celtic-month-title" class="font-cinzel text-xl lg:text-2xl theme-info-hl font-bold mt-1">Ngetal — Junco (Reed)</h3>
                             <p id="celtic-month-desc" class="text-sm lg:text-[15px] theme-muted mt-1 leading-relaxed">Ação direta, harmonia musical, alinhamento de propósito e cura profunda. Erva: Raiz de Junco &amp; Valeriana.</p>
                         </div>
                     </div>
@@ -705,7 +844,10 @@ body.zen-active #toast-container { bottom: calc(72px + env(safe-area-inset-botto
                     <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mt-1">Hoje no caminho</h2>
                 </div>
                 <div id="today-panel" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" aria-label="Resumo de hoje"></div>
-                <div id="daily-few" class="theme-card border rounded-2xl p-4 lg:p-5 text-left flex items-center gap-4" data-text=""></div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div id="daily-few" class="theme-card border rounded-2xl p-4 lg:p-5 text-left flex items-center gap-4" data-text=""></div>
+                    <div id="today-element-weather" class="theme-card border rounded-2xl p-4 lg:p-5 text-left flex items-center gap-4"></div>
+                </div>
                 <div class="theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
                     <h3 class="font-cinzel text-base font-bold theme-title">Prática de hoje</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -1788,8 +1930,8 @@ function drawOghamCard(count) {
             ${drawn.map((item, i) => `
                 <div class="theme-inner border rounded-xl p-5 text-center space-y-2">
                     <span class="text-[11px] uppercase tracking-widest theme-accent font-bold block">${labels[i]}</span>
-                    <div class="text-5xl theme-accent font-bold py-1">${item.symbol}</div>
-                    <h3 class="font-cinzel text-lg font-bold theme-title">${item.name}</h3>
+                    <div class="text-5xl theme-glyph font-bold py-1">${item.symbol}</div>
+                    <h3 class="font-cinzel text-lg font-bold theme-info-hl">${item.name}</h3>
                     <div class="text-xs theme-title font-semibold">${item.tree}</div>
                     <p class="text-sm theme-muted leading-relaxed">${item.meaning}</p>
                 </div>
@@ -1815,8 +1957,8 @@ function drawRunes(count) {
             ${drawn.map((r, i) => `
                 <div class="theme-inner border rounded-xl p-5 text-center space-y-2">
                     <span class="text-[11px] uppercase tracking-widest theme-accent font-bold block">${labels[i]}</span>
-                    <div class="text-5xl theme-accent font-bold py-1">${r.symbol}</div>
-                    <h3 class="font-cinzel text-lg font-bold theme-title">${r.name}</h3>
+                    <div class="text-5xl theme-glyph font-bold py-1">${r.symbol}</div>
+                    <h3 class="font-cinzel text-lg font-bold theme-info-hl">${r.name}</h3>
                     <p class="text-sm theme-muted leading-relaxed">${r.meaning}</p>
                 </div>
             `).join('')}
@@ -2385,10 +2527,10 @@ function renderHerbalList(filter = '') {
     list.innerHTML = filtered.map(o => `
         <div class="theme-inner border rounded-xl p-4 space-y-2 hover:border-[var(--border-hover)] transition">
             <div class="flex items-center justify-between">
-                <span class="text-3xl theme-accent font-bold">${o.symbol}</span>
+                <span class="text-3xl theme-glyph font-bold">${o.symbol}</span>
                 <span class="text-[11px] uppercase tracking-wider theme-muted opacity-75">${o.aicme}</span>
             </div>
-            <h3 class="font-cinzel text-base font-bold theme-title">${o.name} • ${o.tree}</h3>
+            <h3 class="font-cinzel text-base font-bold theme-info-hl">${o.name} • ${o.tree}</h3>
             <p class="text-xs theme-accent font-semibold">Fitoterapia: ${o.herb}</p>
             <p class="text-sm theme-muted leading-relaxed">${o.meaning}</p>
         </div>
@@ -2507,10 +2649,10 @@ function renderDailyFew() {
     const seed = ((d.getFullYear() * 372 + d.getMonth() * 31 + d.getDate()) * 9301 + 49297) % 233280;
     const o = OGHAM_DATA[seed % OGHAM_DATA.length];
     el.innerHTML = `
-        <span class="text-5xl theme-accent font-bold leading-none" aria-hidden="true">${o.symbol}</span>
+        <span class="text-5xl theme-glyph font-bold leading-none" aria-hidden="true">${o.symbol}</span>
         <div class="flex-1 min-w-0">
             <p class="text-sm theme-muted">Few do dia</p>
-            <h3 class="font-cinzel text-base font-bold theme-title">${o.name} • ${o.tree}</h3>
+            <h3 class="font-cinzel text-base font-bold theme-info-hl">${o.name} • ${o.tree}</h3>
             <p class="text-sm theme-muted leading-relaxed mt-1">${o.meaning}</p>
         </div>
         <button onclick="dailyToJournal()" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)] transition">Guardar</button>`;
@@ -2760,10 +2902,10 @@ function renderRuneGallery() {
         <div class="theme-inner border rounded-xl p-4 space-y-2.5 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between gap-2">
-                    <span class="text-4xl theme-accent font-bold leading-none">${r.symbol}</span>
+                    <span class="text-4xl theme-glyph font-bold leading-none">${r.symbol}</span>
                     <span class="text-[11px] uppercase tracking-wider px-2 py-0.5 rounded-md theme-card border theme-muted">Aett de ${r.aett}</span>
                 </div>
-                <h3 class="font-cinzel text-base font-bold theme-title mt-2">${r.name}</h3>
+                <h3 class="font-cinzel text-base font-bold theme-info-hl mt-2">${r.name}</h3>
                 <p class="text-sm theme-muted leading-relaxed mt-1"><strong class="theme-title">Direita:</strong> ${r.meaning}</p>
             </div>
             <p class="text-xs theme-muted leading-relaxed pt-2 border-t border-[var(--border-color)]">
@@ -2934,7 +3076,7 @@ window.addEventListener('DOMContentLoaded', () => {
    ============================================================ */
 (() => {
 const $ = id => document.getElementById(id);
-const BOTTOM_TABS = ['today', 'oracle', 'tarot', 'journal'];
+const BOTTOM_TABS = ['today', 'runes', 'tarot', 'journal'];
 
 // Folha "Mais" e diálogos: fecham ao tocar fora
 const sheet = $('more-sheet');
@@ -3043,4 +3185,231 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 })();
 </script>
+
+<script>
+/* ============================================================
+   v6: ELEMENTO DO DIA (TERRA, ÁGUA, AR, FOGO), METEOROLOGIA GPS
+       E GRÁFICOS ASTRONÓMICOS INTERATIVOS (DRUID PATH PRO)
+   ============================================================ */
+(() => {
+    const $ = id => document.getElementById(id);
+
+    // Regência Elemental por dia da semana + estação/hora, cruzada com meteorologia local
+    const WEEKDAY_ELEMENTS = [
+        { key: 'fire', name: 'Fogo', icon: 'altar', colorVar: 'var(--elem-fire)', planet: 'Sol (Domingo)', quality: 'Vitalidade, iluminação, coragem criativa e expansão da Awen.' },
+        { key: 'water', name: 'Água', icon: 'water', colorVar: 'var(--elem-water)', planet: 'Lua (Segunda-feira)', quality: 'Intuição profunda, sonhos, fluidez emocional e cura interior.' },
+        { key: 'fire', name: 'Fogo', icon: 'altar', colorVar: 'var(--elem-fire)', planet: 'Marte (Terça-feira)', quality: 'Força de vontade, proteção ativa, foco e determinação.' },
+        { key: 'air', name: 'Ar', icon: 'air', colorVar: 'var(--elem-air)', planet: 'Mercúrio (Quarta-feira)', quality: 'Inspiração bárdica, palavra sagrada, estudo e clareza mental.' },
+        { key: 'air', name: 'Ar', icon: 'air', colorVar: 'var(--elem-air)', planet: 'Júpiter (Quinta-feira)', quality: 'Visão elevada, sabedoria filosófica, justiça e horizonte amplo.' },
+        { key: 'water', name: 'Água', icon: 'water', colorVar: 'var(--elem-water)', planet: 'Vénus (Sexta-feira)', quality: 'Harmonia, beleza natural, laços afetivos e fertilidade.' },
+        { key: 'earth', name: 'Terra', icon: 'earth', colorVar: 'var(--elem-earth)', planet: 'Saturno (Sábado)', quality: 'Enraizamento, ancestralidade, silêncio do bosque e estrutura.' }
+    ];
+
+    const WEATHER_CODES_PT = {
+        0: ['Céu limpo', 'fire', 'O sol aberto amplifica o Fogo solar: ideal para rituais ao ar livre e clareza de propósito.'],
+        1: ['Maioritariamente limpo', 'fire', 'Luz clara com brisa leve: equilíbrio entre o Fogo da ação e o Ar da mente.'],
+        2: ['Parcialmente nublado', 'air', 'Nuvens em movimento trazem o sopro do Ar: favorece a contemplação e a escrita bárdica.'],
+        3: ['Céu encoberto', 'earth', 'O manto cinzento recolhe a energia para a Terra: dia propício ao enraizamento e estudo.'],
+        45: ['Nevoeiro', 'water', 'A névoa dissolve fronteiras entre mundos (Água e Ar): excelente para meditação e oráculos.'],
+        48: ['Nevoeiro gelado', 'earth', 'Quietude cristalina da Terra e da Água: recolhimento no Nemeton interior.'],
+        51: ['Chuvisco leve', 'water', 'As águas suaves purificam o ambiente e nutrem a intuição e a cura emocional.'],
+        53: ['Chuvisco moderado', 'water', 'Fluxo contínuo de Água: momento de soltar tensões e ouvir a voz interior.'],
+        55: ['Chuvisco denso', 'water', 'Purificação profunda pelas águas do céu; ideal para o Altar e o Diário.'],
+        61: ['Chuva fraca', 'water', 'A bênção da Água desperta a memória ancestral e a serenidade do bosque.'],
+        63: ['Chuva moderada', 'water', 'Força da Água em movimento: favorece rituais de limpeza e renovação.'],
+        65: ['Chuva forte', 'water', 'Torrente purificadora de Água e Fogo celeste: energia intensa de transformação.'],
+        71: ['Neve leve', 'earth', 'Silêncio branco da Terra em repouso: pureza e paz profunda no Grove.'],
+        80: ['Aguaceiros leves', 'water', 'Alternância dinâmica entre Água e Ar: desbloqueio criativo e movimento.'],
+        81: ['Aguaceiros moderados', 'water', 'Energia viva das águas celestes; bom momento para invocar a Awen.'],
+        95: ['Trovoada', 'fire', 'União poderosa de Fogo (relâmpago), Ar (trovão) e Água: força transformadora de Taranis/Thor.']
+    };
+
+    function classifyWeather(code, windSpeed, temp) {
+        if (WEATHER_CODES_PT[code]) return WEATHER_CODES_PT[code];
+        if (code >= 95) return WEATHER_CODES_PT[95];
+        if (code >= 80) return WEATHER_CODES_PT[80];
+        if (code >= 71) return WEATHER_CODES_PT[71];
+        if (code >= 61) return WEATHER_CODES_PT[61];
+        if (code >= 51) return WEATHER_CODES_PT[51];
+        if (windSpeed > 28) return ['Vento forte', 'air', 'Os ventos intensos ativam o elemento Ar: inspiração rápida e limpeza mental.'];
+        return ['Tempo estável', 'earth', 'Estabilidade atmosférica da Terra: favorece a constância na prática diária.'];
+    }
+
+    function updateAstronomyCharts() {
+        const now = new Date();
+        const synodicMonth = 29.53058867;
+        const knownNewMoon = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+        const diffDays = (now - knownNewMoon) / 86400000;
+        const phaseAge = ((diffDays % synodicMonth) + synodicMonth) % synodicMonth;
+
+        // Atualizar posição da Lua na órbita SVG (0d em baixo (160,150), sentido anti-horário)
+        const angle = (phaseAge / synodicMonth) * 2 * Math.PI;
+        const cx = 160 + 62 * Math.sin(angle);
+        const cy = 88 + 62 * Math.cos(angle);
+        const dot = $('lunar-orbit-dot');
+        const halo = $('lunar-orbit-halo');
+        if (dot) { dot.setAttribute('cx', cx.toFixed(1)); dot.setAttribute('cy', cy.toFixed(1)); }
+        if (halo) { halo.setAttribute('cx', cx.toFixed(1)); halo.setAttribute('cy', cy.toFixed(1)); }
+
+        // Próxima Lua Cheia (14.765d) e Próxima Lua Nova (29.53d)
+        const halfCycle = synodicMonth / 2;
+        const daysToFull = phaseAge <= halfCycle ? (halfCycle - phaseAge) : (synodicMonth - phaseAge + halfCycle);
+        const daysToNew = synodicMonth - phaseAge;
+        const fmtShort = d => d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' });
+        if ($('next-full-moon')) $('next-full-moon').textContent = `${fmtShort(new Date(now.getTime() + daysToFull * 864e5))} (${Math.round(daysToFull)}d)`;
+        if ($('next-new-moon')) $('next-new-moon').textContent = `${fmtShort(new Date(now.getTime() + daysToNew * 864e5))} (${Math.round(daysToNew)}d)`;
+
+        // Atualizar posição do Sol no Arco Diurno SVG
+        const startOfYear = new Date(now.getFullYear(), 0, 0);
+        const dayOfYear = Math.floor((now - startOfYear) / 86400000);
+        const declination = 23.44 * Math.sin(((360 / 365) * (dayOfYear - 81)) * (Math.PI / 180));
+        const lat = parseFloat(localStorage.getItem('druid_lat') || '39.05');
+        const lon = parseFloat(localStorage.getItem('druid_lon') || '-8.98');
+        const cosH = Math.max(-1, Math.min(1, -Math.tan(lat * Math.PI / 180) * Math.tan(declination * Math.PI / 180)));
+        const daylightHours = (2 * Math.acos(cosH) * (180 / Math.PI)) / 15;
+        const B = (360 / 365) * (dayOfYear - 81) * (Math.PI / 180);
+        const eot = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+        const solarNoon = 12 - lon / 15 - now.getTimezoneOffset() / 60 - eot / 60;
+        const sunriseDec = solarNoon - daylightHours / 2;
+        const sunsetDec = solarNoon + daylightHours / 2;
+        const curHour = now.getHours() + now.getMinutes() / 60;
+
+        const sunDot = $('solar-sun-dot');
+        const sunHalo = $('solar-sun-halo');
+        const progLabel = $('solar-progress-label');
+
+        if (curHour >= sunriseDec && curHour <= sunsetDec) {
+            const p = (curHour - sunriseDec) / (sunsetDec - sunriseDec); // 0 a 1
+            const theta = Math.PI * (1 - p); // PI (esquerda) a 0 (direita)
+            const sx = 160 + 125 * Math.cos(theta);
+            const sy = 112 - 90 * Math.sin(theta);
+            if (sunDot) { sunDot.setAttribute('cx', sx.toFixed(1)); sunDot.setAttribute('cy', sy.toFixed(1)); }
+            if (sunHalo) { sunHalo.setAttribute('cx', sx.toFixed(1)); sunHalo.setAttribute('cy', sy.toFixed(1)); }
+            if (progLabel) progLabel.textContent = `Dia Solar: ${Math.round(p * 100)}% decorrido`;
+        } else {
+            // Período noturno: Sol sob o horizonte
+            const nightDur = 24 - daylightHours;
+            const nightElapsed = curHour > sunsetDec ? (curHour - sunsetDec) : (24 - sunsetDec + curHour);
+            const pNight = Math.max(0, Math.min(1, nightElapsed / nightDur));
+            const sx = 285 - 250 * pNight;
+            const sy = 112 + 18 * Math.sin(Math.PI * pNight);
+            if (sunDot) { sunDot.setAttribute('cx', sx.toFixed(1)); sunDot.setAttribute('cy', sy.toFixed(1)); }
+            if (sunHalo) { sunHalo.setAttribute('cx', sx.toFixed(1)); sunHalo.setAttribute('cy', sy.toFixed(1)); }
+            if (progLabel) progLabel.textContent = `Período Noturno: ${Math.round(pNight * 100)}% decorrido`;
+        }
+    }
+
+    function renderElementAndWeather(weatherData) {
+        const now = new Date();
+        const dayElem = WEEKDAY_ELEMENTS[now.getDay()];
+        const elemNames = { earth: 'Terra', air: 'Ar', fire: 'Fogo', water: 'Água' };
+        const elemIcons = { earth: 'earth', air: 'air', fire: 'altar', water: 'water' };
+        const elemColors = { earth: 'var(--elem-earth)', air: 'var(--elem-air)', fire: 'var(--elem-fire)', water: 'var(--elem-water)' };
+
+        // Atualizar secção Astronomia
+        if ($('daily-elem-use')) $('daily-elem-use').setAttribute('href', `#i-${dayElem.icon}`);
+        if ($('daily-elem-title')) {
+            $('daily-elem-title').textContent = `${dayElem.name} • ${dayElem.planet}`;
+            $('daily-elem-title').style.color = dayElem.colorVar;
+        }
+        if ($('daily-elem-desc')) $('daily-elem-desc').textContent = dayElem.quality;
+
+        let weatherSummary = 'Clima local sincronizado';
+        let weatherAssoc = 'Active o GPS para associar a meteorologia exata da sua localização.';
+        let tempStr = '—°C';
+        let wElemKey = dayElem.key;
+
+        if (weatherData && weatherData.current) {
+            const cw = weatherData.current;
+            const temp = Math.round(cw.temperature_2m);
+            const wind = Math.round(cw.wind_speed_10m || 0);
+            const [condLabel, wKey, assocText] = classifyWeather(cw.weather_code, wind, temp);
+            wElemKey = wKey;
+            tempStr = `${temp}°C`;
+            weatherSummary = `${condLabel} · Vento ${wind} km/h`;
+            weatherAssoc = `Ressonância atmosférica de ${elemNames[wKey]}: ${assocText}`;
+        }
+
+        if ($('weather-temp')) $('weather-temp').textContent = tempStr;
+        if ($('weather-cond')) $('weather-cond').textContent = weatherSummary;
+        if ($('weather-elem-assoc')) $('weather-elem-assoc').textContent = weatherAssoc;
+
+        const locName = localStorage.getItem('druid_loc_label') || 'Alenquer, PT (Padrão)';
+        if ($('weather-loc-badge')) $('weather-loc-badge').textContent = locName;
+
+        // Atualizar card no painel "Hoje"
+        const todayCard = $('today-element-weather');
+        if (todayCard) {
+            todayCard.innerHTML = `
+                <div class="w-12 h-12 rounded-xl theme-inner border border-[var(--border-color)] flex items-center justify-center shrink-0" style="color:${dayElem.colorVar}">
+                    <svg class="ic ic-lg" aria-hidden="true"><use href="#i-${dayElem.icon}"></use></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm theme-muted">Elemento do dia &amp; Clima</p>
+                    <h3 class="font-cinzel text-base font-bold theme-info-hl leading-snug">${dayElem.name} · ${tempStr} (${weatherSummary.split(' · ')[0]})</h3>
+                    <p class="text-xs sm:text-sm theme-muted leading-relaxed mt-1">${weatherAssoc}</p>
+                </div>
+                <button type="button" onclick="switchTab('astro')" class="theme-inner border text-sm theme-accent font-semibold py-2 px-3 rounded-lg cursor-pointer hover:border-[var(--border-hover)] transition shrink-0">Ciclos</button>
+            `;
+        }
+    }
+
+    async function fetchLocalWeather(lat, lon) {
+        try {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&timezone=auto`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+            localStorage.setItem('druid_weather_cache', JSON.stringify({ ts: Date.now(), data }));
+            renderElementAndWeather(data);
+        } catch (e) {
+            // Fallback offline com cache se existir
+            try {
+                const cached = JSON.parse(localStorage.getItem('druid_weather_cache') || 'null');
+                if (cached && cached.data) renderElementAndWeather(cached.data);
+                else renderElementAndWeather(null);
+            } catch {
+                renderElementAndWeather(null);
+            }
+        }
+    }
+
+    window.refreshWeatherAndElement = function (askGps = false) {
+        const defaultLat = parseFloat(localStorage.getItem('druid_lat') || '39.0532');
+        const defaultLon = parseFloat(localStorage.getItem('druid_lon') || '-9.0092');
+
+        if (askGps && 'geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                localStorage.setItem('druid_lat', lat.toFixed(4));
+                localStorage.setItem('druid_lon', lon.toFixed(4));
+                localStorage.setItem('druid_loc_label', `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? 'E' : 'O'}`);
+                updateAstronomy();
+                updateAstronomyCharts();
+                fetchLocalWeather(lat, lon);
+                if (typeof showToast === 'function') showToast('Localização GPS e meteorologia atualizadas!');
+            }, () => {
+                fetchLocalWeather(defaultLat, defaultLon);
+                if (typeof showToast === 'function') showToast('A usar coordenadas guardadas para meteorologia.');
+            }, { timeout: 6000 });
+        } else {
+            fetchLocalWeather(defaultLat, defaultLon);
+        }
+    };
+
+    const _origUpdateAstro = updateAstronomy;
+    updateAstronomy = function () {
+        _origUpdateAstro();
+        updateAstronomyCharts();
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+        updateAstronomyCharts();
+        renderElementAndWeather(null);
+        refreshWeatherAndElement(false);
+    });
+})();
+</script>
+
 </body></html>
