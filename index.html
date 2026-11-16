@@ -257,9 +257,15 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
 .tarot-flip-wrapper:focus-visible { box-shadow: 0 0 0 3px var(--bg-body), 0 0 0 5px var(--text-accent); }
 .tarot-flip-inner {
   position: relative; width: 100%; height: 100%;
-  transition: transform .8s cubic-bezier(.2, .9, .25, 1);
+  transition: transform .7s cubic-bezier(.45, .05, .25, 1);
   transform-style: preserve-3d;
 }
+/* A face escondida fica invisível a partir de meio da viragem: evita que o verso
+   (ou partes dele) apareça através da face no Safari/iOS e em alguns Android. */
+.tarot-flip-wrapper .tarot-card-back  { visibility: visible; transition: visibility 0s linear .3s; }
+.tarot-flip-wrapper .tarot-card-front { visibility: hidden;  transition: visibility 0s linear .3s; }
+.tarot-flip-wrapper.is-flipped .tarot-card-back  { visibility: hidden; }
+.tarot-flip-wrapper.is-flipped .tarot-card-front { visibility: visible; }
 .tarot-flip-wrapper.is-flipped .tarot-flip-inner { transform: rotateY(180deg); }
 .tarot-flip-wrapper:not(.is-flipped):hover .tarot-flip-inner { transform: translateY(-4px) rotateZ(-.6deg); }
 
@@ -290,15 +296,11 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
   box-shadow: inset 0 0 0 2.5px var(--ink), inset 0 0 0 3.5px color-mix(in srgb, var(--accent) 70%, transparent);
   opacity: .9;
 }
-/* pequenos losangos nos cantos */
+/* pequenos losangos no meio do topo e da base da moldura */
 .tarot-card-back::after, .tarot-card-front::after {
-  content: ""; position: absolute; inset: 1.2cqw; pointer-events: none;
-  --d: 2.6cqw;
-  background:
-    linear-gradient(45deg, transparent 35%, var(--gold) 36% 64%, transparent 65%) 0 0 / var(--d) var(--d) no-repeat,
-    linear-gradient(45deg, transparent 35%, var(--gold) 36% 64%, transparent 65%) 100% 0 / var(--d) var(--d) no-repeat,
-    linear-gradient(45deg, transparent 35%, var(--gold) 36% 64%, transparent 65%) 0 100% / var(--d) var(--d) no-repeat,
-    linear-gradient(45deg, transparent 35%, var(--gold) 36% 64%, transparent 65%) 100% 100% / var(--d) var(--d) no-repeat;
+  content: ""; position: absolute; left: 0; right: 0; top: 1.3cqw; bottom: 1.3cqw; pointer-events: none;
+  --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 .6 9.4 5 5 9.4 .6 5z' fill='%23d6b25e' stroke='%23141522' stroke-width='1'/%3E%3C/svg%3E");
+  background: var(--dia) 50% 0 / 3.4cqw 3.4cqw no-repeat, var(--dia) 50% 100% / 3.4cqw 3.4cqw no-repeat;
 }
 .tarot-card-front { transform: rotateY(180deg); }
 .tarot-static .tarot-card-front { transform: none; position: absolute; }
@@ -347,9 +349,8 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
 }
 .card-art-box::after { /* brilho/vinheta */
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(90% 60% at 50% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 65%),
+  background: radial-gradient(90% 60% at 50% 30%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 65%),
               radial-gradient(130% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.55));
-  mix-blend-mode: screen;
 }
 .card-art-box .pixel-svg {
   position: absolute; inset: 0; width: 100%; height: 100%; max-width: none;
@@ -391,7 +392,7 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
   -webkit-mask: radial-gradient(circle at 50% 46%, transparent 30cqw, #000 31cqw);
           mask: radial-gradient(circle at 50% 46%, transparent 30cqw, #000 31cqw);
 }
-.tc-back-emblem { position: relative; z-index: 1; width: 66cqw; height: auto; filter: drop-shadow(0 0 10px rgba(214,178,94,.35)); }
+.tc-back-emblem { position: relative; z-index: 1; width: 66cqw; height: auto; }
 .tc-back-label {
   position: absolute; z-index: 1; left: 0; right: 0; bottom: 8.5cqw;
   font-family: 'Cinzel', serif; font-weight: 700; font-size: 5.4cqw; letter-spacing: .3em;
@@ -515,6 +516,7 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
   .tarot-flip-inner, .card-art-box .pixel-svg, .tarot-tile { transition: none; }
   [data-tarot-slot] { animation: none; }
   .tarot-flip-wrapper:not(.is-flipped):hover .tarot-flip-inner { transform: none; }
+  .tarot-flip-wrapper .tarot-card-back, .tarot-flip-wrapper .tarot-card-front { transition: none; }
 }
 
 /* ---------- Zen Mode ---------- */
