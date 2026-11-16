@@ -241,134 +241,218 @@ dialog::backdrop { background: rgba(0, 0, 0, .6); }
 
 .breath-animation { transition: transform 4s ease-in-out, border-color 1s ease; }
 
-/* ---------- Cartas de Tarot 16-bit (v10.1 design) ---------- */
+/* ---------- Cartas de Tarot — design "cartão dourado" (v11) ----------
+   O cartão tem sempre papel escuro e moldura dourada (independente do tema),
+   como uma carta física. A cor do naipe só aparece na face, nunca no verso. */
 .tarot-flip-wrapper, .tarot-static {
-  width: min(200px, 100%);
-  aspect-ratio: 5 / 7.4;
+  --gold: #d6b25e; --gold-hi: #f3dc9a; --gold-lo: #8a6a2a;
+  --ink: #141522; --ink-2: #1d1f33;
+  width: min(208px, 100%);
+  aspect-ratio: 5 / 8.2;
   margin: 0 auto;
   position: relative;
+  container-type: inline-size;
 }
-.tarot-flip-wrapper { perspective: 1200px; }
+.tarot-flip-wrapper { perspective: 1400px; border-radius: 6.5cqw; outline: none; }
+.tarot-flip-wrapper:focus-visible { box-shadow: 0 0 0 3px var(--bg-body), 0 0 0 5px var(--text-accent); }
 .tarot-flip-inner {
   position: relative; width: 100%; height: 100%;
-  transition: transform .7s cubic-bezier(.22, 1, .36, 1);
+  transition: transform .8s cubic-bezier(.2, .9, .25, 1);
   transform-style: preserve-3d;
 }
 .tarot-flip-wrapper.is-flipped .tarot-flip-inner { transform: rotateY(180deg); }
+.tarot-flip-wrapper:not(.is-flipped):hover .tarot-flip-inner { transform: translateY(-4px) rotateZ(-.6deg); }
+
 .tarot-card-back, .tarot-card-front {
+  --accent: var(--gold);
   position: absolute; inset: 0;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  border-radius: 16px;
-  border: 2px solid var(--tarot-border, #c9a227);
+  border-radius: 6.5cqw;
   background:
-    linear-gradient(160deg, color-mix(in srgb, var(--bg-card) 88%, #000) 0%, var(--bg-body) 100%);
+    radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    linear-gradient(170deg, var(--ink-2), var(--ink) 70%);
+  border: 1px solid var(--gold-lo);
   box-shadow:
-    0 12px 28px rgba(0,0,0,.5),
-    0 0 0 1px color-mix(in srgb, var(--tarot-border, #c9a227) 35%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, var(--tarot-border, #c9a227) 25%, transparent),
-    inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent);
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: 9px; overflow: hidden;
+    0 1px 0 rgba(255,255,255,.06) inset,
+    0 14px 30px -10px rgba(0,0,0,.55),
+    0 4px 10px rgba(0,0,0,.25);
+  display: flex; flex-direction: column;
+  padding: 7cqw 6.5cqw 6cqw;
+  overflow: hidden;
+  color: var(--gold-hi);
+  text-align: center;
 }
+/* moldura dupla dourada */
 .tarot-card-back::before, .tarot-card-front::before {
-  content: "";
-  position: absolute; inset: 5px;
-  border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--tarot-border, #c9a227) 40%, transparent);
-  pointer-events: none;
+  content: ""; position: absolute; inset: 3cqw; pointer-events: none;
+  border-radius: 4.5cqw;
+  border: 1.5px solid var(--gold);
+  box-shadow: inset 0 0 0 2.5px var(--ink), inset 0 0 0 3.5px color-mix(in srgb, var(--accent) 70%, transparent);
+  opacity: .9;
+}
+/* pequenos losangos nos cantos */
+.tarot-card-back::after, .tarot-card-front::after {
+  content: ""; position: absolute; inset: 1.2cqw; pointer-events: none;
+  --d: 2.6cqw;
+  background:
+    linear-gradient(45deg, transparent 35%, var(--gold) 36% 64%, transparent 65%) 0 0 / var(--d) var(--d) no-repeat,
+    linear-gradient(45deg, transparent 35%, var(--gold) 36% 64%, transparent 65%) 100% 0 / var(--d) var(--d) no-repeat,
+    linear-gradient(45deg, transparent 35%, var(--gold) 36% 64%, transparent 65%) 0 100% / var(--d) var(--d) no-repeat,
+    linear-gradient(45deg, transparent 35%, var(--gold) 36% 64%, transparent 65%) 100% 100% / var(--d) var(--d) no-repeat;
 }
 .tarot-card-front { transform: rotateY(180deg); }
-.tarot-static .tarot-card-front { transform: none; position: relative; }
-/* Suit / arcana accents */
-.tarot-card-front.suit-major, .tarot-card-back.suit-major { --tarot-border: #c9a227; }
-.tarot-card-front.suit-wands, .tarot-card-back.suit-wands { --tarot-border: var(--elem-fire, #f87171); }
-.tarot-card-front.suit-cups, .tarot-card-back.suit-cups { --tarot-border: var(--elem-water, #60a5fa); }
-.tarot-card-front.suit-swords, .tarot-card-back.suit-swords { --tarot-border: var(--elem-air, #7dd3fc); }
-.tarot-card-front.suit-pentacles, .tarot-card-back.suit-pentacles { --tarot-border: var(--elem-earth, #fbbf24); }
-.card-header-pixel, .card-footer-pixel {
+.tarot-static .tarot-card-front { transform: none; position: absolute; }
+
+/* Acentos por naipe (apenas na face) */
+.tarot-card-front.suit-major     { --accent: #e0b84f; }
+.tarot-card-front.suit-wands     { --accent: #ef6a3a; }
+.tarot-card-front.suit-cups      { --accent: #4f9bff; }
+.tarot-card-front.suit-swords    { --accent: #b9c7d8; }
+.tarot-card-front.suit-pentacles { --accent: #63b86e; }
+
+/* Face: topo (numeral + runa) */
+.tc-top {
   position: relative; z-index: 1;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 7.5px; line-height: 1.45;
-  color: color-mix(in srgb, var(--tarot-border, #c9a227) 70%, #fff);
-  background: color-mix(in srgb, var(--bg-body) 82%, #000);
-  border: 1px solid color-mix(in srgb, var(--tarot-border, #c9a227) 55%, transparent);
-  padding: 6px 5px; border-radius: 7px;
-  text-align: center; letter-spacing: .2px; overflow-wrap: anywhere;
+  display: flex; align-items: center; justify-content: space-between; gap: 2cqw;
+  padding: 0 1.5cqw 2.5cqw;
 }
+.tc-num {
+  font-family: 'Cinzel', serif; font-weight: 700;
+  font-size: 7.2cqw; line-height: 1; letter-spacing: .04em;
+  color: var(--gold-hi);
+}
+.tc-rune {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 10cqw; height: 10cqw; border-radius: 999px;
+  font-family: 'Noto Sans Runic', 'Segoe UI Historic', serif;
+  font-size: 6.2cqw; line-height: 1;
+  color: var(--ink); background: var(--accent);
+  box-shadow: 0 0 0 1px var(--gold-hi), 0 0 8px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.tc-suit {
+  font-size: 4.4cqw; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 75%, #fff);
+  flex: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Janela da arte em arco */
 .card-art-box {
   position: relative; z-index: 1;
-  flex: 1; min-height: 0; margin: 7px 0;
-  border: 1px solid color-mix(in srgb, var(--tarot-border, #c9a227) 30%, var(--border-color));
-  border-radius: 10px;
-  background:
-    radial-gradient(ellipse at 50% 40%, color-mix(in srgb, var(--tarot-border, #c9a227) 12%, transparent), transparent 70%),
-    color-mix(in srgb, var(--bg-body) 92%, #000);
+  flex: 1; min-height: 0;
+  border-radius: 50% 50% 4cqw 4cqw / 28% 28% 4cqw 4cqw;
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 0 0 2.5px var(--ink), 0 0 0 3.5px color-mix(in srgb, var(--accent) 65%, transparent), inset 0 -18px 24px -12px rgba(0,0,0,.6);
   overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
+  background: #0a0c14;
 }
-.card-art-box.is-reversed { transform: rotate(180deg); }
-.pixel-svg {
-  width: 100%; max-width: 7.5rem; height: auto; aspect-ratio: 1;
+.card-art-box::after { /* brilho/vinheta */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(90% 60% at 50% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 65%),
+              radial-gradient(130% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.55));
+  mix-blend-mode: screen;
+}
+.card-art-box .pixel-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%; max-width: none;
   image-rendering: pixelated; image-rendering: crisp-edges;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+  transition: transform .4s ease;
 }
+.card-art-box.is-reversed .pixel-svg { transform: rotate(180deg); }
+
+/* Placa do nome */
+.tc-plate {
+  position: relative; z-index: 1;
+  margin: 3.5cqw 1cqw 0;
+  padding: 2.4cqw 3cqw 2.2cqw;
+  border-radius: 2.5cqw;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 16%, var(--ink)), var(--ink));
+  border: 1px solid color-mix(in srgb, var(--gold) 70%, transparent);
+}
+.tc-name {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  font-family: 'Cinzel', serif; font-weight: 700;
+  font-size: 6.6cqw; line-height: 1.15;
+  color: #fbf3dc;
+  text-wrap: balance;
+}
+.tc-realm {
+  display: block; margin-top: 1cqw;
+  font-size: 4cqw; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 70%, #fff); opacity: .85;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Verso: igual para todas as cartas (não revela o naipe) */
+.tarot-card-back { justify-content: center; align-items: center; }
+.tarot-back-pattern {
+  position: absolute; inset: 3cqw; border-radius: 4.5cqw; pointer-events: none; opacity: .22;
+  background:
+    repeating-linear-gradient(45deg, var(--gold) 0 1px, transparent 1px 7cqw),
+    repeating-linear-gradient(-45deg, var(--gold) 0 1px, transparent 1px 7cqw);
+  -webkit-mask: radial-gradient(circle at 50% 46%, transparent 30cqw, #000 31cqw);
+          mask: radial-gradient(circle at 50% 46%, transparent 30cqw, #000 31cqw);
+}
+.tc-back-emblem { position: relative; z-index: 1; width: 66cqw; height: auto; filter: drop-shadow(0 0 10px rgba(214,178,94,.35)); }
+.tc-back-label {
+  position: absolute; z-index: 1; left: 0; right: 0; bottom: 8.5cqw;
+  font-family: 'Cinzel', serif; font-weight: 700; font-size: 5.4cqw; letter-spacing: .3em;
+  color: var(--gold);
+}
+.tc-back-hint {
+  position: absolute; z-index: 1; left: 0; right: 0; top: 8cqw;
+  font-size: 3.9cqw; letter-spacing: .18em; text-transform: uppercase; color: color-mix(in srgb, var(--gold) 80%, #fff); opacity: .75;
+}
+.tarot-flip-wrapper.is-flipped .tarot-card-front {
+  box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 16px 34px -10px rgba(0,0,0,.6), 0 0 22px -4px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+/* Galeria (Grimório) */
 .tarot-tile {
-  display: flex; flex-direction: column; align-items: stretch; gap: .45rem;
-  padding: .35rem; cursor: pointer; border-radius: 16px;
-  border: 1px solid transparent;
-  transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  display: flex; flex-direction: column; align-items: stretch;
+  padding: .4rem; cursor: pointer; border-radius: 16px;
+  border: 1px solid transparent; background: transparent;
+  transition: border-color .18s ease, transform .18s ease, background-color .18s ease;
 }
-.tarot-tile:hover {
-  border-color: color-mix(in srgb, var(--text-accent) 40%, transparent);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md, 0 8px 20px rgba(0,0,0,.25));
+.tarot-tile:hover, .tarot-tile:focus-visible {
+  border-color: color-mix(in srgb, var(--text-accent) 45%, transparent);
+  background: color-mix(in srgb, var(--text-accent) 6%, transparent);
+  transform: translateY(-3px); outline: none;
 }
-.tarot-tile:hover .tarot-card-front {
-  border-color: var(--text-accent);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--text-accent) 40%, transparent), 0 12px 28px rgba(0,0,0,.45);
-}
-.tarot-tile-name {
-  font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700;
-  line-height: 1.3; color: var(--text-title); text-align: center;
-}
+.tarot-tile .tarot-static { width: 100%; }
+.tarot-tile-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Painel de significado */
 .tarot-meaning {
   background: var(--bg-inner);
   border: 1px solid var(--border-color);
+  border-top: 3px solid var(--text-accent);
   border-radius: 12px;
-  padding: .75rem .85rem;
+  padding: .8rem .9rem;
   text-align: center;
   width: 100%;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 4%, transparent);
 }
-.tarot-meaning .tm-name {
-  font-family: 'Cinzel', serif; font-weight: 700; font-size: .875rem;
-  color: var(--text-title);
-}
+.tarot-meaning .tm-name { font-family: 'Cinzel', serif; font-weight: 700; font-size: .95rem; color: var(--text-title); }
 .tarot-badge {
   display: inline-flex; align-items: center; gap: .25rem;
   font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-  padding: .2rem .45rem; border-radius: 999px; border: 1px solid;
+  padding: .2rem .5rem; border-radius: 999px; border: 1px solid;
 }
 .tarot-badge.ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, transparent); background: color-mix(in srgb, var(--ok) 10%, transparent); }
 .tarot-badge.rev { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 45%, transparent); background: color-mix(in srgb, var(--danger) 10%, transparent); }
-.tarot-back-pattern {
-  position: absolute; inset: 0; opacity: .14; pointer-events: none;
-  background-image:
-    linear-gradient(45deg, var(--tarot-border, #c9a227) 25%, transparent 25%),
-    linear-gradient(-45deg, var(--tarot-border, #c9a227) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, var(--tarot-border, #c9a227) 75%),
-    linear-gradient(-45deg, transparent 75%, var(--tarot-border, #c9a227) 75%);
-  background-size: 12px 12px;
-  background-position: 0 0, 0 6px, 6px -6px, -6px 0;
-  border-radius: 14px;
-}
+
+/* Distribuição das cartas */
+@keyframes tarot-deal { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: none; } }
+[data-tarot-slot] { animation: tarot-deal .55s cubic-bezier(.2, .9, .25, 1) both; }
+[data-tarot-slot]:nth-child(2) { animation-delay: .09s; }
+[data-tarot-slot]:nth-child(3) { animation-delay: .18s; }
+[data-tarot-slot]:nth-child(4) { animation-delay: .27s; }
+[data-tarot-slot]:nth-child(5) { animation-delay: .36s; }
 @media (max-width: 479px) {
-  .tarot-tile .card-footer-pixel { display: none; }
-  .card-header-pixel, .card-footer-pixel { font-size: 6.5px; padding: 4px 3px; }
-  .tarot-flip-wrapper, .tarot-static { width: min(168px, 100%); }
+  .tarot-flip-wrapper { width: min(196px, 100%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tarot-flip-inner { transition: none; }
+  .tarot-flip-inner, .card-art-box .pixel-svg, .tarot-tile { transition: none; }
+  [data-tarot-slot] { animation: none; }
+  .tarot-flip-wrapper:not(.is-flipped):hover .tarot-flip-inner { transform: none; }
 }
 
 /* ---------- Zen Mode ---------- */
@@ -567,6 +651,9 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 .lunar-day.is-full {
   border-color: color-mix(in srgb, var(--moon-color) 70%, var(--border-color));
   background: color-mix(in srgb, var(--moon-color) 10%, var(--bg-inner));
+}
+.lunar-day.is-quarter {
+  border-color: color-mix(in srgb, var(--moon-color) 40%, var(--border-color));
 }
 .lunar-day.is-new {
   opacity: 0.9;
@@ -1109,7 +1196,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                         <div>
                             <div class="eyebrow">Ciclo do mês</div>
                             <h3 class="font-cinzel text-xl font-bold theme-title mt-1">Mapa lunar</h3>
-                            <p class="text-sm theme-muted mt-1">Fases aproximadas do mês civil · navegue entre meses ou exporte o mapa</p>
+                            <p class="text-sm theme-muted mt-1">Fases astronómicas reais (hora local) · navegue entre meses ou exporte o mapa</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
                             <button type="button" class="lunar-nav-btn" onclick="shiftLunarMap(-1)" aria-label="Mês anterior">‹</button>
@@ -1127,7 +1214,9 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
                     </div>
                     <div class="lunar-map-legend">
                         <span>🌑 Nova</span>
+                        <span>🌓 Q. Crescente</span>
                         <span>🌕 Cheia</span>
+                        <span>🌗 Q. Minguante</span>
                         <span><span class="dot" aria-hidden="true"></span>Hoje</span>
                     </div>
                 </div>
@@ -2010,6 +2099,113 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
     <div id="toast-container" role="status" aria-live="polite"></div>
 
     <script>
+/* ============================================================
+   LunarCalc — fases da Lua reais (Meeus, Astronomical Algorithms
+   cap. 47–49). Calculado sempre a partir da data/hora atual do
+   dispositivo, com precisão de minutos para Nova/Quartos/Cheia.
+   ============================================================ */
+(function () {
+  const RAD = Math.PI / 180, DAY = 864e5;
+  const sin = d => Math.sin(d * RAD), cos = d => Math.cos(d * RAD);
+  const NAMES = ['Lua Nova','Lua Crescente','Quarto Crescente','Gibosa Crescente','Lua Cheia','Gibosa Minguante','Quarto Minguante','Lua Minguante'];
+  const ICONS = ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
+  const jdToMs = jd => (jd - 2440587.5) * DAY;
+  const msToJd = ms => ms / DAY + 2440587.5;
+
+  // Instante real (UTC, ms) da fase k (k inteiro = Nova, +.25 QC, +.5 Cheia, +.75 QM)
+  function phaseTime(k) {
+    const T = k / 1236.85, T2 = T * T, T3 = T2 * T, T4 = T3 * T;
+    let jde = 2451550.09766 + 29.530588861 * k + 0.00015437 * T2 - 0.00000015 * T3 + 0.00000000073 * T4;
+    const E = 1 - 0.002516 * T - 0.0000074 * T2, E2 = E * E;
+    const M = 2.5534 + 29.1053567 * k - 0.0000014 * T2 - 0.00000011 * T3;
+    const Mp = 201.5643 + 385.81693528 * k + 0.0107582 * T2 + 0.00001238 * T3 - 0.000000058 * T4;
+    const F = 160.7108 + 390.67050284 * k - 0.0016118 * T2 - 0.00000227 * T3 + 0.000000011 * T4;
+    const O = 124.7746 - 1.56375588 * k + 0.0020672 * T2 + 0.00000215 * T3;
+    const q = Math.round((k - Math.floor(k)) * 4) % 4;
+    let c;
+    if (q === 0 || q === 2) {
+      const n = q === 0;
+      c = (n ? -0.4072 : -0.40614) * sin(Mp) + (n ? 0.17241 : 0.17302) * E * sin(M) + (n ? 0.01608 : 0.01614) * sin(2 * Mp)
+        + (n ? 0.01039 : 0.01043) * sin(2 * F) + (n ? 0.00739 : 0.00734) * E * sin(Mp - M) - (n ? 0.00514 : 0.00515) * E * sin(Mp + M)
+        + (n ? 0.00208 : 0.00209) * E2 * sin(2 * M) - 0.00111 * sin(Mp - 2 * F) - 0.00057 * sin(Mp + 2 * F)
+        + 0.00056 * E * sin(2 * Mp + M) - 0.00042 * sin(3 * Mp) + 0.00042 * E * sin(M + 2 * F) + 0.00038 * E * sin(M - 2 * F)
+        - 0.00024 * E * sin(2 * Mp - M) - 0.00017 * sin(O) - 0.00007 * sin(Mp + 2 * M) + 0.00004 * sin(2 * Mp - 2 * F)
+        + 0.00004 * sin(3 * M) + 0.00003 * sin(Mp + M - 2 * F) + 0.00003 * sin(2 * Mp + 2 * F) - 0.00003 * sin(Mp + M + 2 * F)
+        + 0.00003 * sin(Mp - M + 2 * F) - 0.00002 * sin(Mp - M - 2 * F) - 0.00002 * sin(3 * Mp + M) + 0.00002 * sin(4 * Mp);
+    } else {
+      c = -0.62801 * sin(Mp) + 0.17172 * E * sin(M) - 0.01183 * E * sin(Mp + M) + 0.00862 * sin(2 * Mp) + 0.00804 * sin(2 * F)
+        + 0.00454 * E * sin(Mp - M) + 0.00204 * E2 * sin(2 * M) - 0.0018 * sin(Mp - 2 * F) - 0.0007 * sin(Mp + 2 * F)
+        - 0.0004 * sin(3 * Mp) - 0.00034 * E * sin(2 * Mp - M) + 0.00032 * E * sin(M + 2 * F) + 0.00032 * E * sin(M - 2 * F)
+        - 0.00028 * E2 * sin(Mp + 2 * M) + 0.00027 * E * sin(2 * Mp + M) - 0.00017 * sin(O) - 0.00005 * sin(Mp - M - 2 * F)
+        + 0.00004 * sin(2 * Mp + 2 * F) - 0.00004 * sin(Mp + M + 2 * F) + 0.00004 * sin(Mp - 2 * M) + 0.00003 * sin(Mp + M - 2 * F)
+        + 0.00003 * sin(3 * M) + 0.00002 * sin(2 * Mp - 2 * F) + 0.00002 * sin(Mp - M + 2 * F) - 0.00002 * sin(3 * Mp + M);
+      const W = 0.00306 - 0.00038 * E * cos(M) + 0.00026 * cos(Mp) - 0.00002 * cos(Mp - M) + 0.00002 * cos(Mp + M) + 0.00002 * cos(2 * F);
+      c += q === 1 ? W : -W;
+    }
+    const A = [[299.77, 0.107408, 325], [251.88, 0.016321, 165], [251.83, 26.651886, 164], [349.42, 36.412478, 126],
+      [84.66, 18.206239, 110], [141.74, 53.303771, 62], [207.14, 2.453732, 60], [154.84, 7.30686, 56], [34.52, 27.261239, 47],
+      [207.19, 0.121824, 42], [291.34, 1.844379, 40], [161.72, 24.198154, 37], [239.56, 25.513099, 35], [331.55, 3.592518, 23]];
+    let add = 0;
+    A.forEach(([a, b, w], i) => { add += w * 1e-6 * sin(a + b * k - (i === 0 ? 0.009173 * T2 : 0)); });
+    jde += c + add;
+    return jdToMs(jde) - 69e3; // TT → UTC (ΔT ≈ 69 s)
+  }
+
+  // Eventos principais (type 0 Nova, 1 QC, 2 Cheia, 3 QM) entre dois instantes
+  function events(fromMs, toMs) {
+    const yr = 2000 + (fromMs - Date.UTC(2000, 0, 1)) / (365.25 * DAY);
+    let k = Math.floor((yr - 2000) * 12.3685) - 1;
+    const out = [];
+    for (; ; k++) {
+      for (let q = 0; q < 4; q++) {
+        const t = phaseTime(k + q / 4);
+        if (t >= toMs) return out;
+        if (t >= fromMs) out.push({ t, type: q, date: new Date(t) });
+      }
+    }
+  }
+
+  // Elongação/iluminação instantâneas (Meeus cap. 48, baixa precisão ~0,5°)
+  function geometry(ms) {
+    const T = (msToJd(ms) - 2451545) / 36525;
+    const D = 297.8501921 + 445267.1114034 * T - 0.0018819 * T * T;
+    const M = 357.5291092 + 35999.0502909 * T;
+    const Mp = 134.9633964 + 477198.8675055 * T + 0.0087414 * T * T;
+    const i = 180 - D - 6.289 * sin(Mp) + 2.1 * sin(M) - 1.274 * sin(2 * D - Mp) - 0.658 * sin(2 * D) - 0.214 * sin(2 * Mp) - 0.11 * sin(D);
+    const frac = ((((180 - i) % 360) + 360) % 360) / 360; // 0 Nova, .25 QC, .5 Cheia, .75 QM
+    return { frac, illum: (1 + cos(i)) / 2 };
+  }
+
+  // Fase de um dia civil local: se contém Nova/Quarto/Cheia → essa fase; senão a fase intermédia
+  function dayPhase(y, m, d) {
+    const start = new Date(y, m, d).getTime(), end = new Date(y, m, d + 1).getTime();
+    const ev = events(start, end)[0] || null;
+    if (ev) return { idx: ev.type * 2, event: ev };
+    const { frac } = geometry((start + end) / 2);
+    return { idx: Math.floor(frac * 4) * 2 + 1, event: null };
+  }
+
+  function state(date = new Date()) {
+    const ms = date.getTime();
+    const g = geometry(ms);
+    const around = events(ms - 32 * DAY, ms + 32 * DAY);
+    const prevNew = around.filter(e => e.type === 0 && e.t <= ms).pop();
+    const nextNew = around.find(e => e.type === 0 && e.t > ms);
+    const nextFull = around.find(e => e.type === 2 && e.t > ms);
+    const { idx, event } = dayPhase(date.getFullYear(), date.getMonth(), date.getDate());
+    return {
+      idx, event, name: NAMES[idx], icon: ICONS[idx],
+      frac: g.frac, illum: g.illum, illumPct: Math.round(g.illum * 100),
+      age: prevNew ? (ms - prevNew.t) / DAY : g.frac * 29.530588,
+      prevNew: prevNew && prevNew.date, nextNew: nextNew && nextNew.date, nextFull: nextFull && nextFull.date,
+      upcoming: around.filter(e => e.t > ms)
+    };
+  }
+
+  window.LunarCalc = { NAMES, ICONS, phaseTime, events, geometry, dayPhase, state };
+})();
+    </script>
+    <script>
 /**
  * TAROT DA MITOLOGIA NÓRDICA 16-BIT (78 CARTAS COMPLETAS)
  */
@@ -2266,18 +2462,39 @@ function getFilteredNordicDeck() {
     return NORDIC_TAROT_DECK.filter(c => c.suit === activeTarotFilter);
 }
 
-function buildPixelCardHTML(card, isReversed = false, positionLabel = '') {
-    const svgHTML = renderNordic16BitSVG(card);
-    const suit = (card.suit || card.arcana || 'major').toString().toLowerCase();
-    const suitClass = ['major','wands','cups','swords','pentacles'].includes(suit) ? 'suit-' + suit : (card.num && String(card.num).match(/^(0|[1-9]|1[0-9]|2[0-1])$/) ? 'suit-major' : 'suit-major');
-    // map nordic suit names
-    const suitMap = { asgard: 'major', lanças: 'wands', hidromel: 'cups', espadas: 'swords', draupnir: 'pentacles', major: 'major', wands: 'wands', cups: 'cups', swords: 'swords', pentacles: 'pentacles' };
-    let sc = 'suit-major';
-    const realm = (card.realm || card.suit || '').toLowerCase();
-    for (const [k, v] of Object.entries(suitMap)) { if (realm.includes(k) || suit.includes(k)) { sc = 'suit-' + v; break; } }
-    if (card.arcana === 'major' || card.type === 'major' || (card.id && String(card.id).startsWith('m'))) sc = 'suit-major';
-    if (card.suit === 'wands' || card.suit === 'cups' || card.suit === 'swords' || card.suit === 'pentacles') sc = 'suit-' + card.suit;
 
+// ——— Cartas de tarot: modelo partilhado (face, verso) ———
+const TAROT_SUIT_RUNE = { wands: 'ᚲ', cups: 'ᛚ', swords: 'ᛏ', pentacles: 'ᚠ' };
+function tarotSuitClass(card) {
+    return ['wands', 'cups', 'swords', 'pentacles'].includes(card.suit) ? 'suit-' + card.suit : 'suit-major';
+}
+function tarotEsc(v) {
+    return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function tarotFaceInner(card, isReversed = false) {
+    const isMajor = tarotSuitClass(card) === 'suit-major';
+    const rune = card.rune || TAROT_SUIT_RUNE[card.suit] || 'ᛟ';
+    const suitLabel = isMajor ? 'Arcano Maior' : (card.suitObj ? card.suitObj.label.split(' ')[0] : '');
+    const realm = isMajor ? (card.realm || '') : (card.suitObj ? card.suitObj.element : card.realm || '');
+    return `<div class="tc-top"><span class="tc-num">${tarotEsc(card.num || '')}</span><span class="tc-suit">${tarotEsc(suitLabel)}</span><span class="tc-rune" aria-hidden="true">${rune}</span></div>
+        <div class="card-art-box ${isReversed ? 'is-reversed' : ''}">${renderNordic16BitSVG(card).replace('<svg ', '<svg preserveAspectRatio="xMidYMid slice" ')}</div>
+        <div class="tc-plate"><span class="tc-name">${tarotEsc(card.name || '')}</span><span class="tc-realm">${tarotEsc(realm)}</span></div>`;
+}
+const TAROT_BACK_HTML = `<div class="tarot-back-pattern" aria-hidden="true"></div>
+    <span class="tc-back-hint">Toque para revelar</span>
+    <svg class="tc-back-emblem" viewBox="0 0 120 120" aria-hidden="true" fill="none" stroke="#d6b25e" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="60" cy="60" r="56" stroke-width="1.5"/>
+        <circle cx="60" cy="60" r="50" stroke-width="0.8" stroke-dasharray="1.5 3.2"/>
+        <circle cx="60" cy="60" r="44" stroke-width="1.2" fill="#141522"/>
+        <path d="M60 92 V44" stroke-width="3"/>
+        <path d="M60 58 C50 52 42 50 34 40 M60 58 C70 52 78 50 86 40 M60 50 C54 44 50 38 48 30 M60 50 C66 44 70 38 72 30 M60 66 C52 62 44 62 36 56 M60 66 C68 62 76 62 84 56" stroke-width="2"/>
+        <path d="M60 92 C54 96 46 98 38 96 M60 92 C66 96 74 98 82 96 M60 90 C58 96 56 100 52 104 M60 90 C62 96 64 100 68 104" stroke-width="1.8"/>
+        <g fill="#f3dc9a" stroke="none"><circle cx="34" cy="40" r="2.4"/><circle cx="86" cy="40" r="2.4"/><circle cx="48" cy="30" r="2.4"/><circle cx="72" cy="30" r="2.4"/><circle cx="36" cy="56" r="2.4"/><circle cx="84" cy="56" r="2.4"/><circle cx="60" cy="24" r="3"/></g>
+        <path d="M60 4 l3 5 -3 5 -3 -5z M60 106 l3 5 -3 5 -3 -5z M4 60 l5 -3 5 3 -5 3z M106 60 l5 -3 5 3 -5 3z" fill="#d6b25e" stroke="none"/>
+    </svg>
+    <span class="tc-back-label">YGGDRASIL</span>`;
+
+function buildPixelCardHTML(card, isReversed = false, positionLabel = '') {
     const orientationBadge = isReversed
         ? `<span class="tarot-badge rev">Invertida</span>`
         : `<span class="tarot-badge ok">Direita</span>`;
@@ -2286,35 +2503,15 @@ function buildPixelCardHTML(card, isReversed = false, positionLabel = '') {
     return `
         <div class="flex flex-col items-center w-full max-w-[230px] mx-auto space-y-2.5">
             ${positionLabel ? `<span class="text-[11px] uppercase tracking-widest theme-accent font-bold">${positionLabel}</span>` : ''}
-            <div class="tarot-flip-wrapper is-flipped cursor-pointer" onclick="this.classList.toggle('is-flipped')" title="Toque para virar">
+            <div class="tarot-flip-wrapper is-flipped cursor-pointer" onclick="this.classList.toggle('is-flipped')" title="Toque para virar" aria-label="${tarotEsc(card.name)}">
                 <div class="tarot-flip-inner">
-                    <div class="tarot-card-back pixel-card-vertical ${sc}">
-                        <div class="tarot-back-pattern" aria-hidden="true"></div>
-                        <div class="card-header-pixel">YGGDRASIL · 16-BIT</div>
-                        <div class="card-art-box">
-                            <svg viewBox="0 0 32 32" shape-rendering="crispEdges" class="pixel-svg" aria-hidden="true">
-                                <rect width="32" height="32" fill="#0a0f1a"/>
-                                <rect x="14" y="10" width="4" height="16" fill="#8b5e34"/>
-                                <rect x="6" y="5" width="20" height="9" fill="#1d6b45"/>
-                                <rect x="9" y="3" width="14" height="5" fill="#2f9e66"/>
-                                <rect x="15" y="12" width="2" height="12" fill="#5ec8f0"/>
-                                <rect x="12" y="24" width="8" height="3" fill="#3d2914"/>
-                            </svg>
-                        </div>
-                        <div class="card-footer-pixel">TOCAR PARA VIRAR</div>
-                    </div>
-                    <div class="tarot-card-front pixel-card-vertical ${sc}">
-                        <div class="card-header-pixel">${card.num || ''} · ${card.title || card.name || ''}</div>
-                        <div class="card-art-box ${isReversed ? 'is-reversed' : ''}">
-                            ${svgHTML}
-                        </div>
-                        <div class="card-footer-pixel">${card.realm || card.suit || 'Yggdrasil'}</div>
-                    </div>
+                    <div class="tarot-card-back">${TAROT_BACK_HTML}</div>
+                    <div class="tarot-card-front ${tarotSuitClass(card)}">${tarotFaceInner(card, isReversed)}</div>
                 </div>
             </div>
             <div class="tarot-meaning space-y-1.5">
                 <div class="flex items-center justify-center gap-1.5 flex-wrap">
-                    <strong class="tm-name">${card.name}</strong>
+                    <strong class="tm-name">${tarotEsc(card.name)}</strong>
                     ${orientationBadge}
                 </div>
                 <p class="text-[11px] theme-muted leading-relaxed italic">${describeTarotArt(card)}</p>
@@ -2355,17 +2552,7 @@ function drawTarotCard(count) {
 }
 
 function tarotFaceHTML(card) {
-    let sc = 'suit-major';
-    const realm = (card.realm || card.suit || '').toLowerCase();
-    if (card.suit === 'wands' || realm.includes('lança')) sc = 'suit-wands';
-    else if (card.suit === 'cups' || realm.includes('hidromel')) sc = 'suit-cups';
-    else if (card.suit === 'swords' || realm.includes('espada')) sc = 'suit-swords';
-    else if (card.suit === 'pentacles' || realm.includes('draupnir')) sc = 'suit-pentacles';
-    return `<div class="tarot-static"><div class="tarot-card-front ${sc}">
-        <div class="card-header-pixel">${card.num || ''} · ${card.title || card.name || ''}</div>
-        <div class="card-art-box">${renderNordic16BitSVG(card)}</div>
-        <div class="card-footer-pixel">${card.realm || card.suit || 'Yggdrasil'}</div>
-    </div></div>`;
+    return `<div class="tarot-static"><div class="tarot-card-front ${tarotSuitClass(card)}">${tarotFaceInner(card)}</div></div>`;
 }
 
 // Grimório: 2 colunas no telemóvel; tocar numa carta abre o detalhe (direita + invertida)
@@ -2376,7 +2563,7 @@ function renderTarotGallery() {
         <div class="w-full space-y-4">
             <p class="text-sm theme-muted" aria-live="polite">${pool.length ? `${pool.length} de 78 cartas. Toque numa carta para ver os sentidos direito e invertido.` : 'Nenhuma carta corresponde à pesquisa.'}</p>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                ${pool.map(card => `<button type="button" class="tarot-tile" onclick="openTarotDetail('${card.id}')">${tarotFaceHTML(card)}<span class="tarot-tile-name">${card.name}</span></button>`).join('')}
+                ${pool.map(card => `<button type="button" class="tarot-tile" onclick="openTarotDetail('${card.id}')" aria-label="${tarotEsc(card.name)}">${tarotFaceHTML(card)}<span class="tarot-tile-name">${card.name}</span></button>`).join('')}
             </div>
         </div>
     `;
@@ -2574,34 +2761,8 @@ function calculateExactSolarFestivals() {
 
 function updateAstronomy() {
     const now = new Date();
-    const synodicMonth = (typeof LUNAR_SYNODIC !== 'undefined') ? LUNAR_SYNODIC : 29.530588853;
-    let phaseAge, illumination, phaseName, icon;
-    if (typeof getMoonPhaseInfo === 'function') {
-      const phaseInfo = getMoonPhaseInfo(now);
-      phaseAge = phaseInfo.age;
-      illumination = phaseInfo.illumination;
-      phaseName = phaseInfo.name;
-      icon = phaseInfo.icon;
-    } else {
-      const knownNewMoon = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
-      const diffDays = (now - knownNewMoon) / 86400000;
-      phaseAge = ((diffDays % synodicMonth) + synodicMonth) % synodicMonth;
-      illumination = Math.round(((1 - Math.cos((2 * Math.PI * phaseAge) / synodicMonth)) / 2) * 100);
-      const icons = ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
-      const names = ['Lua Nova','Lua Crescente','Quarto Crescente','Gibosa Crescente','Lua Cheia','Gibosa Minguante','Quarto Minguante','Lua Minguante'];
-      let idx = 0;
-      if (phaseAge < 1.845484) idx = 0;
-      else if (phaseAge < 5.536453) idx = 1;
-      else if (phaseAge < 9.227422) idx = 2;
-      else if (phaseAge < 12.918391) idx = 3;
-      else if (phaseAge < 16.609360) idx = 4;
-      else if (phaseAge < 20.300329) idx = 5;
-      else if (phaseAge < 23.991298) idx = 6;
-      else if (phaseAge < 27.682267) idx = 7;
-      else idx = 0;
-      phaseName = names[idx];
-      icon = icons[idx];
-    }
+    const moon = LunarCalc.state(now);
+    const phaseAge = moon.age, illumination = moon.illumPct, phaseName = moon.name, icon = moon.icon;
 
     const moonIconEl = document.getElementById('moon-icon');
     const moonNameEl = document.getElementById('moon-phase-name');
@@ -4089,13 +4250,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function updateAstronomyCharts() {
         const now = new Date();
-        const synodicMonth = (typeof LUNAR_SYNODIC !== 'undefined') ? LUNAR_SYNODIC : 29.53058867;
-        const phaseAge = (typeof getMoonPhaseInfo === 'function')
-          ? getMoonPhaseInfo(now).age
-          : (((now - new Date(Date.UTC(2000, 0, 6, 18, 14, 0))) / 86400000 % synodicMonth) + synodicMonth) % synodicMonth;
+        const moon = LunarCalc.state(now);
 
         // Atualizar posição da Lua na órbita SVG (0d em baixo (160,150), sentido anti-horário)
-        const angle = (phaseAge / synodicMonth) * 2 * Math.PI;
+        const angle = moon.frac * 2 * Math.PI;
         const cx = 160 + 62 * Math.sin(angle);
         const cy = 88 + 62 * Math.cos(angle);
         const dot = $('lunar-orbit-dot');
@@ -4103,13 +4261,11 @@ window.addEventListener('DOMContentLoaded', () => {
         if (dot) { dot.setAttribute('cx', cx.toFixed(1)); dot.setAttribute('cy', cy.toFixed(1)); }
         if (halo) { halo.setAttribute('cx', cx.toFixed(1)); halo.setAttribute('cy', cy.toFixed(1)); }
 
-        // Próxima Lua Cheia (14.765d) e Próxima Lua Nova (29.53d)
-        const halfCycle = synodicMonth / 2;
-        const daysToFull = phaseAge <= halfCycle ? (halfCycle - phaseAge) : (synodicMonth - phaseAge + halfCycle);
-        const daysToNew = synodicMonth - phaseAge;
-        const fmtShort = d => d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' });
-        if ($('next-full-moon')) $('next-full-moon').textContent = `${fmtShort(new Date(now.getTime() + daysToFull * 864e5))} (${Math.round(daysToFull)}d)`;
-        if ($('next-new-moon')) $('next-new-moon').textContent = `${fmtShort(new Date(now.getTime() + daysToNew * 864e5))} (${Math.round(daysToNew)}d)`;
+        // Próxima Lua Cheia e Próxima Lua Nova (instantes astronómicos reais)
+        const fmtShort = d => d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+        const daysUntil = d => Math.max(0, Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5));
+        if ($('next-full-moon') && moon.nextFull) $('next-full-moon').textContent = `${fmtShort(moon.nextFull)} (${daysUntil(moon.nextFull)}d)`;
+        if ($('next-new-moon') && moon.nextNew) $('next-new-moon').textContent = `${fmtShort(moon.nextNew)} (${daysUntil(moon.nextNew)}d)`;
 
         // Atualizar posição do Sol no Arco Diurno SVG
         const startOfYear = new Date(now.getFullYear(), 0, 0);
@@ -4580,9 +4736,7 @@ window.shareReading = async function (type) {
 };
 
 // ——— Motor lunar unificado (mapa + ciclo) ———
-// Referência: lua nova conhecida (UTC) — fórmula sinódica média
-const LUNAR_SYNODIC = 29.530588853;
-const LUNAR_KNOWN_NEW_MS = Date.UTC(2000, 0, 6, 18, 14, 0);
+// Fases reais calculadas por LunarCalc (Meeus) a partir da data atual
 const LUNAR_ICONS = ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
 const LUNAR_NAMES = [
   'Lua Nova', 'Lua Crescente', 'Quarto Crescente', 'Gibosa Crescente',
@@ -4591,29 +4745,9 @@ const LUNAR_NAMES = [
 
 /** Idade da lua em dias e índice de fase 0–7 para qualquer data */
 window.getMoonPhaseInfo = function (date = new Date()) {
-  const t = date instanceof Date ? date.getTime() : new Date(date).getTime();
-  const diffDays = (t - LUNAR_KNOWN_NEW_MS) / 86400000;
-  const age = ((diffDays % LUNAR_SYNODIC) + LUNAR_SYNODIC) % LUNAR_SYNODIC;
-  // Limiares alinhados ao ciclo (aproximação usada no ciclo e no mapa)
-  let idx = 0;
-  if (age < 1.845484) idx = 0;
-  else if (age < 5.536453) idx = 1;
-  else if (age < 9.227422) idx = 2;
-  else if (age < 12.918391) idx = 3;
-  else if (age < 16.609360) idx = 4;
-  else if (age < 20.300329) idx = 5;
-  else if (age < 23.991298) idx = 6;
-  else if (age < 27.682267) idx = 7;
-  else idx = 0; // volta a nova
-  const illumination = Math.round(((1 - Math.cos((2 * Math.PI * age) / LUNAR_SYNODIC)) / 2) * 100);
-  return {
-    age,
-    idx,
-    icon: LUNAR_ICONS[idx],
-    name: LUNAR_NAMES[idx],
-    illumination,
-    frac: age / LUNAR_SYNODIC
-  };
+  const d = date instanceof Date ? date : new Date(date);
+  const st = LunarCalc.state(d);
+  return { age: st.age, idx: st.idx, icon: st.icon, name: st.name, illumination: st.illumPct, frac: st.frac, event: st.event, nextFull: st.nextFull, nextNew: st.nextNew };
 };
 
 let lunarMapOffset = 0;
@@ -4668,14 +4802,15 @@ window.renderLunarMap = function () {
     title.textContent = base.toLocaleDateString('pt-PT', { month: 'long', year: 'numeric' });
   }
 
-  const phaseClass = (idx) => (idx === 0 ? 'is-new' : idx === 4 ? 'is-full' : '');
+  const phaseClass = (idx) => (idx === 0 ? 'is-new' : idx === 4 ? 'is-full' : idx === 2 || idx === 6 ? 'is-quarter' : '');
   let out = '';
   for (let i = 0; i < firstWeekday; i++) {
     out += '<div class="lunar-day is-empty" aria-hidden="true"></div>';
   }
   for (let d = 1; d <= daysInMonth; d++) {
-    const dt = new Date(y, m, d, 12, 0, 0);
-    const info = getMoonPhaseInfo(dt);
+    const info = LunarCalc.dayPhase(y, m, d);
+    info.icon = LUNAR_ICONS[info.idx]; info.name = LUNAR_NAMES[info.idx];
+    if (info.event) info.name += ' às ' + info.event.date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
     const isToday = (lunarMapOffset || 0) === 0 &&
       d === now.getDate() && m === now.getMonth() && y === now.getFullYear();
     const cls = ['lunar-day', phaseClass(info.idx), isToday ? 'is-today' : ''].filter(Boolean).join(' ');
@@ -4946,10 +5081,8 @@ const LUNAR_COUNSEL = [
 ];
 
 function moonPhaseIndex(date = new Date()) {
-  const synodic = 29.53058867;
-  const knownNew = Date.UTC(2000, 0, 6, 18, 14, 0);
-  const age = (((date.getTime() - knownNew) / 86400000) % synodic + synodic) % synodic;
-  return { age, idx: Math.min(7, Math.floor((age / synodic) * 8)), frac: age / synodic };
+  const st = LunarCalc.state(date);
+  return { age: st.age, idx: st.idx, frac: st.frac };
 }
 
 function updateLunarCounsel() {
