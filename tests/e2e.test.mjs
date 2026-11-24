@@ -13,7 +13,7 @@ import { createStaticServer } from '../tools/serve.mjs';
 const { chromium } = createRequire(import.meta.url)('playwright');
 const root = new URL('..', import.meta.url).pathname;
 const TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'compass', 'altar', 'ritual', 'grove',
-  'journal', 'grounding', 'herbal', 'library', 'obod', 'triads', 'orgs', 'about'];
+  'journal', 'grounding', 'herbal', 'runelore', 'library', 'obod', 'triads', 'orgs', 'about'];
 // Erros de rede de serviços externos (fontes, meteorologia, mapas) não contam:
 // o ambiente de testes pode não ter acesso à internet.
 const EXTERNAL = /Failed to load resource|net::ERR_|fonts\.g|open-meteo|nominatim|qrserver|cdnjs/i;
@@ -113,7 +113,7 @@ test('design global: portais, reinos, Hoje e mapa lunar compacto', async () => {
   // Contador de dias escondido a zero
   assert.equal(await page.evaluate(() => document.getElementById('streak-badge').hidden), true);
   // Quatro portais com página de entrada e cartões que levam às secções
-  for (const [r, n] of [['oraculos', 3], ['ciclos', 3], ['pratica', 4], ['saber', 4]]) {
+  for (const [r, n] of [['oraculos', 3], ['ciclos', 3], ['pratica', 4], ['saber', 5]]) {
     await page.evaluate(id => switchTab(id), 'portal-' + r);
     assert.equal(await page.evaluate(() => document.body.dataset.realm), r);
     assert.equal(await page.$$eval(`#tab-portal-${r}:not(.hidden) .portal-card`, els => els.length), n);
@@ -133,6 +133,26 @@ test('design global: portais, reinos, Hoje e mapa lunar compacto', async () => {
   // Fases desenhadas em SVG (iguais em todos os aparelhos); a Cheia fica toda iluminada
   assert.ok(await page.$$eval('#lunar-month-map .lunar-day .moon-svg', els => els.length) >= 28);
   assert.equal(await page.evaluate(() => document.createRange().createContextualFragment(moonSVG(0.5)).querySelectorAll('circle.moon-lit').length), 1);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+test('runas no Saber: guia completo e treino', async () => {
+  const { ctx, page, errors } = await open(base);
+  await page.evaluate(() => switchTab('runes'));
+  await page.click('#rune-mode-gallery');
+  assert.equal(await page.evaluate(() => document.body.dataset.tab), 'runelore');
+  assert.equal(await page.evaluate(() => document.body.dataset.realm), 'saber');
+  assert.equal(await page.$$eval('#rune-gallery-grid .rl-card', els => els.length), 24);
+  await page.fill('#rune-search', 'teixo');
+  assert.equal(await page.$$eval('#rune-gallery-grid .rl-card', els => els.length), 1);
+  for (const mode of ['glyph', 'name', 'meaning']) {
+    await page.click(`#rune-study .rq-mode[data-mode="${mode}"]`);
+    assert.equal(await page.$$eval('#rune-quiz-options button', els => els.length), 4);
+    await page.click('#rune-quiz-options button >> nth=0');
+    assert.match(await page.textContent('#rune-quiz-feedback'), /Certo|Era/);
+  }
+  assert.match(await page.textContent('#rune-quiz-score'), /de 3/);
   assert.deepEqual(errors, []);
   await ctx.close();
 });

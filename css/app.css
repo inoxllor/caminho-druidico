@@ -1226,3 +1226,52 @@ body[data-tab="today"] .top-info { visibility: hidden; }
 .lunar-day .ld-phase { line-height: 0; }
 .lunar-day .ld-ev i { font-style: normal; }
 @media (max-width: 639px) { .lunar-day { height: 50px; gap: .1rem; } .lunar-day .moon-svg { width: 16px; height: 16px; } .lunar-day .ld-ev i { display: none; } }
+
+/* ============================================================
+   v14 • Runas no Saber: guia completo e treino
+   ============================================================ */
+#rune-gallery-grid { gap: 1rem; }
+.rl-card { display: flex; flex-direction: column; gap: .75rem; padding: 1rem; border-radius: var(--r-lg); background: var(--bg-inner); border: 1px solid var(--border-color); transition: border-color .15s ease; }
+.rl-card:hover { border-color: color-mix(in srgb, #fbbf24 40%, var(--border-color)); }
+.rl-top { display: flex; gap: .9rem; align-items: center; }
+.rl-stone { flex: 0 0 auto; width: 56px; height: 62px; display: grid; place-items: center; border-radius: 48% 52% 44% 56% / 56% 48% 52% 44%;
+  font-family: 'Noto Sans Runic', 'Segoe UI Historic', serif; font-size: 1.7rem; color: #fcd34d; text-shadow: 0 -1px 0 rgba(0,0,0,.7), 0 0 10px rgba(251,191,36,.45);
+  background: radial-gradient(circle at 35% 28%, #5f6570, #3a3f47 45%, #1f2228 100%); box-shadow: inset -4px -6px 10px rgba(0,0,0,.35), inset 3px 4px 8px rgba(255,255,255,.18), 0 6px 12px rgba(0,0,0,.3); }
+.rl-id { min-width: 0; }
+.rl-name { font-weight: 700; font-size: 1.05rem; color: var(--text-title); }
+.rl-word { font-size: .8rem; font-style: italic; color: var(--text-muted); }
+.rl-chips { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .35rem; }
+.rl-mean, .rl-rev { font-size: .85rem; line-height: 1.5; color: var(--text-muted); }
+.rl-mean b, .rl-rev b { display: block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .1rem; }
+.rl-mean b { color: var(--text-title); }
+.rl-rev { padding-top: .6rem; border-top: 1px solid var(--border-color); }
+.rl-rev b { color: #f59e0b; }
+.theme-parchment .rl-rev b { color: #b45309; }
+
+.rq-modes { justify-content: flex-start; }
+.rq-mode { font-size: .8rem; font-weight: 600; padding: .45rem .8rem; border-radius: var(--r-sm); border: 1px solid var(--border-color); background: var(--bg-inner); color: var(--text-muted); cursor: pointer; }
+.rq-mode[aria-pressed="true"] { background: var(--btn-primary); color: var(--on-primary); border-color: transparent; }
+.rq-stage { padding: 1.25rem; display: flex; flex-direction: column; align-items: center; gap: .9rem; text-align: center; }
+.rq-prompt { min-height: 72px; display: grid; place-items: center; color: var(--text-title); }
+.rq-prompt.rq-glyph { width: 72px; height: 80px; border-radius: 48% 52% 44% 56% / 56% 48% 52% 44%; font-family: 'Noto Sans Runic', serif; font-size: 2.3rem; color: #fcd34d;
+  text-shadow: 0 0 12px rgba(251,191,36,.45); background: radial-gradient(circle at 35% 28%, #5f6570, #3a3f47 45%, #1f2228 100%);
+  box-shadow: inset -4px -6px 10px rgba(0,0,0,.35), inset 3px 4px 8px rgba(255,255,255,.18), 0 8px 16px rgba(0,0,0,.35); }
+.rq-prompt.rq-name { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700; }
+.rq-prompt.rq-meaning { font-size: 1.05rem; font-style: italic; max-width: 26rem; }
+.rq-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; width: 100%; max-width: 26rem; }
+.rq-opt { min-height: 44px; padding: .5rem .75rem; border-radius: var(--r-md); border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-title); font-weight: 600; font-size: .9rem; cursor: pointer; transition: border-color .15s ease; }
+.rq-opt:hover:not(:disabled) { border-color: var(--border-hover); }
+.rq-glyphs .rq-opt { font-family: 'Noto Sans Runic', serif; font-size: 1.6rem; color: #fcd34d; }
+.theme-parchment .rq-glyphs .rq-opt { color: #92400e; }
+.rq-opt.quiz-right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 16%, var(--bg-card)); }
+.rq-opt.quiz-wrong { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 16%, var(--bg-card)); }
+.rq-feedback { font-size: .85rem; line-height: 1.5; color: var(--text-muted); max-width: 30rem; min-height: 1.25rem; }
+.rq-ok { color: var(--ok); } .rq-bad { color: var(--danger); }
+.rq-glyph-inline { font-family: 'Noto Sans Runic', serif; color: var(--glyph-highlight); }
+.rq-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; width: 100%; max-width: 26rem; }
+.rq-table > summary { cursor: pointer; padding: .25rem 0; }
+.rq-aettir { display: grid; gap: 1rem; margin-top: .75rem; }
+.rq-row { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: .35rem; margin-top: .4rem; }
+.rq-cell { display: flex; flex-direction: column; align-items: center; padding: .35rem 0; border-radius: var(--r-sm); background: var(--bg-inner); border: 1px solid var(--border-color); }
+.rq-cell b { font-family: 'Noto Sans Runic', serif; font-size: 1.2rem; color: var(--glyph-highlight); line-height: 1.2; }
+.rq-cell i { font-style: normal; font-size: .7rem; color: var(--text-muted); }

@@ -63,7 +63,7 @@ function setRuneAett(aett) {
 
 function setRuneQuery(q) {
     runeQuery = q || '';
-    if (activeRuneMode === 'gallery') renderRuneGallery();
+    renderRuneGallery();
 }
 
 function renderRuneGallery() {
@@ -98,40 +98,12 @@ function renderRuneGallery() {
     `).join('');
 }
 
+/* A galeria vive agora no Saber (Runas: guia & treino); no oráculo fica só a tiragem. */
 function switchRuneMode(mode) {
-    activeRuneMode = mode;
-    const drawBtn = document.getElementById('rune-mode-draw');
-    const galBtn = document.getElementById('rune-mode-gallery');
-    const galleryEl = document.getElementById('rune-gallery');
+    if (mode === 'gallery') { switchTab('runelore'); return; }
+    activeRuneMode = 'draw';
     const cardEl = document.getElementById('rune-card');
     const actionsEl = document.getElementById('rune-draw-actions');
-    const saveBarEl = document.getElementById('rune-save-bar');
-
-    if (mode === 'gallery') {
-        if (galBtn) {
-            galBtn.className = 'bg-[var(--btn-primary)] text-[var(--on-primary)] font-bold text-sm px-4 py-2 rounded-lg transition cursor-pointer';
-            galBtn.setAttribute('aria-pressed', 'true');
-        }
-        if (drawBtn) {
-            drawBtn.className = 'theme-inner theme-title border border-[var(--border-color)] font-semibold text-sm px-4 py-2 rounded-lg transition cursor-pointer';
-            drawBtn.setAttribute('aria-pressed', 'false');
-        }
-        if (galleryEl) galleryEl.classList.remove('hidden');
-        if (cardEl) cardEl.classList.add('hidden');
-        if (actionsEl) actionsEl.classList.add('hidden');
-        if (saveBarEl) saveBarEl.classList.add('hidden');
-        renderRuneGallery();
-    } else {
-        if (drawBtn) {
-            drawBtn.className = 'bg-[var(--btn-primary)] text-[var(--on-primary)] font-bold text-sm px-4 py-2 rounded-lg transition cursor-pointer';
-            drawBtn.setAttribute('aria-pressed', 'true');
-        }
-        if (galBtn) {
-            galBtn.className = 'theme-inner theme-title border border-[var(--border-color)] font-semibold text-sm px-4 py-2 rounded-lg transition cursor-pointer';
-            galBtn.setAttribute('aria-pressed', 'false');
-        }
-        if (galleryEl) galleryEl.classList.add('hidden');
-        if (cardEl) cardEl.classList.remove('hidden');
-        if (actionsEl) actionsEl.classList.remove('hidden');
-    }
+    if (cardEl) cardEl.classList.remove('hidden');
+    if (actionsEl) actionsEl.classList.remove('hidden');
 }
