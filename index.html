@@ -274,12 +274,6 @@
                     </div>
 
                     <div class="oracle-spreads tarot-options text-left space-y-4">
-                        <div>
-                            <span class="spreads-title block mb-2">Baralho</span>
-                            <div class="flex flex-wrap gap-2" role="group" aria-label="Filtrar baralho">
-                                <button type="button" onclick="setTarotFilter('all')" id="filter-btn-all" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todo o baralho (78)</button><button type="button" onclick="setTarotFilter('major')" id="filter-btn-major" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Asgard · Maiores (22)</button><button type="button" onclick="setTarotFilter('wands')" id="filter-btn-wands" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Lanças · Fogo (14)</button><button type="button" onclick="setTarotFilter('cups')" id="filter-btn-cups" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Hidromel · Água (14)</button><button type="button" onclick="setTarotFilter('swords')" id="filter-btn-swords" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Espadas · Ar (14)</button><button type="button" onclick="setTarotFilter('pentacles')" id="filter-btn-pentacles" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Draupnir · Terra (14)</button>
-                            </div>
-                        </div>
                         <div id="tarot-draw-actions" class="space-y-4">
                             <div>
                                 <label for="tarot-question" class="spreads-title block mb-2">A sua pergunta (opcional)</label>
@@ -293,6 +287,12 @@
                                 <button type="button" onclick="drawYesNo('tarot')" class="spread-card"><span class="spread-dia dia-yn dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 carta · resposta direta</span></button>
                             </div>
                             <label class="tr-toggle"><input type="checkbox" id="tarot-ritual-on" checked onchange="setTarotRitual(this.checked)"><span>Ritual de baralhar · escolher as cartas do leque</span></label>
+                        </div>
+                        <div>
+                            <span class="spreads-title block mb-2">Baralho</span>
+                            <div class="flex flex-wrap gap-2" role="group" aria-label="Filtrar baralho">
+                                <button type="button" onclick="setTarotFilter('all')" id="filter-btn-all" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todo o baralho (78)</button><button type="button" onclick="setTarotFilter('major')" id="filter-btn-major" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Asgard · Maiores (22)</button><button type="button" onclick="setTarotFilter('wands')" id="filter-btn-wands" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Lanças · Fogo (14)</button><button type="button" onclick="setTarotFilter('cups')" id="filter-btn-cups" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Hidromel · Água (14)</button><button type="button" onclick="setTarotFilter('swords')" id="filter-btn-swords" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Espadas · Ar (14)</button><button type="button" onclick="setTarotFilter('pentacles')" id="filter-btn-pentacles" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Draupnir · Terra (14)</button>
+                            </div>
                         </div>
                         <div id="tarot-search-wrap" class="hidden">
                             <input id="tarot-search" type="search" oninput="setTarotQuery(this.value)" placeholder="Procurar carta, deus ou reino…" aria-label="Procurar carta" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5">
