@@ -960,7 +960,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
   background: linear-gradient(90deg, #6b4423, #a87a4b 45%, #c79a66 55%, #7a4f2a); box-shadow: 0 6px 14px rgba(0,0,0,.35); }
 .oe-staves span:nth-child(1) { --r: -8deg; height: 84px; } .oe-staves span:nth-child(3) { --r: 7deg; height: 90px; }
 .oe-staves span { writing-mode: vertical-lr; transform: rotate(var(--r, 0deg)); }
-.oe-stones span, .oc-stone { background: radial-gradient(circle at 35% 28%, #a3a9b3, #6b7280 45%, #3f444d 100%); box-shadow: inset -4px -6px 10px rgba(0,0,0,.35), inset 3px 4px 8px rgba(255,255,255,.18), 0 8px 16px rgba(0,0,0,.35); }
+.oe-stones span, .oc-stone { background: radial-gradient(circle at 35% 28%, #5f6570, #3a3f47 45%, #1f2228 100%); box-shadow: inset -4px -6px 10px rgba(0,0,0,.35), inset 3px 4px 8px rgba(255,255,255,.18), 0 8px 16px rgba(0,0,0,.35); }
 .oe-stones span { width: 56px; height: 64px; border-radius: 48% 52% 44% 56% / 56% 48% 52% 44%; font-family: 'Noto Sans Runic', serif; font-size: 1.6rem;
   color: #fcd34d; text-shadow: 0 -1px 0 rgba(0,0,0,.7), 0 0 10px rgba(251,191,36,.45); }
 .oe-stones span:nth-child(1) { --r: -10deg; } .oe-stones span:nth-child(3) { --r: 8deg; width: 50px; height: 58px; }
@@ -1068,3 +1068,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 .tarot-options { text-align: left; }
 .oracle-runes .oracle-sigil { color: #fbbf24; opacity: .9; }
 .theme-parchment .oracle-runes .oracle-sigil { color: #b45309; }
+/* Runa invertida */
+.oc-stone.is-reversed .stone-glyph { transform: rotate(calc(180deg - var(--tilt, 0deg))); }
+.oc-card.is-reversed { border-color: color-mix(in srgb, var(--danger) 45%, var(--border-color)); }
+.oc-chip-rev { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 55%, transparent); background: color-mix(in srgb, var(--danger) 12%, var(--bg-card)); font-weight: 700; }

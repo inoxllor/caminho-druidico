@@ -21,12 +21,29 @@ function runeExtra(name) {
   return list.find(r => r.name === name) || null;
 }
 
+/**
+ * Lança uma runa: as que não são simétricas podem sair invertidas (35%).
+ * Devolve uma cópia; se invertida, o nome e o significado passam a ser os da
+ * posição invertida, para o diário, a partilha e a interpretação usarem o certo.
+ */
+window.castRune = function (r, chance = 0.35) {
+  const x = runeExtra(r.name);
+  if (!x || x.symmetric || !x.reversed || Math.random() >= chance) return { ...r, reversed: false };
+  return { ...r, baseName: r.name, name: `${r.name} (invertida)`, upright: r.meaning, meaning: x.reversed, reversed: true };
+};
+
+/** Avisa quando uma ou mais runas saem invertidas. */
+window.noticeReversedRunes = function (items) {
+  const n = items.filter(r => r.reversed).length;
+  if (n && typeof showToast === 'function') showToast(n === 1 ? (items.length === 1 ? 'A runa saiu invertida.' : '1 runa saiu invertida.') : `${n} runas saíram invertidas.`);
+};
+
 function oghamObject(o) {
   return `<div class="oc-object oc-stave" aria-hidden="true"><span class="stave-glyph">${escH(o.symbol)}</span></div>`;
 }
 function runeObject(r, i) {
   const tilt = [-4, 3, -2, 5, -3][i % 5];
-  return `<div class="oc-object oc-stone" style="--tilt:${tilt}deg" aria-hidden="true"><span class="stone-glyph">${escH(r.symbol)}</span></div>`;
+  return `<div class="oc-object oc-stone${r.reversed ? ' is-reversed' : ''}" style="--tilt:${tilt}deg" aria-hidden="true"><span class="stone-glyph">${escH(r.symbol)}</span></div>`;
 }
 
 function oghamBody(o) {
@@ -44,15 +61,26 @@ function oghamBody(o) {
     ${o.herb ? `<p class="oc-extra"><span>Ervas</span> ${escH(o.herb)}</p>` : ''}`;
 }
 function runeBody(r) {
-  const x = runeExtra(r.name);
-  return `
-    <h3 class="oc-name font-cinzel">${escH(r.name)}</h3>
+  const name = r.baseName || r.name;
+  const x = runeExtra(name);
+  if (r.reversed) {
+    return `
+    <h3 class="oc-name font-cinzel">${escH(name)}</h3>
     <div class="oc-chips">
+      <span class="oc-chip oc-chip-rev" title="A runa saiu de cabeça para baixo">⟲ Invertida</span>
       ${x && x.aett ? `<span class="oc-chip">Aett de ${escH(x.aett)}</span>` : ''}
-      ${x && x.symmetric ? '<span class="oc-chip">Simétrica</span>' : ''}
     </div>
     <p class="oc-meaning">${escH(r.meaning)}</p>
-    ${x && x.reversed ? `<p class="oc-extra"><span>${x.symmetric ? 'Sombra' : 'Invertida'}</span> ${escH(String(x.reversed).replace(/^Sombra \(simétrica\):\s*/i, ''))}</p>` : ''}`;
+    <p class="oc-extra"><span>Direita</span> ${escH(r.upright)}</p>`;
+  }
+  return `
+    <h3 class="oc-name font-cinzel">${escH(name)}</h3>
+    <div class="oc-chips">
+      ${x && x.aett ? `<span class="oc-chip">Aett de ${escH(x.aett)}</span>` : ''}
+      ${x && x.symmetric ? '<span class="oc-chip" title="Igual de qualquer lado: não se inverte">Simétrica</span>' : ''}
+    </div>
+    <p class="oc-meaning">${escH(r.meaning)}</p>
+    ${x && x.reversed ? `<p class="oc-extra"><span>${x.symmetric ? 'Sombra' : 'Se invertida'}</span> ${escH(String(x.reversed).replace(/^Sombra \(simétrica\):\s*/i, ''))}</p>` : ''}`;
 }
 
 /**
@@ -69,7 +97,7 @@ window.renderOracleReading = function (system, items, labels, opts = {}) {
   const layout = opts.answer ? 'yn' : n === 1 ? 'single' : n === 3 ? 'row' : 'cross';
   const areas = ['c', 'n', 'e', 's', 'w'];
   const cards = items.map((it, i) => `
-    <article class="oc-card oc-${system}" ${layout === 'cross' ? `style="grid-area:${areas[i]}"` : ''}>
+    <article class="oc-card oc-${system}${it.reversed ? ' is-reversed' : ''}" ${layout === 'cross' ? `style="grid-area:${areas[i]}"` : ''}>
       ${n > 1 ? `<span class="oc-num" aria-hidden="true">${i + 1}</span>` : ''}
       ${system === 'ogham' ? oghamObject(it) : runeObject(it, i)}
       <div class="oc-body">

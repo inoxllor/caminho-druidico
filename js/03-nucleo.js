@@ -312,11 +312,12 @@ function drawRunes(count) {
     const drawn = [];
     for (let i = 0; i < count; i++) {
         const idx = Math.floor(Math.random() * pool.length);
-        drawn.push(pool.splice(idx, 1)[0]);
+        drawn.push(castRune(pool.splice(idx, 1)[0]));
     }
     lastRuneReading = drawn;
     const labels = count === 3 ? ['Passado (Urd)', 'Presente (Verdandi)', 'Futuro (Skuld)'] : ['Conselho Rúnico'];
     renderOracleReading('runes', drawn, labels);
+    noticeReversedRunes(drawn);
     document.getElementById('rune-save-bar').classList.add('hidden');
 }
 

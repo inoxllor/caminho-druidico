@@ -145,9 +145,10 @@ window.drawYesNo = function (system) {
 
     if (system === 'runes') {
       if (!runes || !runes.length) { showToast('Dados de runas indisponíveis.'); return; }
-      const r = runes[Math.floor(Math.random() * runes.length)];
+      const r = castRune(runes[Math.floor(Math.random() * runes.length)]);
       lastRuneReading = [r];
       renderOracleReading('runes', [r], ['Sim ou Não'], { answer });
+      noticeReversedRunes([r]);
       document.getElementById('rune-save-bar')?.classList.remove('hidden');
       if (typeof switchRuneMode === 'function') try { switchRuneMode('draw'); } catch(e) {}
     } else if (system === 'ogham') {

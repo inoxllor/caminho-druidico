@@ -70,6 +70,19 @@ test('oráculos: Ogham, Runas e Tarot tiram cartas', async () => {
   await page.evaluate(() => { switchTab('runes'); drawRunes(3); });
   assert.equal(await page.$$eval('#rune-card .oc-card .oc-stone', e => e.length), 3);
   assert.ok(await page.isVisible('#rune-save-bar'), 'ações da leitura de runas escondidas');
+  // Runas invertidas: Fehu (não simétrica) sai invertida; Gebo (simétrica) nunca
+  const rev = await page.evaluate(() => {
+    const fehu = RUNES_DATA.find(r => r.name === 'Fehu'), gebo = RUNES_DATA.find(r => r.name === 'Gebo');
+    const a = castRune(fehu, 1), b = castRune(gebo, 1);
+    renderOracleReading('runes', [a, b], ['A', 'B']);
+    return { a, b, chips: [...document.querySelectorAll('#rune-card .oc-chip-rev')].length, turned: document.querySelectorAll('#rune-card .oc-stone.is-reversed').length };
+  });
+  assert.equal(rev.a.reversed, true);
+  assert.equal(rev.a.name, 'Fehu (invertida)');
+  assert.notEqual(rev.a.meaning, rev.a.upright);
+  assert.equal(rev.b.reversed, false, 'runa simétrica não pode sair invertida');
+  assert.equal(rev.chips, 1);
+  assert.equal(rev.turned, 1);
   for (const sys of ['ogham', 'runes', 'tarot']) {
     await page.evaluate(s => { switchTab(s === 'ogham' ? 'oracle' : s); drawYesNo(s); }, sys);
     const sel = sys === 'ogham' ? '#ogham-card' : sys === 'runes' ? '#rune-card' : '#tarot-card-container';
