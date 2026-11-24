@@ -1,0 +1,39 @@
+# Atualiza o ramo HTML-UNICO com a versão de ficheiro único gerada a partir do main.
+# Corre só quando pedido: Actions → «Atualizar ramo HTML-UNICO» → Run workflow.
+name: Atualizar ramo HTML-UNICO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+      - uses: actions/checkout@v4
+        with:
+          ref: HTML-UNICO
+          path: unico
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Gerar o HTML único
+        run: |
+          node main/tools/build-single.mjs unico/index.html
+          cp main/manifest.json main/LICENSE unico/
+          rm -rf unico/icons && cp -r main/icons unico/icons
+      - name: Guardar no ramo HTML-UNICO
+        working-directory: unico
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Sem alterações."; exit 0; fi
+          git commit -m "HTML único gerado a partir de main@${GITHUB_SHA::7}"
+          git push origin HEAD:HTML-UNICO
