@@ -962,7 +962,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 .oe-staves span { writing-mode: vertical-lr; transform: rotate(var(--r, 0deg)); }
 .oe-stones span, .oc-stone { background: radial-gradient(circle at 35% 28%, #a3a9b3, #6b7280 45%, #3f444d 100%); box-shadow: inset -4px -6px 10px rgba(0,0,0,.35), inset 3px 4px 8px rgba(255,255,255,.18), 0 8px 16px rgba(0,0,0,.35); }
 .oe-stones span { width: 56px; height: 64px; border-radius: 48% 52% 44% 56% / 56% 48% 52% 44%; font-family: 'Noto Sans Runic', serif; font-size: 1.6rem;
-  color: color-mix(in srgb, var(--oracle-tint) 80%, #fff); text-shadow: 0 -1px 0 rgba(0,0,0,.6); }
+  color: #fcd34d; text-shadow: 0 -1px 0 rgba(0,0,0,.7), 0 0 10px rgba(251,191,36,.45); }
 .oe-stones span:nth-child(1) { --r: -10deg; } .oe-stones span:nth-child(3) { --r: 8deg; width: 50px; height: 58px; }
 .oe-cards span { width: 54px; height: 84px; border-radius: 7px; border: 2px solid #b8913b;
   background: repeating-linear-gradient(45deg, #1a1530 0 6px, #231c40 6px 12px); box-shadow: 0 8px 16px rgba(0,0,0,.35); }
@@ -1051,7 +1051,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
   color: #2a1608; text-shadow: 0 1px 0 rgba(255,225,180,.45); transform: rotate(-90deg); white-space: nowrap; }
 .oc-stone { width: 84px; height: 96px; border-radius: 48% 52% 44% 56% / 56% 48% 52% 44%; transform: rotate(var(--tilt, 0deg)); }
 .stone-glyph { font-family: 'Noto Sans Runic', 'Segoe UI Historic', serif; font-size: 2.6rem; line-height: 1; transform: rotate(calc(-1 * var(--tilt, 0deg)));
-  color: color-mix(in srgb, var(--oracle-tint) 75%, #fff); text-shadow: 0 -1px 0 rgba(0,0,0,.65), 0 0 14px color-mix(in srgb, var(--oracle-tint) 45%, transparent); }
+  color: #fcd34d; text-shadow: 0 -1px 0 rgba(0,0,0,.75), 0 1px 0 rgba(120,70,0,.5), 0 0 16px rgba(251,191,36,.55); }
 @media (min-width: 768px) {
   .oc-single .oc-stave, .oc-yn .oc-stave { width: 52px; height: 160px; } .oc-single .stave-glyph, .oc-yn .stave-glyph { font-size: 3.2rem; }
   .oc-single .oc-stone, .oc-yn .oc-stone { width: 104px; height: 118px; } .oc-single .stone-glyph, .oc-yn .stone-glyph { font-size: 3.2rem; }
@@ -1066,3 +1066,5 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 .oc-answer.is-no b { color: var(--danger); text-shadow: 0 0 24px color-mix(in srgb, var(--danger) 40%, transparent); }
 .oc-tarot-yn { max-width: 260px; margin: 0 auto; }
 .tarot-options { text-align: left; }
+.oracle-runes .oracle-sigil { color: #fbbf24; opacity: .9; }
+.theme-parchment .oracle-runes .oracle-sigil { color: #b45309; }
