@@ -35,7 +35,11 @@ jobs:
     needs: testes
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    # As permissões do job substituem as do topo: «actions: read» é preciso
+    # para o deploy-pages encontrar o artefacto que o passo anterior enviou.
     permissions:
+      contents: read
+      actions: read
       pages: write
       id-token: write
     environment:
