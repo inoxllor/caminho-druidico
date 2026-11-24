@@ -267,7 +267,31 @@ window.resetLunarMap = function () {
   renderLunarMap();
 };
 
+/**
+ * Desenha a Lua em SVG para a fração do ciclo (0 = Nova, .5 = Cheia):
+ * igual em todos os aparelhos, ao contrário dos emoji 🌑…🌘.
+ */
+window.moonSVG = function (frac, size = 22) {
+  const f = ((frac % 1) + 1) % 1, r = 10, c = 12;
+  const k = Math.cos(2 * Math.PI * f), rx = (Math.abs(k) * r).toFixed(2);
+  let lit = '';
+  if (f > 0.03 && f < 0.97) {
+    if (Math.abs(f - 0.5) < 0.03) lit = `<circle cx="${c}" cy="${c}" r="${r}" class="moon-lit"/>`;
+    else {
+      const waxing = f < 0.5;
+      const edge = waxing ? 1 : 0;
+      const term = waxing ? (k > 0 ? 0 : 1) : (k > 0 ? 1 : 0);
+      lit = `<path class="moon-lit" d="M${c} ${c - r}A${r} ${r} 0 0 ${edge} ${c} ${c + r}A${rx} ${r} 0 0 ${term} ${c} ${c - r}Z"/>`;
+    }
+  }
+  return `<svg class="moon-svg" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true"><circle cx="${c}" cy="${c}" r="${r}" class="moon-dark"/>${lit}<circle cx="${c}" cy="${c}" r="${r}" class="moon-rim"/></svg>`;
+};
+const EVENT_FRAC = { 0: 0, 2: 0.25, 4: 0.5, 6: 0.75 };
+
 window.renderLunarMap = function () {
+  document.querySelectorAll('.lunar-map-legend [data-moon]').forEach(el => {
+    if (!el.firstElementChild) el.insertAdjacentHTML('afterbegin', moonSVG(+el.dataset.moon, 14));
+  });
   const map = $('lunar-month-map');
   if (!map) return;
   const now = new Date();
@@ -294,14 +318,15 @@ window.renderLunarMap = function () {
     if (info.event) {
       const hm = info.event.date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
       info.name += ' às ' + hm;
-      ev = '<span class="ld-ev" aria-hidden="true">' + (['Nova', '', 'Q.C.', '', 'Cheia', '', 'Q.M.', ''][info.idx] || '') + ' ' + hm + '</span>';
+      ev = '<span class="ld-ev" aria-hidden="true">' + (['Nova', '', 'Q.C.', '', 'Cheia', '', 'Q.M.', ''][info.idx] || '') + '<i> ' + hm + '</i></span>';
     }
+    const frac = info.event ? EVENT_FRAC[info.idx] : LunarCalc.geometry(new Date(y, m, d, 12).getTime()).frac;
     const isToday = (lunarMapOffset || 0) === 0 &&
       d === now.getDate() && m === now.getMonth() && y === now.getFullYear();
     const cls = ['lunar-day', phaseClass(info.idx), isToday ? 'is-today' : ''].filter(Boolean).join(' ');
     const label = d + '/' + (m + 1) + '/' + y + ' · ' + info.icon + ' ' + info.name;
     out += '<div class="' + cls + '" role="gridcell" title="' + label + '" aria-label="' + label + '">' +
-      '<span class="ld-phase" aria-hidden="true">' + info.icon + '</span>' +
+      '<span class="ld-phase" aria-hidden="true">' + moonSVG(frac) + '</span>' +
       '<span class="ld-num">' + d + '</span>' + ev + '</div>';
   }
   const total = firstWeekday + daysInMonth;

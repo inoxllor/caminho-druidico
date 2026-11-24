@@ -1212,3 +1212,17 @@ body[data-tab="today"] .top-info { visibility: hidden; }
   .portal-hero { padding: 1.5rem 1rem; }
 }
 @media (min-width: 1024px) { .nudge { left: auto; right: 24px; bottom: 24px; } }
+
+/* Lua desenhada em SVG (mapa lunar e legenda) */
+.moon-svg { display: inline-block; vertical-align: middle; }
+.moon-svg .moon-dark { fill: #1e2433; }
+.moon-svg .moon-lit { fill: #f8f6ec; }
+.moon-svg .moon-rim { fill: none; stroke: #f8f6ec; stroke-opacity: .55; stroke-width: 1.2; }
+.lunar-day.is-full .moon-svg { filter: drop-shadow(0 0 4px rgba(248,246,236,.55)); }
+.lunar-map-legend [data-moon] { display: inline-flex; align-items: center; gap: .3rem; }
+.theme-parchment .moon-svg .moon-dark { fill: #3b4252; }
+.theme-parchment .moon-svg .moon-rim { stroke: #3b4252; stroke-opacity: .6; }
+.theme-parchment .moon-svg .moon-lit { fill: #fffdf3; }
+.lunar-day .ld-phase { line-height: 0; }
+.lunar-day .ld-ev i { font-style: normal; }
+@media (max-width: 639px) { .lunar-day { height: 50px; gap: .1rem; } .lunar-day .moon-svg { width: 16px; height: 16px; } .lunar-day .ld-ev i { display: none; } }

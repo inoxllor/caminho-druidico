@@ -130,6 +130,9 @@ test('design global: portais, reinos, Hoje e mapa lunar compacto', async () => {
   const h = await page.$eval('#lunar-month-map .lunar-day:not(.is-empty)', el => el.getBoundingClientRect().height);
   assert.ok(h <= 60, `célula do mapa lunar com ${h}px`);
   assert.ok(await page.$$eval('#lunar-month-map .ld-ev', els => els.length) >= 3);
+  // Fases desenhadas em SVG (iguais em todos os aparelhos); a Cheia fica toda iluminada
+  assert.ok(await page.$$eval('#lunar-month-map .lunar-day .moon-svg', els => els.length) >= 28);
+  assert.equal(await page.evaluate(() => document.createRange().createContextualFragment(moonSVG(0.5)).querySelectorAll('circle.moon-lit').length), 1);
   assert.deepEqual(errors, []);
   await ctx.close();
 });
