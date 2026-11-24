@@ -142,8 +142,13 @@ test('app instalável e funciona sem rede', async () => {
     return (await fetch(href)).json();
   });
   assert.equal(manifest.display, 'standalone');
-  const active = await page.evaluate(async () => (await window.appOfflineReady)?.active?.state);
-  assert.equal(active, 'activated');
+  // «ready» resolve quando já há um worker ativo, que pode ainda estar em «activating»
+  await page.evaluate(async () => {
+    const reg = await window.appOfflineReady;
+    const sw = reg && reg.active;
+    if (!sw) throw new Error('sem service worker ativo');
+    if (sw.state !== 'activated') await new Promise(r => sw.addEventListener('statechange', () => sw.state === 'activated' && r()));
+  });
   await page.reload({ waitUntil: 'load' });
   assert.ok(await page.evaluate(() => !!navigator.serviceWorker.controller), 'o service worker não controla a página');
   await page.evaluate(() => switchTab('about'));
