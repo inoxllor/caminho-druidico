@@ -303,20 +303,7 @@ function drawOghamCard(count) {
                  : count === 5 ? ['Centro (Espírito)', 'Norte (Terra)', 'Leste (Ar)', 'Sul (Fogo)', 'Oeste (Água)']
                  : ['Mensagem do Bosque'];
 
-    const gridCols = count === 1 ? 'grid-cols-1 max-w-md mx-auto' : count === 3 ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-5';
-    document.getElementById('ogham-card').innerHTML = `
-        <div class="grid ${gridCols} gap-4 w-full">
-            ${drawn.map((item, i) => `
-                <div class="theme-inner border rounded-xl p-5 text-center space-y-2">
-                    <span class="text-[11px] uppercase tracking-widest theme-accent font-bold block">${labels[i]}</span>
-                    <div class="text-5xl theme-glyph font-bold py-1">${item.symbol}</div>
-                    <h3 class="font-cinzel text-lg font-bold theme-info-hl">${item.name}</h3>
-                    <div class="text-xs theme-title font-semibold">${item.tree}</div>
-                    <p class="text-sm theme-muted leading-relaxed">${item.meaning}</p>
-                </div>
-            `).join('')}
-        </div>
-    `;
+    renderOracleReading('ogham', drawn, labels);
     document.getElementById('ogham-save-bar').classList.remove('hidden');
 }
 
@@ -329,20 +316,7 @@ function drawRunes(count) {
     }
     lastRuneReading = drawn;
     const labels = count === 3 ? ['Passado (Urd)', 'Presente (Verdandi)', 'Futuro (Skuld)'] : ['Conselho Rúnico'];
-    const gridCols = count === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-1 md:grid-cols-3';
-
-    document.getElementById('rune-card').innerHTML = `
-        <div class="grid ${gridCols} gap-4 w-full">
-            ${drawn.map((r, i) => `
-                <div class="theme-inner border rounded-xl p-5 text-center space-y-2">
-                    <span class="text-[11px] uppercase tracking-widest theme-accent font-bold block">${labels[i]}</span>
-                    <div class="text-5xl theme-glyph font-bold py-1">${r.symbol}</div>
-                    <h3 class="font-cinzel text-lg font-bold theme-info-hl">${r.name}</h3>
-                    <p class="text-sm theme-muted leading-relaxed">${r.meaning}</p>
-                </div>
-            `).join('')}
-        </div>
-    `;
+    renderOracleReading('runes', drawn, labels);
     document.getElementById('rune-save-bar').classList.add('hidden');
 }
 

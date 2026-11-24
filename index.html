@@ -55,6 +55,9 @@
             <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol>
             <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
             <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l1-4L16 5l3 3L8 19zM14 7l3 3"/></symbol>
+            <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></symbol>
+            <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.7 1.8 1.8.7-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/></symbol>
+            <symbol id="i-redo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></symbol>
         </defs>
     </svg>
 
@@ -199,31 +202,36 @@
 
             <!-- ORÁCULO DE RUNAS -->
             <section id="tab-runes" class="tab-content space-y-6 tab-in hidden">
-                <div class="theme-card border rounded-2xl p-5 lg:p-10 text-center">
-                    <div class="max-w-xl mx-auto">
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo de Runas (Elder Futhark)</h2>
-                        <p class="text-sm lg:text-[15px] theme-muted mb-5">Consulte os símbolos ancestrais de sabedoria nórdica e germânica.</p>
+                <div class="theme-card border rounded-2xl oracle-panel oracle-runes text-center">
+                    <header class="oracle-head">
+                        <div class="oracle-sigil" aria-hidden="true">ᚠ ᚱ ᚾ</div>
+                        <p class="eyebrow">Elder Futhark · 24 runas</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">Oráculo de Runas</h2>
+                        <p class="oracle-sub">Pedras gravadas com os símbolos ancestrais da sabedoria nórdica e germânica. Concentre-se numa pergunta e lance as runas.</p>
                         <div class="seg" role="group" aria-label="Modo">
                             <button type="button" onclick="switchRuneMode('draw')" id="rune-mode-draw" aria-pressed="true" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Tiragem rúnica</button>
                             <button type="button" onclick="switchRuneMode('gallery')" id="rune-mode-gallery" aria-pressed="false" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todas as runas (24)</button>
                             <button type="button" onclick="openReadingGuide('runes')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button>
                         </div>
-                    </div>
+                    </header>
 
                     <!-- Resultado em destaque (acima das opções de tiragem) -->
-                    <div id="rune-card" class="draw-area mt-6 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha uma tiragem para consultar as runas.</p></div>
-                    <div id="rune-save-bar" class="hidden mt-4 flex flex-wrap justify-center gap-2">
-                        <button type="button" onclick="saveLastReadingToJournal('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
-                        <button type="button" onclick="shareReading('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
-                        <button type="button" onclick="interpretReading('runes')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Interpretar</button>
-                        <button type="button" onclick="interpretReading('runes',{deep:true})" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Aprofundar IA</button>
-                        <button type="button" onclick="drawRunes(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
+                    <div id="rune-card" class="draw-area oracle-stage"><div class="oracle-empty"><div class="oe-art oe-stones" aria-hidden="true"><span>ᚠ</span><span>ᚨ</span><span>ᛟ</span></div><p class="oe-text">Respire fundo, formule a sua pergunta e escolha uma tiragem.</p></div></div>
+                    <div id="rune-save-bar" class="hidden oracle-actions" role="group" aria-label="Ações da leitura">
+                        <button type="button" onclick="interpretReading('runes')" class="oa-btn oa-primary"><svg class="ic" aria-hidden="true"><use href="#i-spark"></use></svg>Interpretar</button>
+                        <button type="button" onclick="interpretReading('runes',{deep:true})" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-oracles"></use></svg>Aprofundar IA</button>
+                        <button type="button" onclick="saveLastReadingToJournal('runes')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-journal"></use></svg>Guardar no Diário</button>
+                        <button type="button" onclick="shareReading('runes')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-share"></use></svg>Partilhar</button>
+                        <button type="button" onclick="drawRunes(1)" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
                     </div>
 
-                    <div id="rune-draw-actions" class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mt-6">
-                        <button type="button" onclick="drawRunes(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 runa · Conselho</button>
-                        <button type="button" onclick="drawRunes(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 runas · Passado / Presente / Futuro</button>
-                        <button type="button" onclick="drawYesNo('runes')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
+                    <div id="rune-draw-actions" class="oracle-spreads">
+                        <p class="spreads-title">Escolha uma tiragem</p>
+                        <div class="spread-grid spread-grid-3">
+                            <button type="button" onclick="drawRunes(1)" class="spread-card"><span class="spread-dia dia-1" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Conselho</span><span class="spread-meta">1 runa</span></button>
+                            <button type="button" onclick="drawRunes(3)" class="spread-card"><span class="spread-dia dia-3" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Urd · Verdandi · Skuld</span><span class="spread-meta">3 runas · passado, presente, futuro</span></button>
+                            <button type="button" onclick="drawYesNo('runes')" class="spread-card"><span class="spread-dia dia-yn" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 runa · resposta direta</span></button>
+                        </div>
                     </div>
 
                     <div id="rune-gallery" class="hidden text-left space-y-4 mt-6">
@@ -240,47 +248,49 @@
 
             <!-- BARALHO DE TAROT NÓRDICO 16-BIT (78 CARTAS) -->
             <section id="tab-tarot" class="tab-content space-y-6 tab-in hidden">
-                <div class="theme-card border rounded-2xl p-5 lg:p-10 text-center">
-                    <div class="max-w-2xl mx-auto">
-                        <p class="eyebrow mb-2">Edda Poética • Arte 16-bit</p>
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Tarot da Mitologia Nórdica</h2>
-                        <p class="text-sm lg:text-[15px] theme-muted mb-5">78 cartas: 22 Arcanos Maiores dos Deuses de Asgard e 56 Menores nos naipes <strong>Gungnir (Lanças)</strong>, <strong>Hidromel (Cálices)</strong>, <strong>Skofnung (Espadas)</strong> e <strong>Draupnir (Anéis)</strong>.</p>
+                <div class="theme-card border rounded-2xl oracle-panel oracle-tarot text-center">
+                    <header class="oracle-head">
+                        <div class="oracle-sigil" aria-hidden="true">✦ ᛟ ✦</div>
+                        <p class="eyebrow">Edda Poética · Arte 16-bit</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">Tarot da Mitologia Nórdica</h2>
+                        <p class="oracle-sub">78 cartas: 22 Arcanos Maiores dos deuses de Asgard e 56 Menores nos naipes <strong>Gungnir</strong> (Lanças), <strong>Hidromel</strong> (Cálices), <strong>Skofnung</strong> (Espadas) e <strong>Draupnir</strong> (Anéis).</p>
                         <div class="seg" role="group" aria-label="Modo">
                             <button type="button" onclick="switchTarotMode('draw')" id="tarot-mode-draw" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Tiragem das Nornas</button>
                             <button type="button" onclick="switchTarotMode('gallery')" id="tarot-mode-gallery" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Grimório (78 cartas)</button>
                             <button type="button" onclick="openReadingGuide('tarot')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button>
                         </div>
-                    </div>
+                    </header>
 
                     <!-- Resultado em destaque (acima das opções de tiragem) -->
-                    <div id="tarot-card-container" class="mt-6 min-h-[200px] flex flex-col items-center justify-center"></div>
+                    <div id="tarot-card-container" class="oracle-stage min-h-[200px] flex flex-col items-center justify-center"></div>
 
-                    <div id="tarot-save-bar" class="hidden mt-5 flex flex-wrap justify-center gap-2">
-                        <button type="button" onclick="saveLastReadingToJournal('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
-                        <button type="button" onclick="shareReading('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
-                        <button type="button" onclick="interpretReading('tarot')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Interpretar</button>
-                        <button type="button" onclick="interpretReading('tarot',{deep:true})" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Aprofundar IA</button>
-                        <button type="button" onclick="exportTarotPDF()" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Exportar PDF</button>
-                        <button type="button" onclick="drawTarotCard(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
+                    <div id="tarot-save-bar" class="hidden oracle-actions" role="group" aria-label="Ações da leitura">
+                        <button type="button" onclick="interpretReading('tarot')" class="oa-btn oa-primary"><svg class="ic" aria-hidden="true"><use href="#i-spark"></use></svg>Interpretar</button>
+                        <button type="button" onclick="interpretReading('tarot',{deep:true})" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-oracles"></use></svg>Aprofundar IA</button>
+                        <button type="button" onclick="saveLastReadingToJournal('tarot')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-journal"></use></svg>Guardar no Diário</button>
+                        <button type="button" onclick="shareReading('tarot')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-share"></use></svg>Partilhar</button>
+                        <button type="button" onclick="exportTarotPDF()" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-download"></use></svg>PDF</button>
+                        <button type="button" onclick="drawTarotCard(1)" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
                     </div>
 
-                    <div class="max-w-2xl mx-auto mt-6 text-left space-y-4">
+                    <div class="oracle-spreads tarot-options text-left space-y-4">
                         <div>
-                            <span class="text-sm theme-muted block mb-2">Baralho</span>
+                            <span class="spreads-title block mb-2">Baralho</span>
                             <div class="flex flex-wrap gap-2" role="group" aria-label="Filtrar baralho">
                                 <button type="button" onclick="setTarotFilter('all')" id="filter-btn-all" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todo o baralho (78)</button><button type="button" onclick="setTarotFilter('major')" id="filter-btn-major" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Asgard · Maiores (22)</button><button type="button" onclick="setTarotFilter('wands')" id="filter-btn-wands" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Lanças · Fogo (14)</button><button type="button" onclick="setTarotFilter('cups')" id="filter-btn-cups" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Hidromel · Água (14)</button><button type="button" onclick="setTarotFilter('swords')" id="filter-btn-swords" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Espadas · Ar (14)</button><button type="button" onclick="setTarotFilter('pentacles')" id="filter-btn-pentacles" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Draupnir · Terra (14)</button>
                             </div>
                         </div>
                         <div id="tarot-draw-actions" class="space-y-4">
                             <div>
-                                <label for="tarot-question" class="text-sm theme-muted block mb-2">A sua pergunta (opcional)</label>
+                                <label for="tarot-question" class="spreads-title block mb-2">A sua pergunta (opcional)</label>
                                 <input id="tarot-question" type="text" maxlength="140" placeholder="O que preciso de compreender neste momento?" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5">
                             </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                                <button type="button" onclick="drawTarotCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 carta · Oráculo de Odin</button>
-                                <button type="button" onclick="drawTarotCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 cartas · As Três Nornas</button>
-                                <button type="button" onclick="drawTarotCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 cartas · Cruz Elemental</button>
-                                <button type="button" onclick="drawYesNo('tarot')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
+                            <p class="spreads-title">Escolha uma tiragem</p>
+                            <div class="spread-grid spread-grid-4">
+                                <button type="button" onclick="drawTarotCard(1)" class="spread-card"><span class="spread-dia dia-1 dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Oráculo de Odin</span><span class="spread-meta">1 carta · conselho</span></button>
+                                <button type="button" onclick="drawTarotCard(3)" class="spread-card"><span class="spread-dia dia-3 dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">As Três Nornas</span><span class="spread-meta">3 cartas · passado, presente, futuro</span></button>
+                                <button type="button" onclick="drawTarotCard(5)" class="spread-card"><span class="spread-dia dia-5 dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Cruz Elemental</span><span class="spread-meta">5 cartas · situação completa</span></button>
+                                <button type="button" onclick="drawYesNo('tarot')" class="spread-card"><span class="spread-dia dia-yn dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 carta · resposta direta</span></button>
                             </div>
                             <label class="tr-toggle"><input type="checkbox" id="tarot-ritual-on" checked onchange="setTarotRitual(this.checked)"><span>Ritual de baralhar · escolher as cartas do leque</span></label>
                         </div>
@@ -293,28 +303,35 @@
 
             <!-- ORÁCULO OGHAM -->
             <section id="tab-oracle" class="tab-content space-y-6 tab-in hidden">
-                <div class="theme-card border rounded-2xl p-5 lg:p-10 text-center">
-                    <div class="max-w-xl mx-auto">
-                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title mb-2">Oráculo Sagrado de Ogham</h2>
-                        <p class="mb-3"><button type="button" onclick="openReadingGuide('ogham')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button></p>
-                        <p class="text-sm lg:text-[15px] theme-muted mb-6">Conecte-se com os espíritos das 20 letras Ogham (feda, gravadas em varas de árvores sagradas) da tradição celta.</p>
-                    </div>
+                <div class="theme-card border rounded-2xl oracle-panel oracle-ogham text-center">
+                    <header class="oracle-head">
+                        <div class="oracle-sigil" aria-hidden="true">ᚁ ᚆ ᚋ ᚐ</div>
+                        <p class="eyebrow">Bosque celta · 20 feda</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">Oráculo de Ogham</h2>
+                        <p class="oracle-sub">As letras das árvores sagradas, gravadas em varas de madeira. Segure a pergunta no coração e tire as varas do saco.</p>
+                        <div class="seg" role="group" aria-label="Ajuda">
+                            <button type="button" onclick="openReadingGuide('ogham')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button>
+                        </div>
+                    </header>
 
                     <!-- Resultado em destaque (acima das opções de tiragem) -->
-                    <div id="ogham-card" class="draw-area mt-2 min-h-[200px] flex flex-col items-center justify-center"><p class="text-sm theme-muted text-center">Escolha 1, 3 ou 5 letras para consultar o bosque.</p></div>
-                    <div id="ogham-save-bar" class="hidden mt-4 flex flex-wrap justify-center gap-2">
-                        <button type="button" onclick="saveLastReadingToJournal('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Guardar no Diário</button>
-                        <button type="button" onclick="shareReading('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Partilhar</button>
-                        <button type="button" onclick="interpretReading('ogham')" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-accent font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Interpretar</button>
-                        <button type="button" onclick="interpretReading('ogham',{deep:true})" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-title font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Aprofundar IA</button>
-                        <button type="button" onclick="drawOghamCard(1)" class="theme-inner hover:border-[var(--border-hover)] border text-sm theme-muted font-semibold py-2 px-4 rounded-lg transition cursor-pointer">Tirar outra</button>
+                    <div id="ogham-card" class="draw-area oracle-stage"><div class="oracle-empty"><div class="oe-art oe-staves" aria-hidden="true"><span>ᚁ</span><span>ᚇ</span><span>ᚉ</span></div><p class="oe-text">Respire fundo, formule a sua pergunta e escolha uma tiragem.</p></div></div>
+                    <div id="ogham-save-bar" class="hidden oracle-actions" role="group" aria-label="Ações da leitura">
+                        <button type="button" onclick="interpretReading('ogham')" class="oa-btn oa-primary"><svg class="ic" aria-hidden="true"><use href="#i-spark"></use></svg>Interpretar</button>
+                        <button type="button" onclick="interpretReading('ogham',{deep:true})" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-oracles"></use></svg>Aprofundar IA</button>
+                        <button type="button" onclick="saveLastReadingToJournal('ogham')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-journal"></use></svg>Guardar no Diário</button>
+                        <button type="button" onclick="shareReading('ogham')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-share"></use></svg>Partilhar</button>
+                        <button type="button" onclick="drawOghamCard(1)" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 max-w-3xl mx-auto mt-6">
-                        <button type="button" onclick="drawOghamCard(1)" class="w-full py-3 px-4 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">1 letra · Conselho</button>
-                        <button type="button" onclick="drawOghamCard(3)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">3 letras · Tríade</button>
-                        <button type="button" onclick="drawOghamCard(5)" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">5 letras · Roda Elemental</button>
-                        <button type="button" onclick="drawYesNo('ogham')" class="w-full py-3 px-4 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Sim / Não</button>
+                    <div class="oracle-spreads">
+                        <p class="spreads-title">Escolha uma tiragem</p>
+                        <div class="spread-grid spread-grid-4">
+                            <button type="button" onclick="drawOghamCard(1)" class="spread-card"><span class="spread-dia dia-1" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Conselho</span><span class="spread-meta">1 letra</span></button>
+                            <button type="button" onclick="drawOghamCard(3)" class="spread-card"><span class="spread-dia dia-3" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Raízes · Tronco · Copa</span><span class="spread-meta">3 letras · tríade</span></button>
+                            <button type="button" onclick="drawOghamCard(5)" class="spread-card"><span class="spread-dia dia-5" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Roda Elemental</span><span class="spread-meta">5 letras · centro e 4 direções</span></button>
+                            <button type="button" onclick="drawYesNo('ogham')" class="spread-card"><span class="spread-dia dia-yn" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 letra · resposta direta</span></button>
+                        </div>
                     </div>
                 </div>
                 <details id="reading-history" class="theme-card border rounded-xl p-4 text-left">
@@ -1495,4 +1512,5 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 <script src="js/20-app-offline.js"></script>
 <script src="js/21-ogham-estudo.js"></script>
 <script src="js/22-meditacoes-guiadas.js"></script>
+<script src="js/23-oraculos.js"></script>
 </body></html>

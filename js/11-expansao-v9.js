@@ -147,26 +147,14 @@ window.drawYesNo = function (system) {
       if (!runes || !runes.length) { showToast('Dados de runas indisponíveis.'); return; }
       const r = runes[Math.floor(Math.random() * runes.length)];
       lastRuneReading = [r];
-      const el = document.getElementById('rune-card');
-      if (el) el.innerHTML = `<div class="reveal-in max-w-md mx-auto theme-inner border rounded-xl p-5 text-center space-y-2">
-        <span class="text-[11px] uppercase tracking-widest theme-accent font-bold">Resposta: ${answer}</span>
-        <div class="text-5xl theme-glyph">${r.symbol}</div>
-        <h3 class="font-cinzel text-lg font-bold theme-info-hl">${esc(r.name)}</h3>
-        <p class="text-sm theme-muted">${esc(r.meaning)}</p>
-      </div>`;
+      renderOracleReading('runes', [r], ['Sim ou Não'], { answer });
       document.getElementById('rune-save-bar')?.classList.remove('hidden');
       if (typeof switchRuneMode === 'function') try { switchRuneMode('draw'); } catch(e) {}
     } else if (system === 'ogham') {
       if (!ogham || !ogham.length) { showToast('Dados de Ogham indisponíveis.'); return; }
       const o = ogham[Math.floor(Math.random() * ogham.length)];
       lastOghamReading = [o];
-      const el = document.getElementById('ogham-card');
-      if (el) el.innerHTML = `<div class="reveal-in max-w-md mx-auto theme-inner border rounded-xl p-5 text-center space-y-2">
-        <span class="text-[11px] uppercase tracking-widest theme-accent font-bold">Resposta: ${answer}</span>
-        <div class="text-5xl theme-glyph">${o.symbol}</div>
-        <h3 class="font-cinzel text-lg font-bold theme-info-hl">${esc(o.name)}</h3>
-        <p class="text-sm theme-muted">${esc(o.meaning)}</p>
-      </div>`;
+      renderOracleReading('ogham', [o], ['Sim ou Não'], { answer });
       document.getElementById('ogham-save-bar')?.classList.remove('hidden');
     } else if (system === 'tarot') {
       if (!tarot || !tarot.length) { showToast('Dados de Tarot indisponíveis.'); return; }
@@ -178,11 +166,8 @@ window.drawYesNo = function (system) {
       const el = document.getElementById('tarot-card-container');
       if (el) {
         el.classList.remove('draw-area');
-        el.innerHTML = '<div class="reveal-in max-w-md mx-auto theme-inner border rounded-xl p-5 text-center space-y-2">'
-          + '<span class="text-[11px] uppercase tracking-widest theme-accent font-bold">Resposta: ' + answer + '</span>'
-          + '<h3 class="font-cinzel text-lg font-bold theme-info-hl">' + esc(c.name) + (rev ? ' (inv.)' : '') + '</h3>'
-          + '<p class="text-sm theme-muted">' + esc(rev ? c.reversed : c.upright) + '</p>'
-          + '</div>';
+        el.innerHTML = '<div class="oc-answer ' + (answer === 'Sim' ? 'is-yes' : 'is-no') + '" role="status"><span>O oráculo responde</span><b class="font-cinzel">' + answer + '</b></div>'
+          + '<div class="grid grid-cols-1 gap-5 w-full items-start justify-center oc-tarot-yn">' + buildPixelCardHTML(c, rev, 'Sim ou Não') + '</div>';
       }
       document.getElementById('tarot-save-bar')?.classList.remove('hidden');
     } else {
@@ -428,19 +413,14 @@ window.exportJournalPDF = async function () {
 
 // ——— Enhance empty states after draws ———
 function enhanceEmptyStates() {
-  const configs = [
-    { id: 'rune-card', glyph: 'ᚠ', msg: 'Escolha uma tiragem para consultar as runas.' },
-    { id: 'ogham-card', glyph: 'ᚁ', msg: 'Escolha 1, 3 ou 5 letras para consultar o bosque.' }
-  ];
-  configs.forEach(({ id, glyph, msg }) => {
+  const E = window.ORACLE_EMPTY || {};
+  [['rune-card', 'runes'], ['ogham-card', 'ogham']].forEach(([id, k]) => {
     const el = $(id);
-    if (el && el.querySelector('p') && el.children.length === 1) {
-      el.innerHTML = `<div class="empty-state"><span class="empty-glyph" aria-hidden="true">${glyph}</span><p class="text-sm theme-muted">${msg}</p></div>`;
-    }
+    if (el && !el.querySelector('.oracle-empty, .oc-spread') && E[k]) el.innerHTML = E[k];
   });
   const tarot = $('tarot-card-container');
   if (tarot && !tarot.children.length) {
-    tarot.innerHTML = `<div class="empty-state"><span class="empty-glyph" aria-hidden="true">✦</span><p class="text-sm theme-muted">Formule a pergunta, se quiser, e escolha uma tiragem.</p></div>`;
+    tarot.innerHTML = E.tarot || '';
     tarot.classList.add('draw-area');
   }
 }

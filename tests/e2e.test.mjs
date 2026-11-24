@@ -63,6 +63,21 @@ test('oráculos: Ogham, Runas e Tarot tiram cartas', async () => {
   await page.waitForFunction(() => document.getElementById('ogham-card').innerText.length > 30);
   await page.evaluate(() => { switchTab('runes'); drawRunes(3); });
   await page.waitForFunction(() => document.getElementById('rune-card').innerText.length > 30);
+  // Apresentação: varas de Ogham, pedras rúnicas, disposição em cruz e resposta Sim/Não
+  await page.evaluate(() => { switchTab('oracle'); drawOghamCard(5); });
+  assert.equal(await page.$$eval('#ogham-card .oc-card .oc-stave', e => e.length), 5);
+  assert.equal(await page.$$eval('#ogham-card .oc-cross', e => e.length), 1);
+  await page.evaluate(() => { switchTab('runes'); drawRunes(3); });
+  assert.equal(await page.$$eval('#rune-card .oc-card .oc-stone', e => e.length), 3);
+  assert.ok(await page.isVisible('#rune-save-bar'), 'ações da leitura de runas escondidas');
+  for (const sys of ['ogham', 'runes', 'tarot']) {
+    await page.evaluate(s => { switchTab(s === 'ogham' ? 'oracle' : s); drawYesNo(s); }, sys);
+    const sel = sys === 'ogham' ? '#ogham-card' : sys === 'runes' ? '#rune-card' : '#tarot-card-container';
+    assert.match(await page.textContent(`${sel} .oc-answer b`), /^(Sim|Não)$/);
+  }
+  assert.equal(await page.$$eval('#tab-oracle .spread-card', e => e.length), 4);
+  assert.equal(await page.$$eval('#tab-runes .spread-card', e => e.length), 3);
+  assert.equal(await page.$$eval('#tab-tarot .spread-card', e => e.length), 4);
   await page.evaluate(() => { switchTab('tarot'); drawTarotCard(3); });
   await page.waitForFunction(() => document.querySelectorAll('#tarot-card-container .tarot-flip-wrapper, #tarot-card-container > *').length >= 1);
   assert.deepEqual(errors, []);

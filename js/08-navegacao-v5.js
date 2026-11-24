@@ -27,7 +27,7 @@ switchTab = function (id) {
 
 // Tarot: nada é sorteado sozinho e a tiragem sobrevive à visita ao Grimório
 let keptDraw = null;
-const TAROT_EMPTY = '<p class="text-sm theme-muted text-center">Formule a pergunta, se quiser, e escolha uma tiragem.</p>';
+const TAROT_EMPTY = (window.ORACLE_EMPTY && window.ORACLE_EMPTY.tarot) || '<p class="text-sm theme-muted text-center">Formule a pergunta, se quiser, e escolha uma tiragem.</p>';
 window.restoreTarotDraw = function () {
   const c = $('tarot-card-container');
   c.textContent = '';
