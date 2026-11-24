@@ -1442,6 +1442,19 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 
     <div id="toast-container" role="status" aria-live="polite"></div>
 
+    <script>
+    /* Quando uma versão nova da app fica ativa, recarrega uma vez para não
+       misturar ficheiros novos com antigos (só em atualizações, não na 1.ª visita). */
+    if ('serviceWorker' in navigator) {
+        const hadController = !!navigator.serviceWorker.controller;
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!hadController || refreshing) return;
+            refreshing = true;
+            location.reload();
+        });
+    }
+    </script>
     <script src="js/01-lunar-calc.js"></script>
     <script src="js/02-tarot-nordico.js"></script>
     <script src="js/03-nucleo.js"></script>

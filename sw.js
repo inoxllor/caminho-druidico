@@ -1,10 +1,11 @@
 /* Service worker do Caminho Druídico: permite usar a app sem rede.
-   - Ficheiros da app (HTML, CSS, JS, ícones): guardados na instalação e
-     atualizados em segundo plano sempre que há rede.
+   - Ficheiros da app (HTML, CSS, JS, ícones): com rede, vêm sempre da rede
+     (assim uma atualização nunca mistura ficheiros novos com antigos);
+     sem rede, vêm da cópia guardada na instalação.
    - Fontes e bibliotecas de CDN: guardadas na primeira utilização.
    - APIs externas (tempo, localização, IA, QR): sempre pela rede.
    Ao mudar a lista PRECACHE ou o código, suba VERSION. */
-const VERSION = 'v19';
+const VERSION = 'v20';
 const CORE = `caminho-core-${VERSION}`;
 const RUNTIME = 'caminho-runtime-v1';
 
@@ -71,7 +72,7 @@ self.addEventListener('message', event => {
 async function networkFirstPage(request) {
   const cache = await caches.open(CORE);
   try {
-    const res = await fetch(request);
+    const res = await fetch(request, { cache: 'no-cache' });
     if (res.ok) cache.put(request, res.clone());
     return res;
   } catch {
@@ -81,15 +82,16 @@ async function networkFirstPage(request) {
   }
 }
 
-async function staleWhileRevalidate(request, event) {
+async function networkFirstAsset(request) {
   const cache = await caches.open(CORE);
-  const cached = await cache.match(request, { ignoreSearch: true });
-  const update = fetch(request).then(res => {
+  try {
+    // «no-cache»: confirma com o servidor em vez de usar a cache HTTP do navegador
+    const res = await fetch(request, { cache: 'no-cache' });
     if (res.ok) cache.put(request, res.clone());
     return res;
-  }).catch(() => null);
-  if (cached) { event.waitUntil(update); return cached; }
-  return (await update) || new Response('', { status: 504 });
+  } catch {
+    return (await cache.match(request, { ignoreSearch: true })) || new Response('', { status: 504 });
+  }
 }
 
 async function cacheFirst(request) {
@@ -109,7 +111,7 @@ self.addEventListener('fetch', event => {
   if (request.mode === 'navigate' && url.origin === self.location.origin) {
     event.respondWith(networkFirstPage(request));
   } else if (url.origin === self.location.origin) {
-    event.respondWith(staleWhileRevalidate(request, event));
+    event.respondWith(networkFirstAsset(request));
   } else if (CACHEABLE_HOSTS.includes(url.hostname)) {
     event.respondWith(cacheFirst(request));
   }
