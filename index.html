@@ -90,6 +90,7 @@
             <button type="button" onclick="switchTab('grounding')" id="desk-nav-grounding" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg>Meditação & som</button>
             <button type="button" onclick="switchTab('portal-saber')" id="desk-nav-portal-saber" class="nav-group nav-portal" data-realm="saber">Saber<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
             <button type="button" onclick="switchTab('herbal')" id="desk-nav-herbal" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
+            <button type="button" onclick="switchTab('runelore')" id="desk-nav-runelore" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas: guia & treino</button>
             <button type="button" onclick="switchTab('triads')" id="desk-nav-triads" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
             <button type="button" onclick="switchTab('library')" id="desk-nav-library" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
             <button type="button" onclick="switchTab('obod')" id="desk-nav-obod" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Graus OBOD</button>
@@ -156,6 +157,7 @@
         <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-saber')" data-realm="saber">Saber<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
         <div class="sheet-grid">
             <button type="button" onclick="switchTab('herbal')" data-tab="herbal" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
+            <button type="button" onclick="switchTab('runelore')" data-tab="runelore" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas: guia</button>
             <button type="button" onclick="switchTab('triads')" data-tab="triads" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
             <button type="button" onclick="switchTab('library')" data-tab="library" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
             <button type="button" onclick="switchTab('obod')" data-tab="obod" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Graus OBOD</button>
@@ -216,7 +218,7 @@
                         <p class="oracle-sub">Pedras gravadas com os símbolos ancestrais da sabedoria nórdica e germânica. Concentre-se numa pergunta e lance as runas.</p>
                         <div class="seg" role="group" aria-label="Modo">
                             <button type="button" onclick="switchRuneMode('draw')" id="rune-mode-draw" aria-pressed="true" class="bg-[var(--btn-primary)] text-[var(--on-primary)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Tiragem rúnica</button>
-                            <button type="button" onclick="switchRuneMode('gallery')" id="rune-mode-gallery" aria-pressed="false" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Todas as runas (24)</button>
+                            <button type="button" onclick="switchTab('runelore')" id="rune-mode-gallery" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia & treino (24) →</button>
                             <button type="button" onclick="openReadingGuide('runes')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg transition cursor-pointer">Guia de tiragem</button>
                         </div>
                     </header>
@@ -240,15 +242,7 @@
                         </div>
                     </div>
 
-                    <div id="rune-gallery" class="hidden text-left space-y-4 mt-6">
-                        <p class="text-sm theme-muted text-center max-w-xl mx-auto">As 24 runas do Elder Futhark, com o significado direito e o invertido. Nove delas são simétricas e não se invertem; para essas mostra-se a sombra da runa.</p>
-                        <div class="flex flex-wrap items-center justify-center gap-2">
-                            <div id="rune-filters" class="flex flex-wrap justify-center gap-2"></div>
-                            <input id="rune-search" type="search" oninput="setRuneQuery(this.value)" placeholder="Procurar runa ou tema…" aria-label="Procurar runa" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 w-56">
-                        </div>
-                        <p id="rune-gallery-count" class="text-xs theme-muted text-center" aria-live="polite"></p>
-                        <div id="rune-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-                    </div>
+                    
                 </div>
             </section>
 
@@ -522,10 +516,10 @@
                         <div id="lunar-month-map" class="lunar-cal-grid" role="grid" aria-label="Mapa lunar do mês"></div>
                     </div>
                     <div class="lunar-map-legend">
-                        <span>🌑 Nova</span>
-                        <span>🌓 Q. Crescente</span>
-                        <span>🌕 Cheia</span>
-                        <span>🌗 Q. Minguante</span>
+                        <span data-moon="0">Nova</span>
+                        <span data-moon="0.25">Q. Crescente</span>
+                        <span data-moon="0.5">Cheia</span>
+                        <span data-moon="0.75">Q. Minguante</span>
                         <span><span class="dot" aria-hidden="true"></span>Hoje</span>
                     </div>
                 </div>
@@ -1180,6 +1174,33 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                 </div>
             </section>
 
+            <!-- RUNAS: GUIA COMPLETO E TREINO (SABER) -->
+            <section id="tab-runelore" class="tab-content space-y-6 tab-in hidden">
+                <div class="theme-card border rounded-2xl oracle-panel oracle-runes text-center">
+                    <header class="oracle-head">
+                        <div class="oracle-sigil" aria-hidden="true">ᚠ ᚺ ᛏ</div>
+                        <p class="eyebrow">Elder Futhark · três aettir</p>
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">Runas: guia & treino</h2>
+                        <p class="oracle-sub">O Futhark antigo tem 24 runas, em três famílias de oito (aettir), com o nome de Freyr, Heimdall e Tyr. Cada runa é ao mesmo tempo um som, uma palavra e uma ideia.</p>
+                        <div class="seg" role="group" aria-label="Ir para">
+                            <button type="button" onclick="document.getElementById('rune-gallery').scrollIntoView({behavior:'smooth'})" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer">Guia</button>
+                            <button type="button" onclick="document.getElementById('rune-study').scrollIntoView({behavior:'smooth'})" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer">Treino</button>
+                            <button type="button" onclick="switchTab('runes')" class="theme-inner theme-muted border border-[var(--border-color)] text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer">Lançar as runas →</button>
+                        </div>
+                    </header>
+                </div>
+                    <div id="rune-gallery" class="theme-card border rounded-2xl p-5 lg:p-8 text-left space-y-4">
+                        <div><p class="eyebrow">Guia completo</p><h3 class="font-cinzel text-xl font-bold theme-title mt-1">As 24 runas</h3></div>
+                        <p class="text-sm theme-muted max-w-2xl">As 24 runas do Elder Futhark, com o significado direito e o invertido. Nove delas são simétricas e não se invertem; para essas mostra-se a sombra da runa.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <div id="rune-filters" class="flex flex-wrap gap-2"></div>
+                            <input id="rune-search" type="search" oninput="setRuneQuery(this.value)" placeholder="Procurar runa ou tema…" aria-label="Procurar runa" class="bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 w-56">
+                        </div>
+                        <p id="rune-gallery-count" class="text-xs theme-muted" aria-live="polite"></p>
+                        <div id="rune-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                    </div>
+            </section>
+
             <!-- HERBAL -->
             <section id="tab-herbal" class="tab-content space-y-6 tab-in hidden">
                 <div class="theme-card border rounded-2xl p-6 lg:p-8 space-y-5">
@@ -1525,4 +1546,5 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 <script src="js/22-meditacoes-guiadas.js"></script>
 <script src="js/23-oraculos.js"></script>
 <script src="js/24-design-global.js"></script>
+<script src="js/25-runas-estudo.js"></script>
 </body></html>

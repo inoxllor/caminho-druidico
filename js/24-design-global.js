@@ -42,6 +42,7 @@ const PORTALS = {
     intro: 'O conhecimento das árvores, das tríades e dos símbolos, e os graus da Ordem dos Bardos, Ovates e Druidas.',
     items: [
       ['herbal', 'herbal', 'Árvores & ervas', 'O guia das 20 letras Ogham, o estudo das letras e escrever em Ogham.'],
+      ['runelore', 'runes', 'Runas', 'O guia das 24 runas do Futhark antigo, com som, nome e sentido, e o treino para as decorar.'],
       ['triads', 'triads', 'Tríades', 'A sabedoria dos bardos galeses em grupos de três.'],
       ['library', 'library', 'Biblioteca', 'Símbolos, deuses e conceitos da tradição, num só lugar.'],
       ['obod', 'obod', 'Graus OBOD', 'Bardo, Ovate e Druida: o percurso dos três graus.']
