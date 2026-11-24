@@ -1072,3 +1072,143 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 .oc-stone.is-reversed .stone-glyph { transform: rotate(calc(180deg - var(--tilt, 0deg))); }
 .oc-card.is-reversed { border-color: color-mix(in srgb, var(--danger) 45%, var(--border-color)); }
 .oc-chip-rev { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 55%, transparent); background: color-mix(in srgb, var(--danger) 12%, var(--bg-card)); font-weight: 700; }
+
+/* ============================================================
+   v13 • Design global: reinos, portais, Hoje, consistência
+   ============================================================ */
+
+/* ——— Cor de cada reino ——— */
+.realm-hoje, .realm-comunidade { --realm-tint: var(--text-accent); }
+.realm-oraculos { --realm-tint: #fbbf24; }
+.realm-ciclos { --realm-tint: #93c5fd; }
+.realm-pratica { --realm-tint: #f59e0b; }
+.realm-saber { --realm-tint: #86efac; }
+.theme-parchment .realm-oraculos { --realm-tint: #92400e; }
+.theme-parchment .realm-ciclos { --realm-tint: #1e40af; }
+.theme-parchment .realm-pratica { --realm-tint: #b45309; }
+.theme-parchment .realm-saber { --realm-tint: #3f6212; }
+
+/* ——— Textura de nós celtas no fundo (muito ténue) ——— */
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96' fill='none' stroke='%23ffffff' stroke-width='3'%3E%3Cpath d='M24 8c13 0 24 11 24 24S37 56 24 56 0 45 0 32M72 8C59 8 48 19 48 32s11 24 24 24 24-11 24-24M24 88c13 0 24-11 24-24S37 40 24 40 0 51 0 64M72 88c-13 0-24-11-24-24s11-24 24-24 24 11 24 24'/%3E%3Ccircle cx='48' cy='48' r='9'/%3E%3C/svg%3E");
+  background-size: 96px 96px; }
+.theme-parchment body::before, body.theme-parchment::before { opacity: .035; filter: invert(1); }
+body.zen-active::before { display: none; }
+
+/* ——— Cartão principal de cada secção: cantos ornamentados ——— */
+.sec-lead { position: relative; border-top-color: color-mix(in srgb, var(--realm-tint) 45%, var(--border-color)); }
+.sec-lead::after { content: ""; position: absolute; inset: 8px; pointer-events: none; border-radius: inherit;
+  --c: color-mix(in srgb, var(--realm-tint) 55%, transparent);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 18px 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) top left / 1px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 18px 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 1px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 18px 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 1px 18px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 18px 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 1px 18px no-repeat; }
+.sec-lead.oracle-panel::after { inset: 10px; }
+
+/* ——— Cabeçalho comum das secções ——— */
+.sec-eyebrow, .tab-content[class*="realm-"] .eyebrow { color: color-mix(in srgb, var(--realm-tint) 75%, var(--text-accent)); }
+.sec-eyebrow { display: flex; margin-bottom: .35rem; }
+.sec-eyebrow.is-centered { justify-content: center; }
+h2.sec-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.5rem; line-height: 1.25; color: var(--text-title); letter-spacing: .01em; }
+@media (min-width: 1024px) { h2.sec-title { font-size: 1.75rem; } }
+
+/* ——— Botões uniformes ——— */
+.tab-content button.bg-\[var\(--btn-primary\)\] { min-height: 42px; border-radius: var(--r-md); font-weight: 600; letter-spacing: .01em;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--btn-primary) 30%, transparent); transition: filter .15s ease, transform .15s ease; }
+.tab-content button.bg-\[var\(--btn-primary\)\]:hover { filter: brightness(1.1); }
+.tab-content button.bg-\[var\(--btn-primary\)\]:active { transform: translateY(1px); }
+.tab-content button.theme-inner.border { min-height: 40px; border-radius: var(--r-md); font-weight: 500; }
+.tab-content button.theme-inner.border:hover { border-color: var(--border-hover); }
+.tab-content label.text-xs, .tab-content .field-label { letter-spacing: .04em; }
+
+/* ——— Navegação: portais na barra lateral ——— */
+.nav-portal { display: flex; align-items: center; justify-content: space-between; width: 100%; text-align: left; cursor: pointer; opacity: .85;
+  border-radius: var(--r-sm); transition: color .15s ease, opacity .15s ease, background-color .15s ease; }
+.nav-portal .ic { width: 14px; height: 14px; opacity: .6; }
+.nav-portal:hover { opacity: 1; color: var(--text-title); background: color-mix(in srgb, var(--text-accent) 6%, transparent); }
+.nav-portal[data-realm="oraculos"] { --realm-tint: #fbbf24; } .nav-portal[data-realm="ciclos"] { --realm-tint: #93c5fd; }
+.nav-portal[data-realm="pratica"] { --realm-tint: #f59e0b; } .nav-portal[data-realm="saber"] { --realm-tint: #86efac; }
+.theme-parchment .nav-portal[data-realm="oraculos"] { --realm-tint: #92400e; } .theme-parchment .nav-portal[data-realm="ciclos"] { --realm-tint: #1e40af; }
+.theme-parchment .nav-portal[data-realm="pratica"] { --realm-tint: #b45309; } .theme-parchment .nav-portal[data-realm="saber"] { --realm-tint: #3f6212; }
+.nav-portal::before { content: ""; width: 6px; height: 6px; border-radius: 99px; margin-right: .5rem; flex: 0 0 auto; background: var(--realm-tint, var(--text-accent)); opacity: .7; }
+.nav-portal { justify-content: flex-start; } .nav-portal .ic { margin-left: auto; }
+.nav-portal.realm-on { opacity: 1; color: var(--realm-tint, var(--text-accent)); }
+.sheet .nav-portal, #more-sheet .nav-portal { padding: .9rem .25rem .4rem; }
+.nav-minor { display: flex; flex-wrap: wrap; gap: .25rem .75rem; padding: 1rem .75rem .5rem; margin-top: .75rem; border-top: 1px solid var(--border-color); }
+.nav-minor-item { font-size: 12px; color: var(--text-muted); cursor: pointer; padding: .2rem 0; min-height: 0 !important; }
+.nav-minor-item:hover, .nav-minor-item.active { color: var(--text-title); }
+
+/* ——— Páginas de entrada dos portais ——— */
+.portal-hero { position: relative; overflow: hidden; padding: 2rem 1.25rem; display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  border-color: color-mix(in srgb, var(--realm-tint) 30%, var(--border-color)); }
+.portal-hero::before { content: ""; position: absolute; inset: -40% -20% auto; height: 80%; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--realm-tint) 16%, transparent), transparent 65%); }
+.portal-hero > * { position: relative; }
+.portal-hero .oracle-sigil { color: var(--realm-tint); opacity: .8; }
+.portal-hero .eyebrow { color: color-mix(in srgb, var(--realm-tint) 75%, var(--text-accent)); }
+@media (min-width: 1024px) { .portal-hero { padding: 2.75rem 2.5rem; } }
+.portal-grid { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+@media (min-width: 640px) { .portal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .realm-pratica .portal-grid, .realm-saber .portal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .realm-oraculos .portal-grid, .realm-ciclos .portal-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.portal-card { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "ic name" "ic desc" "ic go"; column-gap: .9rem; row-gap: .25rem; text-align: left;
+  padding: 1.1rem 1.1rem 1rem; border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--border-color); cursor: pointer;
+  transition: border-color .2s ease, transform .2s var(--ease-out, ease), box-shadow .2s ease; }
+.portal-card:hover, .portal-card:focus-visible { border-color: color-mix(in srgb, var(--realm-tint) 60%, var(--border-color)); transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.22); outline: none; }
+.pc-ic { grid-area: ic; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; color: var(--realm-tint);
+  background: color-mix(in srgb, var(--realm-tint) 12%, var(--bg-inner)); border: 1px solid color-mix(in srgb, var(--realm-tint) 30%, transparent); }
+.pc-ic .ic { width: 24px; height: 24px; }
+.pc-name { grid-area: name; font-weight: 700; font-size: 1.05rem; color: var(--text-title); }
+.pc-desc { grid-area: desc; font-size: .85rem; line-height: 1.5; color: var(--text-muted); }
+.pc-go { grid-area: go; margin-top: .35rem; font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--realm-tint); }
+@media (min-width: 1280px) { .portal-card { grid-template-columns: 1fr; grid-template-areas: "ic" "name" "desc" "go"; row-gap: .4rem; } .pc-ic { margin-bottom: .35rem; } .pc-go { margin-top: auto; padding-top: .35rem; } }
+
+/* ——— Hoje ——— */
+.today-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: .75rem; }
+.today-grid > details { min-width: 0; }
+.today-more .tm-hint { flex: 1 1 0; }
+.today-more .tm-title { flex: 0 1 auto; }
+@media (min-width: 768px) { .today-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .today-grid > details[open] { grid-column: 1 / -1; } }
+.today-grid > details { margin: 0 !important; }
+.today-more .tm-ic { flex: 0 0 auto; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: var(--text-accent);
+  background: color-mix(in srgb, var(--text-accent) 10%, var(--bg-inner)); border: 1px solid color-mix(in srgb, var(--text-accent) 22%, transparent); }
+.today-more .tm-ic .ic { width: 18px; height: 18px; }
+.today-more > summary { min-width: 0; }
+.today-more .tm-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+#streak-badge[hidden] { display: none !important; }
+body[data-tab="today"] .top-info { visibility: hidden; }
+
+/* Oráculo do dia: vara, pedra e carta ilustradas */
+.daily-empty { padding: .5rem 0; }
+.oe-mix { height: 100px; gap: 1rem; align-items: center; }
+.oe-mix .mix-stave { width: 22px; height: 84px; border-radius: 9px; font-family: 'Noto Sans Ogham', serif; font-size: 1.3rem; color: #3b2412; writing-mode: vertical-lr;
+  background: linear-gradient(90deg, #6b4423, #a87a4b 45%, #c79a66 55%, #7a4f2a); box-shadow: 0 6px 14px rgba(0,0,0,.35); --r: -8deg; }
+.oe-mix .mix-stone { width: 54px; height: 60px; border-radius: 48% 52% 44% 56% / 56% 48% 52% 44%; font-family: 'Noto Sans Runic', serif; font-size: 1.5rem; color: #fcd34d;
+  background: radial-gradient(circle at 35% 28%, #5f6570, #3a3f47 45%, #1f2228 100%); text-shadow: 0 0 10px rgba(251,191,36,.45);
+  box-shadow: inset -4px -6px 10px rgba(0,0,0,.35), inset 3px 4px 8px rgba(255,255,255,.18), 0 8px 16px rgba(0,0,0,.35); }
+.oe-mix .mix-card { width: 52px; height: 80px; border-radius: 7px; border: 2px solid #b8913b; --r: 8deg;
+  background: repeating-linear-gradient(45deg, #1a1530 0 6px, #231c40 6px 12px); box-shadow: 0 8px 16px rgba(0,0,0,.35); }
+.oe-mix .mix-card::after { content: "ᛟ"; font-family: 'Noto Sans Runic', serif; color: #d4af37; font-size: 1.2rem; }
+
+/* ——— Astronomia: Céu de hoje e mapa lunar compacto ——— */
+.sky-today { position: relative; }
+.sky-today .sky-part { min-width: 0; }
+.lunar-day { aspect-ratio: auto; height: 52px; padding: .15rem; }
+.lunar-day .ld-ev { display: block; max-width: 100%; font-size: .55rem; font-weight: 700; line-height: 1; letter-spacing: .02em; color: var(--text-accent);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lunar-day.is-full .ld-ev { color: var(--moon-color); }
+@media (max-width: 639px) { .lunar-day { height: 44px; border-radius: 8px; } .lunar-day .ld-ev { font-size: .5rem; } .lunar-day .ld-phase { font-size: .85rem; } }
+
+/* ——— Telemóvel: espaço acima da barra inferior ——— */
+@media (max-width: 1023px) {
+  main#main { padding-bottom: calc(var(--bnav-h) + 2rem + env(safe-area-inset-bottom, 0px)); }
+  body.pb-20 { padding-bottom: 0; }
+  .nudge { bottom: calc(var(--bnav-h) + 16px + env(safe-area-inset-bottom, 0px)); }
+  .portal-hero { padding: 1.5rem 1rem; }
+}
+@media (min-width: 1024px) { .nudge { left: auto; right: 24px; bottom: 24px; } }

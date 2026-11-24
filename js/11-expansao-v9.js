@@ -290,14 +290,19 @@ window.renderLunarMap = function () {
   for (let d = 1; d <= daysInMonth; d++) {
     const info = LunarCalc.dayPhase(y, m, d);
     info.icon = LUNAR_ICONS[info.idx]; info.name = LUNAR_NAMES[info.idx];
-    if (info.event) info.name += ' às ' + info.event.date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+    let ev = '';
+    if (info.event) {
+      const hm = info.event.date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+      info.name += ' às ' + hm;
+      ev = '<span class="ld-ev" aria-hidden="true">' + (['Nova', '', 'Q.C.', '', 'Cheia', '', 'Q.M.', ''][info.idx] || '') + ' ' + hm + '</span>';
+    }
     const isToday = (lunarMapOffset || 0) === 0 &&
       d === now.getDate() && m === now.getMonth() && y === now.getFullYear();
     const cls = ['lunar-day', phaseClass(info.idx), isToday ? 'is-today' : ''].filter(Boolean).join(' ');
     const label = d + '/' + (m + 1) + '/' + y + ' · ' + info.icon + ' ' + info.name;
     out += '<div class="' + cls + '" role="gridcell" title="' + label + '" aria-label="' + label + '">' +
       '<span class="ld-phase" aria-hidden="true">' + info.icon + '</span>' +
-      '<span class="ld-num">' + d + '</span></div>';
+      '<span class="ld-num">' + d + '</span>' + ev + '</div>';
   }
   const total = firstWeekday + daysInMonth;
   const trail = (7 - (total % 7)) % 7;

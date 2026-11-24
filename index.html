@@ -75,26 +75,29 @@
         </div>
         <nav class="flex-1 overflow-y-auto px-3 py-3" aria-label="Secções">
             <button type="button" onclick="switchTab('today')" id="desk-nav-today" class="nav-item active" aria-current="page"><svg class="ic" aria-hidden="true"><use href="#i-today"></use></svg>Hoje</button>
-            <div class="nav-group">Oráculos</div>
+            <button type="button" onclick="switchTab('portal-oraculos')" id="desk-nav-portal-oraculos" class="nav-group nav-portal" data-realm="oraculos">Oráculos<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
             <button type="button" onclick="switchTab('runes')" id="desk-nav-runes" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas</button>
             <button type="button" onclick="switchTab('tarot')" id="desk-nav-tarot" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg>Tarot nórdico</button>
             <button type="button" onclick="switchTab('oracle')" id="desk-nav-oracle" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg>Ogham</button>
-            <button type="button" onclick="switchTab('herbal')" id="desk-nav-herbal" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
-            <button type="button" onclick="switchTab('triads')" id="desk-nav-triads" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
-            <button type="button" onclick="switchTab('library')" id="desk-nav-library" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
-            <div class="nav-group">Ciclos</div>
+            <button type="button" onclick="switchTab('portal-ciclos')" id="desk-nav-portal-ciclos" class="nav-group nav-portal" data-realm="ciclos">Ciclos<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
             <button type="button" onclick="switchTab('astro')" id="desk-nav-astro" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-astro"></use></svg>Astronomia</button>
             <button type="button" onclick="switchTab('wheel')" id="desk-nav-wheel" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-wheel"></use></svg>Roda do Ano</button>
             <button type="button" onclick="switchTab('compass')" id="desk-nav-compass" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-compass"></use></svg>Bússola</button>
-            <div class="nav-group">Prática</div>
+            <button type="button" onclick="switchTab('portal-pratica')" id="desk-nav-portal-pratica" class="nav-group nav-portal" data-realm="pratica">Prática<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
             <button type="button" onclick="switchTab('altar')" id="desk-nav-altar" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Altar</button>
             <button type="button" onclick="switchTab('ritual')" id="desk-nav-ritual" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-ritual"></use></svg>Liturgia & rituais</button>
             <button type="button" onclick="switchTab('journal')" id="desk-nav-journal" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-journal"></use></svg>Diário</button>
             <button type="button" onclick="switchTab('grounding')" id="desk-nav-grounding" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg>Meditação & som</button>
+            <button type="button" onclick="switchTab('portal-saber')" id="desk-nav-portal-saber" class="nav-group nav-portal" data-realm="saber">Saber<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
+            <button type="button" onclick="switchTab('herbal')" id="desk-nav-herbal" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
+            <button type="button" onclick="switchTab('triads')" id="desk-nav-triads" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
+            <button type="button" onclick="switchTab('library')" id="desk-nav-library" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
             <button type="button" onclick="switchTab('obod')" id="desk-nav-obod" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Graus OBOD</button>
-            <div class="nav-group">Comunidade</div>
-            <button type="button" onclick="switchTab('orgs')" id="desk-nav-orgs" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-orgs"></use></svg>Organizações</button>
-            <button type="button" onclick="switchTab('about')" id="desk-nav-about" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-about"></use></svg>Sobre & apoio</button>
+            <div class="nav-minor" aria-label="Comunidade">
+                <button type="button" onclick="switchTab('orgs')" id="desk-nav-orgs" class="nav-minor-item">Organizações</button>
+                <button type="button" onclick="switchTab('grove')" id="desk-nav-grove" class="nav-minor-item">Grove local</button>
+                <button type="button" onclick="switchTab('about')" id="desk-nav-about" class="nav-minor-item">Sobre & apoio</button>
+            </div>
         </nav>
         <div class="p-4 border-t border-[var(--border-color)] zen-hide">
             <label for="theme-selector-desktop" class="text-[11px] uppercase tracking-widest theme-muted block mb-1">Ambiente visual</label>
@@ -132,26 +135,29 @@
             <h2 id="more-title" class="font-cinzel text-lg font-bold theme-title">Mais</h2>
             <button type="button" class="icon-btn" onclick="closeMore()" aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-close"></use></svg></button>
         </div>
-        <div class="nav-group">Oráculos</div>
+        <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-oraculos')" data-realm="oraculos">Oráculos<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
         <div class="sheet-grid">
             <button type="button" onclick="switchTab('oracle')" data-tab="oracle" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg>Ogham</button>
             <button type="button" onclick="switchTab('runes')" data-tab="runes" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas</button>
             <button type="button" onclick="switchTab('tarot')" data-tab="tarot" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg>Tarot nórdico</button>
-            <button type="button" onclick="switchTab('herbal')" data-tab="herbal" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
-            <button type="button" onclick="switchTab('triads')" data-tab="triads" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
-            <button type="button" onclick="switchTab('library')" data-tab="library" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
         </div>
-        <div class="nav-group">Ciclos</div>
+        <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-ciclos')" data-realm="ciclos">Ciclos<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
         <div class="sheet-grid">
             <button type="button" onclick="switchTab('astro')" data-tab="astro" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-astro"></use></svg>Astronomia</button>
             <button type="button" onclick="switchTab('wheel')" data-tab="wheel" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-wheel"></use></svg>Roda do Ano</button>
             <button type="button" onclick="switchTab('compass')" data-tab="compass" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-compass"></use></svg>Bússola</button>
         </div>
-        <div class="nav-group">Prática</div>
+        <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-pratica')" data-realm="pratica">Prática<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
         <div class="sheet-grid">
             <button type="button" onclick="switchTab('altar')" data-tab="altar" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Altar</button>
             <button type="button" onclick="switchTab('ritual')" data-tab="ritual" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-ritual"></use></svg>Liturgia & rituais</button>
             <button type="button" onclick="switchTab('grounding')" data-tab="grounding" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg>Meditação & som</button>
+        </div>
+        <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-saber')" data-realm="saber">Saber<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
+        <div class="sheet-grid">
+            <button type="button" onclick="switchTab('herbal')" data-tab="herbal" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
+            <button type="button" onclick="switchTab('triads')" data-tab="triads" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
+            <button type="button" onclick="switchTab('library')" data-tab="library" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
             <button type="button" onclick="switchTab('obod')" data-tab="obod" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Graus OBOD</button>
         </div>
         <div class="nav-group">Comunidade</div>
@@ -379,10 +385,12 @@
                     </div>
                 </div>
 
-                <!-- GRÁFICOS CICLO LUNAR & ARCO SOLAR (ESTILO DRUID PATH PRO) -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- CÉU DE HOJE: CICLO LUNAR & ARCO SOLAR -->
+                <div class="theme-card border rounded-2xl p-5 lg:p-8 space-y-5 sky-today">
+                    <div><p class="eyebrow">Lua e Sol</p><h2 class="font-cinzel text-xl lg:text-2xl font-bold theme-title mt-1">Céu de hoje</h2></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <!-- CICLO LUNAR COM GRÁFICO SINÓDICO -->
-                    <div class="theme-card border rounded-2xl p-5 lg:p-8 flex flex-col justify-between space-y-5">
+                    <div class="theme-inner border rounded-xl p-5 lg:p-6 flex flex-col justify-between space-y-5 sky-part">
                         <div class="flex items-center justify-between gap-4">
                             <div>
                                 <div class="eyebrow">Ciclo Lunar Sinódico (29.53d)</div>
@@ -438,7 +446,7 @@
                     </div>
 
                     <!-- CICLO SOLAR COM GRÁFICO DE ARCO DIURNO E HORAS MÁGICAS -->
-                    <div class="theme-card border rounded-2xl p-5 lg:p-8 flex flex-col justify-between space-y-5">
+                    <div class="theme-inner border rounded-xl p-5 lg:p-6 flex flex-col justify-between space-y-5 sky-part">
                         <div class="flex items-center justify-between gap-4">
                             <div>
                                 <div class="eyebrow">Arco Solar &amp; Horas Mágicas</div>
@@ -488,6 +496,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
 
                 <!-- MAPA LUNAR DO MÊS -->
@@ -664,7 +673,7 @@
                         <button type="button" onclick="drawDailyOracle('tarot')"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg>Tarot</button>
                     </div>
                     <div id="daily-oracle" class="theme-inner border rounded-xl p-4 minh96 flex flex-col items-center justify-center text-center">
-                        <p class="text-sm theme-muted">O conselho do dia aparece aqui.</p>
+                        <div class="oracle-empty daily-empty"><div class="oe-art oe-mix" aria-hidden="true"><span class="mix-stave">ᚁ</span><span class="mix-stone">ᚠ</span><span class="mix-card"></span></div><p class="oe-text">Escolha uma vara, uma pedra ou uma carta. O conselho do dia aparece aqui.</p></div>
                     </div>
                     <div id="daily-oracle-actions" class="hidden flex flex-wrap gap-2 justify-center">
                         <button type="button" onclick="saveDailyOracleToJournal()" class="btn-sec theme-accent">Guardar no Diário</button>
@@ -690,8 +699,9 @@
                 </div>
 
                 <!-- Secções recolhíveis (o estado aberto/fechado fica memorizado) -->
+                <div class="today-grid">
                 <details class="today-more theme-card border rounded-2xl" data-key="signs">
-                    <summary><span class="tm-title">Sinais do dia</span><span class="tm-hint" id="tm-hint-signs">Letra Ogham e elemento</span></summary>
+                    <summary><span class="tm-ic" aria-hidden="true"><svg class="ic"><use href="#i-ogham"></use></svg></span><span class="tm-title">Sinais do dia</span><span class="tm-hint" id="tm-hint-signs">Letra Ogham e elemento</span></summary>
                     <div class="tm-body grid grid-cols-1 lg:grid-cols-2 gap-3">
                         <div id="daily-few" class="theme-inner border rounded-xl p-4 text-left flex items-center gap-4" data-text=""></div>
                         <div id="today-element-weather" class="theme-inner border rounded-xl p-4 text-left flex items-center gap-4"></div>
@@ -699,7 +709,7 @@
                 </details>
 
                 <details class="today-more theme-card border rounded-2xl" data-key="journal">
-                    <summary><span class="tm-title">Diário e tríade</span><span class="tm-hint">Um prompt para escrever hoje</span></summary>
+                    <summary><span class="tm-ic" aria-hidden="true"><svg class="ic"><use href="#i-pen"></use></svg></span><span class="tm-title">Diário e tríade</span><span class="tm-hint">Um prompt para escrever hoje</span></summary>
                     <div class="tm-body space-y-3">
                         <p id="daily-prompt" class="text-sm theme-muted leading-relaxed italic">—</p>
                         <button type="button" onclick="useDailyPrompt()" class="w-full h44 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-semibold text-sm rounded-lg transition cursor-pointer">Escrever a partir deste prompt</button>
@@ -712,7 +722,7 @@
                 </details>
 
                 <details class="today-more theme-card border rounded-2xl" data-key="practice">
-                    <summary><span class="tm-title">Prática de hoje</span><span class="tm-hint">Awen, altar, meditação, diário</span></summary>
+                    <summary><span class="tm-ic" aria-hidden="true"><svg class="ic"><use href="#i-obod"></use></svg></span><span class="tm-title">Prática de hoje</span><span class="tm-hint">Awen, altar, meditação, diário</span></summary>
                     <div class="tm-body grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                         <button type="button" onclick="registerAwenPractice()" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Invocar Awen</button>
                         <button type="button" onclick="switchTab('altar')" class="quick"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Acender o altar</button>
@@ -722,7 +732,7 @@
                 </details>
 
                 <details id="festival-checklist-card" class="today-more theme-card border rounded-2xl" data-key="festival">
-                    <summary><span class="tm-title">Preparação: <span id="fest-check-name">—</span></span><span class="tm-hint">Lista para a próxima festa</span></summary>
+                    <summary><span class="tm-ic" aria-hidden="true"><svg class="ic"><use href="#i-wheel"></use></svg></span><span class="tm-title">Preparação: <span id="fest-check-name">—</span></span><span class="tm-hint">Lista para a próxima festa</span></summary>
                     <div class="tm-body space-y-3">
                         <div id="fest-prep-steps" class="text-sm theme-muted space-y-1"></div>
                         <div id="fest-offerings" class="text-xs theme-muted"></div>
@@ -732,12 +742,13 @@
                 </details>
 
                 <details class="today-more theme-card border rounded-2xl" data-key="stats">
-                    <summary><span class="tm-title">Estatísticas do mês</span><span class="tm-hint" id="tm-hint-stats">—</span></summary>
+                    <summary><span class="tm-ic" aria-hidden="true"><svg class="ic"><use href="#i-astro"></use></svg></span><span class="tm-title">Estatísticas do mês</span><span class="tm-hint" id="tm-hint-stats">—</span></summary>
                     <div class="tm-body space-y-3">
                         <div id="month-stats-bars" class="space-y-2"></div>
                         <p id="month-review-text" class="text-sm theme-muted"></p>
                     </div>
                 </details>
+                </div>
             </section>
 
             <!-- ALTAR DIGITAL INTERATIVO -->
@@ -1513,4 +1524,5 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 <script src="js/21-ogham-estudo.js"></script>
 <script src="js/22-meditacoes-guiadas.js"></script>
 <script src="js/23-oraculos.js"></script>
+<script src="js/24-design-global.js"></script>
 </body></html>

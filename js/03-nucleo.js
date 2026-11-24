@@ -258,7 +258,7 @@ function updateAstronomy() {
     const mobSub = document.getElementById('mob-tree-subtitle');
     if (topTreeSym) topTreeSym.textContent = activeTree.symbol;
     if (topTreeTxt) topTreeTxt.textContent = `${activeTree.name} (${activeTree.tree.split(' ')[0]})`;
-    if (mobSub) mobSub.textContent = `Mês de ${activeTree.name} (${activeTree.symbol})`;
+    if (mobSub) mobSub.textContent = `Mês de ${activeTree.name} · ${activeTree.tree.split(' ')[0]}`;
 }
 
 // GERADOR DE HAIKUS & POESIA AUTOMÁTICA (OBOD BARDIC)

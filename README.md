@@ -13,7 +13,7 @@ Aplicação web progressiva (PWA) *offline-first* com ferramentas para a explora
 ```
 index.html          Página (HTML) — carrega o CSS e os scripts abaixo, por ordem
 css/app.css         Estilos
-js/01-…22-*.js      Código, por funcionalidade (scripts clássicos, partilham o âmbito global)
+js/01-…24-*.js      Código, por funcionalidade (scripts clássicos, partilham o âmbito global)
 sw.js               Service worker: guarda a app para uso offline
 manifest.json       Manifesto da app instalável
 icons/              Ícones da app

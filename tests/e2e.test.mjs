@@ -108,6 +108,32 @@ test('ciclo lunar mostra a fase de hoje e o mapa do mês', async () => {
   await ctx.close();
 });
 
+test('design global: portais, reinos, Hoje e mapa lunar compacto', async () => {
+  const { ctx, page, errors } = await open(base);
+  // Contador de dias escondido a zero
+  assert.equal(await page.evaluate(() => document.getElementById('streak-badge').hidden), true);
+  // Quatro portais com página de entrada e cartões que levam às secções
+  for (const [r, n] of [['oraculos', 3], ['ciclos', 3], ['pratica', 4], ['saber', 4]]) {
+    await page.evaluate(id => switchTab(id), 'portal-' + r);
+    assert.equal(await page.evaluate(() => document.body.dataset.realm), r);
+    assert.equal(await page.$$eval(`#tab-portal-${r}:not(.hidden) .portal-card`, els => els.length), n);
+  }
+  await page.evaluate(() => switchTab('portal-oraculos'));
+  await page.click('#tab-portal-oraculos .portal-card:nth-child(2)');
+  assert.equal(await page.evaluate(() => document.body.dataset.tab), 'runes');
+  assert.equal(await page.evaluate(() => document.body.dataset.realm), 'oraculos');
+  // Cabeçalho comum nas secções que não são oráculos
+  await page.evaluate(() => switchTab('triads'));
+  assert.equal(await page.textContent('#tab-triads .sec-eyebrow'), 'Saber');
+  // Mapa lunar: células baixas e fases principais assinaladas
+  await page.evaluate(() => switchTab('astro'));
+  const h = await page.$eval('#lunar-month-map .lunar-day:not(.is-empty)', el => el.getBoundingClientRect().height);
+  assert.ok(h <= 60, `célula do mapa lunar com ${h}px`);
+  assert.ok(await page.$$eval('#lunar-month-map .ld-ev', els => els.length) >= 3);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
 test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
   const { ctx, page, errors } = await open(base);
   await page.evaluate(() => switchTab('herbal'));
