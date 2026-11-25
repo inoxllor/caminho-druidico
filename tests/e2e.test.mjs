@@ -167,10 +167,16 @@ test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
   assert.equal(await page.textContent('#ogham-write-out'), '᚛ᚉᚑᚂᚂ᚜');
   const lore = await page.$$eval('#tree-list .ogham-lore', els => els.length);
   assert.equal(lore, 20, 'cada letra deve ter o nome antigo e o Bríatharogam');
-  const art = await page.$$eval('#tree-list .bot-figure svg', els => els.length);
-  assert.equal(art, 20, 'cada árvore deve ter o seu desenho');
-  const herbs = await page.$$eval('#tree-list .bot-herb svg', els => els.length);
-  assert.ok(herbs >= 39, `cada erva deve ter o seu desenho (${herbs})`);
+  const plates = await page.$$eval('#tree-list .bot-plate img', els => els.length);
+  assert.equal(plates, 20, 'cada árvore deve ter a sua gravura');
+  const uses = await page.$$eval('#tree-list .bot-use', els => els.map(e => ({ art: !!e.querySelector('img, svg'), txt: e.querySelector('.bot-use-txt p')?.textContent || '' })));
+  assert.equal(uses.length, 39, 'cada erva deve aparecer com a sua indicação');
+  for (const u of uses) { assert.ok(u.art, 'erva sem ilustração'); assert.ok(u.txt.length > 20, 'erva sem indicação de fitoterapia'); }
+  await page.locator('#tree-list .bot-plate-btn').first().scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => { const i = document.querySelector('#tree-list .bot-plate img'); return i && i.complete && i.naturalWidth > 0; });
+  await page.click('#tree-list .bot-plate-btn');
+  assert.ok(await page.isVisible('dialog.bot-zoom img'), 'a gravura deve abrir ampliada');
+  await page.click('dialog.bot-zoom [data-close]');
   await page.click('#ogham-quiz-options button');
   assert.match(await page.textContent('#ogham-quiz-score'), /Acertos: \d de 1/);
   await page.click('#ogham-quiz-next');

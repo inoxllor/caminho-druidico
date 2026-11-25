@@ -1286,15 +1286,35 @@ body[data-tab="today"] .top-info { visibility: hidden; }
 .bot-svg .k  { fill: var(--bg-inner, #0a101c); }
 .bot-svg .v  { stroke-width: .6; opacity: .75; }
 .bot-svg .g  { stroke-width: .8; opacity: .55; }
-.bot-figure { margin: .25rem 0 .5rem; padding: .5rem .5rem .35rem; border-radius: .75rem; text-align: center;
-  background: radial-gradient(ellipse at 50% 60%, color-mix(in srgb, var(--glyph-highlight) 9%, transparent), transparent 70%);
-  border: 1px solid color-mix(in srgb, var(--glyph-highlight) 18%, transparent); text-shadow: none; }
-.bot-figure .bot-svg { width: 100%; max-width: 170px; height: auto; aspect-ratio: 1; margin: 0 auto; }
-.bot-figure figcaption { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; margin-top: .15rem; }
-.bot-herbs { display: flex; flex-wrap: wrap; gap: .5rem .75rem; margin: .25rem 0 .1rem; }
-.bot-herb { display: flex; flex-direction: column; align-items: center; width: 5.25rem; margin: 0; text-align: center; }
-.bot-herb-art { display: block; width: 4.25rem; height: 4.25rem; padding: .35rem; border-radius: 50%; text-shadow: none;
-  border: 1px solid color-mix(in srgb, var(--glyph-highlight) 30%, transparent);
-  background: color-mix(in srgb, var(--glyph-highlight) 6%, var(--bg-inner, transparent)); }
-.bot-herb figcaption { font-size: 11px; line-height: 1.25; margin-top: .3rem; color: var(--text-muted); }
+.bot-svg .lf, .bot-svg .cr { fill: currentColor; fill-opacity: .13; }
+.bot-svg .fl, .bot-svg .hl { fill: var(--bg-inner, #0a101c); }
+.bot-svg .fc, .bot-svg .fr, .bot-svg .fd { fill: currentColor; stroke: none; }
+/* Gravuras botânicas: papel claro em todos os temas, como uma prancha antiga */
+.bot-plate { margin: .25rem 0 .5rem; text-align: center; }
+.bot-plate-btn { display: block; width: 100%; padding: .5rem; border-radius: .75rem; cursor: zoom-in;
+  background: #f6f1e3; border: 1px solid color-mix(in srgb, var(--glyph-highlight) 30%, transparent); }
+.bot-plate-img { display: block; width: 100%; height: 15rem; object-fit: contain; margin: 0 auto; }
+.bot-plate figcaption { font-size: 12px; margin-top: .35rem; color: var(--text-muted); }
+.bot-plate figcaption b { color: var(--info-highlight); font-weight: 600; }
+.bot-plate figcaption span { display: block; font-size: 10.5px; opacity: .75; }
+.bot-fallback { display: block; height: 15rem; color: #8a6a2a; }
+.bot-uses { display: flex; flex-direction: column; gap: .6rem; margin: .35rem 0 .2rem; }
+.bot-use { display: flex; gap: .65rem; align-items: flex-start; }
+.bot-use-art { flex: none; width: 4.25rem; height: 4.25rem; padding: .2rem; border-radius: .6rem; overflow: hidden; cursor: zoom-in;
+  background: #f6f1e3; border: 1px solid color-mix(in srgb, var(--glyph-highlight) 30%, transparent); }
+.bot-use-svg { cursor: default; background: color-mix(in srgb, var(--glyph-highlight) 6%, var(--bg-inner, transparent)); text-shadow: none; }
+.bot-use-img, .bot-use-art .bot-fallback { display: block; width: 100%; height: 100%; object-fit: contain; }
+.bot-use-txt { font-size: .8125rem; line-height: 1.4; color: var(--text-muted); min-width: 0; }
+.bot-use-txt b { font-size: .875rem; }
+.bot-latin { font-size: 11px; opacity: .75; }
+.bot-use-txt p { margin-top: .15rem; }
+.bot-warn { color: var(--text-accent); font-size: .78rem; }
+.bot-zoom { border: none; padding: 0; background: transparent; max-width: min(92vw, 40rem); max-height: 92vh; }
+.bot-zoom::backdrop { background: rgb(0 0 0 / .78); }
+.bot-zoom figure { margin: 0; background: #f6f1e3; color: #2d2a22; border-radius: 1rem; padding: .75rem; text-align: center; }
+.bot-zoom img { display: block; width: 100%; max-height: 72vh; object-fit: contain; }
+.bot-zoom figcaption { font-size: 13px; margin: .5rem 0; }
+.bot-zoom figcaption span { font-size: 11px; opacity: .8; }
+.bot-zoom a { text-decoration: underline; }
+.bot-zoom button { color: #2d2a22; background: #ebe3cc; border-color: #c9bb93; }
 .bot-month { width: 5.5rem; height: 5.5rem; flex: none; text-shadow: none; }
