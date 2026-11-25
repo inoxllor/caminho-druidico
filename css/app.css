@@ -1275,3 +1275,26 @@ body[data-tab="today"] .top-info { visibility: hidden; }
 .rq-cell { display: flex; flex-direction: column; align-items: center; padding: .35rem 0; border-radius: var(--r-sm); background: var(--bg-inner); border: 1px solid var(--border-color); }
 .rq-cell b { font-family: 'Noto Sans Runic', serif; font-size: 1.2rem; color: var(--glyph-highlight); line-height: 1.2; }
 .rq-cell i { font-style: normal; font-size: .7rem; color: var(--text-muted); }
+
+/* ——— Ilustrações botânicas (js/26-ilustracoes-botanicas.js) ——— */
+.bot-svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.bot-svg .t  { fill: currentColor; fill-opacity: .13; }
+.bot-svg .tt { fill: currentColor; fill-opacity: .3; }
+.bot-svg .f  { fill: currentColor; fill-opacity: .45; }
+.bot-svg .tr { fill: currentColor; fill-opacity: .22; }
+.bot-svg .s  { fill: currentColor; stroke: none; }
+.bot-svg .k  { fill: var(--bg-inner, #0a101c); }
+.bot-svg .v  { stroke-width: .6; opacity: .75; }
+.bot-svg .g  { stroke-width: .8; opacity: .55; }
+.bot-figure { margin: .25rem 0 .5rem; padding: .5rem .5rem .35rem; border-radius: .75rem; text-align: center;
+  background: radial-gradient(ellipse at 50% 60%, color-mix(in srgb, var(--glyph-highlight) 9%, transparent), transparent 70%);
+  border: 1px solid color-mix(in srgb, var(--glyph-highlight) 18%, transparent); text-shadow: none; }
+.bot-figure .bot-svg { width: 100%; max-width: 170px; height: auto; aspect-ratio: 1; margin: 0 auto; }
+.bot-figure figcaption { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; margin-top: .15rem; }
+.bot-herbs { display: flex; flex-wrap: wrap; gap: .5rem .75rem; margin: .25rem 0 .1rem; }
+.bot-herb { display: flex; flex-direction: column; align-items: center; width: 5.25rem; margin: 0; text-align: center; }
+.bot-herb-art { display: block; width: 4.25rem; height: 4.25rem; padding: .35rem; border-radius: 50%; text-shadow: none;
+  border: 1px solid color-mix(in srgb, var(--glyph-highlight) 30%, transparent);
+  background: color-mix(in srgb, var(--glyph-highlight) 6%, var(--bg-inner, transparent)); }
+.bot-herb figcaption { font-size: 11px; line-height: 1.25; margin-top: .3rem; color: var(--text-muted); }
+.bot-month { width: 5.5rem; height: 5.5rem; flex: none; text-shadow: none; }
