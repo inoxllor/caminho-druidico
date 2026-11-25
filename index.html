@@ -1337,6 +1337,329 @@ body[data-tab="today"] .top-info { visibility: hidden; }
 .bot-zoom a { text-decoration: underline; }
 .bot-zoom button { color: #2d2a22; background: #ebe3cc; border-color: #c9bb93; }
 .bot-month { width: 5.5rem; height: 5.5rem; flex: none; text-shadow: none; }
+
+/* ============================================================
+   v14 • Renovação do design: «Hoje» com cartão principal, Roda
+   das árvores, pesquisa global, menu «Mais» em portais,
+   contraste, virar carta e partilha da ficha
+   ============================================================ */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* ——— 4) Contraste e legibilidade nos temas escuros ——— */
+:root, .theme-night { --text-muted: #a6b3c9; }
+.theme-forest { --text-muted: #a8cbb9; }
+.theme-stone { --text-muted: #aab6c6; }
+.theme-autumn { --text-muted: #d6ba90; }
+.theme-mist { --text-muted: #abc4d3; }
+.theme-gold { --text-muted: #d3c690; }
+.theme-lantern { --text-muted: #e0b4b4; }
+.nav-group { opacity: 1; font-size: 11.5px; }
+.nav-portal { opacity: 1; }
+.today-chip .t-lb, .today-tile .t-lb, .altar-status, .oc-chip, .oc-pos, .oc-answer span, .hdr-btn span { font-size: 11.5px; }
+.oc-extra span { font-size: 11px; }
+.bot-plate figcaption span { font-size: 11.5px; opacity: 1; }
+.bot-latin { opacity: 1; }
+.tab-content .text-\[11px\], .tab-content .text-\[10px\] { font-size: 11.5px; }
+.tab-content .opacity-75, .tab-content .opacity-70 { opacity: 1; }
+/* Linhas de texto mais curtas: no máximo ~70 caracteres */
+.tab-content p { max-width: 70ch; }
+.tab-content .text-center p, .tab-content p.text-center, .tab-content .items-center > p, .portal-hero p { margin-left: auto; margin-right: auto; }
+.oc-row p, .oc-cross p { max-width: 36ch; }
+/* Alvos de toque de 44 px no telemóvel */
+@media (max-width: 1023px) {
+  .tab-content button:not(.tarot-tile):not(.bot-plate-btn):not(.bot-use-art), .tab-content select,
+  .tab-content input[type="text"], .tab-content input[type="search"], .tab-content input[type="number"],
+  .tab-content input[type="time"], .tab-content input[type="date"], .sheet select, .sheet button { min-height: 44px; }
+  .tab-content button.text-xs { font-size: .8125rem; }
+  .tr-toggle { min-height: 44px; }
+  .nav-minor-item { min-height: 44px !important; display: inline-flex; align-items: center; }
+}
+
+/* ——— 3) Hoje: cartão principal ——— */
+.today-feature { display: block; }
+.tf-card { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 1.5rem; padding: 1.25rem; border-radius: 1.25rem;
+  border-color: color-mix(in srgb, var(--glyph-highlight) 32%, var(--border-color));
+  background: radial-gradient(ellipse at 0% 0%, color-mix(in srgb, var(--glyph-highlight) 10%, transparent), transparent 60%), var(--bg-card);
+  box-shadow: 0 18px 40px -24px rgba(0,0,0,.6); }
+.tf-art { display: block; padding: .5rem; border-radius: 1rem; background: #f6f1e3; cursor: pointer; align-self: stretch;
+  border: 1px solid color-mix(in srgb, var(--glyph-highlight) 35%, transparent); transition: transform .2s ease, box-shadow .2s ease; }
+.tf-art:hover, .tf-art:focus-visible { transform: translateY(-2px); box-shadow: 0 12px 28px -12px rgba(0,0,0,.5); }
+.tf-plate { display: block; width: 100%; height: 100%; min-height: 16rem; max-height: 22rem; object-fit: contain; color: #8a6a2a; }
+.tf-main { min-width: 0; display: flex; flex-direction: column; gap: .5rem; }
+.tf-main .eyebrow { color: var(--glyph-highlight); }
+.tf-title { font-size: 1.75rem; line-height: 1.15; font-weight: 700; color: var(--text-title); display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .5rem; }
+.tf-tree { font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--info-highlight); }
+.tf-glyph { font-family: 'Noto Sans Ogham', 'Segoe UI Historic', serif; color: var(--glyph-highlight); font-size: 1.6rem; margin-right: .15rem; }
+.tf-meaning { font-size: 1rem; line-height: 1.55; color: var(--text-title); max-width: 52ch; }
+.tf-left { font-size: .875rem; color: var(--text-muted); }
+.tf-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .35rem; }
+.tf-stat { display: flex; align-items: center; gap: .75rem; min-height: 64px; padding: .65rem .8rem; text-align: left; border-radius: var(--r-md);
+  background: var(--bg-inner); border: 1px solid var(--border-color); cursor: pointer; transition: border-color .15s ease; min-width: 0; }
+.tf-stat:hover, .tf-stat:focus-visible { border-color: var(--border-hover); }
+.tf-moon { flex: none; width: 44px; height: 44px; display: grid; place-items: center; }
+.tf-ic { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; color: var(--text-accent);
+  background: color-mix(in srgb, var(--text-accent) 12%, transparent); }
+.tf-ic .ic { width: 24px; height: 24px; }
+.tf-st { display: flex; flex-direction: column; min-width: 0; }
+.tf-st .t-lb { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); }
+.tf-st .t-v { font-size: 1rem; font-weight: 700; color: var(--text-title); }
+.tf-st .t-sub { font-size: .8125rem; color: var(--text-muted); }
+.tf-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; margin-top: auto; padding-top: .25rem; }
+.tf-sun { display: inline-flex; align-items: center; gap: .45rem; font-size: .875rem; color: var(--text-muted); }
+.tf-sun .ic { width: 18px; height: 18px; color: var(--sun-color); }
+@media (max-width: 767px) {
+  .tf-card { grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
+  .tf-art { height: 13rem; }
+  .tf-plate { min-height: 0; height: 100%; }
+  .tf-title { font-size: 1.5rem; }
+  .tf-stats { grid-template-columns: 1fr; }
+}
+@media (min-width: 1024px) { .tf-card { padding: 1.5rem; grid-template-columns: 17rem minmax(0, 1fr); } }
+/* O resto do Hoje fica mais discreto, por baixo do cartão principal */
+#tab-today .today-hero { border-color: var(--border-color); }
+#tab-today .today-hero h3 { font-size: 1.05rem; }
+.moon-svg .moon-dark { fill: color-mix(in srgb, var(--moon-color) 14%, var(--bg-inner)); }
+
+/* ——— 2) Roda das árvores ——— */
+.realm-ciclos .portal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 639px) { .realm-ciclos .portal-grid { grid-template-columns: 1fr; } }
+@media (min-width: 1280px) { .realm-ciclos .portal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.tw-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+@media (min-width: 1024px) { .tw-layout { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+.tw-wheel { max-width: 34rem; width: 100%; margin: 0 auto; }
+.tw-svg { width: 100%; height: auto; display: block; overflow: visible; }
+.tw-orbit { fill: none; stroke: var(--border-color); stroke-dasharray: 2 5; }
+.tw-hub { fill: var(--bg-inner); stroke: var(--border-color); stroke-width: 1.5; }
+.tw-seg { cursor: pointer; outline: none; }
+.tw-seg path { fill: var(--bg-inner); stroke: var(--bg-card); stroke-width: 2; transition: fill .15s ease; }
+.tw-seg:hover path, .tw-seg:focus-visible path { fill: color-mix(in srgb, var(--realm-tint, var(--text-accent)) 16%, var(--bg-inner)); }
+.tw-seg:focus-visible path { stroke: var(--text-accent); stroke-width: 2.5; }
+.tw-seg .tw-glyph { font-family: 'Noto Sans Ogham', 'Segoe UI Historic', serif; font-size: 20px; fill: var(--glyph-highlight); pointer-events: none; }
+.tw-seg .tw-name { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 600; fill: var(--text-muted); pointer-events: none; }
+.tw-seg.is-current path { fill: color-mix(in srgb, var(--glyph-highlight) 26%, var(--bg-inner)); stroke: var(--glyph-highlight); stroke-width: 2; }
+.tw-seg.is-current .tw-name { fill: var(--text-title); font-weight: 700; }
+.tw-seg.is-selected:not(.is-current) path { fill: color-mix(in srgb, var(--text-accent) 22%, var(--bg-inner)); }
+.tw-seg.is-selected .tw-name { fill: var(--text-title); }
+.tw-full .moon-svg { overflow: visible; }
+.tw-full.is-past { opacity: .45; }
+.tw-needle { stroke: var(--text-title); stroke-width: 2; stroke-linecap: round; }
+.tw-needle-dot { fill: var(--glyph-highlight); stroke: var(--bg-card); stroke-width: 2; }
+.tw-c-phase { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; fill: var(--text-title); }
+.tw-c-date { font-family: 'Inter', sans-serif; font-size: 11.5px; fill: var(--text-muted); }
+.tw-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem 1.1rem; margin-top: .6rem; font-size: .8125rem; color: var(--text-muted); }
+.tw-legend li { display: inline-flex; align-items: center; gap: .4rem; }
+.tw-key { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+.tw-key-cur { background: color-mix(in srgb, var(--glyph-highlight) 30%, var(--bg-inner)); border: 1.5px solid var(--glyph-highlight); }
+.tw-key-needle { width: 16px; height: 2px; border-radius: 2px; background: var(--text-title); }
+.tw-card { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1.1rem; padding: 1.1rem; border-radius: var(--r-lg);
+  background: var(--bg-inner); border: 1px solid color-mix(in srgb, var(--glyph-highlight) 25%, var(--border-color)); }
+.tw-plate-wrap { background: #f6f1e3; border-radius: .75rem; padding: .4rem; align-self: start; }
+.tw-plate { display: block; width: 100%; height: 14rem; object-fit: contain; color: #8a6a2a; }
+.tw-title { font-size: 1.6rem; font-weight: 700; color: var(--text-title); margin-top: .2rem; }
+.tw-tree { font-size: .95rem; font-weight: 600; color: var(--info-highlight); }
+.tw-meaning { font-size: .95rem; line-height: 1.55; color: var(--text-title); margin-top: .5rem; }
+.tw-extra { font-size: .875rem; line-height: 1.45; color: var(--text-muted); margin-top: .4rem; }
+.tw-extra span { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-accent); margin-right: .3rem; }
+.tw-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+.tw-actions .btn-sec { gap: .4rem; }
+.tw-actions .ic { width: 16px; height: 16px; }
+.tw-body .eyebrow { color: var(--glyph-highlight); }
+@media (max-width: 479px) { .tw-card { grid-template-columns: 1fr; } .tw-plate { height: 12rem; } }
+.tree-share { gap: .35rem; }
+.tree-share .ic { width: 16px; height: 16px; }
+#tree-list > div.is-found, .rl-card.is-found, #triad-container.is-found { animation: foundPulse 2.4s ease-out; }
+@keyframes foundPulse { 0%, 30% { box-shadow: 0 0 0 3px var(--glyph-highlight); border-color: var(--glyph-highlight); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* ——— 5) Pesquisa global ——— */
+.search-trigger { display: inline-flex; align-items: center; gap: .55rem; min-height: 40px; padding: 0 .6rem 0 .75rem; border-radius: var(--r-md);
+  background: var(--bg-inner); border: 1px solid var(--border-color); color: var(--text-muted); font-size: .875rem; cursor: pointer; min-width: 16rem; }
+.search-trigger:hover, .search-trigger:focus-visible { border-color: var(--border-hover); color: var(--text-title); }
+.search-trigger kbd, .sd-status kbd { margin-left: auto; font: 600 11px/1 'Inter', sans-serif; padding: .25rem .45rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-muted); }
+.search-dialog { margin: 8vh auto auto; width: calc(100% - 1.5rem); max-width: 40rem; max-height: 80dvh; padding: 0; display: none; flex-direction: column;
+  background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--r-lg); box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); }
+.search-dialog[open] { display: flex; animation: sheetIn .18s ease-out; }
+@media (max-width: 639px) { .search-dialog { margin: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; border-radius: 0; border: 0; } }
+.sd-head { display: flex; align-items: center; gap: .6rem; padding: .75rem .75rem .75rem 1rem; padding-top: calc(.75rem + env(safe-area-inset-top, 0px)); border-bottom: 1px solid var(--border-color); }
+.sd-head > .ic { width: 20px; height: 20px; flex: none; }
+.sd-head input { flex: 1; min-width: 0; min-height: 44px; background: transparent; border: 0; outline: none; font-size: 1.05rem; color: var(--text-title); }
+.sd-head input::-webkit-search-cancel-button { display: none; }
+.sd-status { padding: .5rem 1rem 0; font-size: .8125rem; color: var(--text-muted); min-height: 1.5rem; }
+.sd-results { overflow-y: auto; padding: .25rem .5rem 1rem; padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); flex: 1; }
+.sd-group { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-accent); padding: .9rem .5rem .35rem; }
+.sd-item { display: flex; align-items: center; gap: .75rem; width: 100%; min-height: 52px; padding: .45rem .5rem; border-radius: var(--r-md); text-align: left;
+  background: transparent; border: 1px solid transparent; color: var(--text-title); cursor: pointer; }
+.sd-item:hover, .sd-item.is-active { background: color-mix(in srgb, var(--text-accent) 10%, transparent); border-color: color-mix(in srgb, var(--text-accent) 30%, transparent); }
+.sd-ic { flex: none; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--bg-inner); border: 1px solid var(--border-color); color: var(--text-accent); }
+.sd-ic .ic { width: 20px; height: 20px; }
+.sd-glyph { font-family: 'Noto Sans Ogham', 'Noto Sans Runic', 'Segoe UI Historic', serif; font-size: 1.35rem; line-height: 1; color: var(--glyph-highlight); }
+.sd-txt { display: flex; flex-direction: column; min-width: 0; }
+.sd-title { font-weight: 600; font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sd-title mark { background: color-mix(in srgb, var(--glyph-highlight) 30%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
+.sd-sub { font-size: .8125rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sd-hints { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; padding: .75rem .5rem; }
+.sd-hints p { width: 100%; font-size: .875rem; color: var(--text-muted); }
+.sd-chip { min-height: 40px; padding: 0 .9rem; border-radius: 999px; background: var(--bg-inner); border: 1px solid var(--border-color); color: var(--text-title); font-size: .875rem; cursor: pointer; }
+.sd-chip:hover { border-color: var(--border-hover); }
+.hdr-btn { min-width: 48px; }
+
+/* ——— 6) Menu «Mais»: grelha dos 4 portais ——— */
+.sheet-search { display: flex; align-items: center; gap: .6rem; width: 100%; min-height: 48px; margin: .75rem 0 .25rem; padding: 0 .9rem; border-radius: var(--r-md);
+  background: var(--bg-inner); border: 1px solid var(--border-color); color: var(--text-muted); font-size: .9rem; text-align: left; cursor: pointer; }
+.sheet-search .ic { width: 18px; height: 18px; }
+.realm-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; margin-top: .75rem; }
+.realm-tile { --realm-tint: var(--text-accent); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; gap: .3rem;
+  min-height: 7.5rem; padding: .9rem; border-radius: var(--r-lg); text-align: left; cursor: pointer; color: var(--text-title);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--realm-tint) 18%, var(--bg-card)), var(--bg-inner) 75%);
+  border: 1px solid color-mix(in srgb, var(--realm-tint) 40%, var(--border-color)); transition: transform .15s ease, border-color .15s ease; }
+.realm-tile:active { transform: scale(.98); }
+.realm-tile:hover, .realm-tile:focus-visible { border-color: var(--realm-tint); }
+.realm-tile.realm-on { box-shadow: inset 0 0 0 1.5px var(--realm-tint); }
+.realm-tile[data-realm="oraculos"] { --realm-tint: #fbbf24; } .realm-tile[data-realm="ciclos"] { --realm-tint: #93c5fd; }
+.realm-tile[data-realm="pratica"] { --realm-tint: #f59e0b; } .realm-tile[data-realm="saber"] { --realm-tint: #86efac; }
+.theme-parchment .realm-tile[data-realm="oraculos"] { --realm-tint: #92400e; } .theme-parchment .realm-tile[data-realm="ciclos"] { --realm-tint: #1e40af; }
+.theme-parchment .realm-tile[data-realm="pratica"] { --realm-tint: #b45309; } .theme-parchment .realm-tile[data-realm="saber"] { --realm-tint: #3f6212; }
+.rt-ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--realm-tint);
+  background: color-mix(in srgb, var(--realm-tint) 16%, transparent); border: 1px solid color-mix(in srgb, var(--realm-tint) 35%, transparent); }
+.rt-ic .ic { width: 24px; height: 24px; }
+.rt-name { font-weight: 700; font-size: 1.05rem; margin-top: .25rem; }
+.rt-sub { font-size: .78rem; line-height: 1.35; color: var(--text-muted); }
+.realm-tile::after { content: ""; position: absolute; right: -18px; bottom: -18px; width: 64px; height: 64px; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--realm-tint) 30%, transparent); box-shadow: 0 0 0 10px color-mix(in srgb, var(--realm-tint) 6%, transparent); pointer-events: none; }
+#more-sheet .nav-group { padding-top: 1.1rem; }
+
+/* ——— 7) Virar carta nos oráculos ——— */
+.oc-card.oc-flip { animation: ocFlip .7s cubic-bezier(.3, .7, .3, 1) both; animation-delay: calc(var(--i, 0) * 160ms); transform-origin: 50% 50%; }
+.oc-card.oc-flip::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; z-index: 3; pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 18px, color-mix(in srgb, var(--oracle-tint, var(--text-accent)) 55%, transparent) 19px 20px, transparent 21px),
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--oracle-tint, var(--text-accent)) 14%, transparent) 0 2px, transparent 2px 12px),
+    repeating-linear-gradient(-45deg, color-mix(in srgb, var(--oracle-tint, var(--text-accent)) 14%, transparent) 0 2px, transparent 2px 12px),
+    linear-gradient(160deg, #1d1530, #0d0a18);
+  border: 1px solid color-mix(in srgb, var(--oracle-tint, var(--text-accent)) 50%, transparent);
+  animation: ocBack .7s linear both; animation-delay: inherit; }
+@keyframes ocFlip { 0% { transform: perspective(1000px) rotateY(0deg) scale(.96); } 50% { transform: perspective(1000px) rotateY(90deg) scale(1.02); } 100% { transform: perspective(1000px) rotateY(0deg); } }
+@keyframes ocBack { 0%, 49.9% { opacity: 1; } 50%, 100% { opacity: 0; } }
+#daily-oracle > .reveal-in { animation: ocFlipIn .6s cubic-bezier(.3, .7, .3, 1) both; }
+@keyframes ocFlipIn { from { transform: perspective(900px) rotateY(-90deg); opacity: .2; } to { transform: none; opacity: 1; } }
+.tw-flip { animation: twIn .35s ease-out both; }
+@keyframes twIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .oc-card.oc-flip, .oc-card.oc-flip::after, #daily-oracle > .reveal-in, .tw-flip, .tf-art, .realm-tile { animation: none !important; transition: none !important; }
+  .oc-card.oc-flip::after { display: none; }
+  #tree-list > div.is-found, .rl-card.is-found, #triad-container.is-found { animation: none; outline: 3px solid var(--glyph-highlight); }
+}
+@media (max-width: 1535px) { .search-trigger { min-width: 0; } .search-trigger > span { display: none; } }
+@media (max-width: 639px) { .tw-seg .tw-name { font-size: 14px; } .tw-seg .tw-glyph { font-size: 22px; } .tw-c-phase { font-size: 16px; } .tw-c-date { font-size: 13px; } }
+@media (min-width: 768px) { .tf-plate { max-height: 18rem; } }
+
+/* ============================================================
+   v15 • Temas com identidade própria, Lanterna toda vermelha,
+   gravuras suaves nos temas escuros e Lua no tema claro
+   ============================================================ */
+.theme-gold { --glyph-highlight: #f59e0b; }
+html body { background-attachment: fixed; }
+/* Noite Mística: céu índigo com estrelas */
+html.theme-night body {
+  background:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1px 1px at 68% 9%, rgba(255,255,255,.45), transparent 60%),
+    radial-gradient(1.5px 1.5px at 84% 32%, rgba(199,210,254,.5), transparent 60%),
+    radial-gradient(1px 1px at 33% 41%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(1px 1px at 52% 72%, rgba(255,255,255,.3), transparent 60%),
+    radial-gradient(1.5px 1.5px at 22% 86%, rgba(199,210,254,.4), transparent 60%),
+    radial-gradient(1px 1px at 91% 78%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(ellipse 60rem 30rem at 80% -10%, rgba(99,102,241,.22), transparent 70%),
+    radial-gradient(ellipse 40rem 24rem at 0% 110%, rgba(251,191,36,.07), transparent 70%),
+    linear-gradient(180deg, #0a0f1d, #080c14 60%);
+  background-attachment: fixed;
+}
+/* Floresta Profunda: luz filtrada pela copa e folhagem */
+html.theme-forest body {
+  background:
+    radial-gradient(ellipse 34rem 22rem at 85% -6%, rgba(110,231,183,.16), transparent 70%),
+    radial-gradient(ellipse 22rem 30rem at 6% 20%, rgba(16,185,129,.10), transparent 70%),
+    radial-gradient(ellipse 50rem 20rem at 50% 115%, rgba(6,78,59,.55), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120' fill='none' stroke='%236ee7b7' stroke-opacity='.06' stroke-width='1.2'%3E%3Cpath d='M20 40c10-14 26-14 30 0-12 6-22 6-30 0zM35 40v10M80 90c10-14 26-14 30 0-12 6-22 6-30 0zM95 90v10M70 20c6-9 16-9 18 0-7 4-13 4-18 0z'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #071510, #06110c);
+  background-attachment: fixed;
+}
+/* Pedra Ancestral: granito */
+html.theme-stone body {
+  background:
+    radial-gradient(ellipse 50rem 26rem at 70% -10%, rgba(148,163,184,.14), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .8 0 0 0 0 .82 0 0 0 0 .86 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .62 0 0 0 0 .66 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #14171b, #101214);
+  background-attachment: fixed;
+}
+/* Outono Dourado: brasas e folhas quentes */
+html.theme-autumn body {
+  background:
+    radial-gradient(ellipse 40rem 24rem at 90% -8%, rgba(245,158,11,.18), transparent 70%),
+    radial-gradient(ellipse 50rem 22rem at 20% 112%, rgba(194,65,12,.22), transparent 70%),
+    radial-gradient(ellipse 18rem 18rem at 4% 30%, rgba(251,113,133,.07), transparent 70%),
+    linear-gradient(180deg, #1a100a, #140d08);
+  background-attachment: fixed;
+}
+/* Neblina Mística: bancos de névoa */
+html.theme-mist body {
+  background:
+    radial-gradient(ellipse 70rem 12rem at 30% 18%, rgba(186,230,253,.07), transparent 70%),
+    radial-gradient(ellipse 60rem 10rem at 75% 48%, rgba(186,230,253,.06), transparent 70%),
+    radial-gradient(ellipse 80rem 14rem at 40% 82%, rgba(186,230,253,.08), transparent 70%),
+    radial-gradient(ellipse 30rem 20rem at 90% -8%, rgba(192,132,252,.12), transparent 70%),
+    linear-gradient(180deg, #0c1720, #0a1218);
+  background-attachment: fixed;
+}
+/* Solstício Dourado: sol baixo e raios */
+html.theme-gold body {
+  background:
+    radial-gradient(circle at 50% -18rem, rgba(250,204,21,.28), rgba(250,204,21,.08) 22rem, transparent 40rem),
+    repeating-conic-gradient(from 0deg at 50% -18rem, rgba(250,204,21,.035) 0 4deg, transparent 4deg 12deg),
+    linear-gradient(180deg, #1b160a, #151108);
+  background-attachment: fixed;
+}
+/* Lanterna: só vermelho, sem texturas claras */
+html.theme-lantern body { background: radial-gradient(ellipse 50rem 30rem at 50% -10%, rgba(185,28,28,.16), transparent 70%), #0a0202; background-attachment: fixed; }
+html.theme-lantern body::before { display: none; }
+/* Luz de Musgo (claro): papel e musgo */
+html.theme-parchment body {
+  background:
+    radial-gradient(ellipse 50rem 26rem at 85% -10%, rgba(47,107,69,.12), transparent 70%),
+    radial-gradient(ellipse 40rem 24rem at 0% 110%, rgba(180,83,9,.08), transparent 70%),
+    linear-gradient(180deg, #f1f2e8, #eceee2);
+  background-attachment: fixed;
+}
+html.theme-forest body::before, html.theme-stone body::before, html.theme-gold body::before { opacity: .025; }
+@media (max-width: 1023px) { html body { background-attachment: scroll !important; } }
+
+/* ——— Gravuras: papel envelhecido e mais suave nos temas escuros ——— */
+html:not(.theme-parchment) :is(.bot-plate-btn, .bot-use-art:not(.bot-use-svg), .tf-art, .tw-plate-wrap, .bot-zoom figure) {
+  background: #d8cba8; border-color: color-mix(in srgb, var(--glyph-highlight) 25%, #6b5530);
+  box-shadow: inset 0 0 0 3px rgba(80,55,20,.18), inset 0 0 18px rgba(80,55,20,.35); }
+html:not(.theme-parchment) :is(.bot-plate-img, .bot-use-img, .tf-plate, .tw-plate, .bot-zoom img) { filter: sepia(.28) brightness(.84) contrast(1.04); mix-blend-mode: multiply; }
+html:not(.theme-parchment) .bot-zoom img { filter: sepia(.15) brightness(.95); }
+
+/* ——— Lanterna: gravuras e Lua em vermelho escuro ——— */
+html.theme-lantern :is(.bot-plate-btn, .bot-use-art:not(.bot-use-svg), .tf-art, .tw-plate-wrap, .bot-zoom figure) { background: #2a0808; border-color: #5b1515; box-shadow: none; }
+html.theme-lantern :is(.bot-plate-img, .bot-use-img, .tf-plate, .tw-plate, .bot-zoom img) {
+  filter: grayscale(1) invert(1) brightness(.42) sepia(1) hue-rotate(-50deg) saturate(5) contrast(1.1); mix-blend-mode: normal; }
+html.theme-lantern .bot-zoom figure { color: #fecaca; }
+html.theme-lantern .bot-zoom button { color: #fecaca; background: #3b1010; border-color: #5b1515; }
+html.theme-lantern .moon-svg .moon-dark { fill: #2a0808; }
+html.theme-lantern .moon-svg .moon-lit { fill: #b4443a; }
+html.theme-lantern .moon-svg .moon-rim { stroke: #b4443a; }
+html.theme-lantern :is(.bot-fallback, .tf-plate.bot-fallback) { color: #b4443a; }
+html.theme-lantern #top-moon-icon, html.theme-lantern #moon-icon { filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(4) brightness(.7); }
+
+/* ——— Lua no tema claro: parte iluminada preenchida e quente ——— */
+html.theme-parchment .moon-svg .moon-dark { fill: #3b4252; }
+html.theme-parchment .moon-svg .moon-lit { fill: #e8b64c; }
+html.theme-parchment .moon-svg .moon-rim { stroke: #8a6a2a; stroke-opacity: .8; }
+/* Lanterna: as cores dos reinos também passam a vermelho */
+html.theme-lantern :is(.realm-oraculos, .realm-ciclos, .realm-pratica, .realm-saber, .realm-comunidade, .realm-hoje),
+html.theme-lantern :is(.nav-portal, .realm-tile)[data-realm] { --realm-tint: #f87171; }
+html.theme-lantern .oracle-sigil, html.theme-lantern .oracle-head { --oracle-tint: #f87171; }
 </style>
 </head>
 <body id="app-body" data-design-version="10" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
@@ -1378,6 +1701,8 @@ body[data-tab="today"] .top-info { visibility: hidden; }
             <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l1-4L16 5l3 3L8 19zM14 7l3 3"/></symbol>
             <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></symbol>
             <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.7 1.8 1.8.7-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/></symbol>
+            <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/></symbol>
+            <symbol id="i-treewheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5M5.6 5.6l3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6"/></symbol>
             <symbol id="i-redo" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></symbol>
         </defs>
     </svg>
@@ -1403,6 +1728,7 @@ body[data-tab="today"] .top-info { visibility: hidden; }
             <button type="button" onclick="switchTab('portal-ciclos')" id="desk-nav-portal-ciclos" class="nav-group nav-portal" data-realm="ciclos">Ciclos<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
             <button type="button" onclick="switchTab('astro')" id="desk-nav-astro" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-astro"></use></svg>Astronomia</button>
             <button type="button" onclick="switchTab('wheel')" id="desk-nav-wheel" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-wheel"></use></svg>Roda do Ano</button>
+            <button type="button" onclick="switchTab('treewheel')" id="desk-nav-treewheel" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-treewheel"></use></svg>Roda das árvores</button>
             <button type="button" onclick="switchTab('compass')" id="desk-nav-compass" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-compass"></use></svg>Bússola</button>
             <button type="button" onclick="switchTab('portal-pratica')" id="desk-nav-portal-pratica" class="nav-group nav-portal" data-realm="pratica">Prática<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
             <button type="button" onclick="switchTab('altar')" id="desk-nav-altar" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Altar</button>
@@ -1437,6 +1763,7 @@ body[data-tab="today"] .top-info { visibility: hidden; }
             </div>
         </div>
         <div class="hdr-actions">
+            <button type="button" onclick="openSearch()" class="hdr-btn" aria-label="Pesquisar em todo o site" title="Pesquisar"><svg class="ic" aria-hidden="true"><use href="#i-search"></use></svg><span>Pesquisar</span></button>
             <button type="button" onclick="toggleLanternMode()" class="hdr-btn" aria-label="Lanterna ritual: luz quente e suave" title="Lanterna ritual: luz quente e suave"><svg class="ic" aria-hidden="true"><use href="#i-lantern"></use></svg><span>Lanterna</span></button>
             <button type="button" onclick="toggleZenMode()" class="hdr-btn" aria-label="Modo Zen: ecrã inteiro sem distrações" title="Modo Zen: ecrã inteiro sem distrações"><svg class="ic" aria-hidden="true"><use href="#i-zen"></use></svg><span>Zen</span></button>
         </div>
@@ -1451,37 +1778,30 @@ body[data-tab="today"] .top-info { visibility: hidden; }
         <button type="button" onclick="openMore()" id="bot-nav-more" class="bot-nav-item theme-muted" aria-haspopup="dialog"><svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg><span>Mais</span></button>
     </nav>
 
+    <!-- PESQUISA GLOBAL -->
+    <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title">
+        <div class="sd-head">
+            <h2 id="search-title" class="sr-only">Pesquisar</h2>
+            <svg class="ic theme-muted" aria-hidden="true"><use href="#i-search"></use></svg>
+            <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Letra, runa, erva, festa, tríade…" aria-label="Pesquisar em todo o site" aria-controls="search-results" aria-describedby="search-status">
+            <button type="button" class="icon-btn" onclick="closeSearch()" aria-label="Fechar a pesquisa"><svg class="ic" aria-hidden="true"><use href="#i-close"></use></svg></button>
+        </div>
+        <p id="search-status" class="sd-status" role="status" aria-live="polite"></p>
+        <div id="search-results" class="sd-results"></div>
+    </dialog>
+
     <!-- FOLHA "MAIS" (mobile) -->
     <dialog id="more-sheet" class="sheet" aria-labelledby="more-title">
         <div class="flex items-center justify-between">
             <h2 id="more-title" class="font-cinzel text-lg font-bold theme-title">Mais</h2>
             <button type="button" class="icon-btn" onclick="closeMore()" aria-label="Fechar"><svg class="ic" aria-hidden="true"><use href="#i-close"></use></svg></button>
         </div>
-        <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-oraculos')" data-realm="oraculos">Oráculos<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
-        <div class="sheet-grid">
-            <button type="button" onclick="switchTab('oracle')" data-tab="oracle" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-ogham"></use></svg>Ogham</button>
-            <button type="button" onclick="switchTab('runes')" data-tab="runes" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas</button>
-            <button type="button" onclick="switchTab('tarot')" data-tab="tarot" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-tarot"></use></svg>Tarot nórdico</button>
-        </div>
-        <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-ciclos')" data-realm="ciclos">Ciclos<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
-        <div class="sheet-grid">
-            <button type="button" onclick="switchTab('astro')" data-tab="astro" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-astro"></use></svg>Astronomia</button>
-            <button type="button" onclick="switchTab('wheel')" data-tab="wheel" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-wheel"></use></svg>Roda do Ano</button>
-            <button type="button" onclick="switchTab('compass')" data-tab="compass" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-compass"></use></svg>Bússola</button>
-        </div>
-        <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-pratica')" data-realm="pratica">Prática<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
-        <div class="sheet-grid">
-            <button type="button" onclick="switchTab('altar')" data-tab="altar" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-altar"></use></svg>Altar</button>
-            <button type="button" onclick="switchTab('ritual')" data-tab="ritual" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-ritual"></use></svg>Liturgia & rituais</button>
-            <button type="button" onclick="switchTab('grounding')" data-tab="grounding" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-sound"></use></svg>Meditação & som</button>
-        </div>
-        <button type="button" class="nav-group nav-portal" onclick="switchTab('portal-saber')" data-realm="saber">Saber<svg class="ic" aria-hidden="true"><use href="#i-more"></use></svg></button>
-        <div class="sheet-grid">
-            <button type="button" onclick="switchTab('herbal')" data-tab="herbal" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-herbal"></use></svg>Árvores & ervas</button>
-            <button type="button" onclick="switchTab('runelore')" data-tab="runelore" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-runes"></use></svg>Runas: guia</button>
-            <button type="button" onclick="switchTab('triads')" data-tab="triads" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
-            <button type="button" onclick="switchTab('library')" data-tab="library" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
-            <button type="button" onclick="switchTab('obod')" data-tab="obod" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Graus OBOD</button>
+        <button type="button" class="sheet-search" onclick="closeMore();openSearch()"><svg class="ic" aria-hidden="true"><use href="#i-search"></use></svg><span>Pesquisar letras, runas, ervas, festas…</span></button>
+        <div class="realm-grid" role="group" aria-label="Os quatro portais">
+            <button type="button" class="realm-tile" data-realm="oraculos" onclick="switchTab('portal-oraculos')"><span class="rt-ic" aria-hidden="true"><svg class="ic"><use href="#i-oracles"></use></svg></span><span class="rt-name font-cinzel">Oráculos</span><span class="rt-sub">Ogham · Runas · Tarot</span></button>
+            <button type="button" class="realm-tile" data-realm="ciclos" onclick="switchTab('portal-ciclos')"><span class="rt-ic" aria-hidden="true"><svg class="ic"><use href="#i-astro"></use></svg></span><span class="rt-name font-cinzel">Ciclos</span><span class="rt-sub">Lua · Roda do Ano · Árvores</span></button>
+            <button type="button" class="realm-tile" data-realm="pratica" onclick="switchTab('portal-pratica')"><span class="rt-ic" aria-hidden="true"><svg class="ic"><use href="#i-altar"></use></svg></span><span class="rt-name font-cinzel">Prática</span><span class="rt-sub">Altar · Rituais · Meditação</span></button>
+            <button type="button" class="realm-tile" data-realm="saber" onclick="switchTab('portal-saber')"><span class="rt-ic" aria-hidden="true"><svg class="ic"><use href="#i-library"></use></svg></span><span class="rt-name font-cinzel">Saber</span><span class="rt-sub">Ervas · Runas · Tríades</span></button>
         </div>
         <div class="nav-group">Comunidade</div>
         <div class="sheet-grid">
@@ -1521,6 +1841,7 @@ body[data-tab="today"] .top-info { visibility: hidden; }
                 </button>
             </div>
             <div class="flex items-center gap-3">
+                <button type="button" onclick="openSearch()" class="search-trigger" aria-label="Pesquisar em todo o site" aria-keyshortcuts="/ Control+K"><svg class="ic" aria-hidden="true"><use href="#i-search"></use></svg><span>Pesquisar letras, runas, ervas…</span><kbd>/</kbd></button>
                 <button type="button" onclick="toggleLanternMode()" id="btn-lantern-toggle" title="Modo Lanterna Ritual" class="theme-inner border hover:border-[var(--border-hover)] text-sm theme-title px-3 py-2 rounded-lg flex items-center gap-2 transition cursor-pointer"><svg class="ic" aria-hidden="true"><use href="#i-lantern"></use></svg>Lanterna</button>
                 <button type="button" onclick="registerAwenPractice()" class="theme-inner border hover:border-[var(--border-hover)] text-sm theme-title px-3 py-2 rounded-lg flex items-center gap-2 transition cursor-pointer"><svg class="ic theme-accent" aria-hidden="true"><use href="#i-obod"></use></svg>Invocar Awen</button>
                 <button type="button" onclick="toggleZenMode()" class="theme-inner border hover:border-[var(--border-hover)] text-sm theme-title px-3 py-2 rounded-lg flex items-center gap-2 transition cursor-pointer" title="Ecrã inteiro sem distrações"><svg class="ic theme-accent" aria-hidden="true"><use href="#i-zen"></use></svg>Modo Zen</button>
@@ -1885,9 +2206,10 @@ body[data-tab="today"] .top-info { visibility: hidden; }
                             <p id="celtic-month-desc" class="text-sm lg:text-[15px] theme-muted mt-1 leading-relaxed">Ação direta, harmonia musical, alinhamento de propósito e cura profunda. Erva: Raiz de Junco &amp; Valeriana.</p>
                         </div>
                     </div>
-                    <button onclick="switchTab('herbal')" class="shrink-0 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-bold text-sm py-3 px-5 rounded-lg transition cursor-pointer">
-                        Ver Ficha Herbal 
-                    </button>
+                    <div class="flex flex-wrap gap-2 shrink-0">
+                        <button type="button" onclick="switchTab('treewheel')" class="btn-sec theme-title">Roda das árvores</button>
+                        <button type="button" onclick="switchTab('herbal')" class="shrink-0 bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-bold text-sm py-3 px-5 rounded-lg transition cursor-pointer">Ver ficha herbal</button>
+                    </div>
                 </div>
             </section>
 
@@ -1973,8 +2295,8 @@ body[data-tab="today"] .top-info { visibility: hidden; }
                     </button>
                 </div>
 
-                <!-- Faixa compacta: Lua · Sol · Mês arbóreo · Próxima festa -->
-                <div id="today-panel" class="today-strip" aria-label="Resumo de hoje"></div>
+                <!-- Cartão principal: árvore do mês, Lua e próxima festa -->
+                <div id="today-feature" class="today-feature" aria-label="Resumo de hoje"></div>
 
                 <!-- Ação principal -->
                 <div class="today-hero theme-card border rounded-2xl p-4 lg:p-5 space-y-3">
@@ -2206,6 +2528,17 @@ body[data-tab="today"] .top-info { visibility: hidden; }
             </section>
 
             <!-- TRÍADES -->
+            <!-- RODA DAS ÁRVORES (calendário arbóreo das 13 luas) -->
+            <section id="tab-treewheel" class="tab-content hidden space-y-6">
+                <div class="theme-card border rounded-2xl p-5 lg:p-8 space-y-5">
+                    <div class="max-w-2xl">
+                        <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">Roda das árvores</h2>
+                        <p class="text-sm lg:text-[15px] theme-muted mt-1">As 13 luas do calendário arbóreo celta, de Beith a Straif. O mês atual está em destaque, o ponteiro marca o dia de hoje e as pequenas luas mostram as Luas Cheias do ano. Toque num mês para abrir a árvore.</p>
+                    </div>
+                    <div id="tree-wheel" class="tw-layout"></div>
+                </div>
+            </section>
+
             <section id="tab-triads" class="tab-content hidden space-y-6">
                 <div class="theme-card border rounded-2xl p-6 lg:p-10 max-w-3xl mx-auto text-center space-y-6">
                     <div>
@@ -4745,7 +5078,7 @@ window.addEventListener('DOMContentLoaded', () => {
    ============================================================ */
 (() => {
 const $ = id => document.getElementById(id);
-const BOTTOM_TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'journal'];
+const BOTTOM_TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'treewheel', 'journal'];
 
 // Folha "Mais" e diálogos: fecham ao tocar fora
 const sheet = $('more-sheet');
@@ -6803,7 +7136,7 @@ ${reading.items.map(it => `- ${it.pos}: ${it.label}\n  ${it.text}${it.art ? '\n 
 (() => {
   const GROUPS = {
     oracles: { label: 'Oráculos', tabs: [['oracle', 'Ogham'], ['runes', 'Runas'], ['tarot', 'Tarot']] },
-    cycles: { label: 'Ciclos', tabs: [['astro', 'Astronomia'], ['wheel', 'Roda do Ano']] }
+    cycles: { label: 'Ciclos', tabs: [['astro', 'Astronomia'], ['wheel', 'Roda do Ano'], ['treewheel', 'Árvores']] }
   };
   const groupOf = id => Object.keys(GROUPS).find(g => GROUPS[g].tabs.some(t => t[0] === id));
   const last = g => { try { return localStorage.getItem('druid_last_' + g); } catch { return null; } };
@@ -7848,10 +8181,11 @@ const PORTALS = {
   },
   ciclos: {
     label: 'Ciclos', sigil: '☽ ◯ ☾', eyebrow: 'O tempo que gira',
-    intro: 'A Lua, o Sol e a Roda do Ano: os ritmos que marcam a prática, calculados para o lugar onde está.',
+    intro: 'A Lua, o Sol, a Roda do Ano e as luas das árvores: os ritmos que marcam a prática, calculados para o lugar onde está.',
     items: [
       ['astro', 'astro', 'Astronomia', 'Fase da Lua, nascer e pôr do Sol, mapa lunar do mês, solstícios e equinócios.'],
       ['wheel', 'wheel', 'Roda do Ano', 'As oito festas celtas, a próxima celebração e o que preparar.'],
+      ['treewheel', 'treewheel', 'Roda das árvores', 'As 13 luas do calendário arbóreo celta, com o mês atual e as Luas Cheias do ano.'],
       ['compass', 'compass', 'Bússola', 'Os quatro quadrantes e os seus elementos, para orientar o círculo.']
     ]
   },
@@ -9215,6 +9549,8 @@ document.addEventListener('error', e => {
 
 window.botanica.plates = PLATES;
 window.botanica.uses = USES;
+window.botanica.plateSrc = plateSrc;
+window.botanica.herbPlate = HERB_PLATE;
 
 const base = window.renderHerbalList;
 if (typeof base === 'function') {
@@ -9251,6 +9587,650 @@ function init() {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
 setInterval(decorateMonth, 60 * 60 * 1000);
+})();
+</script>
+<script>
+/* ============================================================
+   Renovação do design (v14):
+   • «Hoje» com cartão principal: gravura da árvore do mês, fase
+     da Lua e próxima festa da Roda do Ano.
+   • Roda das árvores: calendário circular das 13 luas arbóreas,
+     com o mês atual, o dia de hoje e as Luas Cheias do ano.
+   • Pesquisa global (letras, runas, ervas, festas, tríades,
+     cartas e secções), com «/» ou Ctrl+K.
+   • Virar carta nos oráculos (respeita prefers-reduced-motion).
+   • Partilhar a ficha de uma árvore como imagem em pergaminho.
+   ============================================================ */
+(() => {
+const $ = id => document.getElementById(id);
+const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ico = (i, cls = 'ic') => `<svg class="${cls}" aria-hidden="true"><use href="#i-${i}"></use></svg>`;
+const DATA = () => (typeof OGHAM_DATA !== 'undefined' ? OGHAM_DATA : []);
+const bot = () => window.botanica || {};
+const treeName = o => String(o.tree || '').replace(/\s*\(.*\)\s*$/, '');
+const reduceMotion = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; } };
+const MESES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+/* ——— As 13 luas arbóreas (as mesmas datas de getCelticTree) ——— */
+const MONTHS = [
+  ['Beith', 12, 24], ['Luis', 1, 21], ['Fearn', 2, 18], ['Saille', 3, 18], ['Nion', 4, 15], ['Huath', 5, 13], ['Duir', 6, 10],
+  ['Tinne', 7, 8], ['Coll', 8, 5], ['Muin', 9, 2], ['Gort', 9, 30], ['Ngetal', 10, 28], ['Straif', 11, 25]
+];
+/** Início (24 Dez) do ciclo arbóreo que contém a data d. */
+function cycleStart(d = new Date()) {
+  const y = d.getFullYear();
+  const s = new Date(y, 11, 24);
+  return d >= s ? s : new Date(y - 1, 11, 24);
+}
+/** Meses do ciclo com datas reais de início e fim. */
+function cycleMonths(d = new Date()) {
+  const c0 = cycleStart(d), y0 = c0.getFullYear();
+  const starts = MONTHS.map(([n, m, day], i) => [n, i === 0 ? c0 : new Date(y0 + 1, m - 1, day)]);
+  const end = new Date(y0 + 1, 11, 24);
+  return starts.map(([n, s], i) => {
+    const e = i < starts.length - 1 ? starts[i + 1][1] : end;
+    return { name: n, start: s, end: e, last: new Date(e.getFullYear(), e.getMonth(), e.getDate() - 1), data: DATA().find(o => o.name === n) };
+  });
+}
+const fmtDay = d => `${d.getDate()} ${MESES[d.getMonth()]}`;
+const monthRange = m => `${fmtDay(m.start)} – ${fmtDay(m.last)}`;
+function currentMonth(d = new Date()) {
+  const t = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  return cycleMonths(d).find(m => t >= m.start && t < m.end) || cycleMonths(d)[0];
+}
+
+/* ——— Gravura (ou desenho, se não houver) de uma árvore ——— */
+function plateHTML(o, cls) {
+  const b = bot(), key = 'tree-' + o.name;
+  const svg = b.tree ? b.tree(o.name) : '';
+  if (b.plateSrc && b.plates && b.plates[key]) {
+    return `<img class="${cls}" src="${b.plateSrc(key)}" alt="Gravura botânica: ${escH(treeName(o))} (${escH(b.plates[key][0])})" loading="lazy" decoding="async" data-fallback="${escH(svg)}">`;
+  }
+  return `<span class="${cls} bot-fallback theme-glyph">${svg}</span>`;
+}
+
+/* ============================================================
+   «Hoje»: cartão principal
+   ============================================================ */
+function renderTodayFeature() {
+  const box = $('today-feature');
+  if (!box) return;
+  const now = new Date();
+  const m = currentMonth(now), o = m.data;
+  if (!o) return;
+  const L = window.LunarCalc ? LunarCalc.state(now) : null;
+  const fest = window.__druid && __druid.nextFestival ? __druid.nextFestival(now) : null;
+  const moonArt = L && window.moonSVG ? moonSVG(L.frac, 44) : '';
+  const sun = ($('top-sun-text') || {}).textContent || '';
+  const daysLeft = Math.round((m.end - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
+  const fDate = fest ? fest.date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long' }) : '';
+  const fWhen = fest ? (fest.days === 0 ? 'Hoje!' : fest.days === 1 ? 'Amanhã' : `Daqui a ${fest.days} dias`) : '';
+  const nextFull = L && L.nextFull ? L.nextFull.toLocaleDateString('pt-PT', { day: 'numeric', month: 'short' }) : '';
+  box.innerHTML = `
+    <article class="tf-card theme-card border">
+      <button type="button" class="tf-art" onclick="openTreeMonth('${o.name}')" aria-label="Abrir a árvore do mês: ${escH(treeName(o))}">
+        ${plateHTML(o, 'tf-plate')}
+      </button>
+      <div class="tf-main">
+        <p class="eyebrow">Mês arbóreo · ${escH(monthRange(m))}</p>
+        <h3 class="tf-title font-cinzel"><span class="tf-glyph" aria-hidden="true">${escH(o.symbol)}</span>${escH(o.name)} <span class="tf-tree">· ${escH(treeName(o))}</span></h3>
+        <p class="tf-meaning">${escH(o.meaning)}</p>
+        <p class="tf-left">${daysLeft <= 1 ? 'Último dia desta lua arbórea.' : `Faltam ${daysLeft} dias para a lua de ${escH(cycleMonths(now)[(cycleMonths(now).findIndex(x => x.name === m.name) + 1) % 13].name)}.`}</p>
+        <div class="tf-stats">
+          <button type="button" class="tf-stat" onclick="switchTab('astro')">
+            <span class="tf-moon" aria-hidden="true">${moonArt}</span>
+            <span class="tf-st"><span class="t-lb">Lua</span><span class="t-v">${escH(L ? L.name : '—')}</span><span class="t-sub">${L ? `${L.illumPct}% iluminada${nextFull ? ` · Cheia a ${escH(nextFull)}` : ''}` : ''}</span></span>
+          </button>
+          <button type="button" class="tf-stat" onclick="switchTab('wheel')">
+            <span class="tf-ic" aria-hidden="true">${ico('wheel')}</span>
+            <span class="tf-st"><span class="t-lb">Próxima festa</span><span class="t-v">${escH(fest ? fest.name : '—')}</span><span class="t-sub">${escH(fWhen)}${fDate ? ` · ${escH(fDate)}` : ''}</span></span>
+          </button>
+        </div>
+        <div class="tf-foot">
+          ${sun && sun !== '—' ? `<span class="tf-sun">${ico('sun')}<span><span class="sr-only">Sol: </span>${escH(sun)}</span></span>` : ''}
+          <button type="button" class="btn-link" onclick="switchTab('treewheel')">Roda das árvores →</button>
+        </div>
+      </div>
+    </article>`;
+  const d = $('today-date');
+  if (d) d.textContent = now.toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
+/* ============================================================
+   Roda das árvores
+   ============================================================ */
+let twSelected = null;
+const C = 200, R_OUT = 176, R_IN = 108, R_MOON = 190;
+const polar = (r, a) => [C + r * Math.sin(a), C - r * Math.cos(a)];
+function arcPath(a0, a1, r0, r1) {
+  const [x0, y0] = polar(r1, a0), [x1, y1] = polar(r1, a1), [x2, y2] = polar(r0, a1), [x3, y3] = polar(r0, a0);
+  const big = a1 - a0 > Math.PI ? 1 : 0;
+  const f = n => n.toFixed(2);
+  return `M${f(x0)} ${f(y0)}A${r1} ${r1} 0 ${big} 1 ${f(x1)} ${f(y1)}L${f(x2)} ${f(y2)}A${r0} ${r0} 0 ${big} 0 ${f(x3)} ${f(y3)}Z`;
+}
+function renderTreeWheel() {
+  const host = $('tree-wheel');
+  if (!host || !DATA().length) return;
+  const now = new Date();
+  const months = cycleMonths(now), cur = currentMonth(now);
+  const c0 = months[0].start, total = months[12].end - c0;
+  const ang = t => ((t - c0) / total) * 2 * Math.PI;
+  if (!twSelected) twSelected = cur.name;
+  const segs = months.map((m, i) => {
+    const a0 = ang(m.start), a1 = ang(m.end), mid = (a0 + a1) / 2;
+    const [gx, gy] = polar((R_OUT + R_IN) / 2 + 18, mid), [nx, ny] = polar((R_OUT + R_IN) / 2 - 14, mid);
+    const isCur = m.name === cur.name, isSel = m.name === twSelected;
+    const o = m.data || {};
+    return `<g class="tw-seg${isCur ? ' is-current' : ''}${isSel ? ' is-selected' : ''}" data-tree="${m.name}" role="button" tabindex="0"
+        aria-pressed="${isSel}" aria-label="${escH(`${m.name}, ${treeName(o)}, ${monthRange(m)}${isCur ? ' (mês atual)' : ''}`)}">
+      <path d="${arcPath(a0 + .006, a1 - .006, R_IN, R_OUT)}"/>
+      <text class="tw-glyph" x="${gx.toFixed(1)}" y="${gy.toFixed(1)}" text-anchor="middle" dominant-baseline="central">${escH(o.symbol || '')}</text>
+      <text class="tw-name" x="${nx.toFixed(1)}" y="${ny.toFixed(1)}" text-anchor="middle" dominant-baseline="central">${escH(m.name)}</text>
+    </g>`;
+  }).join('');
+  // Luas Cheias do ciclo
+  let moons = '';
+  if (window.LunarCalc && window.moonSVG) {
+    LunarCalc.events(c0.getTime(), months[12].end.getTime()).filter(e => e.type === 2).forEach(e => {
+      const [x, y] = polar(R_MOON, ang(e.t));
+      const past = e.t < now.getTime();
+      moons += `<g class="tw-full${past ? ' is-past' : ''}"><title>Lua Cheia · ${escH(e.date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long' }))}</title>${moonSVG(0.5, 14).replace('<svg ', `<svg x="${(x - 7).toFixed(1)}" y="${(y - 7).toFixed(1)}" `)}</g>`;
+    });
+  }
+  // Ponteiro de hoje e Lua de hoje ao centro
+  const a = ang(now);
+  const [px0, py0] = polar(R_IN - 6, a), [px1, py1] = polar(R_OUT + 4, a);
+  const L = window.LunarCalc ? LunarCalc.state(now) : null;
+  const centre = L && window.moonSVG ? moonSVG(L.frac, 64).replace('<svg ', `<svg x="${C - 32}" y="${C - 50}" `) : '';
+  host.innerHTML = `
+    <div class="tw-wheel">
+      <svg viewBox="0 0 400 400" class="tw-svg" role="group" aria-label="Roda das árvores: 13 luas arbóreas">
+        <circle cx="${C}" cy="${C}" r="${R_MOON}" class="tw-orbit"/>
+        ${segs}
+        <circle cx="${C}" cy="${C}" r="${R_IN - 8}" class="tw-hub"/>
+        ${moons}
+        <line class="tw-needle" x1="${px0.toFixed(1)}" y1="${py0.toFixed(1)}" x2="${px1.toFixed(1)}" y2="${py1.toFixed(1)}"/>
+        <circle class="tw-needle-dot" cx="${px1.toFixed(1)}" cy="${py1.toFixed(1)}" r="4.5"/>
+        ${centre}
+        <text class="tw-c-phase" x="${C}" y="${C + 32}" text-anchor="middle">${escH(L ? L.name : '')}</text>
+        <text class="tw-c-date" x="${C}" y="${C + 50}" text-anchor="middle">Hoje · ${escH(fmtDay(now))}</text>
+      </svg>
+      <ul class="tw-legend">
+        <li><span class="tw-key tw-key-cur"></span>Mês atual</li>
+        <li><span class="tw-key tw-key-needle"></span>Hoje</li>
+        <li>${window.moonSVG ? moonSVG(0.5, 14) : ''}Luas Cheias</li>
+      </ul>
+    </div>
+    <div id="tw-detail" class="tw-detail" aria-live="polite"></div>`;
+  renderTreeDetail(twSelected);
+}
+function renderTreeDetail(name) {
+  const box = $('tw-detail');
+  const m = cycleMonths().find(x => x.name === name);
+  if (!box || !m || !m.data) return;
+  const o = m.data, b = bot();
+  const p = b.plates && b.plates['tree-' + o.name];
+  const lore = (window.OGHAM_LORE || {})[o.name];
+  const isCur = currentMonth().name === name;
+  box.innerHTML = `
+    <article class="tw-card tw-flip">
+      <div class="tw-plate-wrap">${plateHTML(o, 'tw-plate')}</div>
+      <div class="tw-body">
+        <p class="eyebrow">${isCur ? 'Lua arbórea atual' : 'Lua arbórea'} · ${escH(monthRange(m))}</p>
+        <h3 class="font-cinzel tw-title"><span class="tf-glyph" aria-hidden="true">${escH(o.symbol)}</span>${escH(o.name)}</h3>
+        <p class="tw-tree">${escH(treeName(o))}${p ? ` · <i>${escH(p[0])}</i>` : ''}</p>
+        <p class="tw-meaning">${escH(o.meaning)}</p>
+        ${lore ? `<p class="tw-extra"><span>Bríatharogam</span> «${escH(lore.kenningPt)}»</p>` : ''}
+        <p class="tw-extra"><span>Ervas</span> ${escH(o.herb)}</p>
+        <div class="tw-actions">
+          <button type="button" class="btn-sec theme-title" onclick="openTreeInGuide('${o.name}')">Abrir no guia</button>
+          <button type="button" class="btn-sec theme-accent" onclick="shareTreeCard('${o.name}')">${ico('share')}<span>Partilhar ficha</span></button>
+        </div>
+      </div>
+    </article>`;
+}
+function selectTreeMonth(name) {
+  twSelected = name;
+  document.querySelectorAll('.tw-seg').forEach(g => {
+    const on = g.dataset.tree === name;
+    g.classList.toggle('is-selected', on);
+    g.setAttribute('aria-pressed', on);
+  });
+  renderTreeDetail(name);
+}
+document.addEventListener('click', e => {
+  const g = e.target.closest && e.target.closest('.tw-seg');
+  if (!g) return;
+  selectTreeMonth(g.dataset.tree);
+  if (matchMedia('(max-width: 1023px)').matches) {
+    const d = $('tw-detail');
+    if (d) d.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+  }
+});
+
+/** Abre a roda já com a árvore escolhida. */
+window.openTreeMonth = function (name) {
+  twSelected = name;
+  switchTab('treewheel');
+};
+/** Mostra a ficha da letra no guia «Árvores & ervas». */
+window.openTreeInGuide = function (name) {
+  const s = $('herbal-search');
+  if (s && s.value) { s.value = ''; if (typeof filterHerbal === 'function') filterHerbal(); }
+  switchTab('herbal');
+  requestAnimationFrame(() => {
+    const card = document.querySelector(`#tree-list [data-tree="${name}"]`);
+    if (card) flash(card);
+  });
+};
+function flash(el) {
+  el.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
+  el.classList.remove('is-found'); void el.offsetWidth; el.classList.add('is-found');
+  setTimeout(() => el.classList.remove('is-found'), 2600);
+}
+
+/* ——— Fichas do guia: marcar cada árvore e juntar «Partilhar» ——— */
+function decorateGuide() {
+  const list = $('tree-list');
+  if (!list) return;
+  list.querySelectorAll(':scope > div').forEach(card => {
+    const h = card.querySelector('h3');
+    const name = h && h.textContent.split('•')[0].trim();
+    if (!name || card.dataset.tree) return;
+    card.dataset.tree = name;
+    if (!DATA().some(o => o.name === name)) return;
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn-link tree-share';
+    b.innerHTML = `${ico('share')}<span>Partilhar ficha</span>`;
+    b.setAttribute('aria-label', `Partilhar a ficha de ${name} como imagem`);
+    b.addEventListener('click', () => shareTreeCard(name));
+    card.appendChild(b);
+  });
+}
+
+/* ============================================================
+   Partilhar a ficha de uma árvore como imagem (pergaminho)
+   ============================================================ */
+const OGHAM_GROUPS = ['right', 'left', 'across', 'notch'];
+/** Desenha a letra Ogham com traços (não depende de fontes). */
+function drawOgham(ctx, idx, x, yTop, h, color) {
+  const g = OGHAM_GROUPS[Math.floor(idx / 5)] || 'notch', n = (idx % 5) + 1;
+  ctx.save();
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineCap = 'round';
+  ctx.lineWidth = 7;
+  ctx.beginPath(); ctx.moveTo(x, yTop); ctx.lineTo(x, yTop + h); ctx.stroke();
+  const step = 24, y0 = yTop + h / 2 - ((n - 1) * step) / 2;
+  ctx.lineWidth = 6;
+  for (let i = 0; i < n; i++) {
+    const y = y0 + i * step;
+    ctx.beginPath();
+    if (g === 'right') { ctx.moveTo(x, y); ctx.lineTo(x + 44, y); }
+    else if (g === 'left') { ctx.moveTo(x - 44, y); ctx.lineTo(x, y); }
+    else if (g === 'across') { ctx.moveTo(x - 36, y + 14); ctx.lineTo(x + 36, y - 14); }
+    else { ctx.moveTo(x - 14, y); ctx.lineTo(x + 14, y); }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function wrap(ctx, text, maxW) {
+  const words = String(text).split(/\s+/), lines = [];
+  let line = '';
+  words.forEach(w => {
+    const t = line ? line + ' ' + w : w;
+    if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t;
+  });
+  if (line) lines.push(line);
+  return lines;
+}
+function loadImage(src) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    if (/^https?:/.test(src) && !src.startsWith(location.origin)) img.crossOrigin = 'anonymous';
+    img.onload = () => res(img); img.onerror = rej; img.src = src;
+  });
+}
+async function treeArt(o) {
+  const b = bot(), key = 'tree-' + o.name;
+  if (b.plateSrc && b.plates && b.plates[key]) {
+    try { return { img: await loadImage(b.plateSrc(key)), plate: true }; } catch { /* usa o desenho */ }
+  }
+  const svg = (b.tree ? b.tree(o.name) : '').replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" style="color:#4a2e14" ');
+  if (!svg) return null;
+  try { return { img: await loadImage('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)), plate: false }; } catch { return null; }
+}
+
+async function buildTreeImage(name) {
+  const o = DATA().find(x => x.name === name);
+  if (!o) throw new Error('árvore desconhecida');
+  const idx = DATA().indexOf(o);
+  const m = cycleMonths().find(x => x.name === name);
+  const W = 1080, H = 1350, cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+  try { if (document.fonts && document.fonts.ready) await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 800))]); } catch { /* nada */ }
+  const SERIF = "'Cinzel', 'Times New Roman', Georgia, serif", SANS = "'Inter', 'Segoe UI', Helvetica, Arial, sans-serif";
+  const INK = '#3b2412', INK2 = '#6b4a2a', RED = '#7a2e12';
+
+  // Pergaminho: fundo, manchas e vinheta
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#f6e9c8'); bg.addColorStop(.55, '#efdcae'); bg.addColorStop(1, '#e2c58e');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+  let seed = idx * 7919 + 13;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < 60; i++) {
+    const x = rnd() * W, y = rnd() * H, r = 30 + rnd() * 160;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, `rgba(150,100,40,${(.03 + rnd() * .05).toFixed(3)})`); g.addColorStop(1, 'rgba(150,100,40,0)');
+    ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r);
+  }
+  const vg = ctx.createRadialGradient(W / 2, H / 2, H * .35, W / 2, H / 2, H * .75);
+  vg.addColorStop(0, 'rgba(90,50,10,0)'); vg.addColorStop(1, 'rgba(90,50,10,.28)');
+  ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+  // Moldura dupla
+  ctx.strokeStyle = INK2; ctx.lineWidth = 4; ctx.strokeRect(40, 40, W - 80, H - 80);
+  ctx.lineWidth = 1.5; ctx.strokeRect(54, 54, W - 108, H - 108);
+  [[54, 54], [W - 54, 54], [54, H - 54], [W - 54, H - 54]].forEach(([x, y]) => {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(Math.PI / 4); ctx.fillStyle = INK2; ctx.fillRect(-7, -7, 14, 14); ctx.restore();
+  });
+
+  // Cabeçalho
+  ctx.textAlign = 'center'; ctx.fillStyle = INK2;
+  ctx.font = `600 26px ${SANS}`;
+  ctx.fillText(('Calendário arbóreo celta' + (m ? ` · ${monthRange(m)}` : '')).toUpperCase(), W / 2, 118);
+
+  // Letra Ogham e nome
+  drawOgham(ctx, idx, 150, 150, 200, RED);
+  ctx.fillStyle = INK; ctx.font = `700 92px ${SERIF}`;
+  ctx.fillText(o.name, W / 2, 238);
+  ctx.font = `italic 500 40px Georgia, 'Times New Roman', serif`; ctx.fillStyle = INK2;
+  const p = bot().plates && bot().plates['tree-' + o.name];
+  ctx.fillText(treeName(o) + (p ? ` · ${p[0]}` : ''), W / 2, 296);
+  ctx.strokeStyle = INK2; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(W / 2 - 180, 330); ctx.lineTo(W / 2 + 180, 330); ctx.stroke();
+  ctx.fillStyle = INK2; ctx.beginPath(); ctx.arc(W / 2, 330, 5, 0, 7); ctx.fill();
+
+  // Gravura
+  const art = await treeArt(o);
+  const box = { x: 250, y: 360, w: 580, h: 560 };
+  if (art) {
+    const r = Math.min(box.w / art.img.width, box.h / art.img.height);
+    const w = art.img.width * r, h = art.img.height * r, x = box.x + (box.w - w) / 2, y = box.y + (box.h - h) / 2;
+    ctx.save();
+    ctx.shadowColor = 'rgba(60,30,5,.35)'; ctx.shadowBlur = 24; ctx.shadowOffsetY = 8;
+    ctx.fillStyle = '#f3e2b8'; ctx.fillRect(x - 10, y - 10, w + 20, h + 20);
+    ctx.restore();
+    if (art.plate) ctx.globalCompositeOperation = 'multiply';
+    ctx.drawImage(art.img, x, y, w, h);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.strokeStyle = INK2; ctx.lineWidth = 2; ctx.strokeRect(x - 10, y - 10, w + 20, h + 20);
+  }
+
+  // Significado e ervas
+  let y = 990;
+  ctx.fillStyle = INK; ctx.font = `500 34px ${SANS}`;
+  wrap(ctx, o.meaning, W - 240).slice(0, 3).forEach(l => { ctx.fillText(l, W / 2, y); y += 46; });
+  y += 8;
+  ctx.font = `700 22px ${SANS}`; ctx.fillStyle = RED;
+  ctx.fillText('ERVAS', W / 2, y); y += 36;
+  ctx.font = `italic 500 30px Georgia, 'Times New Roman', serif`; ctx.fillStyle = INK2;
+  wrap(ctx, o.herb, W - 240).slice(0, 2).forEach(l => { ctx.fillText(l, W / 2, y); y += 40; });
+
+  // Rodapé
+  ctx.font = `600 22px ${SANS}`; ctx.fillStyle = INK2;
+  ctx.fillText('Caminho Druídico · inoxllor.github.io/caminho-druidico', W / 2, H - 82);
+  return cv;
+}
+
+window.shareTreeCard = async function (name) {
+  const toast = typeof showToast === 'function' ? showToast : () => {};
+  let blob;
+  try {
+    const cv = await buildTreeImage(name);
+    blob = await new Promise((res, rej) => cv.toBlob(b => (b ? res(b) : rej(new Error('vazio'))), 'image/png'));
+  } catch (e) {
+    console.warn(e);
+    toast('Não foi possível criar a imagem da ficha.');
+    return;
+  }
+  const fileName = `ficha-${name.toLowerCase()}.png`;
+  const o = DATA().find(x => x.name === name) || {};
+  try {
+    const file = new File([blob], fileName, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: `${name} · ${treeName(o)}`, text: `${name} (${treeName(o)}): ${o.meaning || ''}` });
+      return;
+    }
+  } catch (e) {
+    if (e && e.name === 'AbortError') return;
+  }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = fileName;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1e4);
+  toast('Imagem da ficha descarregada.');
+};
+window.__treeCardImage = buildTreeImage;
+
+/* ============================================================
+   Virar carta nos oráculos
+   ============================================================ */
+function wrapReading(fn) {
+  const base = window[fn];
+  if (typeof base !== 'function') return;
+  window[fn] = function (...args) {
+    const r = base.apply(this, args);
+    flipIn();
+    return r;
+  };
+}
+function flipIn() {
+  if (reduceMotion()) return;
+  ['ogham-card', 'rune-card'].forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    el.querySelectorAll('.oc-card:not(.oc-flipped)').forEach((c, i) => {
+      c.classList.add('oc-flip', 'oc-flipped');
+      c.style.setProperty('--i', i);
+      c.addEventListener('animationend', ev => { if (ev.target === c) c.classList.remove('oc-flip'); }, { once: false });
+    });
+  });
+}
+
+/* ============================================================
+   Pesquisa global
+   ============================================================ */
+const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+let INDEX = null;
+const KIND = {
+  section: ['Secções', 'compass'], ogham: ['Letras Ogham e árvores', 'ogham'], rune: ['Runas', 'runes'], herb: ['Ervas', 'herbal'],
+  fest: ['Festas da Roda do Ano', 'wheel'], triad: ['Tríades', 'triads'], tarot: ['Tarot nórdico', 'tarot']
+};
+function buildIndex() {
+  const out = [];
+  const add = (kind, title, sub, text, go, glyph = '') => out.push({ kind, title, sub, glyph, go, n: norm(title), t: norm(`${title} ${sub} ${text}`) });
+  // Secções
+  const P = (window.DruidRealms || {}).PORTALS || {};
+  add('section', 'Hoje', 'Ecrã inicial', 'dia lua festa oraculo', () => switchTab('today'));
+  Object.entries(P).forEach(([r, p]) => {
+    add('section', p.label, 'Portal', p.intro, () => switchTab('portal-' + r));
+    p.items.forEach(([tab, , name, desc]) => add('section', name, p.label, desc, () => switchTab(tab)));
+  });
+  [['orgs', 'Organizações', 'Comunidade'], ['grove', 'Grove local', 'Comunidade'], ['about', 'Sobre & apoio', 'Comunidade']]
+    .forEach(([t, n, s]) => add('section', n, s, '', () => switchTab(t)));
+  // Ogham
+  DATA().forEach(o => {
+    const lore = (window.OGHAM_LORE || {})[o.name] || {};
+    add('ogham', `${o.name} · ${treeName(o)}`, `${o.aicme || ''}${o.month ? ' · ' + o.month : ''}`, `${o.tree} ${o.meaning} ${o.herb} ${lore.kenningPt || ''} ${lore.word || ''}`,
+      () => openTreeInGuide(o.name), o.symbol);
+  });
+  // Runas
+  (typeof RUNES_EXTENDED !== 'undefined' ? RUNES_EXTENDED : []).forEach(r => {
+    add('rune', r.name, r.aett ? `Aett de ${r.aett}` : 'Runa', `${r.meaning} ${r.reversed || ''}`, () => {
+      switchTab('runelore');
+      requestAnimationFrame(() => {
+        const card = [...document.querySelectorAll('#tab-runelore .rl-card')].find(c => (c.querySelector('h3,h4,.rl-name') || c).textContent.trim().startsWith(r.name) || c.querySelector('.rl-stone')?.textContent === r.symbol);
+        if (card) flash(card);
+      });
+    }, r.symbol);
+  });
+  // Ervas
+  const uses = bot().uses || {};
+  Object.entries(uses).forEach(([herb, u]) => {
+    const o = DATA().find(x => norm(x.herb).includes(norm(herb)));
+    const label = herb.charAt(0).toUpperCase() + herb.slice(1);
+    add('herb', label, o ? `Erva de ${o.name} · ${treeName(o)}` : 'Erva', (u || []).join(' '), () => {
+      if (!o) return switchTab('herbal');
+      openTreeInGuide(o.name);
+    });
+  });
+  // Festas
+  if (typeof FESTIVALS_DATA !== 'undefined') Object.entries(FESTIVALS_DATA).forEach(([id, f]) => {
+    add('fest', f.title, f.date, `${f.theme} ${f.ritual}`, () => { switchTab('wheel'); if (typeof selectFestival === 'function') selectFestival(+id); });
+  });
+  // Tríades
+  (window.TRIADS_DATA || []).forEach(t => {
+    const [head] = String(t).split(':');
+    add('triad', head.length < 90 ? head : head.slice(0, 87) + '…', 'Tríade', t, () => {
+      switchTab('triads');
+      const el = $('triad-text');
+      if (el) { el.textContent = `"${t}"`; flash(el.closest('#triad-container') || el); }
+    });
+  });
+  // Tarot
+  (typeof NORDIC_TAROT_DECK !== 'undefined' ? NORDIC_TAROT_DECK : []).forEach(c => {
+    add('tarot', c.name, c.title || 'Carta', `${c.upright || ''} ${c.reversed || ''} ${c.keywords || ''}`, () => {
+      switchTab('tarot');
+      if (typeof openTarotDetail === 'function') openTarotDetail(c.id);
+    });
+  });
+  return out;
+}
+function search(q) {
+  const nq = norm(q).trim();
+  if (!nq) return [];
+  const terms = nq.split(/\s+/);
+  INDEX = INDEX || buildIndex();
+  return INDEX.map(it => {
+    if (!terms.every(t => it.t.includes(t))) return null;
+    let score = 0;
+    if (it.n === nq) score += 100;
+    if (it.n.startsWith(nq)) score += 50;
+    if (it.n.includes(nq)) score += 20;
+    terms.forEach(t => { if (it.n.includes(t)) score += 5; });
+    return { it, score };
+  }).filter(Boolean).sort((a, b) => b.score - a.score).slice(0, 60).map(x => x.it);
+}
+function highlight(text, q) {
+  const terms = norm(q).trim().split(/\s+/).filter(t => t.length > 1);
+  const src = String(text), n = norm(src);
+  if (!terms.length) return escH(src);
+  const marks = new Array(src.length).fill(false);
+  terms.forEach(t => { let i = n.indexOf(t); while (i >= 0) { for (let k = i; k < i + t.length; k++) marks[k] = true; i = n.indexOf(t, i + t.length); } });
+  let out = '', open = false;
+  [...src].forEach((ch, i) => {
+    if (marks[i] && !open) { out += '<mark>'; open = true; }
+    if (!marks[i] && open) { out += '</mark>'; open = false; }
+    out += escH(ch);
+  });
+  return out + (open ? '</mark>' : '');
+}
+let results = [], active = -1;
+function renderResults() {
+  const q = $('search-input').value;
+  const list = $('search-results'), status = $('search-status');
+  results = search(q);
+  active = results.length ? 0 : -1;
+  if (!q.trim()) {
+    status.textContent = '';
+    list.innerHTML = `<div class="sd-hints"><p>Experimente:</p>${['Carvalho', 'Fehu', 'Valeriana', 'Samhain', 'Verdade', 'Odin'].map(s => `<button type="button" class="sd-chip" data-q="${s}">${s}</button>`).join('')}</div>`;
+    return;
+  }
+  status.textContent = results.length ? `${results.length} resultado${results.length === 1 ? '' : 's'}` : 'Nada encontrado. Tente outra palavra.';
+  let html = '', last = '';
+  results.forEach((r, i) => {
+    if (r.kind !== last) { html += `<p class="sd-group">${escH(KIND[r.kind][0])}</p>`; last = r.kind; }
+    html += `<button type="button" class="sd-item${i === active ? ' is-active' : ''}" data-i="${i}" id="sd-item-${i}">
+      <span class="sd-ic" aria-hidden="true">${r.glyph ? `<span class="sd-glyph">${escH(r.glyph)}</span>` : ico(KIND[r.kind][1])}</span>
+      <span class="sd-txt"><span class="sd-title">${highlight(r.title, q)}</span><span class="sd-sub">${escH(r.sub)}</span></span>
+    </button>`;
+  });
+  list.innerHTML = html;
+}
+function setActive(i) {
+  if (!results.length) return;
+  active = (i + results.length) % results.length;
+  document.querySelectorAll('.sd-item').forEach(b => b.classList.toggle('is-active', +b.dataset.i === active));
+  const el = $('sd-item-' + active);
+  if (el) { el.scrollIntoView({ block: 'nearest' }); $('search-input').setAttribute('aria-activedescendant', el.id); }
+}
+function go(i) {
+  const r = results[i];
+  if (!r) return;
+  closeSearch();
+  setTimeout(() => r.go(), 30);
+}
+window.openSearch = function () {
+  const d = $('search-dialog');
+  if (!d) return;
+  if (typeof closeMore === 'function') closeMore();
+  if (!d.open) d.showModal();
+  const inp = $('search-input');
+  inp.select();
+  renderResults();
+};
+window.closeSearch = function () { const d = $('search-dialog'); if (d && d.open) d.close(); };
+function initSearch() {
+  const inp = $('search-input'), list = $('search-results');
+  if (!inp || !list) return;
+  let t = 0;
+  inp.addEventListener('input', () => { clearTimeout(t); t = setTimeout(renderResults, 80); });
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+    else if (e.key === 'Enter') { e.preventDefault(); go(active < 0 ? 0 : active); }
+  });
+  list.addEventListener('click', e => {
+    const chip = e.target.closest('.sd-chip');
+    if (chip) { inp.value = chip.dataset.q; renderResults(); inp.focus(); return; }
+    const b = e.target.closest('.sd-item');
+    if (b) go(+b.dataset.i);
+  });
+  document.addEventListener('keydown', e => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable;
+    if ((e.key === 'k' || e.key === 'K') && (e.ctrlKey || e.metaKey)) { e.preventDefault(); openSearch(); }
+    else if (e.key === '/' && !typing && !document.querySelector('dialog[open]')) { e.preventDefault(); openSearch(); }
+  });
+  const d = $('search-dialog');
+  d.addEventListener('click', e => { if (e.target === d) d.close(); });
+}
+
+/* ============================================================
+   Ligações e arranque
+   ============================================================ */
+const prevSwitch = window.switchTab;
+window.switchTab = function (id) {
+  const r = prevSwitch.apply(this, arguments);
+  if (id === 'treewheel') renderTreeWheel();
+  if (id === 'today') renderTodayFeature();
+  return r;
+};
+// Ativar com teclado os meses da roda (Enter/Espaço já disparam click em role=button).
+
+function init() {
+  renderTodayFeature();
+  renderTreeWheel();
+  decorateGuide();
+  const list = $('tree-list');
+  if (list && 'MutationObserver' in window) new MutationObserver(decorateGuide).observe(list, { childList: true });
+  wrapReading('renderOracleReading');
+  initSearch();
+  // O Sol chega depois do cálculo da astronomia; refrescar quando mudar.
+  const sun = $('top-sun-text');
+  if (sun && 'MutationObserver' in window) new MutationObserver(renderTodayFeature).observe(sun, { childList: true, characterData: true, subtree: true });
+  setInterval(renderTodayFeature, 10 * 60 * 1000);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
 </body></html>
