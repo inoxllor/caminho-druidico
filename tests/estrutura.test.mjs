@@ -56,3 +56,12 @@ test('o HTML único inclui todo o CSS e JS e não depende de ficheiros locais', 
     assert.ok(single.includes(firstLine), `${ref} não foi incluído`);
   }
 });
+
+test('a publicação no Pages copia todas as pastas que o service worker guarda', () => {
+  const wf = read('.github/workflows/pages.yml');
+  const cp = (wf.match(/cp -r ([^\n]+) _site\//) || [])[1] || '';
+  const copied = cp.split(/\s+/);
+  const sw = read('sw.js');
+  const tops = new Set([...sw.matchAll(/'\.\/([^'\/]+)(?:\/[^']*)?'/g)].map(m => m[1]).filter(Boolean));
+  for (const t of tops) assert.ok(copied.includes(t), `pages.yml não copia ${t} para o site`);
+});

@@ -31,12 +31,32 @@ jobs:
       - name: Correr os testes
         run: npm test
 
-  publicar:
+  montar:
     needs: testes
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Montar o site
+        run: |
+          mkdir -p _site
+          cp -r index.html manifest.json sw.js LICENSE css js icons img _site/
+          node tools/build-single.mjs _site/caminho-druidico.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  # Publicar num job à parte (como no modelo oficial do GitHub): o deploy-pages
+  # só procura o artefacto depois de o job «montar» o ter enviado e fechado.
+  publicar:
+    needs: montar
+    runs-on: ubuntu-latest
     # As permissões do job substituem as do topo: «actions: read» é preciso
-    # para o deploy-pages encontrar o artefacto que o passo anterior enviou.
+    # para o deploy-pages encontrar o artefacto que o job anterior enviou.
     permissions:
       contents: read
       actions: read
@@ -46,18 +66,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Montar o site
-        run: |
-          mkdir -p _site
-          cp -r index.html manifest.json sw.js LICENSE css js icons _site/
-          node tools/build-single.mjs _site/caminho-druidico.html
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
