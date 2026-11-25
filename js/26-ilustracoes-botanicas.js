@@ -86,7 +86,7 @@ function makeKit(seed) {
     const left = side(1), right = side(-1).reverse();
     const all = left.concat(right.slice(1));
     const d = (o.teeth || o.spiky) ? poly(all) : smooth(all, true);
-    out += path(d, o.cls ?? 't');
+    out += path(d, o.cls ?? 'lf');
     if (o.vein !== false && len > 6) {
       out += path(`M${r1(bx)} ${r1(by)}L${r1(bx + dx * len * 0.88)} ${r1(by + dy * len * 0.88)}`, 'v');
       const vs = o.veins ?? (len > 14 ? 3 : 0);
@@ -115,7 +115,7 @@ function makeKit(seed) {
       r *= 0.55 + 0.45 * Math.sin(Math.PI * Math.min(1, u * 1.08 + 0.0));
       pts.push([x + Math.cos(th) * r, y + Math.sin(th) * r]);
     }
-    let out = path((o.teeth ? poly(pts) : smooth(pts, true)), o.cls ?? 't');
+    let out = path((o.teeth ? poly(pts) : smooth(pts, true)), o.cls ?? 'lf');
     for (let k = 0; k < lobes; k++) {
       const th = (ang - spread / 2 + spread * (k + 0.5) / lobes) * RAD;
       out += path(`M${r1(x)} ${r1(y)}L${r1(x + Math.cos(th) * R * 0.75)} ${r1(y + Math.sin(th) * R * 0.75)}`, 'v');
@@ -146,8 +146,8 @@ function makeKit(seed) {
     }
     if (o.stems) for (const p of pts) out += path(`M${r1(o.stems[0])} ${r1(o.stems[1])}Q${r1((o.stems[0] + p[0]) / 2)} ${r1(Math.min(o.stems[1], p[1]) - 2)} ${r1(p[0])} ${r1(p[1])}`, 'v');
     for (const p of pts) {
-      out += circle(p[0], p[1], r, o.cls || 's');
-      if (o.eye !== false) out += circle(p[0] - r * 0.35, p[1] - r * 0.35, r * 0.28, 'k');
+      out += circle(p[0], p[1], r, o.cls || 'fr');
+      if (o.eye !== false) out += circle(p[0] - r * 0.35, p[1] - r * 0.35, r * 0.28, 'hl');
     }
     return out;
   }
@@ -158,9 +158,9 @@ function makeKit(seed) {
     for (let i = 0; i < petals; i++) {
       const a = rot + i * 360 / petals;
       const px = cx + Math.cos((a - 90) * RAD) * r * 0.52, py = cy + Math.sin((a - 90) * RAD) * r * 0.52;
-      out += ellipse(px, py, r * (o.pw || 0.36), r * 0.52, a, o.cls ?? 'k');
+      out += ellipse(px, py, r * (o.pw || 0.36), r * 0.52, a, o.cls ?? 'fl');
     }
-    out += circle(cx, cy, r * (o.c || 0.2), 's');
+    out += circle(cx, cy, r * (o.c || 0.2), 'fc');
     return out;
   }
 
@@ -173,10 +173,10 @@ function makeKit(seed) {
       for (let i = 0; i < n; i++) {
         const a = (rot + i * 360 / n) * RAD;
         const px = cx + Math.cos(a) * rl * 0.62, py = cy + Math.sin(a) * rl * 0.62 * (o.tilt || 1);
-        out += ellipse(px, py, rl * 0.38, rl * (o.pw || 0.11), rot + i * 360 / n, o.cls ?? 'k');
+        out += ellipse(px, py, rl * 0.38, rl * (o.pw || 0.11), rot + i * 360 / n, o.cls ?? 'fl');
       }
     }
-    out += circle(cx, cy, r * (o.c || 0.3), 's');
+    out += circle(cx, cy, r * (o.c || 0.3), 'fc');
     return out;
   }
 
@@ -187,7 +187,7 @@ function makeKit(seed) {
       const u = n === 1 ? 0.5 : i / (n - 1);
       const tx = x - w / 2 + w * u, ty = y - h + Math.pow(Math.abs(u - 0.5) * 2, 2) * h * 0.35 + rr(-1, 1);
       out += path(`M${r1(x)} ${r1(y)}L${r1(tx)} ${r1(ty)}`, 'v');
-      for (let k = 0; k < (o.florets || 4); k++) out += circle(tx + rr(-2.2, 2.2), ty + rr(-2, 1), o.fr || 1.1, o.cls || 'k');
+      for (let k = 0; k < (o.florets || 4); k++) out += circle(tx + rr(-2.2, 2.2), ty + rr(-2, 1), o.fr || 1.1, o.cls || 'fl');
     }
     return out;
   }
@@ -201,10 +201,10 @@ function makeKit(seed) {
       const s = i % 2 ? 1 : -1;
       const sz = size * (1 - t * (o.taper ?? 0.35));
       const px = x + dx * len * t - dy * sz * 0.7 * s, py = y + dy * len * t + dx * sz * 0.7 * s;
-      if (kind === 'bell') out += path(`M${r1(px - sz * 0.6)} ${r1(py - sz * 0.5)}Q${r1(px)} ${r1(py - sz * 1.3)} ${r1(px + sz * 0.6)} ${r1(py - sz * 0.5)}L${r1(px + sz * 0.5)} ${r1(py + sz * 0.6)}L${r1(px - sz * 0.5)} ${r1(py + sz * 0.6)}Z`, o.cls || 't');
-      else if (kind === 'lip') out += ellipse(px, py, sz * 0.75, sz * 0.45, ang + s * 50, o.cls || 't');
-      else if (kind === 'bud') out += ellipse(px, py, sz * 0.5, sz * 0.8, ang + 90 + s * 25, o.cls || 's');
-      else out += circle(px, py, sz * 0.55, o.cls || 's');
+      if (kind === 'bell') out += path(`M${r1(px - sz * 0.6)} ${r1(py - sz * 0.5)}Q${r1(px)} ${r1(py - sz * 1.3)} ${r1(px + sz * 0.6)} ${r1(py - sz * 0.5)}L${r1(px + sz * 0.5)} ${r1(py + sz * 0.6)}L${r1(px - sz * 0.5)} ${r1(py + sz * 0.6)}Z`, o.cls || 'fl');
+      else if (kind === 'lip') out += ellipse(px, py, sz * 0.75, sz * 0.45, ang + s * 50, o.cls || 'fl');
+      else if (kind === 'bud') out += ellipse(px, py, sz * 0.5, sz * 0.8, ang + 90 + s * 25, o.cls || 'fd');
+      else out += circle(px, py, sz * 0.55, o.cls || 'fd');
     }
     return out;
   }
@@ -221,7 +221,7 @@ function makeKit(seed) {
       const flat = (o.flatBottom && Math.sin(th) > 0) ? 1 - o.flatBottom * Math.sin(th) : 1;
       pts.push([cx + Math.cos(th) * rx * r, cy + Math.sin(th) * ry * r * flat]);
     }
-    return path(smooth(pts, true), o.cls ?? 't');
+    return path(smooth(pts, true), o.cls ?? 'cr');
   }
 
   /** Tronco afunilado de (x, yb) a (x + lean, yt). */
@@ -834,6 +834,49 @@ function splitHerbs(text) {
   return String(text || '').split(/\s*(?:&|,)\s*/).map(s => s.trim()).filter(Boolean);
 }
 
+/* ——— Indicações tradicionais de fitoterapia (curtas e prudentes) ——— */
+const USES = {
+  'casca de vidoeiro': ['Folhas e casca em infusão como diurético e depurativo; tradicional para dores nas articulações.', 'Evitar se tiver alergia à aspirina.'],
+  'dente-de-leão': ['Folhas diuréticas; raiz amarga que ajuda a digestão e o fígado.', 'Evitar com cálculos biliares ou alergia a margaridas.'],
+  'bagas de sorveira': ['Bagas ricas em vitamina C, em geleia ou xarope para a garganta; adstringentes.', 'Só cozinhadas: cruas irritam o estômago.'],
+  'verbena': ['Infusão calmante para a tensão nervosa e uma digestão lenta.', 'Evitar na gravidez.'],
+  'folhas de amieiro': ['Uso externo: folhas frescas em cataplasma para inflamações e pés cansados; casca em gargarejo.', null],
+  'ulmeira': ['Acidez do estômago, febre e dores ligeiras (contém salicilatos naturais).', 'Evitar com alergia à aspirina e em crianças.'],
+  'casca de salgueiro': ['Dores, febre e inflamação: a salicina da casca deu origem à aspirina.', 'Mesmos cuidados da aspirina; não tomar com anticoagulantes.'],
+  'artemísia': ['Amarga e digestiva; tradicional para regular o ciclo menstrual; usada em defumações e para os sonhos.', 'Proibida na gravidez.'],
+  'sementes de freixo': ['Folhas e frutos tradicionais como diurético, para a gota e o reumatismo.', null],
+  'agrimónia': ['Adstringente: gargarejo para a garganta e infusão para diarreia ligeira.', null],
+  'flores de espinheiro': ['Tónico do coração e da circulação; acalma palpitações de nervos.', 'Se toma medicação para o coração, só com o médico.'],
+  'rosa silvestre': ['Os frutos (escaramujos) são riquíssimos em vitamina C, para as defesas; pétalas em água de rosas.', 'Retirar os pelos das sementes, que irritam.'],
+  'bolota': ['Casca de carvalho e bolotas são adstringentes: gargarejos, banhos e pequenas feridas. As bolotas comem-se depois de demolhadas.', 'Cruas são amargas e indigestas.'],
+  'musgo de carvalho': ['Líquen aromático usado em incenso e perfumaria; tradicionalmente expectorante.', 'Pode causar alergia de contacto; uso sobretudo aromático.'],
+  'viscum': ['Na tradição, para a tensão arterial e a circulação; hoje só em preparados médicos.', 'Bagas e folhas tóxicas: não usar em casa.'],
+  'folhas de azevinho': ['Antigamente em infusão para febres; hoje sobretudo planta simbólica do Inverno.', 'Bagas tóxicas.'],
+  'cardo santo': ['Amargo que abre o apetite e ajuda a digestão.', 'Evitar na gravidez e com alergia a margaridas.'],
+  'avelãs': ['Alimento nutritivo (gorduras boas, vitamina E); folhas adstringentes para varizes.', 'Atenção a alergia a frutos secos.'],
+  'sálvia': ['Gargarejo para garganta e gengivas; reduz os suores (por exemplo na menopausa).', 'Não em doses altas, na gravidez ou com epilepsia.'],
+  'flor de macieira': ['Flores em infusão suave e calmante; a maçã ajuda a digestão.', null],
+  'camomila': ['Calmante: digestão, cólicas e sono; compressas para olhos irritados.', 'Evitar com alergia a margaridas.'],
+  'folha de videira': ['Folhas vermelhas do outono para pernas cansadas e a circulação venosa; folhas novas comestíveis.', null],
+  'amora silvestre': ['Folhas adstringentes para gargarejos e diarreia ligeira; frutos ricos em antioxidantes.', null],
+  'hera terrestre': ['Expectorante: catarros, tosse e sinusite.', 'Evitar na gravidez.'],
+  'alecrim': ['Estimula a circulação, a memória e a digestão; óleo em fricção para músculos cansados.', 'Evitar doses altas na gravidez, com tensão alta ou epilepsia.'],
+  'raiz de junco': ['Uso sobretudo simbólico; na medicina popular, o rizoma do caniço foi usado como diurético e para febres.', null],
+  'valeriana': ['Raiz calmante: ansiedade, nervos e para adormecer.', 'Dá sonolência: não juntar a álcool, sedativos ou condução.'],
+  'abrunhos': ['Frutos adstringentes, melhores depois da geada, em licor ou compota; flores laxantes suaves.', 'Não triturar os caroços (tóxicos).'],
+  'absinto': ['Amargo muito forte para a digestão, em doses pequenas.', 'Tóxico em excesso; proibido na gravidez. Só com orientação.'],
+  'flor e baga de sabugueiro': ['Flores em infusão para constipações e febre (fazem suar); bagas cozidas em xarope para as defesas.', 'Bagas cruas, folhas e caules são tóxicos: só bagas maduras e cozinhadas.'],
+  'agulhas de pinheiro': ['Infusão rica em vitamina C para constipações e tosse; inalações.', 'Confirmar a árvore: o teixo é parecido e mortal. Evitar na gravidez.'],
+  'resina': ['Uso externo em pomadas para pequenas feridas; queimada como incenso.', 'Não ingerir.'],
+  'flores douradas de tojo': ['Flores comestíveis com cheiro a coco; tradicionais em infusão; floral de Bach para o desânimo.', 'Sementes tóxicas.'],
+  'calêndula': ['Pomada ou óleo para pele, feridas e queimaduras ligeiras; infusão digestiva.', 'Evitar com alergia a margaridas.'],
+  'flores de urze': ['Infusão diurética e anti-séptica das vias urinárias; calmante suave.', null],
+  'lavanda': ['Calmante para o sono e a ansiedade; óleo para pequenas queimaduras e picadas.', null],
+  'folhas de choupo': ['Os botões de choupo deram o unguento populeão, para dores e inflamações; casca com salicina.', 'Evitar com alergia à aspirina.'],
+  'erva-cidreira': ['Calmante: ansiedade, sono e digestão nervosa; uso externo no herpes labial.', 'Cuidado com problemas de tiroide.'],
+  'teixo': ['Muito tóxico: todas as partes, incluindo a semente dentro do arilo vermelho. Planta só simbólica.', 'Nunca ingerir.']
+};
+
 const STYLE = 'fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"';
 const cache = new Map();
 function render(kind, key, label) {
@@ -857,33 +900,157 @@ window.botanica = {
   splitHerbs
 };
 
-/* ——— Liga os desenhos ao guia «Árvores & ervas» ——— */
+/* ——— Gravuras botânicas antigas (domínio público, Wikimedia Commons) ———
+   Mostram a planta real ao lado de cada letra. Ficheiros em img/plantas/. */
+const T = 'Thomé, Flora von Deutschland (1885)', KO = 'Köhler, Medizinal-Pflanzen (1887)',
+  ST = 'Sturm, Deutschlands Flora (1796–1855)', LI = 'Lindman, Bilder ur Nordens Flora (1917–1926)';
+const PLATES = {
+  'tree-Beith':  ['Betula pendula', T, 'Illustration Betula pendula0.jpg'],
+  'tree-Luis':   ['Sorbus aucuparia', T, 'Illustration Sorbus aucuparia0.jpg'],
+  'tree-Fearn':  ['Alnus glutinosa', T, 'Illustration Alnus glutinosa0.jpg'],
+  'tree-Saille': ['Salix alba', T, 'Illustration Salix alba0.jpg'],
+  'tree-Nion':   ['Fraxinus excelsior', T, 'Illustration Fraxinus excelsior0.jpg'],
+  'tree-Huath':  ['Crataegus monogyna', ST, 'Crataegus monogyna Sturm 08004.jpg'],
+  'tree-Duir':   ['Quercus robur', T, 'Illustration Quercus robur0 clean.jpg'],
+  'tree-Tinne':  ['Ilex aquifolium', T, 'Illustration Ilex aquifolium0.jpg'],
+  'tree-Coll':   ['Corylus avellana', T, 'Illustration Corylus avellana0 clean.jpg'],
+  'tree-Quert':  ['Malus domestica', KO, 'Malus domestica - Köhler–s Medizinal-Pflanzen-108.jpg'],
+  'tree-Muin':   ['Vitis vinifera', T, 'Illustration Vitis vinifera0.jpg'],
+  'tree-Gort':   ['Hedera helix', T, 'Illustration Hedera helix0.jpg'],
+  'tree-Ngetal': ['Phragmites australis', T, 'Illustration Phragmites australis0 - clean.jpg'],
+  'tree-Straif': ['Prunus spinosa', T, 'Illustration Prunus spinosa0.jpg'],
+  'tree-Ruis':   ['Sambucus nigra', T, 'Illustration Sambucus nigra0.jpg'],
+  'tree-Ailm':   ['Abies alba', T, 'Illustration Abies alba0 clean.jpg'],
+  'tree-Onn':    ['Ulex europaeus', T, 'Illustration Ulex europaeus0.jpg'],
+  'tree-Ur':     ['Calluna vulgaris', T, 'Illustration Calluna vulgaris0.jpg'],
+  'tree-Eadha':  ['Populus tremula', T, 'Illustration Populus tremula0.jpg'],
+  'tree-Ioho':   ['Taxus baccata', T, 'Illustration Taxus baccata0.jpg'],
+  'herb-dente-de-leao':   ['Taraxacum officinale', T, 'Illustration Taraxacum officinale0 clean.jpg'],
+  'herb-verbena':         ['Verbena officinalis', T, 'Illustration Verbena officinalis clean.JPG'],
+  'herb-ulmeira':         ['Filipendula ulmaria', T, 'Illustration Filipendula ulmaria0 clean.jpg'],
+  'herb-artemisia':       ['Artemisia vulgaris', KO, 'Artemisia vulgaris - Köhler–s Medizinal-Pflanzen-016.jpg'],
+  'herb-agrimonia':       ['Agrimonia eupatoria', ST, 'Agrimonia eupatoria Sturm08057.jpg'],
+  'herb-rosa-silvestre':  ['Rosa canina', T, 'Illustration Rosa canina0.jpg'],
+  'herb-viscum':          ['Viscum album', T, 'Illustration Viscum album0 clean.jpg'],
+  'herb-cardo-santo':     ['Cnicus benedictus', T, 'Illustration Cnicus benedictus0.jpg'],
+  'herb-salvia':          ['Salvia officinalis', KO, 'Salvia officinalis - Köhler–s Medizinal-Pflanzen-126.jpg'],
+  'herb-camomila':        ['Matricaria chamomilla', T, 'Illustration Matricaria chamomilla0.jpg'],
+  'herb-amora-silvestre': ['Rubus nemorosus', LI, '307 Rubus nemorosus.jpg'],
+  'herb-hera-terrestre':  ['Glechoma hederacea', T, 'Illustration Glechoma hederacea0.jpg'],
+  'herb-alecrim':         ['Rosmarinus officinalis', T, 'Illustration Rosmarinus officinalis0.jpg'],
+  'herb-valeriana':       ['Valeriana officinalis', T, 'Illustration Valeriana officinalis0.jpg'],
+  'herb-absinto':         ['Artemisia absinthium', T, 'Illustration Artemisia absinthium0 clean.jpg'],
+  'herb-calendula':       ['Calendula officinalis', T, 'Illustration Calendula officinalis0.jpg'],
+  'herb-lavanda':         ['Lavandula angustifolia', T, 'Illustration Lavandula angustifolia0.jpg'],
+  'herb-erva-cidreira':   ['Melissa officinalis', T, 'Illustration Melissa officinalis0.jpg'],
+  'herb-pinheiro':        ['Pinus sylvestris', T, 'Illustration Pinus sylvestris0.jpg']
+};
+/** Gravura de cada erva: a própria, ou a da árvore de onde vem a parte usada. */
+const HERB_PLATE = {
+  'casca de vidoeiro': 'tree-Beith', 'dente-de-leão': 'herb-dente-de-leao', 'bagas de sorveira': 'tree-Luis',
+  'verbena': 'herb-verbena', 'folhas de amieiro': 'tree-Fearn', 'ulmeira': 'herb-ulmeira',
+  'casca de salgueiro': 'tree-Saille', 'artemísia': 'herb-artemisia', 'sementes de freixo': 'tree-Nion',
+  'agrimónia': 'herb-agrimonia', 'flores de espinheiro': 'tree-Huath', 'rosa silvestre': 'herb-rosa-silvestre',
+  'bolota': 'tree-Duir', 'viscum': 'herb-viscum', 'folhas de azevinho': 'tree-Tinne',
+  'cardo santo': 'herb-cardo-santo', 'avelãs': 'tree-Coll', 'sálvia': 'herb-salvia',
+  'flor de macieira': 'tree-Quert', 'camomila': 'herb-camomila', 'folha de videira': 'tree-Muin',
+  'amora silvestre': 'herb-amora-silvestre', 'hera terrestre': 'herb-hera-terrestre', 'alecrim': 'herb-alecrim',
+  'raiz de junco': 'tree-Ngetal', 'valeriana': 'herb-valeriana', 'abrunhos': 'tree-Straif',
+  'absinto': 'herb-absinto', 'flor e baga de sabugueiro': 'tree-Ruis', 'agulhas de pinheiro': 'herb-pinheiro',
+  'resina': 'herb-pinheiro', 'flores douradas de tojo': 'tree-Onn', 'calêndula': 'herb-calendula',
+  'flores de urze': 'tree-Ur', 'lavanda': 'herb-lavanda', 'folhas de choupo': 'tree-Eadha',
+  'erva-cidreira': 'herb-erva-cidreira', 'teixo': 'tree-Ioho'
+};
+// O HTML único aberto a partir de um ficheiro vai buscar as gravuras ao site publicado.
+const PLATE_BASE = location.protocol === 'file:' ? 'https://inoxllor.github.io/caminho-druidico/' : '';
+const plateSrc = key => `${PLATE_BASE}img/plantas/${key}.webp`;
+const commonsUrl = file => 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(file.replace(/ /g, '_'));
+
+function plateImg(key, alt, fallbackSvg, cls) {
+  return `<img class="${cls}" src="${plateSrc(key)}" alt="${esc(alt)}" loading="lazy" decoding="async" data-plate="${key}" data-fallback="${esc(fallbackSvg)}">`;
+}
+
+/* ——— Ampliar a gravura ao tocar ——— */
+let zoom = null;
+function openZoom(key, title) {
+  const p = PLATES[key];
+  if (!p) return;
+  if (!zoom) {
+    zoom = document.createElement('dialog');
+    zoom.className = 'bot-zoom';
+    zoom.addEventListener('click', e => { if (e.target === zoom || e.target.closest('[data-close]')) zoom.close(); });
+    document.body.appendChild(zoom);
+  }
+  zoom.innerHTML = `<figure><img src="${plateSrc(key)}" alt="${esc(title)}">
+    <figcaption><b>${esc(title)}</b> · <i>${esc(p[0])}</i><br><span>Gravura de ${esc(p[1])}, domínio público · <a href="${commonsUrl(p[2])}" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption>
+    <button type="button" data-close class="theme-card border text-sm font-semibold py-2 px-4 rounded-lg cursor-pointer">Fechar</button></figure>`;
+  if (typeof zoom.showModal === 'function') zoom.showModal(); else zoom.setAttribute('open', '');
+}
+
+/* ——— Liga as gravuras e a fitoterapia ao guia «Árvores & ervas» ——— */
 function decorate() {
   const list = $('tree-list');
   if (!list) return;
   const data = DATA();
   list.querySelectorAll(':scope > div').forEach(card => {
-    if (card.querySelector('.bot-figure')) return;
+    if (card.querySelector('.bot-plate')) return;
     const h = card.querySelector('h3');
     const name = h && h.textContent.split('•')[0].trim();
     const o = data.find(x => x.name === name);
     if (!o || !TREES[o.name]) return;
+    const tree = o.tree.replace(/\s*\(.*\)\s*$/, '');
+    const pk = 'tree-' + o.name, p = PLATES[pk];
     const fig = document.createElement('figure');
-    fig.className = 'bot-figure theme-glyph';
-    fig.innerHTML = render('tree', o.name, treeLabel(o)) + `<figcaption>${esc(o.tree.replace(/\s*\(.*\)\s*$/, ''))}</figcaption>`;
+    fig.className = 'bot-plate';
+    fig.innerHTML = `<button type="button" class="bot-plate-btn" data-zoom="${pk}" data-title="${esc(tree)}" aria-label="Ampliar a gravura: ${esc(tree)}">${plateImg(pk, `Gravura botânica: ${tree} (${p[0]})`, render('tree', o.name, treeLabel(o)), 'bot-plate-img')}</button>
+      <figcaption><b>${esc(tree)}</b> · <i>${esc(p[0])}</i><span>Gravura de ${esc(p[1].split(',')[0])}, domínio público</span></figcaption>`;
     const head = card.firstElementChild;
     card.insertBefore(fig, head ? head.nextSibling : card.firstChild);
 
     const herbs = splitHerbs(o.herb).filter(herbKey);
     if (herbs.length) {
-      const row = document.createElement('div');
-      row.className = 'bot-herbs';
-      row.innerHTML = herbs.map(n => `<figure class="bot-herb"><span class="bot-herb-art theme-glyph">${window.botanica.herb(n)}</span><figcaption>${esc(n === 'Simbólico (Não ingerir)' ? 'Teixo: tóxico, só simbólico' : n)}</figcaption></figure>`).join('');
-      const fito = [...card.querySelectorAll('p')].find(p => /Fitoterapia/.test(p.textContent));
-      (fito || h).after(row);
+      const box = document.createElement('div');
+      box.className = 'bot-uses';
+      box.innerHTML = herbs.map(n => {
+        const k = herbKey(n), use = USES[k] || [], hp = HERB_PLATE[k];
+        const label = k === 'teixo' ? 'Teixo (todas as partes)' : n;
+        const svg = render('herb', k, 'Desenho: ' + label);
+        const art = hp
+          ? `<button type="button" class="bot-use-art" data-zoom="${hp}" data-title="${esc(label)}" aria-label="Ampliar a gravura: ${esc(label)}">${plateImg(hp, `Gravura: ${label}`, svg, 'bot-use-img')}</button>`
+          : `<span class="bot-use-art bot-use-svg theme-glyph">${svg}</span>`;
+        const latin = hp ? `<i class="bot-latin">${esc(PLATES[hp][0])}</i>` : '';
+        return `<div class="bot-use">${art}<div class="bot-use-txt"><b class="theme-title">${esc(label)}</b> ${latin}
+          ${use[0] ? `<p>${esc(use[0])}</p>` : ''}${use[1] ? `<p class="bot-warn" role="note">⚠ ${esc(use[1])}</p>` : ''}</div></div>`;
+      }).join('');
+      const fito = [...card.querySelectorAll('p')].find(q => /Fitoterapia/.test(q.textContent));
+      (fito || h).after(box);
     }
   });
+  if (!$('bot-disclaimer')) {
+    const note = document.createElement('p');
+    note.id = 'bot-disclaimer';
+    note.className = 'text-xs theme-muted';
+    note.textContent = 'Fitoterapia: usos tradicionais, só para informação. Não substituem o conselho de um médico ou farmacêutico, sobretudo na gravidez, em crianças ou com medicação. Gravuras botânicas antigas em domínio público (Wikimedia Commons); toque numa gravura para a ampliar.';
+    list.before(note);
+  }
 }
+
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-zoom]');
+  if (b) openZoom(b.dataset.zoom, b.dataset.title);
+});
+// Sem rede e sem cópia guardada: mostra o desenho em vez da gravura.
+document.addEventListener('error', e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || !img.dataset.fallback) return;
+  const span = document.createElement('span');
+  span.className = 'bot-fallback theme-glyph';
+  span.innerHTML = img.dataset.fallback;
+  img.replaceWith(span);
+}, true);
+
+window.botanica.plates = PLATES;
+window.botanica.uses = USES;
 
 const base = window.renderHerbalList;
 if (typeof base === 'function') {
