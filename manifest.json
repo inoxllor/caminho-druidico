@@ -1,8 +1,20 @@
 {
   "name": "Caminho Druídico Pro Ultimate",
   "short_name": "Caminho Druídico",
+  "description": "Oráculos de Ogham, Runas e Tarot nórdico, ciclo lunar, Roda do Ano e diário druídico, também offline.",
+  "lang": "pt-PT",
+  "id": "./",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#090d16",
-  "theme_color": "#090d16"
+  "theme_color": "#0c1220",
+  "categories": ["lifestyle", "education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
 }
