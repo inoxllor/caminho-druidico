@@ -4,7 +4,7 @@
    ============================================================ */
 (() => {
 const $ = id => document.getElementById(id);
-const BOTTOM_TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'journal'];
+const BOTTOM_TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'treewheel', 'journal'];
 
 // Folha "Mais" e diálogos: fecham ao tocar fora
 const sheet = $('more-sheet');

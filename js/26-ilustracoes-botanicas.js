@@ -1051,6 +1051,8 @@ document.addEventListener('error', e => {
 
 window.botanica.plates = PLATES;
 window.botanica.uses = USES;
+window.botanica.plateSrc = plateSrc;
+window.botanica.herbPlate = HERB_PLATE;
 
 const base = window.renderHerbalList;
 if (typeof base === 'function') {

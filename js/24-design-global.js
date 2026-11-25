@@ -20,10 +20,11 @@ const PORTALS = {
   },
   ciclos: {
     label: 'Ciclos', sigil: '☽ ◯ ☾', eyebrow: 'O tempo que gira',
-    intro: 'A Lua, o Sol e a Roda do Ano: os ritmos que marcam a prática, calculados para o lugar onde está.',
+    intro: 'A Lua, o Sol, a Roda do Ano e as luas das árvores: os ritmos que marcam a prática, calculados para o lugar onde está.',
     items: [
       ['astro', 'astro', 'Astronomia', 'Fase da Lua, nascer e pôr do Sol, mapa lunar do mês, solstícios e equinócios.'],
       ['wheel', 'wheel', 'Roda do Ano', 'As oito festas celtas, a próxima celebração e o que preparar.'],
+      ['treewheel', 'treewheel', 'Roda das árvores', 'As 13 luas do calendário arbóreo celta, com o mês atual e as Luas Cheias do ano.'],
       ['compass', 'compass', 'Bússola', 'Os quatro quadrantes e os seus elementos, para orientar o círculo.']
     ]
   },
