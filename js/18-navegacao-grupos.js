@@ -3,7 +3,7 @@
 (() => {
   const GROUPS = {
     oracles: { label: 'Oráculos', tabs: [['oracle', 'Ogham'], ['runes', 'Runas'], ['tarot', 'Tarot']] },
-    cycles: { label: 'Ciclos', tabs: [['astro', 'Astronomia'], ['wheel', 'Roda do Ano']] }
+    cycles: { label: 'Ciclos', tabs: [['astro', 'Astronomia'], ['wheel', 'Roda do Ano'], ['treewheel', 'Árvores']] }
   };
   const groupOf = id => Object.keys(GROUPS).find(g => GROUPS[g].tabs.some(t => t[0] === id));
   const last = g => { try { return localStorage.getItem('druid_last_' + g); } catch { return null; } };

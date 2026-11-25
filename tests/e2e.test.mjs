@@ -12,7 +12,7 @@ import { createStaticServer } from '../tools/serve.mjs';
 
 const { chromium } = createRequire(import.meta.url)('playwright');
 const root = new URL('..', import.meta.url).pathname;
-const TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'compass', 'altar', 'ritual', 'grove',
+const TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'treewheel', 'compass', 'altar', 'ritual', 'grove',
   'journal', 'grounding', 'herbal', 'runelore', 'library', 'obod', 'triads', 'orgs', 'about'];
 // Erros de rede de serviços externos (fontes, meteorologia, mapas) não contam:
 // o ambiente de testes pode não ter acesso à internet.
@@ -113,7 +113,7 @@ test('design global: portais, reinos, Hoje e mapa lunar compacto', async () => {
   // Contador de dias escondido a zero
   assert.equal(await page.evaluate(() => document.getElementById('streak-badge').hidden), true);
   // Quatro portais com página de entrada e cartões que levam às secções
-  for (const [r, n] of [['oraculos', 3], ['ciclos', 3], ['pratica', 4], ['saber', 5]]) {
+  for (const [r, n] of [['oraculos', 3], ['ciclos', 4], ['pratica', 4], ['saber', 5]]) {
     await page.evaluate(id => switchTab(id), 'portal-' + r);
     assert.equal(await page.evaluate(() => document.body.dataset.realm), r);
     assert.equal(await page.$$eval(`#tab-portal-${r}:not(.hidden) .portal-card`, els => els.length), n);
@@ -157,6 +157,38 @@ test('runas no Saber: guia completo e treino', async () => {
   await ctx.close();
 });
 
+test('renovação: Hoje com cartão principal, roda das árvores, pesquisa, Mais e ficha partilhável', async () => {
+  const { ctx, page, errors } = await open(base);
+  // Hoje: cartão principal com a árvore do mês, a Lua e a próxima festa
+  await page.waitForSelector('#today-feature .tf-card');
+  const tree = await page.evaluate(() => getCelticTree(new Date()).name);
+  assert.match(await page.textContent('#today-feature .tf-title'), new RegExp(tree));
+  assert.equal(await page.$$eval('#today-feature .tf-stat', els => els.length), 2);
+  // Roda das árvores: 13 meses, o atual em destaque, Luas Cheias, abrir uma árvore
+  await page.evaluate(() => switchTab('treewheel'));
+  assert.equal(await page.$$eval('#tree-wheel .tw-seg', els => els.length), 13);
+  assert.equal(await page.$eval('#tree-wheel .tw-seg.is-current', el => el.dataset.tree), tree);
+  assert.ok(await page.$$eval('#tree-wheel .tw-full', els => els.length) >= 12);
+  await page.click('#tree-wheel .tw-seg[data-tree="Duir"]');
+  assert.match(await page.textContent('#tw-detail .tw-title'), /Duir/);
+  // Ficha como imagem
+  const size = await page.evaluate(async () => { const c = await __treeCardImage('Duir'); return [c.width, c.height]; });
+  assert.deepEqual(size, [1080, 1350]);
+  // Pesquisa global
+  await page.keyboard.press('/');
+  await page.fill('#search-input', 'valeriana');
+  await page.waitForSelector('.sd-item');
+  assert.ok(await page.$$eval('.sd-item', els => els.length) >= 1);
+  await page.fill('#search-input', 'fehu');
+  await page.waitForFunction(() => document.querySelector('.sd-item .sd-title')?.textContent === 'Fehu');
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => document.body.dataset.tab === 'runelore');
+  // Mais: os quatro portais
+  assert.equal(await page.$$eval('#more-sheet .realm-tile', els => els.length), 4);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
 test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
   const { ctx, page, errors } = await open(base);
   await page.evaluate(() => switchTab('herbal'));
@@ -175,6 +207,8 @@ test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
   await page.locator('#tree-list .bot-plate-btn').first().scrollIntoViewIfNeeded();
   await page.waitForFunction(() => { const i = document.querySelector('#tree-list .bot-plate img'); return i && i.complete && i.naturalWidth > 0; });
   await page.click('#tree-list .bot-plate-btn');
+  // A imagem ampliada só tem altura depois de descodificada: esperar por ela em vez de verificar logo a seguir ao clique.
+  await page.waitForSelector('dialog.bot-zoom[open] img', { state: 'visible', timeout: 5000 }).catch(() => null);
   assert.ok(await page.isVisible('dialog.bot-zoom img'), 'a gravura deve abrir ampliada');
   await page.click('dialog.bot-zoom [data-close]');
   await page.click('#ogham-quiz-options button');
