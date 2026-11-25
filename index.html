@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Oráculos de Ogham, Tarot Nórdico e Runas, Roda do Ano, astronomia e diário druídico."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23080c14'/%3E%3Cpath d='M25 85L40 25M50 85V38M75 85L60 25' stroke='%23a5b4fc' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
-    <title>Caminho Druídico Pro Ultimate • Edição inspirada na OBOD &amp; Tarot Nórdico 16-Bit</title>
+    <title>Caminho Druídico</title>
     <meta name="theme-color" content="#0c1220">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Caminho Druídico">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-    <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t})()</script>
+    <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t;try{var z=localStorage.getItem('druid_text_size');if(z==='lg'||z==='xl')document.documentElement.classList.add('ts-'+z)}catch(e){}})()</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:wght@400;500;600;700&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ogham&amp;family=Noto+Sans+Runic&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body id="app-body" data-design-version="10" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
@@ -114,7 +113,7 @@
         <div class="flex items-center gap-2 min-w-0">
             <svg class="awen-svg !w-7 !h-7" viewBox="0 0 100 100" aria-hidden="true"><line x1="25" y1="85" x2="40" y2="20"></line><line x1="50" y1="85" x2="50" y2="35"></line><line x1="75" y1="85" x2="60" y2="20"></line><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none"></circle></svg>
             <div class="min-w-0">
-                <h1 class="font-cinzel text-sm font-bold theme-title tracking-wider">CAMINHO DRUÍDICO</h1>
+                <h1 class="font-cinzel text-sm font-bold theme-title tracking-wider mob-title">CAMINHO DRUÍDICO</h1>
                 <p id="mob-tree-subtitle" class="text-[11px] theme-accent uppercase tracking-wide truncate">&nbsp;</p>
             </div>
         </div>
@@ -993,8 +992,8 @@
                 <div id="journal-lock-screen" class="hidden theme-card border rounded-2xl p-8 lg:p-12 text-center max-w-md mx-auto space-y-5">
                     <div class="flex justify-center theme-accent"><svg class="ic ic-hero" aria-hidden="true"><use href="#i-lock"></use></svg></div>
                     <h2 class="font-cinzel text-xl font-bold theme-title">Santuário Escrito Protegido</h2>
-                    <p class="text-sm theme-muted">Introduza o seu PIN de 4 dígitos para aceder ao Diário e ao Caderno de Poesia Bárdica.</p>
-                    <input type="password" id="journal-pin-unlock-input" maxlength="4" placeholder="••••" class="w-36 mx-auto text-center tracking-[0.5em] text-xl font-bold theme-inner border rounded-lg p-3 theme-title">
+                    <p class="text-sm theme-muted">Os seus escritos estão cifrados com o PIN. Introduza-o para abrir o Diário e o Caderno bárdico.</p>
+                    <input type="password" id="journal-pin-unlock-input" maxlength="64" autocomplete="current-password" placeholder="PIN ou frase" onkeydown="if(event.key==='Enter')unlockJournalWithPin()" class="w-56 mx-auto text-center tracking-[0.5em] text-xl font-bold theme-inner border rounded-lg p-3 theme-title">
                     <div id="pin-error-msg" class="c-danger text-sm hidden font-semibold">PIN incorreto. Tente novamente.</div>
                     <div>
                         <button onclick="unlockJournalWithPin()" class="bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-bold py-2.5 px-8 rounded-lg text-sm transition cursor-pointer">Desbloquear</button>
@@ -1018,10 +1017,10 @@
                     <div id="pin-settings-box" class="hidden theme-inner border rounded-xl p-4 flex flex-wrap items-center justify-between gap-3 text-sm">
                         <div class="space-y-0.5">
                             <strong class="theme-title block">Proteção por PIN Local</strong>
-                            <span class="theme-muted text-xs">Defina um código de 4 dígitos para proteger os seus escritos neste dispositivo.</span>
+                            <span class="theme-muted text-xs">O PIN cifra o Diário e o Caderno bárdico neste dispositivo (AES-256). Use pelo menos 4 caracteres; uma frase é mais segura. Se esquecer o PIN, o texto não pode ser recuperado: faça antes uma cópia de segurança.</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <input type="password" id="new-pin-input" maxlength="4" placeholder="4 dígitos" class="w-24 text-center theme-card border rounded-lg px-2.5 py-1.5 theme-title">
+                            <input type="password" id="new-pin-input" maxlength="64" autocomplete="new-password" placeholder="Novo PIN" class="w-36 text-center theme-card border rounded-lg px-2.5 py-1.5 theme-title">
                             <button onclick="saveNewJournalPin()" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-bold px-3 py-1.5 rounded-lg cursor-pointer">Ativar</button>
                             <button onclick="removeJournalPin()" class="border px-3 py-1.5 rounded-lg cursor-pointer tone-danger">Remover</button>
                         </div>
@@ -1572,4 +1571,5 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 <script src="js/25-runas-estudo.js"></script>
 <script src="js/26-ilustracoes-botanicas.js"></script>
 <script src="js/27-renovacao-design.js"></script>
+<script src="js/28-sugestoes-utilizadores.js"></script>
 </body></html>

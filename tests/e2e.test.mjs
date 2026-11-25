@@ -189,6 +189,61 @@ test('renovação: Hoje com cartão principal, roda das árvores, pesquisa, Mais
   await ctx.close();
 });
 
+test('sugestões: diário cifrado, texto maior, ano na Roda, colheita e graus', async () => {
+  const { ctx, page, errors } = await open(base);
+  // Primeiros passos e título por secção
+  assert.ok(await page.$('#first-steps'));
+  await page.evaluate(() => switchTab('journal'));
+  assert.equal(await page.title(), 'Diário · Caminho Druídico');
+  // Diário cifrado com o PIN: nada fica em claro e só abre com o PIN certo
+  await page.fill('#journal-input', 'Segredo do bosque');
+  await page.evaluate(() => autoSaveJournal());
+  await page.evaluate(async () => { document.getElementById('new-pin-input').value = '4321'; await saveNewJournalPin(); });
+  await page.waitForFunction(() => !!localStorage.getItem('druid_journal_enc'));
+  assert.deepEqual(await page.evaluate(() => [localStorage.getItem('druid_journal'), localStorage.getItem('druid_journal_pin')]), [null, null]);
+  assert.ok(!(await page.evaluate(() => localStorage.getItem('druid_journal_enc'))).includes('Segredo'));
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForFunction(() => typeof window.switchTab === 'function');
+  await page.evaluate(() => switchTab('journal'));
+  assert.ok(await page.isVisible('#journal-lock-screen'));
+  await page.fill('#journal-pin-unlock-input', '0000');
+  await page.evaluate(() => unlockJournalWithPin());
+  await page.waitForTimeout(800);
+  assert.ok(await page.isVisible('#journal-lock-screen'), 'abriu com o PIN errado');
+  await page.fill('#journal-pin-unlock-input', '4321');
+  await page.evaluate(() => unlockJournalWithPin());
+  await page.waitForFunction(() => document.getElementById('journal-input').value.includes('Segredo do bosque'));
+  // Texto maior
+  await page.evaluate(() => setTextSize('xl'));
+  assert.equal(await page.evaluate(() => getComputedStyle(document.getElementById('main')).zoom), '1.25');
+  await page.evaluate(() => setTextSize('md'));
+  // O meu ano na Roda
+  await page.evaluate(() => switchTab('wheel'));
+  await page.evaluate(() => editFestLog('Samhain'));
+  await page.fill('#wy-text', 'Vela acesa pelos antepassados.');
+  await page.evaluate(() => saveFestLog('Samhain'));
+  assert.equal(await page.$$eval('.wheel-node.is-done', els => els.length), 1);
+  assert.ok(await page.$('#cycle-reminders .cr-opt'));
+  // Ervas: colheita e lista
+  await page.evaluate(() => switchTab('herbal'));
+  await page.waitForSelector('#harvest-panel');
+  await page.locator('.herb-fav').first().click();
+  assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('druid_herb_favs')).length), 1);
+  assert.ok(await page.$('#harvest-panel .hv-mine .hv-chip'));
+  // Meditações por grau
+  await page.evaluate(() => switchTab('grounding'));
+  await page.click('.gm-grade[data-grade="druida"]');
+  const shown = await page.$$eval('.gm-item', els => els.filter(e => !e.hidden).map(e => e.dataset.grade));
+  assert.ok(shown.includes('druida') && shown.every(g => g === 'druida' || g === 'todos'));
+  // Sem rede
+  await ctx.setOffline(true);
+  await page.evaluate(() => switchTab('today'));
+  await page.waitForSelector('#net-banner');
+  await ctx.setOffline(false);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
 test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
   const { ctx, page, errors } = await open(base);
   await page.evaluate(() => switchTab('herbal'));
@@ -222,7 +277,7 @@ test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
 test('meditação guiada corre do início ao fim', async () => {
   const { ctx, page, errors } = await open(base);
   await page.evaluate(() => switchTab('grounding'));
-  assert.equal(await page.$$eval('#gm-list .gm-item', b => b.length), 5);
+  assert.equal(await page.$$eval('#gm-list .gm-item', b => b.length), 8);
   await page.evaluate(() => { window.__medSpeed = 0.002; GuidedMeditations.state.voiceOn = false; });
   await page.click('#gm-list .gm-item[data-id="awen"]');
   await page.click('#gm-play');
