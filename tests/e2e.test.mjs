@@ -167,6 +167,10 @@ test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
   assert.equal(await page.textContent('#ogham-write-out'), '᚛ᚉᚑᚂᚂ᚜');
   const lore = await page.$$eval('#tree-list .ogham-lore', els => els.length);
   assert.equal(lore, 20, 'cada letra deve ter o nome antigo e o Bríatharogam');
+  const art = await page.$$eval('#tree-list .bot-figure svg', els => els.length);
+  assert.equal(art, 20, 'cada árvore deve ter o seu desenho');
+  const herbs = await page.$$eval('#tree-list .bot-herb svg', els => els.length);
+  assert.ok(herbs >= 39, `cada erva deve ter o seu desenho (${herbs})`);
   await page.click('#ogham-quiz-options button');
   assert.match(await page.textContent('#ogham-quiz-score'), /Acertos: \d de 1/);
   await page.click('#ogham-quiz-next');

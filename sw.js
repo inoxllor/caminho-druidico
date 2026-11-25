@@ -5,7 +5,7 @@
    - Fontes e bibliotecas de CDN: guardadas na primeira utilização.
    - APIs externas (tempo, localização, IA, QR): sempre pela rede.
    Ao mudar a lista PRECACHE ou o código, suba VERSION. */
-const VERSION = 'v20';
+const VERSION = 'v21';
 const CORE = `caminho-core-${VERSION}`;
 const RUNTIME = 'caminho-runtime-v1';
 
@@ -39,6 +39,7 @@ const PRECACHE = [
   './js/23-oraculos.js',
   './js/24-design-global.js',
   './js/25-runas-estudo.js',
+  './js/26-ilustracoes-botanicas.js',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
