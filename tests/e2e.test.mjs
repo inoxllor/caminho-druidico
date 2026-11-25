@@ -207,6 +207,8 @@ test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
   await page.locator('#tree-list .bot-plate-btn').first().scrollIntoViewIfNeeded();
   await page.waitForFunction(() => { const i = document.querySelector('#tree-list .bot-plate img'); return i && i.complete && i.naturalWidth > 0; });
   await page.click('#tree-list .bot-plate-btn');
+  // A imagem ampliada só tem altura depois de descodificada: esperar por ela em vez de verificar logo a seguir ao clique.
+  await page.waitForSelector('dialog.bot-zoom[open] img', { state: 'visible', timeout: 5000 }).catch(() => null);
   assert.ok(await page.isVisible('dialog.bot-zoom img'), 'a gravura deve abrir ampliada');
   await page.click('dialog.bot-zoom [data-close]');
   await page.click('#ogham-quiz-options button');
