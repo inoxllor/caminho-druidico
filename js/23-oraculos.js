@@ -60,6 +60,11 @@ function oghamBody(o) {
     ${lore ? `<p class="oc-extra"><span>Bríatharogam</span> «${escH(lore.kenningPt)}»</p>` : ''}
     ${o.herb ? `<p class="oc-extra"><span>Ervas</span> ${escH(o.herb)}</p>` : ''}`;
 }
+/** Mensagem da runa segundo o manual (js/29-runas-tiragens.js). */
+function runeMessage(name) {
+  const m = (window.RUNE_MESSAGES || {})[name];
+  return m ? `<p class="oc-extra oc-msg"><span>Mensagem</span> ${escH(m)}</p>` : '';
+}
 function runeBody(r) {
   const name = r.baseName || r.name;
   const x = runeExtra(name);
@@ -71,7 +76,7 @@ function runeBody(r) {
       ${x && x.aett ? `<span class="oc-chip">Aett de ${escH(x.aett)}</span>` : ''}
     </div>
     <p class="oc-meaning">${escH(r.meaning)}</p>
-    <p class="oc-extra"><span>Direita</span> ${escH(r.upright)}</p>`;
+    <p class="oc-extra"><span>Direita</span> ${escH(r.upright)}</p>${runeMessage(name)}`;
   }
   return `
     <h3 class="oc-name font-cinzel">${escH(name)}</h3>
@@ -80,7 +85,7 @@ function runeBody(r) {
       ${x && x.symmetric ? '<span class="oc-chip" title="Igual de qualquer lado: não se inverte">Simétrica</span>' : ''}
     </div>
     <p class="oc-meaning">${escH(r.meaning)}</p>
-    ${x && x.reversed ? `<p class="oc-extra"><span>${x.symmetric ? 'Sombra' : 'Se invertida'}</span> ${escH(String(x.reversed).replace(/^Sombra \(simétrica\):\s*/i, ''))}</p>` : ''}`;
+    ${x && x.reversed ? `<p class="oc-extra"><span>${x.symmetric ? 'Sombra' : 'Se invertida'}</span> ${escH(String(x.reversed).replace(/^Sombra \(simétrica\):\s*/i, ''))}</p>` : ''}${runeMessage(name)}`;
 }
 
 /**
@@ -94,6 +99,8 @@ window.renderOracleReading = function (system, items, labels, opts = {}) {
   const el = document.getElementById(system === 'ogham' ? 'ogham-card' : 'rune-card');
   if (!el) return;
   const n = items.length;
+  const S = opts.spread;
+  if (S && n > 1) return renderSpread(el, system, items, labels, S);
   const layout = opts.answer ? 'yn' : n === 1 ? 'single' : n === 3 ? 'row' : 'cross';
   const areas = ['c', 'n', 'e', 's', 'w'];
   const cards = items.map((it, i) => `
@@ -102,13 +109,43 @@ window.renderOracleReading = function (system, items, labels, opts = {}) {
       ${system === 'ogham' ? oghamObject(it) : runeObject(it, i)}
       <div class="oc-body">
         <p class="oc-pos">${escH(labels[i] || '')}</p>
+        ${it.hint ? `<p class="oc-hint">${escH(it.hint)}</p>` : ''}
         ${system === 'ogham' ? oghamBody(it) : runeBody(it)}
       </div>
     </article>`).join('');
   const answer = opts.answer
     ? `<div class="oc-answer ${opts.answer === 'Sim' ? 'is-yes' : 'is-no'}" role="status"><span>O oráculo responde</span><b class="font-cinzel">${escH(opts.answer)}</b></div>`
     : '';
+  const head = S ? `<p class="rs-title font-cinzel">${escH(S.name)}</p>` : '';
   el.classList.remove('draw-area');
-  el.innerHTML = `${answer}<div class="grid oc-spread oc-${layout}">${cards}</div>`;
+  el.innerHTML = `${answer}${head}<div class="grid oc-spread oc-${layout}">${cards}</div>`;
 };
+
+/**
+ * Tiragem com casas (manual «Runas»): mapa da disposição, regra de leitura e
+ * cada runa na sua casa. No telemóvel as runas ficam em coluna pela ordem de
+ * leitura; a partir de 768 px ocupam a disposição do manual.
+ */
+function renderSpread(el, system, items, labels, S) {
+  const cards = items.map((it, i) => `
+    <article class="oc-card oc-${system}${it.reversed ? ' is-reversed' : ''}" style="grid-area:${String.fromCharCode(97 + i)}">
+      <span class="oc-num" aria-hidden="true">${i + 1}.ª</span>
+      ${system === 'ogham' ? oghamObject(it) : runeObject(it, i)}
+      <div class="oc-body">
+        <p class="oc-pos"><span class="sr-only">${i + 1}.ª runa: </span>${escH(labels[i] || '')}</p>
+        ${S.pos[i] && S.pos[i][1] ? `<p class="oc-hint">${escH(S.pos[i][1])}</p>` : ''}
+        ${system === 'ogham' ? oghamBody(it) : runeBody(it)}
+      </div>
+    </article>`).join('');
+  el.classList.remove('draw-area');
+  el.innerHTML = `
+    <div class="rs-head">
+      ${typeof runeSpreadMap === 'function' ? runeSpreadMap(S) : ''}
+      <div class="rs-text">
+        <p class="rs-title font-cinzel">${escH(S.name)}</p>
+        <p class="rs-how">${escH(S.how || '')}</p>
+      </div>
+    </div>
+    <div class="grid oc-spread oc-rs" style='${runeSpreadGridStyle(S)}'>${cards}</div>`;
+}
 })();

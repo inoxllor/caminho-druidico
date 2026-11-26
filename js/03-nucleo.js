@@ -307,16 +307,22 @@ function drawOghamCard(count) {
     document.getElementById('ogham-save-bar').classList.remove('hidden');
 }
 
-function drawRunes(count) {
+/* Tiragens de runas (casas e disposição em js/29-runas-tiragens.js).
+   Aceita a chave da tiragem ('amor', 'objetivo', …) ou o número antigo (1, 3);
+   sem argumento repete a última tiragem. */
+let lastRuneSpread = 'conselho';
+function drawRunes(spread) {
+    const S = runeSpread(spread === undefined ? lastRuneSpread : spread);
     const pool = [...RUNES_DATA];
     const drawn = [];
-    for (let i = 0; i < count; i++) {
+    S.pos.forEach(([pos, hint]) => {
         const idx = Math.floor(Math.random() * pool.length);
-        drawn.push(castRune(pool.splice(idx, 1)[0]));
-    }
+        drawn.push({ ...castRune(pool.splice(idx, 1)[0]), pos, hint });
+    });
+    lastRuneSpread = S.key;
+    window.lastRuneSpreadInfo = S;
     lastRuneReading = drawn;
-    const labels = count === 3 ? ['Passado (Urd)', 'Presente (Verdandi)', 'Futuro (Skuld)'] : ['Conselho Rúnico'];
-    renderOracleReading('runes', drawn, labels);
+    renderOracleReading('runes', drawn, S.pos.map(p => p[0]), { spread: S });
     noticeReversedRunes(drawn);
     document.getElementById('rune-save-bar').classList.add('hidden');
 }
@@ -327,7 +333,7 @@ function saveLastReadingToJournal(type) {
     if (type === 'ogham' && lastOghamReading.length) {
         entry += `ORÁCULO DE OGHAM ---\n` + lastOghamReading.map(o => `• ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`).join('\n');
     } else if (type === 'runes' && lastRuneReading.length) {
-        entry += `ORÁCULO DE RUNAS ---\n` + lastRuneReading.map(r => `• ${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+        entry += `ORÁCULO DE RUNAS${lastRuneReading[0].pos && window.lastRuneSpreadInfo ? ' · ' + window.lastRuneSpreadInfo.name.toUpperCase() : ''} ---\n` + lastRuneReading.map(r => `• ${r.pos ? r.pos + ': ' : ''}${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
     }
     const area = document.getElementById('journal-input');
     area.value = (area.value + entry + '\n').trimStart();

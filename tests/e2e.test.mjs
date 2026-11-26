@@ -57,6 +57,48 @@ test('abre sem erros e todas as secções têm conteúdo', async () => {
   await ctx.close();
 });
 
+test('runas: tiragens do manual com casas, disposição e mensagem', async () => {
+  const { ctx, page, errors } = await open(base);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.evaluate(() => switchTab('runes'));
+  // Botões: 7 tiragens do manual + Sim/Não
+  assert.equal(await page.$$eval('#rune-spread-grid .spread-card', e => e.length), 8);
+  const want = { conselho: 1, nornas: 3, amor: 5, trabalho: 4, saude: 3, objetivo: 5, diario: 3 };
+  for (const [key, n] of Object.entries(want)) {
+    await page.click(`#rune-spread-grid [data-spread="${key}"]`);
+    const r = await page.evaluate(() => ({
+      cards: document.querySelectorAll('#rune-card .oc-card .oc-stone').length,
+      pos: lastRuneReading.map(x => x.pos), msg: document.querySelectorAll('#rune-card .oc-msg').length,
+      names: lastRuneReading.map(x => x.baseName || x.name)
+    }));
+    assert.equal(r.cards, n, key);
+    assert.equal(new Set(r.names).size, n, `${key}: runas repetidas`);
+    assert.ok(r.pos.every(Boolean), `${key}: casas sem nome`);
+    assert.equal(r.msg, n, `${key}: falta a mensagem da runa`);
+  }
+  // Leitura da direita para a esquerda: a 1.ª runa fica à direita da 3.ª
+  await page.click('#rune-spread-grid [data-spread="nornas"]');
+  const x = await page.$$eval('#rune-card .oc-card', e => e.map(c => c.getBoundingClientRect().x));
+  assert.ok(x[0] > x[1] && x[1] > x[2], 'nornas não estão da direita para a esquerda');
+  // Cruz: 1.ª em cima, 5.ª em baixo
+  await page.click('#rune-spread-grid [data-spread="objetivo"]');
+  const y = await page.$$eval('#rune-card .oc-card', e => e.map(c => c.getBoundingClientRect().y));
+  assert.ok(y[0] < y[1] && y[4] > y[1], 'cruz fora de ordem');
+  // «Tirar outra» repete a mesma tiragem
+  await page.evaluate(() => drawRunes());
+  assert.equal(await page.evaluate(() => lastRuneReading[4].pos), 'Síntese geral');
+  // Telemóvel: em coluna, pela ordem de leitura, sem deslocar a página na horizontal
+  await page.setViewportSize({ width: 375, height: 800 });
+  const m = await page.evaluate(() => ({
+    ys: [...document.querySelectorAll('#rune-card .oc-card')].map(c => c.getBoundingClientRect().y),
+    over: document.documentElement.scrollWidth - window.innerWidth
+  }));
+  assert.ok(m.ys.every((v, i) => i === 0 || v > m.ys[i - 1]), 'no telemóvel não estão em coluna');
+  assert.ok(m.over <= 1, `a página desloca-se na horizontal (${m.over}px)`);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
 test('oráculos: Ogham, Runas e Tarot tiram cartas', async () => {
   const { ctx, page, errors } = await open(base);
   await page.evaluate(() => { switchTab('oracle'); drawOghamCard(3); });
@@ -89,7 +131,7 @@ test('oráculos: Ogham, Runas e Tarot tiram cartas', async () => {
     assert.match(await page.textContent(`${sel} .oc-answer b`), /^(Sim|Não)$/);
   }
   assert.equal(await page.$$eval('#tab-oracle .spread-card', e => e.length), 4);
-  assert.equal(await page.$$eval('#tab-runes .spread-card', e => e.length), 3);
+  assert.equal(await page.$$eval('#tab-runes .spread-card', e => e.length), 8);
   assert.equal(await page.$$eval('#tab-tarot .spread-card', e => e.length), 4);
   await page.evaluate(() => { switchTab('tarot'); drawTarotCard(3); });
   await page.waitForFunction(() => document.querySelectorAll('#tarot-card-container .tarot-flip-wrapper, #tarot-card-container > *').length >= 1);

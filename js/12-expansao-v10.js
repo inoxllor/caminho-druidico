@@ -131,8 +131,8 @@ function setCompare(a) { LS.set('druid_compare', a.slice(0, 3)); renderCompareSl
 window.saveCompareSlot = function (type) {
   let text = '', title = type;
   if (type === 'runes' && typeof lastRuneReading !== 'undefined' && lastRuneReading?.length) {
-    text = lastRuneReading.map(r => `${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
-    title = 'Runas';
+    text = lastRuneReading.map(r => `${r.pos ? r.pos + ': ' : ''}${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+    title = window.lastRuneSpreadInfo ? `Runas · ${window.lastRuneSpreadInfo.name}` : 'Runas';
   } else if (type === 'ogham' && typeof lastOghamReading !== 'undefined' && lastOghamReading?.length) {
     text = lastOghamReading.map(o => `${o.symbol} ${o.name}: ${o.meaning}`).join('\n');
     title = 'Ogham';
@@ -341,7 +341,7 @@ window.exportShareCard = function (source) {
     if (typeof lastRuneReading !== 'undefined' && lastRuneReading?.length) {
       glyph = lastRuneReading[0].symbol;
       title = lastRuneReading.map(r => r.name).join(' · ');
-      body = lastRuneReading.map(r => r.meaning).join('\n');
+      body = lastRuneReading.map(r => (r.pos ? r.pos + ': ' : '') + r.meaning).join('\n');
     }
   }
   if (!body && typeof lastOghamReading !== 'undefined' && lastOghamReading?.length) {

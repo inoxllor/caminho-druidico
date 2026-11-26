@@ -17,13 +17,17 @@
   function collectReading(type) {
     const q = ($('tarot-question') && type === 'tarot') ? $('tarot-question').value.trim() : '';
     if (type === 'runes' && typeof lastRuneReading !== 'undefined' && lastRuneReading?.length) {
+      const S = window.lastRuneSpreadInfo;
       return {
         type: 'runes',
         question: q,
+        spread: S ? S.name : '',
+        guide: S ? S.how : '',
         items: lastRuneReading.map((r, i) => ({
-          pos: ['Conselho', 'Passado', 'Presente', 'Futuro'][i] || `Posição ${i + 1}`,
+          pos: r.pos || ['Conselho', 'Passado', 'Presente', 'Futuro'][i] || `Posição ${i + 1}`,
+          hint: r.hint || '',
           label: `${r.symbol} ${r.name}`,
-          text: r.meaning
+          text: r.meaning + ((window.RUNE_MESSAGES || {})[r.baseName || r.name] ? ` Mensagem: ${window.RUNE_MESSAGES[r.baseName || r.name]}` : '')
         }))
       };
     }
@@ -68,13 +72,16 @@
 
     // Per card
     reading.items.forEach((it, i) => {
-      lines.push(`\n${it.pos} — ${it.label}\n${it.text}`);
+      lines.push(`\n${it.pos} — ${it.label}${it.hint ? `\n(${it.hint})` : ''}\n${it.text}`);
       if (it.art) lines.push(`Imagem: ${it.art}`);
     });
 
     // Synthesis by count
     lines.push('\n— Síntese —');
-    if (n === 1) {
+    if (reading.guide && n > 1) {
+      lines.push(`Tiragem «${reading.spread}». ${reading.guide}`);
+      lines.push(`O fio da leitura vai de ${reading.items[0].label} (${reading.items[0].pos.toLowerCase()}) até ${reading.items[n - 1].label} (${reading.items[n - 1].pos.toLowerCase()}): leia as runas em diálogo, cada uma à luz da sua casa.`);
+    } else if (n === 1) {
       lines.push(`O núcleo da mensagem concentra-se em «${reading.items[0].label}». Trate este símbolo como um conselho único: uma qualidade a cultivar ou um aviso a respeitar nas próximas decisões.`);
     } else if (n === 3) {
       const [a, b, c] = reading.items;
@@ -126,8 +133,8 @@ Evita fatalismo e diagnósticos médicos/legais.`;
 
     const user = `Sistema: ${reading.type}
 Pergunta: ${reading.question || '(não formulada)'}
-Tiragem:
-${reading.items.map(it => `- ${it.pos}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}`).join('\n')}`;
+Tiragem${reading.spread ? ' «' + reading.spread + '»' : ''}:${reading.guide ? '\nComo ler: ' + reading.guide : ''}
+${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}`).join('\n')}`;
 
     const res = await fetch(base + '/chat/completions', {
       method: 'POST',

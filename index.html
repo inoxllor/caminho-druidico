@@ -227,16 +227,13 @@
                         <button type="button" onclick="interpretReading('runes',{deep:true})" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-oracles"></use></svg>Aprofundar IA</button>
                         <button type="button" onclick="saveLastReadingToJournal('runes')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-journal"></use></svg>Guardar no Diário</button>
                         <button type="button" onclick="shareReading('runes')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-share"></use></svg>Partilhar</button>
-                        <button type="button" onclick="drawRunes(1)" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
+                        <button type="button" onclick="drawRunes()" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
                     </div>
 
                     <div id="rune-draw-actions" class="oracle-spreads">
                         <p class="spreads-title">Escolha uma tiragem</p>
-                        <div class="spread-grid spread-grid-3">
-                            <button type="button" onclick="drawRunes(1)" class="spread-card"><span class="spread-dia dia-1" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Conselho</span><span class="spread-meta">1 runa</span></button>
-                            <button type="button" onclick="drawRunes(3)" class="spread-card"><span class="spread-dia dia-3" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Urd · Verdandi · Skuld</span><span class="spread-meta">3 runas · passado, presente, futuro</span></button>
-                            <button type="button" onclick="drawYesNo('runes')" class="spread-card"><span class="spread-dia dia-yn" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 runa · resposta direta</span></button>
-                        </div>
+                        <div id="rune-spread-grid" class="spread-grid spread-grid-4"></div>
+                        <p class="spreads-note">Segundo o manual: as runas leem-se da direita para a esquerda e de cima para baixo; nas leituras em círculo, no sentido dos ponteiros do relógio.</p>
                     </div>
 
                     
@@ -1391,21 +1388,50 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
             </div>
             <div class="guide-panel hidden" data-panel="runes">
                 <h3 class="font-cinzel font-bold theme-title text-base">Runas (Elder Futhark)</h3>
-                <div class="space-y-3">
+                <p class="theme-muted">Como num jogo de tarot: misture as 24 runas, escolha algumas sem olhar e coloque cada uma na sua casa. Há também quem lance todas as runas sobre um pano e leia as posições, mas aqui usamos tiragens com casas.</p>
+                <div class="theme-inner border rounded-lg p-3">
+                    <p class="font-semibold theme-accent">Como ler</p>
+                    <ul class="theme-muted list-disc pl-5 space-y-1">
+                        <li>Da <strong>direita para a esquerda</strong>: a 1.ª runa fica à direita.</li>
+                        <li>De <strong>cima para baixo</strong>.</li>
+                        <li>Nas leituras em círculo, no <strong>sentido dos ponteiros do relógio</strong>, a começar em cima.</li>
+                    </ul>
+                </div>
+                <div class="space-y-3 mt-3">
                     <div class="theme-inner border rounded-lg p-3">
-                        <p class="font-semibold theme-accent">1 runa · Conselho</p>
-                        <p class="theme-muted">Uma força a honrar ou um aviso a escutar. Excelente para o oráculo de hoje.</p>
+                        <p class="font-semibold theme-accent">Conselho · 1 runa</p>
+                        <p class="theme-muted">Uma mensagem para ser absorvida. Excelente para o oráculo de hoje.</p>
                     </div>
                     <div class="theme-inner border rounded-lg p-3">
-                        <p class="font-semibold theme-accent">3 runas · Passado / Presente / Futuro</p>
-                        <p class="theme-muted">Mesma lógica das Nornas: origem → estado actual → direcção. Leia as três em conjunto, não isoladas.</p>
+                        <p class="font-semibold theme-accent">Passado · Presente · Futuro · 3 runas em linha</p>
+                        <p class="theme-muted">1.ª (direita) o passado e o que levou ao dia de hoje; 2.ª (meio) o presente e o que pode estar oculto; 3.ª (esquerda) o conselho para um futuro que pode ser construído.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Amor · 5 runas</p>
+                        <p class="theme-muted">Duas filas de duas e uma em baixo. 1.ª Intenções, 2.ª Sentimentos, 3.ª Superação, 4.ª União, 5.ª Resultado.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Trabalho · 4 runas</p>
+                        <p class="theme-muted">Duas filas de duas. Em cima: 1.ª Objetivo (direita) e 2.ª Conquista. Em baixo: Obstáculos e Investimento.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Saúde · 3 runas em linha</p>
+                        <p class="theme-muted">1.ª Saúde atual (direita), 2.ª Atenção, 3.ª Expectativa. Leitura simbólica: não substitui o médico.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Objetivo temporal · 5 runas em cruz</p>
+                        <p class="theme-muted">1.ª em cima, a situação atual; na fila do meio, da direita para a esquerda, 2.ª Positivo, 3.ª Desenvolvimento, 4.ª Negativo; 5.ª em baixo, a síntese geral.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Conselho diário · 3 runas em coluna</p>
+                        <p class="theme-muted">De cima para baixo: 1.ª Energia favorável, 2.ª Obstáculos, 3.ª Como agir.</p>
                     </div>
                     <div class="theme-inner border rounded-lg p-3">
                         <p class="font-semibold theme-accent">Sim / Não</p>
-                        <p class="theme-muted">Resposta directa com a runa como comentário. Útil para escolhas binárias simples.</p>
+                        <p class="theme-muted">Resposta direta com a runa como comentário. Útil para escolhas simples.</p>
                     </div>
                 </div>
-                <p class="theme-muted mt-2">As 24 runas estão no grimório rúnico. Toque numa runa na galeria para rever o significado.</p>
+                <p class="theme-muted mt-2">Cada runa traz também a sua mensagem. As 24 runas estão em Saber → Runas: guia & treino.</p>
             </div>
             <div class="guide-panel hidden" data-panel="ogham">
                 <h3 class="font-cinzel font-bold theme-title text-base">Ogham — o bosque que fala</h3>
@@ -1572,4 +1598,5 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 <script src="js/26-ilustracoes-botanicas.js"></script>
 <script src="js/27-renovacao-design.js"></script>
 <script src="js/28-sugestoes-utilizadores.js"></script>
+<script src="js/29-runas-tiragens.js"></script>
 </body></html>
