@@ -1027,6 +1027,36 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 @media (min-width: 640px) and (max-width: 1023px) { .oc-cross { grid-template-columns: repeat(2, minmax(0, 1fr)); } .oc-cross .oc-card { grid-area: auto !important; } .oc-cross .oc-card:first-child { grid-column: 1 / -1; } }
 @media (max-width: 639px) { .oc-cross .oc-card { grid-area: auto !important; } }
 
+/* Tiragens de runas com casas */
+.spreads-note { font-size: .78rem; line-height: 1.45; color: var(--text-muted); margin: .9rem auto 0; max-width: 40rem; }
+/* (cont.) (manual «Runas», js/29-runas-tiragens.js) */
+.rs-mini, .rs-map { display: inline-grid; gap: 4px; justify-content: center; align-content: center; }
+.rs-mini { height: 40px; margin-bottom: .2rem; gap: 3px; }
+.rs-mini .rs-dot { width: 9px; height: 9px; border-radius: 50%; }
+.rs-dot { display: flex; align-items: center; justify-content: center; border-radius: 42% 58% 46% 54% / 55% 45% 55% 45%;
+  background: radial-gradient(circle at 35% 28%, #5f6570, #3a3f47 45%, #1f2228 100%); box-shadow: inset -1px -2px 3px rgba(0,0,0,.4), 0 1px 3px rgba(0,0,0,.35); }
+.rs-map .rs-dot { width: 1.6rem; height: 1.75rem; font-family: 'Cinzel', serif; font-size: .75rem; font-weight: 700; color: #fcd34d; text-shadow: 0 0 6px rgba(251,191,36,.5); }
+.rs-head { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 0 auto 1.25rem; max-width: 40rem; text-align: left; }
+.rs-title { font-size: 1rem; font-weight: 700; color: var(--text-title); }
+.rs-title:first-child { text-align: center; margin-bottom: .75rem; }
+.rs-text .rs-title { text-align: left; margin-bottom: 0; }
+.rs-dot { justify-self: center; }
+.rs-how { font-size: .82rem; line-height: 1.45; color: var(--text-muted); margin-top: .2rem; }
+.oc-hint { font-size: .78rem; line-height: 1.4; color: var(--text-muted); font-style: italic; margin-top: .15rem; }
+.oc-msg { border-left: 2px solid color-mix(in srgb, #fbbf24 55%, transparent); padding-left: .5rem; }
+.oc-rs .oc-num { font-size: .75rem; }
+@media (max-width: 767px) {
+  .oc-rs { grid-template-columns: minmax(0, 1fr) !important; grid-template-areas: none !important; }
+  .oc-rs .oc-card { grid-area: auto !important; }
+}
+@media (min-width: 768px) {
+  .oc-rs .oc-card { flex-direction: column; align-items: center; text-align: center; padding: 1.25rem 1rem 1.1rem; }
+  .oc-rs .oc-chips { justify-content: center; }
+  .oc-rs p { max-width: 36ch; margin-left: auto; margin-right: auto; }
+  .oc-rs .oc-msg { border-left: 0; padding-left: 0; }
+}
+@media (max-width: 420px) { .rs-head { flex-direction: column; text-align: center; gap: .6rem; } .rs-text .rs-title { text-align: center; } }
+
 /* Leitura: carta */
 .oc-card { position: relative; display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; border-radius: var(--r-lg);
   background: linear-gradient(180deg, color-mix(in srgb, var(--oracle-tint) 6%, var(--bg-inner)), var(--bg-inner)); border: 1px solid var(--border-color); }

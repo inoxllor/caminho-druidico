@@ -147,6 +147,7 @@ window.drawYesNo = function (system) {
       if (!runes || !runes.length) { showToast('Dados de runas indisponíveis.'); return; }
       const r = castRune(runes[Math.floor(Math.random() * runes.length)]);
       lastRuneReading = [r];
+      window.lastRuneSpreadInfo = null;
       renderOracleReading('runes', [r], ['Sim ou Não'], { answer });
       noticeReversedRunes([r]);
       document.getElementById('rune-save-bar')?.classList.remove('hidden');
@@ -187,8 +188,8 @@ window.shareReading = async function (type) {
   let title = 'Caminho Druídico', body = '';
   if (type === 'daily' && lastDailyOracle) { body = lastDailyOracle; title = 'Oráculo de hoje'; }
   else if (type === 'runes' && lastRuneReading?.length) {
-    body = lastRuneReading.map(r => `${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
-    title = 'Tiragem de Runas';
+    body = lastRuneReading.map(r => `${r.pos ? r.pos + ': ' : ''}${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+    title = window.lastRuneSpreadInfo ? `Runas · ${window.lastRuneSpreadInfo.name}` : 'Tiragem de Runas';
   } else if (type === 'ogham' && lastOghamReading?.length) {
     body = lastOghamReading.map(o => `${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`).join('\n');
     title = 'Tiragem de Ogham';
