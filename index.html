@@ -1045,6 +1045,36 @@ input:focus,textarea:focus,select:focus{border-color:var(--text-accent);box-shad
 @media (min-width: 640px) and (max-width: 1023px) { .oc-cross { grid-template-columns: repeat(2, minmax(0, 1fr)); } .oc-cross .oc-card { grid-area: auto !important; } .oc-cross .oc-card:first-child { grid-column: 1 / -1; } }
 @media (max-width: 639px) { .oc-cross .oc-card { grid-area: auto !important; } }
 
+/* Tiragens de runas com casas */
+.spreads-note { font-size: .78rem; line-height: 1.45; color: var(--text-muted); margin: .9rem auto 0; max-width: 40rem; }
+/* (cont.) (manual «Runas», js/29-runas-tiragens.js) */
+.rs-mini, .rs-map { display: inline-grid; gap: 4px; justify-content: center; align-content: center; }
+.rs-mini { height: 40px; margin-bottom: .2rem; gap: 3px; }
+.rs-mini .rs-dot { width: 9px; height: 9px; border-radius: 50%; }
+.rs-dot { display: flex; align-items: center; justify-content: center; border-radius: 42% 58% 46% 54% / 55% 45% 55% 45%;
+  background: radial-gradient(circle at 35% 28%, #5f6570, #3a3f47 45%, #1f2228 100%); box-shadow: inset -1px -2px 3px rgba(0,0,0,.4), 0 1px 3px rgba(0,0,0,.35); }
+.rs-map .rs-dot { width: 1.6rem; height: 1.75rem; font-family: 'Cinzel', serif; font-size: .75rem; font-weight: 700; color: #fcd34d; text-shadow: 0 0 6px rgba(251,191,36,.5); }
+.rs-head { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 0 auto 1.25rem; max-width: 40rem; text-align: left; }
+.rs-title { font-size: 1rem; font-weight: 700; color: var(--text-title); }
+.rs-title:first-child { text-align: center; margin-bottom: .75rem; }
+.rs-text .rs-title { text-align: left; margin-bottom: 0; }
+.rs-dot { justify-self: center; }
+.rs-how { font-size: .82rem; line-height: 1.45; color: var(--text-muted); margin-top: .2rem; }
+.oc-hint { font-size: .78rem; line-height: 1.4; color: var(--text-muted); font-style: italic; margin-top: .15rem; }
+.oc-msg { border-left: 2px solid color-mix(in srgb, #fbbf24 55%, transparent); padding-left: .5rem; }
+.oc-rs .oc-num { font-size: .75rem; }
+@media (max-width: 767px) {
+  .oc-rs { grid-template-columns: minmax(0, 1fr) !important; grid-template-areas: none !important; }
+  .oc-rs .oc-card { grid-area: auto !important; }
+}
+@media (min-width: 768px) {
+  .oc-rs .oc-card { flex-direction: column; align-items: center; text-align: center; padding: 1.25rem 1rem 1.1rem; }
+  .oc-rs .oc-chips { justify-content: center; }
+  .oc-rs p { max-width: 36ch; margin-left: auto; margin-right: auto; }
+  .oc-rs .oc-msg { border-left: 0; padding-left: 0; }
+}
+@media (max-width: 420px) { .rs-head { flex-direction: column; text-align: center; gap: .6rem; } .rs-text .rs-title { text-align: center; } }
+
 /* Leitura: carta */
 .oc-card { position: relative; display: flex; gap: 1rem; align-items: flex-start; padding: 1rem; border-radius: var(--r-lg);
   background: linear-gradient(180deg, color-mix(in srgb, var(--oracle-tint) 6%, var(--bg-inner)), var(--bg-inner)); border: 1px solid var(--border-color); }
@@ -2003,16 +2033,13 @@ html.ts-xl :is(#main, .sheet, dialog) { zoom: 1.25; }
                         <button type="button" onclick="interpretReading('runes',{deep:true})" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-oracles"></use></svg>Aprofundar IA</button>
                         <button type="button" onclick="saveLastReadingToJournal('runes')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-journal"></use></svg>Guardar no Diário</button>
                         <button type="button" onclick="shareReading('runes')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-share"></use></svg>Partilhar</button>
-                        <button type="button" onclick="drawRunes(1)" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
+                        <button type="button" onclick="drawRunes()" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
                     </div>
 
                     <div id="rune-draw-actions" class="oracle-spreads">
                         <p class="spreads-title">Escolha uma tiragem</p>
-                        <div class="spread-grid spread-grid-3">
-                            <button type="button" onclick="drawRunes(1)" class="spread-card"><span class="spread-dia dia-1" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Conselho</span><span class="spread-meta">1 runa</span></button>
-                            <button type="button" onclick="drawRunes(3)" class="spread-card"><span class="spread-dia dia-3" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Urd · Verdandi · Skuld</span><span class="spread-meta">3 runas · passado, presente, futuro</span></button>
-                            <button type="button" onclick="drawYesNo('runes')" class="spread-card"><span class="spread-dia dia-yn" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 runa · resposta direta</span></button>
-                        </div>
+                        <div id="rune-spread-grid" class="spread-grid spread-grid-4"></div>
+                        <p class="spreads-note">Segundo o manual: as runas leem-se da direita para a esquerda e de cima para baixo; nas leituras em círculo, no sentido dos ponteiros do relógio.</p>
                     </div>
 
                     
@@ -3167,21 +3194,50 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
             </div>
             <div class="guide-panel hidden" data-panel="runes">
                 <h3 class="font-cinzel font-bold theme-title text-base">Runas (Elder Futhark)</h3>
-                <div class="space-y-3">
+                <p class="theme-muted">Como num jogo de tarot: misture as 24 runas, escolha algumas sem olhar e coloque cada uma na sua casa. Há também quem lance todas as runas sobre um pano e leia as posições, mas aqui usamos tiragens com casas.</p>
+                <div class="theme-inner border rounded-lg p-3">
+                    <p class="font-semibold theme-accent">Como ler</p>
+                    <ul class="theme-muted list-disc pl-5 space-y-1">
+                        <li>Da <strong>direita para a esquerda</strong>: a 1.ª runa fica à direita.</li>
+                        <li>De <strong>cima para baixo</strong>.</li>
+                        <li>Nas leituras em círculo, no <strong>sentido dos ponteiros do relógio</strong>, a começar em cima.</li>
+                    </ul>
+                </div>
+                <div class="space-y-3 mt-3">
                     <div class="theme-inner border rounded-lg p-3">
-                        <p class="font-semibold theme-accent">1 runa · Conselho</p>
-                        <p class="theme-muted">Uma força a honrar ou um aviso a escutar. Excelente para o oráculo de hoje.</p>
+                        <p class="font-semibold theme-accent">Conselho · 1 runa</p>
+                        <p class="theme-muted">Uma mensagem para ser absorvida. Excelente para o oráculo de hoje.</p>
                     </div>
                     <div class="theme-inner border rounded-lg p-3">
-                        <p class="font-semibold theme-accent">3 runas · Passado / Presente / Futuro</p>
-                        <p class="theme-muted">Mesma lógica das Nornas: origem → estado actual → direcção. Leia as três em conjunto, não isoladas.</p>
+                        <p class="font-semibold theme-accent">Passado · Presente · Futuro · 3 runas em linha</p>
+                        <p class="theme-muted">1.ª (direita) o passado e o que levou ao dia de hoje; 2.ª (meio) o presente e o que pode estar oculto; 3.ª (esquerda) o conselho para um futuro que pode ser construído.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Amor · 5 runas</p>
+                        <p class="theme-muted">Duas filas de duas e uma em baixo. 1.ª Intenções, 2.ª Sentimentos, 3.ª Superação, 4.ª União, 5.ª Resultado.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Trabalho · 4 runas</p>
+                        <p class="theme-muted">Duas filas de duas. Em cima: 1.ª Objetivo (direita) e 2.ª Conquista. Em baixo: Obstáculos e Investimento.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Saúde · 3 runas em linha</p>
+                        <p class="theme-muted">1.ª Saúde atual (direita), 2.ª Atenção, 3.ª Expectativa. Leitura simbólica: não substitui o médico.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Objetivo temporal · 5 runas em cruz</p>
+                        <p class="theme-muted">1.ª em cima, a situação atual; na fila do meio, da direita para a esquerda, 2.ª Positivo, 3.ª Desenvolvimento, 4.ª Negativo; 5.ª em baixo, a síntese geral.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Conselho diário · 3 runas em coluna</p>
+                        <p class="theme-muted">De cima para baixo: 1.ª Energia favorável, 2.ª Obstáculos, 3.ª Como agir.</p>
                     </div>
                     <div class="theme-inner border rounded-lg p-3">
                         <p class="font-semibold theme-accent">Sim / Não</p>
-                        <p class="theme-muted">Resposta directa com a runa como comentário. Útil para escolhas binárias simples.</p>
+                        <p class="theme-muted">Resposta direta com a runa como comentário. Útil para escolhas simples.</p>
                     </div>
                 </div>
-                <p class="theme-muted mt-2">As 24 runas estão no grimório rúnico. Toque numa runa na galeria para rever o significado.</p>
+                <p class="theme-muted mt-2">Cada runa traz também a sua mensagem. As 24 runas estão em Saber → Runas: guia & treino.</p>
             </div>
             <div class="guide-panel hidden" data-panel="ogham">
                 <h3 class="font-cinzel font-bold theme-title text-base">Ogham — o bosque que fala</h3>
@@ -4053,16 +4109,22 @@ function drawOghamCard(count) {
     document.getElementById('ogham-save-bar').classList.remove('hidden');
 }
 
-function drawRunes(count) {
+/* Tiragens de runas (casas e disposição em js/29-runas-tiragens.js).
+   Aceita a chave da tiragem ('amor', 'objetivo', …) ou o número antigo (1, 3);
+   sem argumento repete a última tiragem. */
+let lastRuneSpread = 'conselho';
+function drawRunes(spread) {
+    const S = runeSpread(spread === undefined ? lastRuneSpread : spread);
     const pool = [...RUNES_DATA];
     const drawn = [];
-    for (let i = 0; i < count; i++) {
+    S.pos.forEach(([pos, hint]) => {
         const idx = Math.floor(Math.random() * pool.length);
-        drawn.push(castRune(pool.splice(idx, 1)[0]));
-    }
+        drawn.push({ ...castRune(pool.splice(idx, 1)[0]), pos, hint });
+    });
+    lastRuneSpread = S.key;
+    window.lastRuneSpreadInfo = S;
     lastRuneReading = drawn;
-    const labels = count === 3 ? ['Passado (Urd)', 'Presente (Verdandi)', 'Futuro (Skuld)'] : ['Conselho Rúnico'];
-    renderOracleReading('runes', drawn, labels);
+    renderOracleReading('runes', drawn, S.pos.map(p => p[0]), { spread: S });
     noticeReversedRunes(drawn);
     document.getElementById('rune-save-bar').classList.add('hidden');
 }
@@ -4073,7 +4135,7 @@ function saveLastReadingToJournal(type) {
     if (type === 'ogham' && lastOghamReading.length) {
         entry += `ORÁCULO DE OGHAM ---\n` + lastOghamReading.map(o => `• ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`).join('\n');
     } else if (type === 'runes' && lastRuneReading.length) {
-        entry += `ORÁCULO DE RUNAS ---\n` + lastRuneReading.map(r => `• ${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+        entry += `ORÁCULO DE RUNAS${lastRuneReading[0].pos && window.lastRuneSpreadInfo ? ' · ' + window.lastRuneSpreadInfo.name.toUpperCase() : ''} ---\n` + lastRuneReading.map(r => `• ${r.pos ? r.pos + ': ' : ''}${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
     }
     const area = document.getElementById('journal-input');
     area.value = (area.value + entry + '\n').trimStart();
@@ -5779,6 +5841,7 @@ window.drawYesNo = function (system) {
       if (!runes || !runes.length) { showToast('Dados de runas indisponíveis.'); return; }
       const r = castRune(runes[Math.floor(Math.random() * runes.length)]);
       lastRuneReading = [r];
+      window.lastRuneSpreadInfo = null;
       renderOracleReading('runes', [r], ['Sim ou Não'], { answer });
       noticeReversedRunes([r]);
       document.getElementById('rune-save-bar')?.classList.remove('hidden');
@@ -5819,8 +5882,8 @@ window.shareReading = async function (type) {
   let title = 'Caminho Druídico', body = '';
   if (type === 'daily' && lastDailyOracle) { body = lastDailyOracle; title = 'Oráculo de hoje'; }
   else if (type === 'runes' && lastRuneReading?.length) {
-    body = lastRuneReading.map(r => `${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
-    title = 'Tiragem de Runas';
+    body = lastRuneReading.map(r => `${r.pos ? r.pos + ': ' : ''}${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+    title = window.lastRuneSpreadInfo ? `Runas · ${window.lastRuneSpreadInfo.name}` : 'Tiragem de Runas';
   } else if (type === 'ogham' && lastOghamReading?.length) {
     body = lastOghamReading.map(o => `${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`).join('\n');
     title = 'Tiragem de Ogham';
@@ -6313,8 +6376,8 @@ function setCompare(a) { LS.set('druid_compare', a.slice(0, 3)); renderCompareSl
 window.saveCompareSlot = function (type) {
   let text = '', title = type;
   if (type === 'runes' && typeof lastRuneReading !== 'undefined' && lastRuneReading?.length) {
-    text = lastRuneReading.map(r => `${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
-    title = 'Runas';
+    text = lastRuneReading.map(r => `${r.pos ? r.pos + ': ' : ''}${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+    title = window.lastRuneSpreadInfo ? `Runas · ${window.lastRuneSpreadInfo.name}` : 'Runas';
   } else if (type === 'ogham' && typeof lastOghamReading !== 'undefined' && lastOghamReading?.length) {
     text = lastOghamReading.map(o => `${o.symbol} ${o.name}: ${o.meaning}`).join('\n');
     title = 'Ogham';
@@ -6523,7 +6586,7 @@ window.exportShareCard = function (source) {
     if (typeof lastRuneReading !== 'undefined' && lastRuneReading?.length) {
       glyph = lastRuneReading[0].symbol;
       title = lastRuneReading.map(r => r.name).join(' · ');
-      body = lastRuneReading.map(r => r.meaning).join('\n');
+      body = lastRuneReading.map(r => (r.pos ? r.pos + ': ' : '') + r.meaning).join('\n');
     }
   }
   if (!body && typeof lastOghamReading !== 'undefined' && lastOghamReading?.length) {
@@ -6764,13 +6827,17 @@ window.openReadingGuide = function (section) {
   function collectReading(type) {
     const q = ($('tarot-question') && type === 'tarot') ? $('tarot-question').value.trim() : '';
     if (type === 'runes' && typeof lastRuneReading !== 'undefined' && lastRuneReading?.length) {
+      const S = window.lastRuneSpreadInfo;
       return {
         type: 'runes',
         question: q,
+        spread: S ? S.name : '',
+        guide: S ? S.how : '',
         items: lastRuneReading.map((r, i) => ({
-          pos: ['Conselho', 'Passado', 'Presente', 'Futuro'][i] || `Posição ${i + 1}`,
+          pos: r.pos || ['Conselho', 'Passado', 'Presente', 'Futuro'][i] || `Posição ${i + 1}`,
+          hint: r.hint || '',
           label: `${r.symbol} ${r.name}`,
-          text: r.meaning
+          text: r.meaning + ((window.RUNE_MESSAGES || {})[r.baseName || r.name] ? ` Mensagem: ${window.RUNE_MESSAGES[r.baseName || r.name]}` : '')
         }))
       };
     }
@@ -6815,13 +6882,16 @@ window.openReadingGuide = function (section) {
 
     // Per card
     reading.items.forEach((it, i) => {
-      lines.push(`\n${it.pos} — ${it.label}\n${it.text}`);
+      lines.push(`\n${it.pos} — ${it.label}${it.hint ? `\n(${it.hint})` : ''}\n${it.text}`);
       if (it.art) lines.push(`Imagem: ${it.art}`);
     });
 
     // Synthesis by count
     lines.push('\n— Síntese —');
-    if (n === 1) {
+    if (reading.guide && n > 1) {
+      lines.push(`Tiragem «${reading.spread}». ${reading.guide}`);
+      lines.push(`O fio da leitura vai de ${reading.items[0].label} (${reading.items[0].pos.toLowerCase()}) até ${reading.items[n - 1].label} (${reading.items[n - 1].pos.toLowerCase()}): leia as runas em diálogo, cada uma à luz da sua casa.`);
+    } else if (n === 1) {
       lines.push(`O núcleo da mensagem concentra-se em «${reading.items[0].label}». Trate este símbolo como um conselho único: uma qualidade a cultivar ou um aviso a respeitar nas próximas decisões.`);
     } else if (n === 3) {
       const [a, b, c] = reading.items;
@@ -6873,8 +6943,8 @@ Evita fatalismo e diagnósticos médicos/legais.`;
 
     const user = `Sistema: ${reading.type}
 Pergunta: ${reading.question || '(não formulada)'}
-Tiragem:
-${reading.items.map(it => `- ${it.pos}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}`).join('\n')}`;
+Tiragem${reading.spread ? ' «' + reading.spread + '»' : ''}:${reading.guide ? '\nComo ler: ' + reading.guide : ''}
+${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}`).join('\n')}`;
 
     const res = await fetch(base + '/chat/completions', {
       method: 'POST',
@@ -8294,6 +8364,11 @@ function oghamBody(o) {
     ${lore ? `<p class="oc-extra"><span>Bríatharogam</span> «${escH(lore.kenningPt)}»</p>` : ''}
     ${o.herb ? `<p class="oc-extra"><span>Ervas</span> ${escH(o.herb)}</p>` : ''}`;
 }
+/** Mensagem da runa segundo o manual (js/29-runas-tiragens.js). */
+function runeMessage(name) {
+  const m = (window.RUNE_MESSAGES || {})[name];
+  return m ? `<p class="oc-extra oc-msg"><span>Mensagem</span> ${escH(m)}</p>` : '';
+}
 function runeBody(r) {
   const name = r.baseName || r.name;
   const x = runeExtra(name);
@@ -8305,7 +8380,7 @@ function runeBody(r) {
       ${x && x.aett ? `<span class="oc-chip">Aett de ${escH(x.aett)}</span>` : ''}
     </div>
     <p class="oc-meaning">${escH(r.meaning)}</p>
-    <p class="oc-extra"><span>Direita</span> ${escH(r.upright)}</p>`;
+    <p class="oc-extra"><span>Direita</span> ${escH(r.upright)}</p>${runeMessage(name)}`;
   }
   return `
     <h3 class="oc-name font-cinzel">${escH(name)}</h3>
@@ -8314,7 +8389,7 @@ function runeBody(r) {
       ${x && x.symmetric ? '<span class="oc-chip" title="Igual de qualquer lado: não se inverte">Simétrica</span>' : ''}
     </div>
     <p class="oc-meaning">${escH(r.meaning)}</p>
-    ${x && x.reversed ? `<p class="oc-extra"><span>${x.symmetric ? 'Sombra' : 'Se invertida'}</span> ${escH(String(x.reversed).replace(/^Sombra \(simétrica\):\s*/i, ''))}</p>` : ''}`;
+    ${x && x.reversed ? `<p class="oc-extra"><span>${x.symmetric ? 'Sombra' : 'Se invertida'}</span> ${escH(String(x.reversed).replace(/^Sombra \(simétrica\):\s*/i, ''))}</p>` : ''}${runeMessage(name)}`;
 }
 
 /**
@@ -8328,6 +8403,8 @@ window.renderOracleReading = function (system, items, labels, opts = {}) {
   const el = document.getElementById(system === 'ogham' ? 'ogham-card' : 'rune-card');
   if (!el) return;
   const n = items.length;
+  const S = opts.spread;
+  if (S && n > 1) return renderSpread(el, system, items, labels, S);
   const layout = opts.answer ? 'yn' : n === 1 ? 'single' : n === 3 ? 'row' : 'cross';
   const areas = ['c', 'n', 'e', 's', 'w'];
   const cards = items.map((it, i) => `
@@ -8336,15 +8413,45 @@ window.renderOracleReading = function (system, items, labels, opts = {}) {
       ${system === 'ogham' ? oghamObject(it) : runeObject(it, i)}
       <div class="oc-body">
         <p class="oc-pos">${escH(labels[i] || '')}</p>
+        ${it.hint ? `<p class="oc-hint">${escH(it.hint)}</p>` : ''}
         ${system === 'ogham' ? oghamBody(it) : runeBody(it)}
       </div>
     </article>`).join('');
   const answer = opts.answer
     ? `<div class="oc-answer ${opts.answer === 'Sim' ? 'is-yes' : 'is-no'}" role="status"><span>O oráculo responde</span><b class="font-cinzel">${escH(opts.answer)}</b></div>`
     : '';
+  const head = S ? `<p class="rs-title font-cinzel">${escH(S.name)}</p>` : '';
   el.classList.remove('draw-area');
-  el.innerHTML = `${answer}<div class="grid oc-spread oc-${layout}">${cards}</div>`;
+  el.innerHTML = `${answer}${head}<div class="grid oc-spread oc-${layout}">${cards}</div>`;
 };
+
+/**
+ * Tiragem com casas (manual «Runas»): mapa da disposição, regra de leitura e
+ * cada runa na sua casa. No telemóvel as runas ficam em coluna pela ordem de
+ * leitura; a partir de 768 px ocupam a disposição do manual.
+ */
+function renderSpread(el, system, items, labels, S) {
+  const cards = items.map((it, i) => `
+    <article class="oc-card oc-${system}${it.reversed ? ' is-reversed' : ''}" style="grid-area:${String.fromCharCode(97 + i)}">
+      <span class="oc-num" aria-hidden="true">${i + 1}.ª</span>
+      ${system === 'ogham' ? oghamObject(it) : runeObject(it, i)}
+      <div class="oc-body">
+        <p class="oc-pos"><span class="sr-only">${i + 1}.ª runa: </span>${escH(labels[i] || '')}</p>
+        ${S.pos[i] && S.pos[i][1] ? `<p class="oc-hint">${escH(S.pos[i][1])}</p>` : ''}
+        ${system === 'ogham' ? oghamBody(it) : runeBody(it)}
+      </div>
+    </article>`).join('');
+  el.classList.remove('draw-area');
+  el.innerHTML = `
+    <div class="rs-head">
+      ${typeof runeSpreadMap === 'function' ? runeSpreadMap(S) : ''}
+      <div class="rs-text">
+        <p class="rs-title font-cinzel">${escH(S.name)}</p>
+        <p class="rs-how">${escH(S.how || '')}</p>
+      </div>
+    </div>
+    <div class="grid oc-spread oc-rs" style='${runeSpreadGridStyle(S)}'>${cards}</div>`;
+}
 })();
 </script>
 <script>
@@ -11079,6 +11186,175 @@ function init() {
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 window.DruidPrivacy = { encOn, locked, lock: () => window.lockJournalNow() };
+})();
+</script>
+<script>
+/* ============================================================
+   Tiragens de runas segundo o manual «Runas» (Bosque do Cervo,
+   Henry Barbosa, 2021): casas e disposição de cada tiragem, regras
+   de leitura e a mensagem de cada runa.
+
+   Regras do manual:
+   - lê-se da direita para a esquerda;
+   - lê-se de cima para baixo;
+   - nas leituras circulares, no sentido dos ponteiros do relógio.
+
+   Cada tiragem tem `grid`: as linhas da disposição, com uma letra
+   por casa (a = 1.ª runa, b = 2.ª, …) e «.» para espaço vazio.
+   ============================================================ */
+(() => {
+const RUNE_SPREADS = {
+  conselho: {
+    name: 'Conselho', short: '1 runa · mensagem',
+    intro: 'Uma só runa: a mensagem para ser absorvida.',
+    grid: ['a'],
+    pos: [['Conselho', 'Mensagem para ser absorvida.']],
+    how: 'Leia a runa como um conselho único: uma força a honrar ou um aviso a escutar.'
+  },
+  nornas: {
+    name: 'Passado · Presente · Futuro', short: '3 runas · conselho simples',
+    intro: 'Três runas em linha, lidas da direita para a esquerda.',
+    grid: ['c b a'],
+    pos: [
+      ['Passado', 'As situações que levaram ao dia de hoje.'],
+      ['Presente', 'A situação presente e o que pode estar oculto ao consulente.'],
+      ['Futuro', 'O conselho ou a direção para um futuro que pode ser construído.']
+    ],
+    how: 'Comece pela runa da direita (o passado), passe à do meio (o presente e o que está oculto) e termine na da esquerda, que dá o conselho para o futuro.'
+  },
+  amor: {
+    name: 'Amor', short: '5 runas · relação',
+    intro: 'Duas filas de duas runas e uma em baixo, ao centro.',
+    grid: ['b b a a', 'd d c c', '. e e .'],
+    pos: [
+      ['Intenções', 'O que se procura e se deseja nesta relação.'],
+      ['Sentimentos', 'O que se sente de verdade.'],
+      ['Superação', 'O que é preciso ultrapassar.'],
+      ['União', 'O que une e pode fortalecer o laço.'],
+      ['Resultado', 'Para onde a relação tende.']
+    ],
+    how: 'Leia cada fila da direita para a esquerda, de cima para baixo, e feche com o Resultado.'
+  },
+  trabalho: {
+    name: 'Trabalho', short: '4 runas · carreira e projetos',
+    intro: 'Duas filas de duas runas.',
+    // O quadro do manual numera a fila de baixo «4.ª Obstáculos – 5.ª Investimento»
+    // e não tem 3.ª casa: são quatro runas, pela ordem do manual.
+    grid: ['b a', 'c d'],
+    pos: [
+      ['Objetivo', 'A meta que se quer alcançar.'],
+      ['Conquista', 'O que já se conseguiu ou se pode conquistar.'],
+      ['Obstáculos', 'O que trava o caminho.'],
+      ['Investimento', 'Onde pôr tempo, esforço e recursos.']
+    ],
+    how: 'Leia a fila de cima da direita para a esquerda (Objetivo, depois Conquista); em baixo, os Obstáculos e, por fim, o Investimento.'
+  },
+  saude: {
+    name: 'Saúde', short: '3 runas · bem-estar',
+    intro: 'Três runas em linha, lidas da direita para a esquerda.',
+    grid: ['c b a'],
+    pos: [
+      ['Saúde atual', 'O estado presente do corpo e da energia.'],
+      ['Atenção', 'O que pede cuidado.'],
+      ['Expectativa', 'O que se pode esperar.']
+    ],
+    how: 'Comece pela direita (a saúde atual) e avance para a esquerda. É uma leitura simbólica: não substitui o conselho de um médico.'
+  },
+  objetivo: {
+    name: 'Objetivo temporal', short: '5 runas · cruz',
+    intro: 'Uma cruz: lê-se de cima para baixo e, na fila do meio, da direita para a esquerda.',
+    grid: ['. a .', 'd c b', '. e .'],
+    pos: [
+      ['A situação atual', 'Onde se está em relação ao objetivo.'],
+      ['Positivo', 'O que ajuda e favorece.'],
+      ['Desenvolvimento', 'Como a situação vai evoluir.'],
+      ['Negativo', 'O que dificulta ou se deve evitar.'],
+      ['Síntese geral', 'A resposta de conjunto.']
+    ],
+    how: 'Comece no topo (a situação atual), leia a fila do meio da direita para a esquerda (Positivo, Desenvolvimento, Negativo) e termine em baixo, na Síntese geral.'
+  },
+  diario: {
+    name: 'Conselho diário', short: '3 runas · para o dia',
+    intro: 'Três runas em coluna, lidas de cima para baixo.',
+    grid: ['a', 'b', 'c'],
+    pos: [
+      ['Energia favorável', 'A força com que pode contar hoje.'],
+      ['Obstáculos', 'O que pode atrapalhar o dia.'],
+      ['Como agir', 'O conselho para o dia.']
+    ],
+    how: 'Leia de cima para baixo: a energia do dia, o obstáculo e, por fim, como agir.'
+  }
+};
+/* Atalhos antigos: drawRunes(1) e drawRunes(3) continuam a funcionar. */
+const ALIAS = { 1: 'conselho', 3: 'nornas' };
+
+/** Mensagem de cada runa, segundo o manual. */
+const RUNE_MESSAGES = {
+  Fehu: 'Aproveite o enriquecimento e viva o seu sucesso.',
+  Uruz: 'Não tenha medo de enfrentar o novo: renove-se.',
+  Thurisaz: 'Às vezes a melhor ação é parar. Não reagir também é agir.',
+  Ansuz: 'Toda a aprendizagem vale a pena; é tempo de meditar.',
+  Raidho: 'Saiba aproveitar as mudanças; liberte-se de desejos e ilusões.',
+  Kenaz: 'Os caminhos estão abertos; revigore-se com as novas energias.',
+  Gebo: 'União sem anulação: associe-se, mas em harmonia.',
+  Wunjo: 'É preciso calma para alcançar a vitória; deixe a felicidade entrar.',
+  Hagalaz: 'Precisamos de aprender a conviver com as perdas e os limites naturais da vida.',
+  Nauthiz: 'Os atrasos podem ser providenciais. Aprenda com a adversidade.',
+  Isa: 'É melhor deixar para um momento mais propício; é tempo de parar.',
+  Jera: 'Bênçãos e boa sorte chovem sobre nós em grande festa.',
+  Eihwaz: 'A reflexão deve ser o alicerce da ação; saiba aguardar o momento.',
+  Perthro: 'As revelações serão agradáveis; é preciso ousar para encontrar.',
+  Algiz: 'Ajoelhe-se e receba as bênçãos; controle as suas emoções.',
+  Sowilo: 'A vitória é incondicional. Receba a força vital.',
+  Tiwaz: 'Coragem para prosseguir a luta; cultive a paciência.',
+  Berkano: 'Os sonhos serão realizados; olhe para o seu interior.',
+  Ehwaz: 'O cavalo de Odin atravessa qualquer obstáculo: é tempo de mudar.',
+  Mannaz: 'O ser humano é um ser social: mantenha a modéstia.',
+  Laguz: 'Como a água, a intuição é fonte de vida: liberte a criatividade.',
+  Ingwaz: 'É tempo de viver, criar e aproveitar a vida; dedique-lhe mais do seu tempo.',
+  Dagaz: 'A escuridão está a terminar. Mantenha os olhos abertos para não perder uma oportunidade.',
+  Othala: 'É preciso envelhecer com sabedoria; faça sem fazer.'
+};
+
+const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/** Devolve a tiragem pedida (chave ou número antigo), com a chave incluída. */
+window.runeSpread = function (k) {
+  const key = RUNE_SPREADS[k] ? k : (ALIAS[k] || 'conselho');
+  return { key, ...RUNE_SPREADS[key] };
+};
+window.RUNE_SPREADS = RUNE_SPREADS;
+window.RUNE_MESSAGES = RUNE_MESSAGES;
+
+/** Estilo de grelha CSS de uma disposição. */
+window.runeSpreadGridStyle = function (s, col) {
+  const cols = s.grid[0].split(' ').length;
+  return `grid-template-columns:repeat(${cols},${col || 'minmax(0,1fr)'});grid-template-areas:${s.grid.map(r => `"${r}"`).join(' ')}`;
+};
+
+/** Mapa da tiragem: pedras pequenas numeradas na disposição do manual. */
+window.runeSpreadMap = function (s, { numbers = true, cls = 'rs-map' } = {}) {
+  const dots = s.pos.map((p, i) => {
+    const area = String.fromCharCode(97 + i);
+    return `<span class="rs-dot" style="grid-area:${area}"${numbers ? ` title="${escH(`${i + 1}.ª · ${p[0]}`)}"` : ''}>${numbers ? i + 1 : ''}</span>`;
+  }).join('');
+  return `<span class="${cls}" aria-hidden="true" style='${runeSpreadGridStyle(s, numbers ? '1.6rem' : '9px')}'>${dots}</span>`;
+};
+
+/** Botões de escolha da tiragem no Oráculo de Runas. */
+function renderSpreadButtons() {
+  const grid = document.getElementById('rune-spread-grid');
+  if (!grid) return;
+  const btns = Object.keys(RUNE_SPREADS).map(key => {
+    const s = RUNE_SPREADS[key];
+    return `<button type="button" onclick="drawRunes('${key}')" class="spread-card" data-spread="${key}">
+      ${runeSpreadMap({ ...s }, { numbers: false, cls: 'rs-mini' })}
+      <span class="spread-name">${escH(s.name)}</span><span class="spread-meta">${escH(s.short)}</span></button>`;
+  }).join('');
+  grid.innerHTML = btns + `<button type="button" onclick="drawYesNo('runes')" class="spread-card" data-spread="simnao"><span class="spread-dia dia-yn" aria-hidden="true"><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 runa · resposta direta</span></button>`;
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderSpreadButtons);
+else renderSpreadButtons();
 })();
 </script>
 </body></html>
