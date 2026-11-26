@@ -255,7 +255,9 @@ ${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${
         </div>
       </div>
       <button type="button" onclick="saveAIConfig()" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-semibold text-sm px-4 py-2 rounded-lg cursor-pointer">Guardar configuração IA</button>
-      <p class="text-xs theme-muted">A chave nunca é enviada para os servidores desta app — só para o endpoint que indicar, quando usar «Aprofundar IA».</p>`;
+      <p class="text-xs theme-muted">A chave nunca é enviada para os servidores desta app — só para o endpoint que indicar, quando usar «Aprofundar IA».</p>
+      <p class="text-xs bot-warn" role="note">⚠ A chave fica guardada <strong>sem cifra</strong> neste browser: quem usar este aparelho pode vê-la. Use uma chave com limite de gastos e apague-a em aparelhos partilhados. As leituras enviadas para a IA saem do aparelho.</p>
+      <button type="button" onclick="document.getElementById('ai-api-key').value='';saveAIConfig()" class="theme-inner theme-title border border-[var(--border-color)] font-semibold text-sm px-4 py-2 rounded-lg cursor-pointer">Apagar a chave</button>`;
     host.appendChild(box);
   }
 

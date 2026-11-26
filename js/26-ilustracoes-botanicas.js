@@ -837,16 +837,16 @@ function splitHerbs(text) {
 /* ——— Indicações tradicionais de fitoterapia (curtas e prudentes) ——— */
 const USES = {
   'casca de vidoeiro': ['Folhas e casca em infusão como diurético e depurativo; tradicional para dores nas articulações.', 'Evitar se tiver alergia à aspirina.'],
-  'dente-de-leão': ['Folhas diuréticas; raiz amarga que ajuda a digestão e o fígado.', 'Evitar com cálculos biliares ou alergia a margaridas.'],
+  'dente-de-leão': ['Folhas diuréticas; raiz amarga que ajuda a digestão e o fígado.', 'Evitar com cálculos biliares ou alergia a margaridas. Com diuréticos ou lítio, só com o médico.'],
   'bagas de sorveira': ['Bagas ricas em vitamina C, em geleia ou xarope para a garganta; adstringentes.', 'Só cozinhadas: cruas irritam o estômago.'],
-  'verbena': ['Infusão calmante para a tensão nervosa e uma digestão lenta.', 'Evitar na gravidez.'],
+  'verbena': ['Infusão calmante para a tensão nervosa e uma digestão lenta.', 'Evitar na gravidez e na amamentação.'],
   'folhas de amieiro': ['Uso externo: folhas frescas em cataplasma para inflamações e pés cansados; casca em gargarejo.', null],
   'ulmeira': ['Acidez do estômago, febre e dores ligeiras (contém salicilatos naturais).', 'Evitar com alergia à aspirina e em crianças.'],
   'casca de salgueiro': ['Dores, febre e inflamação: a salicina da casca deu origem à aspirina.', 'Mesmos cuidados da aspirina; não tomar com anticoagulantes.'],
-  'artemísia': ['Amarga e digestiva; tradicional para regular o ciclo menstrual; usada em defumações e para os sonhos.', 'Proibida na gravidez.'],
+  'artemísia': ['Amarga e digestiva; tradicional para regular o ciclo menstrual; usada em defumações e para os sonhos.', 'Proibida na gravidez e na amamentação. Contém tujona: não usar de forma continuada nem com epilepsia.'],
   'sementes de freixo': ['Folhas e frutos tradicionais como diurético, para a gota e o reumatismo.', null],
   'agrimónia': ['Adstringente: gargarejo para a garganta e infusão para diarreia ligeira.', null],
-  'flores de espinheiro': ['Tónico do coração e da circulação; acalma palpitações de nervos.', 'Se toma medicação para o coração, só com o médico.'],
+  'flores de espinheiro': ['Tónico do coração e da circulação; acalma palpitações de nervos.', 'Interage com medicação para o coração e a tensão (digoxina, beta-bloqueantes): só com o médico.'],
   'rosa silvestre': ['Os frutos (escaramujos) são riquíssimos em vitamina C, para as defesas; pétalas em água de rosas.', 'Retirar os pelos das sementes, que irritam.'],
   'bolota': ['Casca de carvalho e bolotas são adstringentes: gargarejos, banhos e pequenas feridas. As bolotas comem-se depois de demolhadas.', 'Cruas são amargas e indigestas.'],
   'musgo de carvalho': ['Líquen aromático usado em incenso e perfumaria; tradicionalmente expectorante.', 'Pode causar alergia de contacto; uso sobretudo aromático.'],
@@ -854,7 +854,7 @@ const USES = {
   'folhas de azevinho': ['Antigamente em infusão para febres; hoje sobretudo planta simbólica do Inverno.', 'Bagas tóxicas.'],
   'cardo santo': ['Amargo que abre o apetite e ajuda a digestão.', 'Evitar na gravidez e com alergia a margaridas.'],
   'avelãs': ['Alimento nutritivo (gorduras boas, vitamina E); folhas adstringentes para varizes.', 'Atenção a alergia a frutos secos.'],
-  'sálvia': ['Gargarejo para garganta e gengivas; reduz os suores (por exemplo na menopausa).', 'Não em doses altas, na gravidez ou com epilepsia.'],
+  'sálvia': ['Gargarejo para garganta e gengivas; reduz os suores (por exemplo na menopausa).', 'Contém tujona: não em doses altas nem por mais de 2 semanas; evitar na gravidez, na amamentação e com epilepsia.'],
   'flor de macieira': ['Flores em infusão suave e calmante; a maçã ajuda a digestão.', null],
   'camomila': ['Calmante: digestão, cólicas e sono; compressas para olhos irritados.', 'Evitar com alergia a margaridas.'],
   'folha de videira': ['Folhas vermelhas do outono para pernas cansadas e a circulação venosa; folhas novas comestíveis.', null],
@@ -862,9 +862,9 @@ const USES = {
   'hera terrestre': ['Expectorante: catarros, tosse e sinusite.', 'Evitar na gravidez.'],
   'alecrim': ['Estimula a circulação, a memória e a digestão; óleo em fricção para músculos cansados.', 'Evitar doses altas na gravidez, com tensão alta ou epilepsia.'],
   'raiz de junco': ['Uso sobretudo simbólico; na medicina popular, o rizoma do caniço foi usado como diurético e para febres.', null],
-  'valeriana': ['Raiz calmante: ansiedade, nervos e para adormecer.', 'Dá sonolência: não juntar a álcool, sedativos ou condução.'],
+  'valeriana': ['Raiz calmante: ansiedade, nervos e para adormecer.', 'Dá sonolência: não juntar a álcool, sedativos ou condução. Não dar a crianças com menos de 12 anos.'],
   'abrunhos': ['Frutos adstringentes, melhores depois da geada, em licor ou compota; flores laxantes suaves.', 'Não triturar os caroços (tóxicos).'],
-  'absinto': ['Amargo muito forte para a digestão, em doses pequenas.', 'Tóxico em excesso; proibido na gravidez. Só com orientação.'],
+  'absinto': ['Amargo muito forte para a digestão, em doses pequenas.', 'Contém tujona, que em excesso causa convulsões. Proibido na gravidez, na amamentação e com epilepsia; nunca mais de 4 semanas. Só com orientação.'],
   'flor e baga de sabugueiro': ['Flores em infusão para constipações e febre (fazem suar); bagas cozidas em xarope para as defesas.', 'Bagas cruas, folhas e caules são tóxicos: só bagas maduras e cozinhadas.'],
   'agulhas de pinheiro': ['Infusão rica em vitamina C para constipações e tosse; inalações.', 'Confirmar a árvore: o teixo é parecido e mortal. Evitar na gravidez.'],
   'resina': ['Uso externo em pomadas para pequenas feridas; queimada como incenso.', 'Não ingerir.'],
@@ -873,9 +873,17 @@ const USES = {
   'flores de urze': ['Infusão diurética e anti-séptica das vias urinárias; calmante suave.', null],
   'lavanda': ['Calmante para o sono e a ansiedade; óleo para pequenas queimaduras e picadas.', null],
   'folhas de choupo': ['Os botões de choupo deram o unguento populeão, para dores e inflamações; casca com salicina.', 'Evitar com alergia à aspirina.'],
-  'erva-cidreira': ['Calmante: ansiedade, sono e digestão nervosa; uso externo no herpes labial.', 'Cuidado com problemas de tiroide.'],
+  'erva-cidreira': ['Calmante: ansiedade, sono e digestão nervosa; uso externo no herpes labial.', 'Evitar com problemas de tiroide ou medicação para a tiroide; pode dar sonolência.'],
   'teixo': ['Muito tóxico: todas as partes, incluindo a semente dentro do arilo vermelho. Planta só simbólica.', 'Nunca ingerir.']
 };
+
+/* Nível de risco (revisão do feedback dos utilizadores): alto = tóxico ou com
+   contraindicações sérias; médio = interações ou cuidados importantes. */
+const RISK = {
+  alto: ['viscum', 'absinto', 'teixo', 'artemísia', 'folhas de azevinho', 'flor e baga de sabugueiro', 'flores douradas de tojo', 'abrunhos'],
+  medio: ['sálvia', 'valeriana', 'casca de salgueiro', 'ulmeira', 'flores de espinheiro', 'alecrim', 'hera terrestre', 'agulhas de pinheiro', 'cardo santo', 'erva-cidreira', 'dente-de-leão', 'verbena', 'folhas de choupo', 'casca de vidoeiro', 'resina']
+};
+const riskOf = k => RISK.alto.includes(k) ? 'alto' : RISK.medio.includes(k) ? 'medio' : '';
 
 const STYLE = 'fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"';
 const cache = new Map();
@@ -1020,7 +1028,7 @@ function decorate() {
           : `<span class="bot-use-art bot-use-svg theme-glyph">${svg}</span>`;
         const latin = hp ? `<i class="bot-latin">${esc(PLATES[hp][0])}</i>` : '';
         return `<div class="bot-use" data-herb="${k}">${art}<div class="bot-use-txt"><b class="theme-title">${esc(label)}</b> ${latin}
-          ${use[0] ? `<p>${esc(use[0])}</p>` : ''}${use[1] ? `<p class="bot-warn" role="note">⚠ ${esc(use[1])}</p>` : ''}</div></div>`;
+          ${use[0] ? `<p>${esc(use[0])}</p>` : ''}${use[1] ? `<p class="bot-warn${riskOf(k) === 'alto' ? ' bot-warn-high' : ''}" role="note">${riskOf(k) ? `<span class="bot-risk">${riskOf(k) === 'alto' ? 'Risco alto' : 'Cuidado'}</span>` : '⚠ '}${esc(use[1])}</p>` : ''}</div></div>`;
       }).join('');
       const fito = [...card.querySelectorAll('p')].find(q => /Fitoterapia/.test(q.textContent));
       (fito || h).after(box);
@@ -1030,7 +1038,7 @@ function decorate() {
     const note = document.createElement('p');
     note.id = 'bot-disclaimer';
     note.className = 'text-xs theme-muted';
-    note.textContent = 'Fitoterapia: usos tradicionais, só para informação. Não substituem o conselho de um médico ou farmacêutico, sobretudo na gravidez, em crianças ou com medicação. Gravuras botânicas antigas em domínio público (Wikimedia Commons); toque numa gravura para a ampliar.';
+    note.textContent = 'Fitoterapia: usos tradicionais, só para informação. Não substituem o conselho de um médico ou farmacêutico, sobretudo na gravidez, em crianças ou com medicação. Em caso de intoxicação, ligue para o Centro de Informação Antivenenos (CIAV): 800 250 250. Gravuras botânicas antigas em domínio público (Wikimedia Commons); toque numa gravura para a ampliar.';
     list.before(note);
   }
 }

@@ -57,6 +57,28 @@ test('abre sem erros e todas as secções têm conteúdo', async () => {
   await ctx.close();
 });
 
+test('acessibilidade e privacidade: pt-PT, fontes locais, anúncios e foco', async () => {
+  const ctx = await browser.newContext({ locale: 'pt-PT' });
+  const external = [];
+  ctx.on('request', r => { if (/fonts\.(googleapis|gstatic)\.com/.test(r.url())) external.push(r.url()); });
+  const { page, errors } = await open(base, { context: ctx });
+  assert.equal(await page.getAttribute('html', 'lang'), 'pt-PT');
+  await page.evaluate(() => document.fonts.ready);
+  assert.ok(await page.evaluate(() => document.fonts.check('700 16px Cinzel') && document.fonts.check('400 16px Inter')), 'fontes locais não carregaram');
+  assert.deepEqual(external, [], 'ainda há pedidos às fontes do Google');
+  await page.evaluate(() => { switchTab('runes'); drawRunes('nornas'); });
+  await page.waitForFunction(() => /Passado: /.test(document.getElementById('sr-announce')?.textContent || ''));
+  // Mudar de secção pela navegação põe o foco no título da secção
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.click('#desk-nav-tarot');
+  await page.waitForFunction(() => document.activeElement && document.activeElement.closest('#tab-tarot') && /^H[12]$/.test(document.activeElement.tagName));
+  assert.ok(await page.isVisible('#privacy') === false);
+  await page.evaluate(() => switchTab('about'));
+  assert.match(await page.textContent('#privacy'), /só neste aparelho/);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
 test('runas: tiragens do manual com casas, disposição e mensagem', async () => {
   const { ctx, page, errors } = await open(base);
   await page.setViewportSize({ width: 1280, height: 900 });

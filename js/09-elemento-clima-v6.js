@@ -121,7 +121,7 @@
         if ($('daily-elem-desc')) $('daily-elem-desc').textContent = dayElem.quality;
 
         let weatherSummary = 'Sem dados de clima';
-        let weatherAssoc = 'Toque em «Atualizar GPS & Clima» (em Ciclos) para ver o tempo da sua localização.';
+        let weatherAssoc = 'Toque em «Atualizar GPS & Clima», acima, para ver o tempo da sua localização.';
         let tempStr = '—°C';
         let wElemKey = dayElem.key;
 
