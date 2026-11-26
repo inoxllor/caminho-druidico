@@ -290,13 +290,7 @@ function renderFirstSteps() {
           <span class="sr-only">${d[k] ? '(feito)' : ''}</span>
         </button>
       </li>`).join('')}</ol>
-    <details class="fs-help"><summary>O que fazem os botões do topo?</summary>
-      <ul>
-        <li>${ico('search')}<span><b>Pesquisar</b>: encontra letras, runas, ervas, festas, tríades e cartas.</span></li>
-        <li>${ico('lantern')}<span><b>Lanterna</b>: tudo em vermelho escuro, para ler à noite em ritual sem perder a visão noturna.</span></li>
-        <li>${ico('zen')}<span><b>Zen</b>: ecrã inteiro, sem menus nem distrações, para meditar ou ler uma tiragem.</span></li>
-      </ul>
-    </details>`;
+`;
 }
 window.hideFirstSteps = () => { ls.set('druid_fs_hidden', '1'); renderFirstSteps(); };
 
