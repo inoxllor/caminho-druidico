@@ -1903,3 +1903,64 @@ html.ts-xl .bot-nav-item .ic { width: 1.6rem; height: 1.6rem; } html.ts-xl .bot-
 #tree-list h3.font-cinzel, .rl-card h3, .rl-card .font-cinzel, .tarot-tile .font-cinzel, .tw-card h3.font-cinzel { font-family: 'Cinzel', serif; font-weight: 700; }
 .fichas-rune-gallery-grid > .fc-item:not(.fc-open) .rl-chips { display: none; }
 .fichas-rune-gallery-grid > .fc-item:not(.fc-open) .rl-word { font-size: .78rem; }
+
+/* ——— Runas: escolher à mão, opções e grelha das tiragens ——— */
+#rune-spread-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#rune-spread-grid > :last-child { grid-column: 1 / -1; }
+@media (min-width: 768px) { #rune-spread-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } #rune-spread-grid > :last-child { grid-column: auto; } }
+.rune-options { display: grid; gap: .5rem; max-width: 40rem; margin: 1rem auto 0; text-align: left; font-size: .9rem; color: var(--text-title); }
+.rune-options label { display: flex; gap: .6rem; align-items: flex-start; cursor: pointer; min-height: 44px; padding: .55rem .75rem; border-radius: var(--r-md); border: 1px solid var(--border-color); background: var(--bg-inner); }
+.rune-options input { width: 1.15rem; height: 1.15rem; margin-top: .1rem; accent-color: var(--btn-primary); flex: none; }
+.rune-opt-note { color: var(--text-muted); font-size: .8rem; }
+.rp-pick { width: 100%; text-align: center; }
+.rp-status { font-size: .9rem; color: var(--text-muted); margin: .35rem 0 1rem; min-height: 1.4em; }
+.rp-field { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .75rem; max-width: 34rem; margin: 0 auto; }
+@media (min-width: 640px) { .rp-field { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
+.rp-stone { position: relative; aspect-ratio: 7 / 8; border-radius: 48% 52% 44% 56% / 56% 48% 52% 44%; transform: rotate(var(--tilt, 0deg)); cursor: pointer;
+  background: radial-gradient(circle at 35% 28%, #5f6570, #3a3f47 45%, #1f2228 100%);
+  box-shadow: inset -3px -4px 8px rgba(0,0,0,.35), inset 2px 3px 6px rgba(255,255,255,.16), 0 6px 12px rgba(0,0,0,.3); transition: transform .15s, opacity .2s; }
+.rp-stone:hover:not(:disabled), .rp-stone:focus-visible { transform: rotate(var(--tilt, 0deg)) translateY(-3px); outline: 2px solid #fbbf24; outline-offset: 2px; }
+.rp-stone.is-chosen { opacity: .55; cursor: default; }
+.rp-stone.is-chosen::after { content: attr(data-n); position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Cinzel', serif; font-weight: 700; color: #fcd34d; font-size: 1.1rem; text-shadow: 0 0 8px rgba(251,191,36,.6); }
+.rp-cancel { margin-top: 1rem; }
+
+/* ——— Origem do saber e glossário ——— */
+.origin-box { margin: .9rem auto 0; max-width: 46rem; text-align: left; font-size: .875rem; color: var(--text-muted); border: 1px solid var(--border-color); border-radius: var(--r-md); background: var(--bg-inner); }
+.origin-box summary { cursor: pointer; padding: .6rem .8rem; display: flex; align-items: center; gap: .5rem; color: var(--text-title); font-weight: 600; min-height: 44px; }
+.origin-box[open] summary { border-bottom: 1px solid var(--border-color); }
+.origin-box > :not(summary) { margin: .6rem .8rem; }
+.origin-box ul { list-style: disc; padding-left: 1.1rem; }
+.origin-src-h { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-accent); margin-bottom: .2rem !important; }
+.origin-tag { font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: .1rem .45rem; border-radius: .35rem; border: 1px solid currentColor; }
+.origin-antigo { color: #a16207; } .origin-medieval { color: #7c3aed; } .origin-moderno { color: #0369a1; } .origin-misto { color: var(--text-accent); }
+html:not(.theme-parchment) .origin-antigo { color: #fbbf24; } html:not(.theme-parchment) .origin-medieval { color: #c4b5fd; } html:not(.theme-parchment) .origin-moderno { color: #7dd3fc; }
+.glossary-list > div { padding: .6rem 0; border-bottom: 1px solid var(--border-color); }
+.glossary-list dt { font-weight: 700; color: var(--text-title); }
+.glossary-list dd { font-size: .9rem; color: var(--text-muted); line-height: 1.5; margin-top: .15rem; }
+
+/* ——— Partilhar ritual, QR e impressão em A5 ——— */
+.qr-box { display: grid; place-items: center; margin: 1rem auto 0; max-width: 16rem; padding: .75rem; background: #fff; border-radius: var(--r-md); }
+.qr-box svg { width: 100%; height: auto; display: block; }
+@media print {
+  @page { size: A5; margin: 12mm; }
+  body.print-ritual * { visibility: hidden !important; }
+  body.print-ritual #ritual-preview, body.print-ritual #ritual-preview * { visibility: visible !important; color: #111 !important; }
+  body.print-ritual #ritual-preview { position: absolute; left: 0; top: 0; width: 100%; border: 0 !important; background: #fff !important; font-size: 11pt; line-height: 1.5; }
+  body.print-ritual #ritual-preview h3 { font-size: 15pt; }
+}
+
+/* ——— Calendário de leituras ——— */
+.reading-cal { margin-top: .75rem; }
+.rc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .4rem; color: var(--text-title); }
+.rc-head button { width: 2.75rem; height: 2.75rem; border-radius: .6rem; border: 1px solid var(--border-color); font-size: 1.2rem; color: var(--text-title); cursor: pointer; }
+.rc-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; text-align: center; font-size: .8rem; }
+.rc-grid abbr { text-decoration: none; font-weight: 700; color: var(--text-muted); padding: .2rem 0; }
+.rc-grid > span, .rc-grid > button { min-height: 2.6rem; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: .5rem; color: var(--text-muted); }
+.rc-grid > button { background: color-mix(in srgb, var(--text-accent) 12%, var(--bg-inner)); color: var(--text-title); font-weight: 700; cursor: pointer; border: 1px solid transparent; }
+.rc-grid > button i { font-style: normal; font-size: .6rem; line-height: 1; color: var(--text-accent); letter-spacing: 1px; }
+.rc-grid > .is-sel { border-color: var(--text-accent); }
+.rc-grid > .is-today { outline: 1px dashed var(--text-accent); outline-offset: -2px; }
+.rc-day { list-style: none; padding: 0; margin-top: .6rem; display: grid; gap: .5rem; font-size: .85rem; }
+.rc-day li { padding: .5rem .65rem; border-radius: .5rem; background: var(--bg-inner); border: 1px solid var(--border-color); }
+.rc-q { font-style: italic; color: var(--text-title); margin: .15rem 0; }
+.oracle-question { max-width: 40rem; margin: 0 auto 1rem; text-align: left; }

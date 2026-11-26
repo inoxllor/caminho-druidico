@@ -96,6 +96,7 @@
             <button type="button" onclick="switchTab('triads')" id="desk-nav-triads" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-triads"></use></svg>Tríades</button>
             <button type="button" onclick="switchTab('library')" id="desk-nav-library" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Biblioteca</button>
             <button type="button" onclick="switchTab('obod')" id="desk-nav-obod" class="nav-item theme-muted"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg>Graus OBOD</button>
+            <button type="button" onclick="openGlossary()" id="desk-nav-glossary" class="nav-item theme-muted" aria-haspopup="dialog"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg>Glossário</button>
             <div class="nav-minor" aria-label="Comunidade">
                 <button type="button" onclick="switchTab('orgs')" id="desk-nav-orgs" class="nav-minor-item">Organizações</button>
                 <button type="button" onclick="switchTab('grove')" id="desk-nav-grove" class="nav-minor-item">Grove local</button>
@@ -178,6 +179,7 @@
             <button type="button" onclick="switchTab('about')" data-tab="about" class="sheet-item"><svg class="ic" aria-hidden="true"><use href="#i-about"></use></svg>Sobre & apoio</button>
         </div>
         <button type="button" onclick="closeMore();openSettings()" class="sheet-search"><svg class="ic" aria-hidden="true"><use href="#i-sliders"></use></svg><span>Ambiente & ajustes: tema, texto, Lanterna, Zen</span></button>
+        <button type="button" onclick="closeMore();openGlossary()" class="sheet-search"><svg class="ic" aria-hidden="true"><use href="#i-library"></use></svg><span>Glossário: Awen, aett, aicme, Futhark…</span></button>
     </dialog>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -235,6 +237,10 @@
                     </div>
 
                     <div id="rune-draw-actions" class="oracle-spreads">
+                        <div class="oracle-question">
+                            <label for="rune-question" class="spreads-title block mb-2">A sua pergunta (opcional)</label>
+                            <input id="rune-question" type="text" maxlength="140" placeholder="Sobre que assunto peço conselho às runas?" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5">
+                        </div>
                         <p class="spreads-title">Escolha uma tiragem</p>
                         <div id="rune-spread-grid" class="spread-grid spread-grid-4"></div>
                         <p class="spreads-note">Segundo o manual: as runas leem-se da direita para a esquerda e de cima para baixo; nas leituras em círculo, no sentido dos ponteiros do relógio.</p>
@@ -323,6 +329,10 @@
                     </div>
 
                     <div class="oracle-spreads">
+                        <div class="oracle-question">
+                            <label for="ogham-question" class="spreads-title block mb-2">A sua pergunta (opcional)</label>
+                            <input id="ogham-question" type="text" maxlength="140" placeholder="O que o bosque tem para me dizer?" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5">
+                        </div>
                         <p class="spreads-title">Escolha uma tiragem</p>
                         <div class="spread-grid spread-grid-4">
                             <button type="button" onclick="drawOghamCard(1)" class="spread-card"><span class="spread-dia dia-1" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Conselho</span><span class="spread-meta">1 letra</span></button>
@@ -974,7 +984,7 @@
 
                     <div class="lg:col-span-5 theme-card border rounded-2xl p-6 lg:p-8 flex flex-col justify-between space-y-4">
                         <div class="space-y-3">
-                            <span class="text-[11px] uppercase tracking-widest theme-accent font-semibold">Pergaminho Litúrgico OBOD</span>
+                            <span class="text-[11px] uppercase tracking-widest theme-accent font-semibold">Pergaminho litúrgico</span>
                             <div id="ritual-preview" class="theme-inner border rounded-xl p-5 min-h-[340px] text-sm space-y-3 leading-relaxed">
         <h3 class="font-cinzel text-base font-bold theme-accent border-b border-[var(--border-color)] pb-2">Cerimónia Sagrada do Grove</h3>
         <p><strong class="theme-title">1. Paz nos Quadrantes:</strong><br><span class="theme-muted">Que haja paz no Norte, no Leste, no Sul e no Oeste. Que haja paz em todo o mundo e no centro deste Grove.</span></p>
@@ -1297,12 +1307,11 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                     <div id="privacy" class="theme-inner border rounded-xl p-4 lg:p-5 space-y-2 text-left">
                         <h3 class="font-cinzel text-base font-bold theme-title">Privacidade</h3>
                         <p class="text-sm theme-muted leading-relaxed">Não há contas, publicidade nem estatísticas de visitas. O diário, as leituras, os ajustes e as listas ficam guardados <strong>só neste aparelho</strong> (no armazenamento do browser). O diário e o caderno bárdico podem ser cifrados com um PIN.</p>
-                        <p class="text-sm theme-muted leading-relaxed">As letras do site (Cinzel, Inter, Noto Sans Ogham e Rúnica) estão alojadas aqui mesmo: abrir o site não faz pedidos a terceiros. Só quando usa estas funções é que o browser contacta um serviço externo:</p>
+                        <p class="text-sm theme-muted leading-relaxed">As letras do site (Cinzel, Inter, Noto Sans Ogham e Rúnica) e os códigos QR são feitos aqui mesmo: abrir o site não faz pedidos a terceiros. Só quando usa estas funções é que o browser contacta um serviço externo:</p>
                         <ul class="text-sm theme-muted list-disc pl-5 space-y-1">
                             <li><strong>Meteorologia</strong> (Open-Meteo, open-meteo.com): as coordenadas, ao tocar em «Atualizar GPS & Clima».</li>
                             <li><strong>Nome do lugar</strong> (Nominatim, OpenStreetMap): as mesmas coordenadas, para mostrar o nome da localidade.</li>
                             <li><strong>Exportar PDF ou ZIP</strong> (cdnjs, Cloudflare): descarrega a biblioteca necessária; não envia os seus dados.</li>
-                            <li><strong>Código QR da cópia de segurança</strong> (goqr.me): o código de referência da cópia.</li>
                             <li><strong>Aprofundar IA</strong> (o serviço que configurar): a tiragem e a pergunta, com a sua chave.</li>
                         </ul>
                         <p class="text-sm theme-muted leading-relaxed">Para apagar tudo, limpe os dados deste site nas definições do browser.</p>
@@ -1440,6 +1449,10 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                         <p class="theme-muted">1.ª em cima, a situação atual; na fila do meio, da direita para a esquerda, 2.ª Positivo, 3.ª Desenvolvimento, 4.ª Negativo; 5.ª em baixo, a síntese geral.</p>
                     </div>
                     <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Roda das oito runas · em círculo</p>
+                        <p class="theme-muted">A 1.ª em cima e as outras no sentido dos ponteiros do relógio. Leia-as como os passos de um ciclo e compare as que ficam frente a frente.</p>
+                    </div>
+                    <div class="theme-inner border rounded-lg p-3">
                         <p class="font-semibold theme-accent">Conselho diário · 3 runas em coluna</p>
                         <p class="theme-muted">De cima para baixo: 1.ª Energia favorável, 2.ª Obstáculos, 3.ª Como agir.</p>
                     </div>
@@ -1448,6 +1461,7 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                         <p class="theme-muted">Resposta direta com a runa como comentário. Útil para escolhas simples.</p>
                     </div>
                 </div>
+                <p class="theme-muted mt-2">Pode <strong>escolher as runas à mão</strong>: as pedras ficam viradas para baixo e toca numa por casa. Pode também juntar a <strong>Wyrd</strong>, a runa em branco que o manual chama «Runa de Odin»; é uma criação moderna (anos 80) e por isso vem desligada.</p>
                 <p class="theme-muted mt-2">Cada runa traz também a sua mensagem. As 24 runas estão em Saber → Runas: guia & treino.</p>
             </div>
             <div class="guide-panel hidden" data-panel="ogham">
@@ -1618,4 +1632,7 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 <script src="js/29-runas-tiragens.js"></script>
 <script src="js/30-acessibilidade.js"></script>
 <script src="js/31-ajustes-fichas.js"></script>
+<script src="js/32-saber-origem.js"></script>
+<script src="js/vendor-qrcode.js"></script>
+<script src="js/33-grove-leituras.js"></script>
 </body></html>

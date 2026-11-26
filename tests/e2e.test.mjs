@@ -3,7 +3,7 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import { mkdtempSync } from 'node:fs';
+import { mkdtempSync, cpSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -79,13 +79,47 @@ test('acessibilidade e privacidade: pt-PT, fontes locais, anúncios e foco', asy
   await ctx.close();
 });
 
+test('etapa 3: runas à mão, roda de 8, Wyrd, origem, glossário, ritual partilhado e calendário', async () => {
+  const { ctx, page, errors } = await open(base);
+  await page.evaluate(() => { switchTab('runes'); setRunePick(true); setWyrd(true); });
+  await page.fill('#rune-question', 'Que caminho seguir?');
+  await page.evaluate(() => runeSpreadClick('roda'));
+  assert.equal(await page.$$eval('#rune-card .rp-stone', e => e.length), 25, '24 runas + Wyrd viradas para baixo');
+  for (let i = 0; i < 8; i++) await page.click(`#rune-card .rp-stone[data-i="${i}"]`);
+  await page.waitForFunction(() => document.querySelectorAll('#rune-card .oc-card .oc-stone').length === 8);
+  assert.equal(await page.evaluate(() => lastRuneReading[7].pos), '8.º passo');
+  // Origem e glossário
+  assert.ok(await page.$('#tab-runes .origin-box'), 'falta «De onde vem isto?» nas runas');
+  assert.ok(await page.$('#tab-treewheel .origin-box'));
+  await page.evaluate(() => openGlossary());
+  assert.ok(await page.$$eval('#glossary-dialog dt', e => e.length) >= 12);
+  await page.fill('#glossary-q', 'awen');
+  assert.equal(await page.$$eval('#glossary-dialog .glossary-list > div:not([hidden])', e => e.length), 1);
+  await page.click('#glossary-dialog [data-close]');
+  // Calendário de leituras com a pergunta
+  await page.evaluate(() => { switchTab('oracle'); document.getElementById('reading-history').open = true; });
+  await page.click('#reading-cal [data-day]');
+  assert.match(await page.textContent('#reading-cal .rc-day'), /Que caminho seguir\?/);
+  // Ritual: link com o ritual dentro, QR local e reabertura
+  await page.evaluate(() => { switchTab('ritual'); document.getElementById('rit-title').value = 'Equinócio no bosque'; });
+  const url = await page.evaluate(() => { const b = document.querySelector('#ritual-share-row button'); return b ? (shareRitualLink(), new Promise(r => setTimeout(() => r(document.getElementById('share-ritual-url').value), 200))) : ''; });
+  assert.match(url, /#ritual=/);
+  assert.ok(await page.$('#share-ritual-qr svg'), 'o código QR deve ser feito localmente');
+  const p2 = await ctx.newPage();
+  await p2.goto(url);
+  await p2.waitForFunction(() => document.getElementById('rit-title')?.value === 'Equinócio no bosque');
+  assert.ok(await page.$('#grove-place'));
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
 test('runas: tiragens do manual com casas, disposição e mensagem', async () => {
   const { ctx, page, errors } = await open(base);
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.evaluate(() => switchTab('runes'));
-  // Botões: 7 tiragens do manual + Sim/Não
-  assert.equal(await page.$$eval('#rune-spread-grid .spread-card', e => e.length), 8);
-  const want = { conselho: 1, nornas: 3, amor: 5, trabalho: 4, saude: 3, objetivo: 5, diario: 3 };
+  // Botões: 8 tiragens do manual + Sim/Não
+  assert.equal(await page.$$eval('#rune-spread-grid .spread-card', e => e.length), 9);
+  const want = { conselho: 1, nornas: 3, amor: 5, trabalho: 4, saude: 3, objetivo: 5, roda: 8, diario: 3 };
   for (const [key, n] of Object.entries(want)) {
     await page.click(`#rune-spread-grid [data-spread="${key}"]`);
     const r = await page.evaluate(() => ({
@@ -153,7 +187,7 @@ test('oráculos: Ogham, Runas e Tarot tiram cartas', async () => {
     assert.match(await page.textContent(`${sel} .oc-answer b`), /^(Sim|Não)$/);
   }
   assert.equal(await page.$$eval('#tab-oracle .spread-card', e => e.length), 4);
-  assert.equal(await page.$$eval('#tab-runes .spread-card', e => e.length), 8);
+  assert.equal(await page.$$eval('#tab-runes .spread-card', e => e.length), 9);
   assert.equal(await page.$$eval('#tab-tarot .spread-card', e => e.length), 4);
   await page.evaluate(() => { switchTab('tarot'); drawTarotCard(3); });
   await page.waitForFunction(() => document.querySelectorAll('#tarot-card-container .tarot-flip-wrapper, #tarot-card-container > *').length >= 1);
@@ -402,4 +436,35 @@ test('HTML único funciona aberto a partir de um ficheiro', async () => {
   assert.equal(await page.evaluate(() => toOgham('Duir')), '᚛ᚇᚗᚏ᚜');
   assert.deepEqual(errors, []);
   await ctx.close();
+});
+
+test('site do Pages (JS junto e minificado) funciona com e sem rede', async () => {
+  const site = mkdtempSync(join(tmpdir(), 'druid-site-'));
+  for (const p of ['index.html', 'manifest.json', 'sw.js', 'LICENSE', 'css', 'js', 'fonts', 'icons', 'img'])
+    cpSync(join(root, p), join(site, p), { recursive: true });
+  execFileSync(process.execPath, [join(root, 'tools/build-pages.mjs'), site]);
+  const srv = createStaticServer(site);
+  await new Promise(r => srv.listen(0, r));
+  const url = `http://localhost:${srv.address().port}/`;
+  const context = await browser.newContext({ locale: 'pt-PT', timezoneId: 'Europe/Lisbon' });
+  const { page, errors } = await open(url, { context });
+  const scripts = await page.evaluate(() => [...document.scripts].map(s => s.getAttribute('src')).filter(Boolean));
+  assert.ok(scripts.some(s => s.startsWith('js/app.min.js?v=')), 'falta o bundle');
+  assert.ok(!scripts.some(s => /js\/\d\d-/.test(s)), 'ainda há scripts soltos');
+  await checkAllTabs(page);
+  await page.evaluate(() => { switchTab('runes'); drawRunes(3); });
+  await page.waitForFunction(() => document.getElementById('rune-card').innerText.length > 30);
+  await page.evaluate(async () => {
+    const reg = await window.appOfflineReady;
+    const sw = reg && reg.active;
+    if (sw && sw.state !== 'activated') await new Promise(r => sw.addEventListener('statechange', () => sw.state === 'activated' && r()));
+  });
+  await page.reload({ waitUntil: 'load' });
+  await context.setOffline(true);
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForFunction(() => typeof window.switchTab === 'function');
+  await checkAllTabs(page);
+  assert.deepEqual(errors, []);
+  await context.close();
+  srv.close();
 });

@@ -15,7 +15,8 @@
   }
 
   function collectReading(type) {
-    const q = ($('tarot-question') && type === 'tarot') ? $('tarot-question').value.trim() : '';
+    const qId = { tarot: 'tarot-question', runes: 'rune-question', ogham: 'ogham-question' }[type];
+    const q = qId && $(qId) ? $(qId).value.trim() : '';
     if (type === 'runes' && typeof lastRuneReading !== 'undefined' && lastRuneReading?.length) {
       const S = window.lastRuneSpreadInfo;
       return {

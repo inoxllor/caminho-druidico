@@ -83,6 +83,7 @@ function runeBody(r) {
     <div class="oc-chips">
       ${x && x.aett ? `<span class="oc-chip">Aett de ${escH(x.aett)}</span>` : ''}
       ${x && x.symmetric ? '<span class="oc-chip" title="Igual de qualquer lado: não se inverte">Simétrica</span>' : ''}
+      ${r.blank ? '<span class="oc-chip" title="A Wyrd não faz parte do Futhark antigo: foi acrescentada nos anos 80">Runa em branco · moderna</span>' : ''}
     </div>
     <p class="oc-meaning">${escH(r.meaning)}</p>
     ${x && x.reversed ? `<p class="oc-extra"><span>${x.symmetric ? 'Sombra' : 'Se invertida'}</span> ${escH(String(x.reversed).replace(/^Sombra \(simétrica\):\s*/i, ''))}</p>` : ''}${runeMessage(name)}`;
