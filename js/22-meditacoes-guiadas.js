@@ -168,7 +168,9 @@ let voice = null;
 function pickVoice() {
   if (!synth) return null;
   const vs = synth.getVoices();
-  voice = vs.find(v => /^pt[-_]PT/i.test(v.lang)) || vs.find(v => /^pt/i.test(v.lang)) || null;
+  // Voz no idioma da app (pt-PT ou en-GB)
+  const [lg, rg] = (window.APP_LANG || 'pt-PT').split('-');
+  voice = vs.find(v => new RegExp(`^${lg}[-_]${rg}`, 'i').test(v.lang)) || vs.find(v => new RegExp(`^${lg}`, 'i').test(v.lang)) || null;
   updateVoiceNote();
   return voice;
 }
@@ -178,7 +180,7 @@ function speak(text) {
   return new Promise(resolve => {
     if (!synth || !state.voiceOn) return resolve();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = voice ? voice.lang : 'pt-PT';
+    u.lang = voice ? voice.lang : (window.APP_LANG || 'pt-PT');
     if (voice) u.voice = voice;
     u.rate = state.rate; u.pitch = 0.95;
     let done = false;

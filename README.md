@@ -6,6 +6,7 @@ Aplicação web progressiva (PWA) *offline-first* com ferramentas para a explora
 ## Usar
 
 - **No site:** abra a página publicada no GitHub Pages. Em *Mais › Sobre* aparece o botão **Instalar app**; depois da primeira visita funciona sem rede.
+- **Em inglês (en-GB):** escolha o idioma em *Ambiente & ajustes* ou abra o site com `?lang=en` (e `?lang=pt` para voltar). Num browser em inglês (ou noutra língua que não o português), a app abre logo em inglês.
 - **Num só ficheiro:** descarregue `caminho-druidico.html` (no site publicado ou em *Sobre › Descarregar (.zip)*) e abra-o diretamente no navegador. O ramo `HTML-UNICO` guarda também esta versão.
 
 ## Estrutura
@@ -13,6 +14,7 @@ Aplicação web progressiva (PWA) *offline-first* com ferramentas para a explora
 ```
 index.html          Página (HTML) — carrega o CSS e os scripts abaixo, por ordem
 css/app.css         Estilos
+i18n/en-GB.js       Dicionário português → inglês (en-GB), usado por js/00-idioma.js
 js/01-…25-*.js      Código, por funcionalidade (scripts clássicos, partilham o âmbito global)
 sw.js               Service worker: guarda a app para uso offline
 manifest.json       Manifesto da app instalável
@@ -20,6 +22,8 @@ icons/              Ícones da app
 tools/              build-single.mjs (gera o HTML único), build-pages.mjs (junta e minifica o JS e o CSS no Pages) e serve.mjs (servidor local)
 tests/              Testes automáticos
 ```
+
+Os textos estão em português no código. A versão inglesa traduz o que aparece no ecrã com `i18n/en-GB.js` (frases) e os padrões de `js/00-idioma.js` (números, datas, combinações); ao acrescentar um texto novo, junte a tradução ao dicionário.
 
 Os ficheiros `js/` são carregados pela ordem numérica. Ao acrescentar um ficheiro novo, junte-o também à lista `PRECACHE` em `sw.js` e suba a `VERSION` (o teste `estrutura` avisa se faltar).
 

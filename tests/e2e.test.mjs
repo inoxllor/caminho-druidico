@@ -440,7 +440,7 @@ test('HTML único funciona aberto a partir de um ficheiro', async () => {
 
 test('site do Pages (JS junto e minificado) funciona com e sem rede', async () => {
   const site = mkdtempSync(join(tmpdir(), 'druid-site-'));
-  for (const p of ['index.html', 'manifest.json', 'sw.js', 'LICENSE', 'css', 'js', 'fonts', 'icons', 'img'])
+  for (const p of ['index.html', 'manifest.json', 'sw.js', 'LICENSE', 'css', 'js', 'fonts', 'icons', 'img', 'i18n'])
     cpSync(join(root, p), join(site, p), { recursive: true });
   execFileSync(process.execPath, [join(root, 'tools/build-pages.mjs'), site]);
   const srv = createStaticServer(site);
@@ -467,4 +467,34 @@ test('site do Pages (JS junto e minificado) funciona com e sem rede', async () =
   assert.deepEqual(errors, []);
   await context.close();
   srv.close();
+});
+
+test('versão en-GB: tradução, datas, pesquisa e voltar ao português', async () => {
+  const ctx = await browser.newContext({ locale: 'en-GB', timezoneId: 'Europe/London' });
+  const { page, errors } = await open(base + '?lang=en', { context: ctx });
+  assert.equal(await page.getAttribute('html', 'lang'), 'en-GB');
+  assert.equal(await page.evaluate(() => window.APP_LANG), 'en-GB');
+  assert.match(await page.textContent('.skip-link'), /Skip to content/);
+  assert.equal(await page.evaluate(() => t('Roda do Ano')), 'Wheel of the Year');
+  assert.equal(await page.evaluate(() => t('Lua Cheia · 1 de fevereiro')), 'Full Moon · 1 February');
+  assert.equal(await page.evaluate(() => t('3 runas saíram invertidas.')), '3 runes came out reversed.');
+  assert.equal(await page.evaluate(() => new Date(2026, 10, 26).toLocaleDateString('pt-PT', { month: 'long' })), 'November');
+  await checkAllTabs(page);
+  // Uma tiragem é traduzida mesmo sendo desenhada depois
+  await page.evaluate(() => { switchTab('runes'); drawRunes('nornas'); });
+  await page.waitForFunction(() => document.getElementById('rune-card').innerText.length > 30);
+  const reading = await page.textContent('#rune-card');
+  assert.doesNotMatch(reading, /Passado|Presente|Futuro|invertida/);
+  // Sem português à vista na navegação
+  const nav = await page.evaluate(() => [...document.querySelectorAll('.bottom-nav, .sidebar')].map(e => e.innerText).join(' '));
+  assert.doesNotMatch(nav, /Hoje|Oráculos|Ciclos|Diário|Mais\b/);
+  // Pesquisa em inglês encontra o carvalho
+  await page.evaluate(() => { openSearch(); const i = document.getElementById('search-input'); i.value = 'oak'; i.dispatchEvent(new Event('input', { bubbles: true })); });
+  await page.waitForFunction(() => /Duir/.test(document.getElementById('search-results').innerText));
+  assert.deepEqual(errors, []);
+  // Voltar ao português pelo painel de ajustes
+  await page.evaluate(() => setLanguage('pt-PT'));
+  await page.waitForFunction(() => window.APP_LANG === 'pt-PT' && document.documentElement.lang === 'pt-PT');
+  assert.match(await page.textContent('.skip-link'), /Saltar para o conteúdo/);
+  await ctx.close();
 });
