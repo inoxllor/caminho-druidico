@@ -291,7 +291,10 @@ test('sugestões: diário cifrado, texto maior, ano na Roda, colheita e graus', 
   // Ervas: colheita e lista
   await page.evaluate(() => switchTab('herbal'));
   await page.waitForSelector('#harvest-panel');
-  await page.locator('.herb-fav').first().click();
+  // As árvores aparecem em fichas: abre-se a primeira para chegar às ervas
+  await page.locator('#tree-list .fc-open-btn').first().click();
+  await page.locator('#ficha-dialog .herb-fav').first().click();
+  await page.click('#ficha-dialog [data-close]');
   assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('druid_herb_favs')).length), 1);
   assert.ok(await page.$('#harvest-panel .hv-mine .hv-chip'));
   // Meditações por grau
@@ -323,13 +326,15 @@ test('estudo do Ogham: escrever em Ogham, saber antigo e treino', async () => {
   const uses = await page.$$eval('#tree-list .bot-use', els => els.map(e => ({ art: !!e.querySelector('img, svg'), txt: e.querySelector('.bot-use-txt p')?.textContent || '' })));
   assert.equal(uses.length, 39, 'cada erva deve aparecer com a sua indicação');
   for (const u of uses) { assert.ok(u.art, 'erva sem ilustração'); assert.ok(u.txt.length > 20, 'erva sem indicação de fitoterapia'); }
-  await page.locator('#tree-list .bot-plate-btn').first().scrollIntoViewIfNeeded();
-  await page.waitForFunction(() => { const i = document.querySelector('#tree-list .bot-plate img'); return i && i.complete && i.naturalWidth > 0; });
-  await page.click('#tree-list .bot-plate-btn');
+  await page.locator('#tree-list .fc-open-btn').first().click();
+  await page.waitForFunction(() => { const i = document.querySelector('#ficha-dialog .bot-plate img'); return i && i.complete && i.naturalWidth > 0; });
+  await page.click('#ficha-dialog .bot-plate-btn');
   // A imagem ampliada só tem altura depois de descodificada: esperar por ela em vez de verificar logo a seguir ao clique.
   await page.waitForSelector('dialog.bot-zoom[open] img', { state: 'visible', timeout: 5000 }).catch(() => null);
   assert.ok(await page.isVisible('dialog.bot-zoom img'), 'a gravura deve abrir ampliada');
   await page.click('dialog.bot-zoom [data-close]');
+  await page.click('#ficha-dialog [data-close]');
+  await page.waitForFunction(() => document.querySelectorAll('#tree-list > [data-tree]').length === 20); // a ficha volta ao seu lugar
   await page.click('#ogham-quiz-options button');
   assert.match(await page.textContent('#ogham-quiz-score'), /Acertos: \d de 1/);
   await page.click('#ogham-quiz-next');

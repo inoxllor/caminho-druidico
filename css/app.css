@@ -1835,3 +1835,71 @@ html.ts-xl .bot-nav-item .ic { width: 1.6rem; height: 1.6rem; } html.ts-xl .bot-
 .bot-warn-high { color: var(--danger); font-weight: 600; }
 .bot-risk { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 0 .4rem; border-radius: .35rem; margin-right: .35rem;
   border: 1px solid currentColor; }
+
+/* ——— Ambiente & ajustes ——— */
+.settings-dialog, .ficha-dialog { width: min(32rem, calc(100vw - 2rem)); max-height: min(88vh, 46rem); overflow: auto; padding: 1.25rem; text-align: left; }
+.ficha-dialog { width: min(40rem, calc(100vw - 1.5rem)); padding: .75rem; }
+.sd-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .5rem; }
+.ficha-dialog .sd-head { position: sticky; top: 0; z-index: 2; justify-content: flex-end; margin: 0 0 -2.75rem; pointer-events: none; }
+.ficha-dialog .sd-close { pointer-events: auto; background: var(--bg-card); }
+.sd-close { width: 2.75rem; height: 2.75rem; display: grid; place-items: center; border-radius: .75rem; border: 1px solid var(--border-color); color: var(--text-title); cursor: pointer; }
+.st-group { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-accent); margin: 1rem 0 .5rem; }
+.st-practice { display: grid; gap: .5rem; }
+.st-practice button { display: flex; gap: .8rem; align-items: flex-start; text-align: left; padding: .75rem .85rem; border-radius: var(--r-md); border: 1px solid var(--border-color); background: var(--bg-inner); cursor: pointer; }
+.st-practice button:hover, .st-practice button:focus-visible { border-color: var(--border-hover); }
+.st-practice .ic { flex: none; width: 1.4rem; height: 1.4rem; margin-top: .1rem; color: var(--text-accent); }
+.st-practice b { display: block; color: var(--text-title); font-size: .95rem; }
+.st-practice b + span { display: block; font-size: .82rem; line-height: 1.4; color: var(--text-muted); }
+.settings-dialog select { margin-bottom: .75rem; }
+.settings-dialog .ts-wrap { margin-top: .25rem; }
+
+/* ——— Fichas em grelha (guia das árvores & ervas, 24 runas) ——— */
+.fichas { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: .75rem !important; }
+@media (min-width: 768px) { .fichas-tree-list { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } .fichas-rune-gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; } }
+@media (min-width: 1200px) { .fichas-tree-list { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; } .fichas-rune-gallery-grid { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; } }
+.fichas-rune-gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.fc-item { position: relative; }
+.fichas > .fc-item:not(.fc-open) > :not(.fc-keep):not(.fc-open-btn) { display: none !important; }
+.fichas > .fc-item:not(.fc-open) { padding: .65rem !important; gap: .35rem; transition: border-color .15s, transform .15s; }
+.fichas > .fc-item:not(.fc-open):hover { transform: translateY(-2px); border-color: var(--border-hover); }
+.fichas > .fc-item:not(.fc-open) .bot-plate { margin: 0; }
+.fichas > .fc-item:not(.fc-open) .bot-plate img, .fichas > .fc-item:not(.fc-open) .bot-plate svg { max-height: 8.5rem; }
+.fichas > .fc-item:not(.fc-open) .bot-plate figcaption { display: none; }
+.fichas > .fc-item:not(.fc-open) h3 { font-size: .9rem; line-height: 1.25; }
+.fichas-rune-gallery-grid > .fc-item:not(.fc-open) .rl-top { flex-direction: column; align-items: center; text-align: center; gap: .3rem; }
+.fc-open-btn { position: absolute; inset: 0; z-index: 3; border-radius: inherit; background: transparent; cursor: pointer; }
+.fc-open-btn:focus-visible { outline: 2px solid var(--text-accent); outline-offset: 2px; }
+.fc-item.fc-open .fc-open-btn { display: none; }
+.ficha-body > .fc-item { border: 0; box-shadow: none; }
+
+/* ——— Continuar onde parei ——— */
+.today-resume { display: flex; align-items: center; gap: .6rem; width: 100%; padding: .7rem .9rem; border-radius: var(--r-md); border: 1px dashed var(--border-color);
+  background: var(--bg-inner); color: var(--text-muted); font-size: .9rem; text-align: left; cursor: pointer; }
+.today-resume b { color: var(--text-title); }
+.today-resume > span:last-child { margin-left: auto; color: var(--text-accent); }
+.today-resume .ic { width: 1.1rem; height: 1.1rem; color: var(--text-accent); }
+
+/* ——— Hoje mais compacto no telemóvel ——— */
+@media (max-width: 639px) {
+  .tf-card { grid-template-columns: 6rem minmax(0, 1fr); gap: .9rem; align-items: start; }
+  .tf-art { height: 8rem; overflow: hidden; padding: .3rem; }
+  .tf-plate { min-height: 0; height: 100%; max-height: none; }
+  .tf-title { font-size: 1.3rem; }
+  .tf-meaning { font-size: .95rem; }
+  .tf-stats { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; margin-left: -6.9rem; }
+  .tf-stat { min-height: 0; padding: .55rem .6rem; gap: .5rem; }
+  .tf-stat .tf-moon, .tf-stat .tf-ic { width: 32px; height: 32px; }
+  .tf-foot { margin-left: -6.9rem; }
+}
+
+/* ——— Menos ornamento: o traço das etiquetas e os cantos só nos oráculos;
+       a Cinzel só nos títulos das secções e nos nomes ——— */
+.eyebrow::before { display: none; }
+.oracle-panel .eyebrow::before, .tf-main .eyebrow::before { display: block; }
+.sec-lead:not(.oracle-panel)::after { display: none; }
+.tab-content .theme-card h3.font-cinzel:not(.oc-name):not(.tf-title),
+.tab-content .theme-inner h3.font-cinzel, .tab-content h4.font-cinzel {
+  font-family: 'Inter', system-ui, sans-serif; font-weight: 650; letter-spacing: 0; text-transform: none; font-variant: normal; }
+#tree-list h3.font-cinzel, .rl-card h3, .rl-card .font-cinzel, .tarot-tile .font-cinzel, .tw-card h3.font-cinzel { font-family: 'Cinzel', serif; font-weight: 700; }
+.fichas-rune-gallery-grid > .fc-item:not(.fc-open) .rl-chips { display: none; }
+.fichas-rune-gallery-grid > .fc-item:not(.fc-open) .rl-word { font-size: .78rem; }
