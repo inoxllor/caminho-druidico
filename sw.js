@@ -5,7 +5,7 @@
    - Fontes e bibliotecas de CDN: guardadas na primeira utilização.
    - APIs externas (tempo, localização, IA, QR): sempre pela rede.
    Ao mudar a lista PRECACHE ou o código, suba VERSION. */
-const VERSION = 'v26';
+const VERSION = 'v27';
 const CORE = `caminho-core-${VERSION}`;
 const RUNTIME = 'caminho-runtime-v1';
 
@@ -14,6 +14,12 @@ const PRECACHE = [
   './index.html',
   './manifest.json',
   './css/app.css',
+  './fonts/cinzel-latin-500-normal.woff2',
+  './fonts/cinzel-latin-700-normal.woff2',
+  './fonts/inter-latin-400-normal.woff2',
+  './fonts/inter-latin-500-normal.woff2',
+  './fonts/inter-latin-600-normal.woff2',
+  './fonts/inter-latin-700-normal.woff2',
   './js/01-lunar-calc.js',
   './js/02-tarot-nordico.js',
   './js/03-nucleo.js',
@@ -43,6 +49,7 @@ const PRECACHE = [
   './js/27-renovacao-design.js',
   './js/28-sugestoes-utilizadores.js',
   './js/29-runas-tiragens.js',
+  './js/30-acessibilidade.js',
   './img/plantas/herb-absinto.webp',
   './img/plantas/herb-agrimonia.webp',
   './img/plantas/herb-alecrim.webp',
@@ -90,7 +97,7 @@ const PRECACHE = [
 ];
 
 // Recursos de terceiros que podem ficar em cache (fontes e bibliotecas fixas)
-const CACHEABLE_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdnjs.cloudflare.com'];
+const CACHEABLE_HOSTS = ['cdnjs.cloudflare.com'];
 
 self.addEventListener('install', event => {
   event.waitUntil(

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt" class="theme-night"><head>
+<html lang="pt-PT" class="theme-night"><head>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -12,9 +12,8 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t;try{var z=localStorage.getItem('druid_text_size');if(z==='lg'||z==='xl')document.documentElement.classList.add('ts-'+z)}catch(e){}})()</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:wght@400;500;600;700&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+    <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/cinzel-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body id="app-body" data-design-version="10" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
@@ -71,7 +70,7 @@
             <svg class="awen-svg" viewBox="0 0 100 100" aria-hidden="true"><line x1="25" y1="85" x2="40" y2="20"></line><line x1="50" y1="85" x2="50" y2="35"></line><line x1="75" y1="85" x2="60" y2="20"></line><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none"></circle></svg>
             <div>
                 <h1 class="font-cinzel text-lg font-bold theme-title tracking-wider leading-tight">CAMINHO DRUÍDICO</h1>
-                <p class="text-xs theme-accent tracking-wide leading-snug mt-0.5">Edição inspirada na OBOD • Pro</p>
+                <p class="text-xs theme-accent tracking-wide leading-snug mt-0.5">Prática diária do caminho druídico</p>
             </div>
         </div>
         <nav class="flex-1 overflow-y-auto px-3 py-3" aria-label="Secções">
@@ -1290,6 +1289,19 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                             <a href="mailto:inoxllor+bard@gmail.com" class="w-full py-2.5 px-3 text-center block theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Enviar email</a>
                         </div>
                     </div>
+                    <div id="privacy" class="theme-inner border rounded-xl p-4 lg:p-5 space-y-2 text-left">
+                        <h3 class="font-cinzel text-base font-bold theme-title">Privacidade</h3>
+                        <p class="text-sm theme-muted leading-relaxed">Não há contas, publicidade nem estatísticas de visitas. O diário, as leituras, os ajustes e as listas ficam guardados <strong>só neste aparelho</strong> (no armazenamento do browser). O diário e o caderno bárdico podem ser cifrados com um PIN.</p>
+                        <p class="text-sm theme-muted leading-relaxed">As letras do site (Cinzel, Inter, Noto Sans Ogham e Rúnica) estão alojadas aqui mesmo: abrir o site não faz pedidos a terceiros. Só quando usa estas funções é que o browser contacta um serviço externo:</p>
+                        <ul class="text-sm theme-muted list-disc pl-5 space-y-1">
+                            <li><strong>Meteorologia</strong> (Open-Meteo, open-meteo.com): as coordenadas, ao tocar em «Atualizar GPS & Clima».</li>
+                            <li><strong>Nome do lugar</strong> (Nominatim, OpenStreetMap): as mesmas coordenadas, para mostrar o nome da localidade.</li>
+                            <li><strong>Exportar PDF ou ZIP</strong> (cdnjs, Cloudflare): descarrega a biblioteca necessária; não envia os seus dados.</li>
+                            <li><strong>Código QR da cópia de segurança</strong> (goqr.me): o código de referência da cópia.</li>
+                            <li><strong>Aprofundar IA</strong> (o serviço que configurar): a tiragem e a pergunta, com a sua chave.</li>
+                        </ul>
+                        <p class="text-sm theme-muted leading-relaxed">Para apagar tudo, limpe os dados deste site nas definições do browser.</p>
+                    </div>
                 </div>
             </section>
 
@@ -1299,7 +1311,7 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
         <footer class="max-w-6xl w-full mx-auto px-4 sm:px-8 py-6 border-t border-[var(--border-color)] flex flex-col sm:flex-row items-center justify-between gap-3 text-sm theme-muted lg:pr-44 zen-hide">
             <div class="flex items-center gap-2">
                 <svg class="awen-svg !w-5 !h-5" viewBox="0 0 100 100" aria-hidden="true"><line x1="25" y1="85" x2="40" y2="20"></line><line x1="50" y1="85" x2="50" y2="35"></line><line x1="75" y1="85" x2="60" y2="20"></line><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none"></circle></svg>
-                <span>Caminho Druídico • Edição inspirada na OBOD</span>
+                <span>Caminho Druídico • Prática diária do caminho druídico</span>
             </div>
             <button type="button" onclick="switchTab('about')" class="underline theme-muted cursor-pointer">Sobre & apoio</button>
         </footer>
@@ -1551,10 +1563,10 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
     <p class="text-sm theme-muted">Um companheiro diário para a prática: oráculos, ciclos da Lua e do Sol, a Roda do Ano e um diário pessoal. Tudo fica guardado só neste dispositivo.</p>
     <p class="text-sm font-semibold theme-title">Escolha o ambiente visual</p>
     <div class="ob-themes" role="radiogroup" aria-label="Ambiente visual">
-      <button type="button" role="radio" data-theme="theme-night" style="--sw:#0f172a;--sw2:#818cf8">Noite</button>
-      <button type="button" role="radio" data-theme="theme-forest" style="--sw:#0c1f17;--sw2:#4ade80">Floresta</button>
-      <button type="button" role="radio" data-theme="theme-autumn" style="--sw:#1f130a;--sw2:#f59e0b">Outono</button>
-      <button type="button" role="radio" data-theme="theme-parchment" style="--sw:#f4f1e6;--sw2:#3f6212">Claro</button>
+      <button type="button" role="radio" data-theme="theme-night" style="--sw:#0f172a;--sw2:#818cf8">Noite Mística<small>escuro</small></button>
+      <button type="button" role="radio" data-theme="theme-forest" style="--sw:#0c1f17;--sw2:#4ade80">Floresta Profunda<small>escuro</small></button>
+      <button type="button" role="radio" data-theme="theme-autumn" style="--sw:#1f130a;--sw2:#f59e0b">Outono Dourado<small>escuro</small></button>
+      <button type="button" role="radio" data-theme="theme-parchment" style="--sw:#f4f1e6;--sw2:#3f6212">Luz de Musgo<small>claro</small></button>
     </div>
     <p class="text-xs theme-muted">Pode mudar mais tarde em Mais › Ambiente visual.</p>
   </section>
@@ -1599,4 +1611,5 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 <script src="js/27-renovacao-design.js"></script>
 <script src="js/28-sugestoes-utilizadores.js"></script>
 <script src="js/29-runas-tiragens.js"></script>
+<script src="js/30-acessibilidade.js"></script>
 </body></html>

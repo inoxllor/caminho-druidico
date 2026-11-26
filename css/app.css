@@ -1,3 +1,11 @@
+/* Cinzel e Inter alojadas no próprio site (SIL Open Font License 1.1, fonts/LICENSE-*.txt):
+   nenhum pedido ao Google, funcionam sem rede. */
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 500; font-display: swap; src: url(../fonts/cinzel-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Cinzel'; font-style: normal; font-weight: 700; font-display: swap; src: url(../fonts/cinzel-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url(../fonts/inter-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url(../fonts/inter-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url(../fonts/inter-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url(../fonts/inter-latin-700-normal.woff2) format('woff2'); }
 /* Fontes Ogham e Rúnica embutidas (Noto Sans Ogham/Runic, SIL Open Font License 1.1):
    os símbolos aparecem bem mesmo sem rede e no HTML único. */
 @font-face { font-family: 'Noto Sans Ogham'; font-style: normal; font-weight: 400; font-display: block; unicode-range: U+1680-169C;
@@ -1803,3 +1811,27 @@ html.ts-xl :is(#main, .sheet, dialog) { zoom: 1.25; }
   .hdr-btn { min-width: 44px; padding: 0 .25rem; }
   .hdr-btn span { font-size: 9.5px; letter-spacing: 0; }
 }
+
+/* ——— Feedback dos utilizadores (2026-11-26): legibilidade e estados claros ——— */
+/* Etiquetas: nunca abaixo de 12 px e com menos espaçamento; crescem com o tamanho do texto. */
+.eyebrow, .nav-group, .spreads-title, .oc-pos, .oc-chip, .oc-answer span, .today-tile .t-lb, .today-chip .t-lb, .altar-status,
+.ogham-lore .lore-k, .ts-label, .sd-group, .tf-st .t-lb, .hv-season > p, .bot-latin, .bot-zoom figcaption span,
+.bot-plate figcaption span, .hdr-btn span, .tab-content .text-\[11px\], .tab-content .text-\[10px\] { font-size: .75rem; }
+.eyebrow, .nav-group, .spreads-title, .oc-pos, .ts-label, .sd-group, .hv-season > p { letter-spacing: .06em; }
+.oc-extra span, .tw-extra span, .bot-harvest span, .gm-grade-tag, .ts-name { font-size: .72rem; letter-spacing: .05em; }
+/* Texto maior: a barra de baixo também cresce (ícones e nomes), sem zoom para não sair do lugar. */
+html.ts-lg .bot-nav-item .ic { width: 1.45rem; height: 1.45rem; } html.ts-lg .bot-nav-item span { font-size: .8rem; }
+html.ts-xl .bot-nav-item .ic { width: 1.6rem; height: 1.6rem; } html.ts-xl .bot-nav-item span { font-size: .85rem; }
+
+/* Boas-vindas: o tema escolhido tem um visto; o foco tem um contorno diferente. */
+.ob-themes button { position: relative; text-align: center; line-height: 1.2; }
+.ob-themes button small { display: block; font-size: .7rem; font-weight: 500; color: var(--text-muted); }
+.ob-themes button[aria-checked="true"] { background: color-mix(in srgb, var(--text-accent) 12%, var(--bg-inner)); }
+.ob-themes button[aria-checked="true"]::after { content: "✓"; position: absolute; top: .3rem; right: .4rem; font-size: .8rem; font-weight: 700; color: var(--text-accent); }
+.ob-themes button:focus-visible { outline: 2px dashed var(--text-accent); outline-offset: 3px; }
+.ob-themes button:focus:not(:focus-visible) { outline: none; }
+
+/* Ervas: nível de risco */
+.bot-warn-high { color: var(--danger); font-weight: 600; }
+.bot-risk { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 0 .4rem; border-radius: .35rem; margin-right: .35rem;
+  border: 1px solid currentColor; }

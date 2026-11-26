@@ -43,7 +43,7 @@ jobs:
       - name: Montar o site
         run: |
           mkdir -p _site
-          cp -r index.html manifest.json sw.js LICENSE css js icons img _site/
+          cp -r index.html manifest.json sw.js LICENSE css js fonts icons img _site/
           node tools/build-single.mjs _site/caminho-druidico.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
