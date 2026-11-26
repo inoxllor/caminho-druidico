@@ -13,7 +13,7 @@ import { createStaticServer } from '../tools/serve.mjs';
 const { chromium } = createRequire(import.meta.url)('playwright');
 const root = new URL('..', import.meta.url).pathname;
 const TABS = ['today', 'oracle', 'runes', 'tarot', 'astro', 'wheel', 'treewheel', 'compass', 'altar', 'ritual', 'grove',
-  'journal', 'grounding', 'herbal', 'runelore', 'library', 'obod', 'triads', 'orgs', 'about'];
+  'journal', 'grounding', 'ancestors', 'herbal', 'runelore', 'library', 'obod', 'triads', 'orgs', 'about'];
 // Erros de rede de serviços externos (fontes, meteorologia, mapas) não contam:
 // o ambiente de testes pode não ter acesso à internet.
 const EXTERNAL = /Failed to load resource|net::ERR_|fonts\.g|open-meteo|nominatim|qrserver|cdnjs/i;
@@ -211,7 +211,7 @@ test('design global: portais, reinos, Hoje e mapa lunar compacto', async () => {
   // Contador de dias escondido a zero
   assert.equal(await page.evaluate(() => document.getElementById('streak-badge').hidden), true);
   // Quatro portais com página de entrada e cartões que levam às secções
-  for (const [r, n] of [['oraculos', 3], ['ciclos', 4], ['pratica', 4], ['saber', 5]]) {
+  for (const [r, n] of [['oraculos', 3], ['ciclos', 4], ['pratica', 5], ['saber', 5]]) {
     await page.evaluate(id => switchTab(id), 'portal-' + r);
     assert.equal(await page.evaluate(() => document.body.dataset.realm), r);
     assert.equal(await page.$$eval(`#tab-portal-${r}:not(.hidden) .portal-card`, els => els.length), n);
@@ -341,6 +341,110 @@ test('sugestões: diário cifrado, texto maior, ano na Roda, colheita e graus', 
   await page.evaluate(() => switchTab('today'));
   await page.waitForSelector('#net-banner');
   await ctx.setOffline(false);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+test('constelações e antepassados: aviso, círculo, tiragem e ritual no diário cifrado', async () => {
+  const { ctx, page, errors } = await open(base);
+  // Entra pelo portal Prática
+  await page.evaluate(() => switchTab('portal-pratica'));
+  await page.click('#tab-portal-pratica .portal-card:has-text("Constelações")');
+  assert.ok(await page.isVisible('#tab-ancestors'));
+  assert.equal(await page.title(), 'Constelações & antepassados · Caminho Druídico');
+  // Aviso de cuidado com contactos de ajuda, antes das ferramentas
+  const care = await page.textContent('#anc-care');
+  assert.match(care, /Não substitui terapia/);
+  assert.match(care, /sem validação científica/);
+  assert.match(care, /808 24 24 24/);
+  assert.match(care, /SOS Voz Amiga/);
+  assert.match(care, /116 123/);
+  assert.equal(await page.$$eval('#anc-body .anc-tabs', l => l.length), 0);
+  await page.click('text=Compreendo, quero continuar');
+  // O círculo: juntar, dar nome, notas, e mover com as setas
+  await page.click('[data-quick="mae"]');
+  await page.evaluate(() => ancAdd());
+  await page.fill('#anc-f-name', 'Rosa');
+  await page.check('#anc-f-dead');
+  await page.fill('#anc-f-note', 'Sinto-a atrás de mim.');
+  assert.equal(await page.$$eval('#anc-board .anc-tok', l => l.length), 3);
+  const tok = '#anc-board .anc-tok.is-dead';
+  const x0 = await page.$eval(tok, e => parseFloat(e.style.left));
+  await page.focus(tok);
+  await page.keyboard.press('ArrowRight');
+  assert.ok(await page.$eval(tok, e => parseFloat(e.style.left)) > x0, 'as setas não moveram a pessoa');
+  // Arrastar com o rato
+  const box = await page.$eval('#anc-board .anc-tok.side-m', e => { const r = e.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + 20 }; });
+  await page.mouse.move(box.x, box.y); await page.mouse.down();
+  await page.mouse.move(box.x + 60, box.y + 40, { steps: 6 }); await page.mouse.up();
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('druid_ancestors')));
+  assert.equal(saved.people.length, 2);
+  assert.ok(saved.people.find(p => p.name === 'Rosa' && p.dead && /atrás/.test(p.note)));
+  await page.evaluate(() => ancLayout('tree'));
+  // Fica guardado depois de recarregar
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForFunction(() => typeof window.ancView === 'function');
+  await page.evaluate(() => switchTab('ancestors'));
+  assert.equal(await page.$$eval('#anc-board .anc-tok', l => l.length), 3);
+  assert.match(await page.textContent('#anc-board'), /Rosa/);
+  // Tiragem dos Antepassados: runas e Ogham, com as cinco casas
+  await page.evaluate(() => ancView('spread'));
+  await page.click('#anc-view button:has-text("Tirar")');
+  assert.equal(await page.$$eval('#anc-reading .oc-card .oc-stone', l => l.length), 5);
+  const reading = await page.textContent('#anc-reading');
+  for (const c of ['Linha materna', 'Linha paterna', 'O que se herda', 'O que se devolve', 'A bênção']) assert.ok(reading.includes(c), `falta a casa ${c}`);
+  await page.click('[data-sys="ogham"]');
+  await page.click('#anc-view button:has-text("Tirar")');
+  assert.equal(await page.$$eval('#anc-reading .oc-card .oc-stave', l => l.length), 5);
+  // Ritual de Samhain registado no diário cifrado
+  await page.evaluate(async () => { switchTab('journal'); document.getElementById('new-pin-input').value = '4321'; await saveNewJournalPin(); });
+  await page.waitForFunction(() => !!localStorage.getItem('druid_journal_enc'));
+  await page.evaluate(() => ancView('ritual'));
+  assert.equal(await page.$$eval('.anc-steps > li', l => l.length), 8);
+  assert.match(await page.textContent('.anc-names'), /Rosa/);
+  await page.fill('#anc-r-receive', 'A coragem da avó');
+  await page.check('#anc-r-wheel');
+  await page.click('#anc-view button:has-text("Registar no Diário")');
+  await page.waitForFunction(() => document.getElementById('journal-input').value.includes('RITUAL DE SAMHAIN'));
+  await page.waitForTimeout(400);
+  const store = await page.evaluate(() => [localStorage.getItem('druid_journal'), localStorage.getItem('druid_journal_enc')]);
+  assert.equal(store[0], null);
+  assert.ok(!store[1].includes('coragem'), 'o ritual ficou em claro');
+  assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem('druid_fest_log') || '[]').some(e => e.fest === 'Samhain' && e.year === new Date().getFullYear())));
+  // Com o diário fechado, o registo fica à espera e entra ao desbloquear
+  await page.evaluate(() => { lockJournalNow(); ancView('ritual'); });
+  await page.fill('#anc-r-felt', 'Paz depois do silêncio');
+  await page.click('#anc-view button:has-text("Registar no Diário")');
+  await page.evaluate(() => switchTab('journal'));
+  await page.fill('#journal-pin-unlock-input', '4321');
+  await page.evaluate(() => unlockJournalWithPin());
+  await page.waitForFunction(() => { const v = document.getElementById('journal-input').value; return v.includes('A coragem da avó') && v.includes('Paz depois do silêncio'); });
+  // Apagar o círculo pede um segundo toque
+  await page.evaluate(() => ancView('circle'));
+  await page.click('#anc-clear');
+  assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('druid_ancestors')).people.length), 2);
+  await page.click('#anc-clear');
+  assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('druid_ancestors')).people.length), 0);
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});
+
+test('constelações e antepassados em inglês', async () => {
+  const ctx = await browser.newContext({ locale: 'en-GB', timezoneId: 'Europe/London' });
+  const { page, errors } = await open(base + '?lang=en', { context: ctx });
+  await page.evaluate(() => switchTab('ancestors'));
+  const care = await page.textContent('#anc-care');
+  assert.match(care, /not a substitute for therapy/);
+  assert.ok(care.indexOf('Samaritans') < care.indexOf('SNS 24'), 'em inglês, as linhas do Reino Unido vêm primeiro');
+  await page.click('text=I understand, I want to continue');
+  await page.click('[data-quick="pai"]');
+  await page.evaluate(() => ancView('spread'));
+  await page.click('#anc-view button:has-text("Draw")');
+  const text = await page.textContent('#tab-ancestors');
+  assert.doesNotMatch(text, /Linha materna|Linha paterna|O que se herda|bênção|Tiragem/);
+  assert.match(text, /Maternal line/);
+  await page.evaluate(() => ancReadingToJournal());
+  assert.match(await page.evaluate(() => document.getElementById('journal-input').value), /ANCESTORS SPREAD · Runes\n• Maternal line:/);
   assert.deepEqual(errors, []);
   await ctx.close();
 });

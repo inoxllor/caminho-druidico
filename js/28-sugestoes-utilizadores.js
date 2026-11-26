@@ -456,6 +456,18 @@ window.saveFestLog = function (name) {
   renderYearCard();
   toast(`Ritual de ${name} registado.`);
 };
+/** Junta um texto ao diário sem perder o que está à espera de cifra
+    (usado por outras secções, p. ex. js/34-antepassados.js). */
+window.journalAppend = function (text) {
+  if (locked()) {
+    ls.set(PEND, `${ls.get(PEND, '')}\n--- [${new Date().toLocaleString('pt-PT')}] ${text}\n`);
+    toast('Guardado. Será cifrado quando desbloquear o diário.');
+    return 'pending';
+  }
+  if (typeof appendToJournal === 'function') appendToJournal(text);
+  return encOn() ? 'encrypted' : 'plain';
+};
+window.journalEncrypted = () => encOn();
 window.deleteFestLog = function (name) {
   const y = new Date().getFullYear();
   ls.setJson('druid_fest_log', festLog().filter(e => !(e.fest === name && e.year === y)));
