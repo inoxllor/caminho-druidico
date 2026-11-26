@@ -456,7 +456,14 @@ const KIND = {
 };
 function buildIndex() {
   const out = [];
-  const add = (kind, title, sub, text, go, glyph = '') => out.push({ kind, title, sub, glyph, go, n: norm(title), t: norm(`${title} ${sub} ${text}`) });
+  // Em inglês (js/00-idioma.js), o índice tem o texto nas duas línguas e mostra-se em inglês
+  const tr = window.APP_LANG === 'en-GB' && window.t ? window.t : null;
+  const add = (kind, title, sub, text, go, glyph = '') => {
+    const parts = (Array.isArray(text) ? text : [text]).filter(Boolean);
+    let all = `${title} ${sub} ${parts.join(' ')}`;
+    if (tr) { all += ` ${tr(title)} ${tr(sub)} ${parts.map(tr).join(' ')}`; title = tr(title); sub = tr(sub); }
+    out.push({ kind, title, sub, glyph, go, n: norm(title), t: norm(all) });
+  };
   // Secções
   const P = (window.DruidRealms || {}).PORTALS || {};
   add('section', 'Hoje', 'Ecrã inicial', 'dia lua festa oraculo', () => switchTab('today'));
@@ -469,12 +476,12 @@ function buildIndex() {
   // Ogham
   DATA().forEach(o => {
     const lore = (window.OGHAM_LORE || {})[o.name] || {};
-    add('ogham', `${o.name} · ${treeName(o)}`, `${o.aicme || ''}${o.month ? ' · ' + o.month : ''}`, `${o.tree} ${o.meaning} ${o.herb} ${lore.kenningPt || ''} ${lore.word || ''}`,
+    add('ogham', `${o.name} · ${treeName(o)}`, `${o.aicme || ''}${o.month ? ' · ' + o.month : ''}`, [o.tree, o.meaning, o.herb, lore.kenningPt, lore.word],
       () => openTreeInGuide(o.name), o.symbol);
   });
   // Runas
   (typeof RUNES_EXTENDED !== 'undefined' ? RUNES_EXTENDED : []).forEach(r => {
-    add('rune', r.name, r.aett ? `Aett de ${r.aett}` : 'Runa', `${r.meaning} ${r.reversed || ''}`, () => {
+    add('rune', r.name, r.aett ? `Aett de ${r.aett}` : 'Runa', [r.meaning, r.reversed], () => {
       switchTab('runelore');
       requestAnimationFrame(() => {
         const card = [...document.querySelectorAll('#tab-runelore .rl-card')].find(c => (c.querySelector('h3,h4,.rl-name') || c).textContent.trim().startsWith(r.name) || c.querySelector('.rl-stone')?.textContent === r.symbol);
@@ -487,14 +494,14 @@ function buildIndex() {
   Object.entries(uses).forEach(([herb, u]) => {
     const o = DATA().find(x => norm(x.herb).includes(norm(herb)));
     const label = herb.charAt(0).toUpperCase() + herb.slice(1);
-    add('herb', label, o ? `Erva de ${o.name} · ${treeName(o)}` : 'Erva', (u || []).join(' '), () => {
+    add('herb', label, o ? `Erva de ${o.name} · ${treeName(o)}` : 'Erva', u || [], () => {
       if (!o) return switchTab('herbal');
       openTreeInGuide(o.name);
     });
   });
   // Festas
   if (typeof FESTIVALS_DATA !== 'undefined') Object.entries(FESTIVALS_DATA).forEach(([id, f]) => {
-    add('fest', f.title, f.date, `${f.theme} ${f.ritual}`, () => { switchTab('wheel'); if (typeof selectFestival === 'function') selectFestival(+id); });
+    add('fest', f.title, f.date, [f.theme, f.ritual], () => { switchTab('wheel'); if (typeof selectFestival === 'function') selectFestival(+id); });
   });
   // Tríades
   (window.TRIADS_DATA || []).forEach(t => {
@@ -507,7 +514,7 @@ function buildIndex() {
   });
   // Tarot
   (typeof NORDIC_TAROT_DECK !== 'undefined' ? NORDIC_TAROT_DECK : []).forEach(c => {
-    add('tarot', c.name, c.title || 'Carta', `${c.upright || ''} ${c.reversed || ''} ${c.keywords || ''}`, () => {
+    add('tarot', c.name, c.title || 'Carta', [c.upright, c.reversed, c.keywords], () => {
       switchTab('tarot');
       if (typeof openTarotDetail === 'function') openTarotDetail(c.id);
     });

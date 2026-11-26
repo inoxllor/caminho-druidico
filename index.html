@@ -11,7 +11,9 @@
     <meta name="apple-mobile-web-app-title" content="Caminho Druídico">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-    <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t;try{var z=localStorage.getItem('druid_text_size');if(z==='lg'||z==='xl')document.documentElement.classList.add('ts-'+z)}catch(e){}})()</script>
+    <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t;try{var z=localStorage.getItem('druid_text_size');if(z==='lg'||z==='xl')document.documentElement.classList.add('ts-'+z)}catch(e){}var h=document.documentElement,L='pt-PT';try{var q=(location.search.match(/[?&]lang=([a-z]{2})/i)||[])[1];if(q)localStorage.setItem('druid_lang',/^en/i.test(q)?'en-GB':'pt-PT');L=localStorage.getItem('druid_lang')||((navigator.languages||[navigator.language||'']).some(function(x){return /^pt/i.test(x)})?'pt-PT':'en-GB')}catch(e){}if(L!=='en-GB')L='pt-PT';h.lang=L;window.__lang=L;if(L==='en-GB'){h.classList.add('i18n-wait');setTimeout(function(){h.classList.remove('i18n-wait')},3000);document.write('<scr'+'ipt src="'+(location.protocol==='file:'?'https://inoxllor.github.io/caminho-druidico/':'')+'i18n/en-GB.js"></scr'+'ipt>')}})()</script>
+    <link rel="alternate" hreflang="pt-PT" href="https://inoxllor.github.io/caminho-druidico/?lang=pt">
+    <link rel="alternate" hreflang="en-GB" href="https://inoxllor.github.io/caminho-druidico/?lang=en">
     <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/cinzel-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="css/app.css">
@@ -144,6 +146,8 @@
             <button type="button" onclick="closeSettings();registerAwenPractice()"><svg class="ic" aria-hidden="true"><use href="#i-obod"></use></svg><span><b>Invocar Awen</b><span>Regista no diário que fez a invocação da Awen hoje.</span></span></button>
         </div>
         <p class="st-group">Ajustes</p>
+        <label for="lang-selector" class="ts-label" translate="no">Idioma · Language</label>
+        <select id="lang-selector" translate="no" onchange="setLanguage(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 mb-3 cursor-pointer"><option value="pt-PT" lang="pt-PT">Português (Portugal)</option><option value="en-GB" lang="en-GB">English (UK)</option></select>
         <label for="theme-selector-desktop" class="ts-label">Ambiente visual</label>
         <select id="theme-selector-desktop" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 cursor-pointer"><option value="theme-night">Noite Mística</option><option value="theme-forest">Floresta Profunda</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
         <p class="text-xs theme-muted mt-4">Tudo fica guardado só neste aparelho. <button type="button" class="underline cursor-pointer" onclick="closeSettings();switchTab('about');setTimeout(()=>document.getElementById('privacy')?.scrollIntoView(),300)">Privacidade</button></p>
@@ -1521,6 +1525,7 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
         });
     }
     </script>
+    <script src="js/00-idioma.js"></script>
     <script src="js/01-lunar-calc.js"></script>
     <script src="js/02-tarot-nordico.js"></script>
     <script src="js/03-nucleo.js"></script>

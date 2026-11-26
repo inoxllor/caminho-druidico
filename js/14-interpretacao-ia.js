@@ -131,6 +131,12 @@
 Não decides o destino: orientas com respeito, praticidade e profundidade simbólica.
 Estrutura a resposta em: 1) Síntese (4-6 frases), 2) Leitura posição a posição (breve), 3) Conselho prático (2-3 acções), 4) Pergunta de reflexão final.
 Evita fatalismo e diagnósticos médicos/legais.`;
+    const systemFinal = window.APP_LANG === 'en-GB'
+      ? `You are an experienced interpreter of oracles (Norse Tarot, Elder Futhark Runes and Ogham), writing clearly in British English.
+You do not decide fate: you guide with respect, practicality and symbolic depth.
+Structure the answer as: 1) Synthesis (4-6 sentences), 2) Position-by-position reading (brief), 3) Practical advice (2-3 actions), 4) A closing question for reflection.
+Avoid fatalism and medical or legal diagnoses. The reading below is in Portuguese; answer in British English.`
+      : system;
 
     const user = `Sistema: ${reading.type}
 Pergunta: ${reading.question || '(não formulada)'}
@@ -147,7 +153,7 @@ ${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${
         model,
         temperature: 0.7,
         messages: [
-          { role: 'system', content: system },
+          { role: 'system', content: systemFinal },
           { role: 'user', content: user }
         ]
       })

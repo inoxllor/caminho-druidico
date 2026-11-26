@@ -6,7 +6,7 @@
      guardadas na primeira utilização, para a instalação ser leve.
    - APIs externas (tempo, localização, IA, QR): sempre pela rede.
    Ao mudar a lista PRECACHE ou o código, suba VERSION. */
-const VERSION = 'v31';
+const VERSION = 'v32';
 const CORE = `caminho-core-${VERSION}`;
 const RUNTIME = 'caminho-runtime-v1';
 const ON_DEMAND = /\/img\/plantas\//;
@@ -22,6 +22,8 @@ const PRECACHE = [
   './fonts/inter-latin-500-normal.woff2',
   './fonts/inter-latin-600-normal.woff2',
   './fonts/inter-latin-700-normal.woff2',
+  './i18n/en-GB.js',
+  './js/00-idioma.js',
   './js/01-lunar-calc.js',
   './js/02-tarot-nordico.js',
   './js/03-nucleo.js',

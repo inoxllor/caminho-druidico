@@ -1964,3 +1964,6 @@ html:not(.theme-parchment) .origin-antigo { color: #fbbf24; } html:not(.theme-pa
 .rc-day li { padding: .5rem .65rem; border-radius: .5rem; background: var(--bg-inner); border: 1px solid var(--border-color); }
 .rc-q { font-style: italic; color: var(--text-title); margin: .15rem 0; }
 .oracle-question { max-width: 40rem; margin: 0 auto 1rem; text-align: left; }
+
+/* Idioma: em inglês, esconde a página até o texto estar traduzido (no máximo 3 s) */
+html.i18n-wait body { visibility: hidden; }
