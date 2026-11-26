@@ -313,11 +313,13 @@ function drawOghamCard(count) {
 let lastRuneSpread = 'conselho';
 function drawRunes(spread) {
     const S = runeSpread(spread === undefined ? lastRuneSpread : spread);
-    const pool = [...RUNES_DATA];
+    const pool = typeof runePool === 'function' ? runePool() : [...RUNES_DATA];
+    const chosen = window.__runesChosen; window.__runesChosen = null; // pedras escolhidas à mão (js/29)
     const drawn = [];
-    S.pos.forEach(([pos, hint]) => {
-        const idx = Math.floor(Math.random() * pool.length);
-        drawn.push({ ...castRune(pool.splice(idx, 1)[0]), pos, hint });
+    S.pos.forEach(([pos, hint], i) => {
+        const r = chosen && chosen[i] ? chosen[i] : pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
+        if (chosen && chosen[i]) { const k = pool.indexOf(r); if (k >= 0) pool.splice(k, 1); }
+        drawn.push({ ...castRune(r), pos, hint });
     });
     lastRuneSpread = S.key;
     window.lastRuneSpreadInfo = S;
@@ -330,10 +332,12 @@ function drawRunes(spread) {
 function saveLastReadingToJournal(type) {
     const nowStr = new Date().toLocaleString('pt-PT');
     let entry = `\n--- [${nowStr}] `;
+    const qEl = document.getElementById(type === 'runes' ? 'rune-question' : 'ogham-question');
+    const qTxt = qEl && qEl.value.trim() ? `Pergunta: «${qEl.value.trim()}»\n` : '';
     if (type === 'ogham' && lastOghamReading.length) {
-        entry += `ORÁCULO DE OGHAM ---\n` + lastOghamReading.map(o => `• ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`).join('\n');
+        entry += `ORÁCULO DE OGHAM ---\n` + qTxt + lastOghamReading.map(o => `• ${o.symbol} ${o.name} (${o.tree}): ${o.meaning}`).join('\n');
     } else if (type === 'runes' && lastRuneReading.length) {
-        entry += `ORÁCULO DE RUNAS${lastRuneReading[0].pos && window.lastRuneSpreadInfo ? ' · ' + window.lastRuneSpreadInfo.name.toUpperCase() : ''} ---\n` + lastRuneReading.map(r => `• ${r.pos ? r.pos + ': ' : ''}${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
+        entry += `ORÁCULO DE RUNAS${lastRuneReading[0].pos && window.lastRuneSpreadInfo ? ' · ' + window.lastRuneSpreadInfo.name.toUpperCase() : ''} ---\n` + qTxt + lastRuneReading.map(r => `• ${r.pos ? r.pos + ': ' : ''}${r.symbol} ${r.name}: ${r.meaning}`).join('\n');
     }
     const area = document.getElementById('journal-input');
     area.value = (area.value + entry + '\n').trimStart();

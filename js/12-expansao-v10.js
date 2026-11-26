@@ -325,11 +325,6 @@ window.showBackupQR = function () {
   // QR for a hash/code only (full JSON too large for QR) — show instructions
   const code = btoa(unescape(encodeURIComponent(json.slice(0, 80)))).slice(0, 12);
   showToast('Backup JSON descarregado. Código de referência: ' + code);
-  // Draw simple QR-like pattern is heavy; use Google chart API if online
-  try {
-    const url = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent('DRUID-BACKUP-REF:' + code);
-    window.open(url, '_blank');
-  } catch {}
 };
 
 // ——— 15. Cartão PNG de partilha ———
