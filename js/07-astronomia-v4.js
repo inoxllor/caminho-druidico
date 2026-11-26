@@ -1,4 +1,4 @@
-/* v4: melhorias (astronomia exata, painel Hoje, acessibilidade, ecrã sempre ligado, ZIP limpo) */
+/* v4: melhorias (astronomia exata, painel Hoje, acessibilidade, ecrã sempre ligado) */
 (() => {
 const $ = id => document.getElementById(id), P = Math.PI / 180;
 const MEEUS = [[485,324.96,1934.136],[203,337.23,32964.467],[199,342.08,20.186],[182,27.85,445267.112],[156,73.14,45036.886],[136,171.52,22518.443],[77,222.54,65928.934],[74,296.72,3034.906],[70,243.58,9037.513],[58,119.81,33718.147],[52,297.17,150.678],[50,21.02,2281.226],[45,247.54,29929.562],[44,325.15,31555.956],[29,60.93,4443.417],[18,155.12,67555.328],[17,288.79,4562.452],[16,198.04,62894.029],[14,199.76,31436.921],[12,95.39,14577.848],[12,287.11,31931.756],[12,320.81,34777.259],[9,227.73,1222.114],[8,15.45,16859.074]];
@@ -81,27 +81,6 @@ switchTab = function (id) { _st(id); if (id === 'tarot') { const c = $('tarot-ca
 document.addEventListener('keydown', e => { const w = e.target.matches && e.target.matches('[role="button"]:not(button)') ? e.target : null; if (w && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); w.dispatchEvent(new MouseEvent('click', { bubbles: true })); } });
 new MutationObserver(() => document.querySelectorAll('.tarot-flip-wrapper:not([tabindex])').forEach(w => { w.tabIndex = 0; w.setAttribute('role', 'button'); w.setAttribute('aria-label', 'Virar carta'); }))
   .observe($('tarot-card-container'), { childList: true, subtree: true });
-
-// ZIP: exporta o código-fonte original (sem estado de sessão)
-downloadProjectZip = async function () {
-  if (typeof JSZip === 'undefined') return showToast('Biblioteca JSZip ainda a carregar.');
-  try {
-    let html;
-    if (/^https?:$/.test(location.protocol)) { const r = await fetch(location.href.split('#')[0]); if (r.ok) html = await r.text(); }
-    if (!html) {
-      const c = document.documentElement.cloneNode(true);
-      ['tarot-card-container','ogham-card','rune-card','rune-gallery-grid','tree-list','history-list','daily-few','toast-container','today-panel','tarot-detail-body'].forEach(i => { const e = c.querySelector('#' + i); if (e) e.innerHTML = ''; });
-      c.querySelectorAll('style').forEach(x => { if ((x.textContent || '').includes('tailwindcss v3')) x.remove(); });
-      c.querySelector('body').classList.remove('zen-active');
-      c.querySelectorAll('script[data-lazy]').forEach(x => x.remove());
-      html = '<!DOCTYPE html>\n' + c.outerHTML;
-    }
-    const z = new JSZip(); z.file('index.html', html);
-    const a = document.createElement('a'); a.href = URL.createObjectURL(await z.generateAsync({ type: 'blob' })); a.download = 'caminho-druidico.zip';
-    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1e4);
-    showToast('ZIP descarregado!');
-  } catch (e) { console.error(e); showToast('Não foi possível criar o ZIP.'); }
-};
 
 window.addEventListener('DOMContentLoaded', () => {
   activeTarotMode = 'draw'; activeRuneMode = 'draw';

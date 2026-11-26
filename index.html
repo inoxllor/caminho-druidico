@@ -150,6 +150,8 @@
         <select id="lang-selector" translate="no" onchange="setLanguage(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 mb-3 cursor-pointer"><option value="pt-PT" lang="pt-PT">Português (Portugal)</option><option value="en-GB" lang="en-GB">English (UK)</option></select>
         <label for="theme-selector-desktop" class="ts-label">Ambiente visual</label>
         <select id="theme-selector-desktop" onchange="changeTheme(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2 cursor-pointer"><option value="theme-night">Noite Mística</option><option value="theme-forest">Floresta Profunda</option><option value="theme-stone">Pedra Ancestral</option><option value="theme-autumn">Outono Dourado</option><option value="theme-mist">Neblina Mística</option><option value="theme-gold">Solstício Dourado</option><option value="theme-lantern">Lanterna Ritual (noturno)</option><option value="theme-parchment">Luz de Musgo (claro)</option></select>
+        <p class="st-group">Apoiar</p>
+        <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" class="st-coffee"><span class="sc-cup" aria-hidden="true">☕</span><span><b>Oferecer um café</b><span>O projeto é gratuito e sem publicidade. Um café ajuda a mantê-lo vivo.</span></span><span class="sc-go" aria-hidden="true">↗</span></a>
         <p class="text-xs theme-muted mt-4">Tudo fica guardado só neste aparelho. <button type="button" class="underline cursor-pointer" onclick="closeSettings();switchTab('about');setTimeout(()=>document.getElementById('privacy')?.scrollIntoView(),300)">Privacidade</button></p>
     </dialog>
     <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title">
@@ -239,6 +241,7 @@
                         <button type="button" onclick="shareReading('runes')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-share"></use></svg>Partilhar</button>
                         <button type="button" onclick="drawRunes()" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
                     </div>
+                    <p class="support-note">Esta leitura foi útil? <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">☕</span> Ofereça um café ao projeto</a></p>
 
                     <div id="rune-draw-actions" class="oracle-spreads">
                         <div class="oracle-question">
@@ -280,6 +283,7 @@
                         <button type="button" onclick="exportTarotPDF()" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-download"></use></svg>PDF</button>
                         <button type="button" onclick="drawTarotCard(1)" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
                     </div>
+                    <p class="support-note">Esta leitura foi útil? <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">☕</span> Ofereça um café ao projeto</a></p>
 
                     <div class="oracle-spreads tarot-options text-left space-y-4">
                         <div id="tarot-draw-actions" class="space-y-4">
@@ -331,6 +335,7 @@
                         <button type="button" onclick="shareReading('ogham')" class="oa-btn"><svg class="ic" aria-hidden="true"><use href="#i-share"></use></svg>Partilhar</button>
                         <button type="button" onclick="drawOghamCard(1)" class="oa-btn oa-quiet"><svg class="ic" aria-hidden="true"><use href="#i-redo"></use></svg>Tirar outra</button>
                     </div>
+                    <p class="support-note">Esta leitura foi útil? <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">☕</span> Ofereça um café ao projeto</a></p>
 
                     <div class="oracle-spreads">
                         <div class="oracle-question">
@@ -1294,13 +1299,9 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                         <h2 class="font-cinzel text-2xl lg:text-3xl font-bold theme-title">Sobre & apoio</h2>
                         <p class="text-sm lg:text-[15px] theme-muted">Caminho Druídico é um projeto pessoal e gratuito. Os seus escritos ficam guardados apenas neste dispositivo.</p>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="theme-inner border rounded-xl p-4 space-y-3 flex flex-col justify-between">
-                            <div class="space-y-1"><h3 class="font-cinzel text-base font-bold theme-title">Código</h3><p class="text-sm theme-muted leading-relaxed">Descarregue a página completa num só ficheiro HTML, para usar offline ou adaptar.</p></div>
-                            <button type="button" onclick="downloadProjectZip()" class="w-full py-2.5 px-3 theme-inner theme-title font-semibold text-sm rounded-lg border border-[var(--border-color)] hover:border-[var(--border-hover)] transition cursor-pointer">Descarregar (.zip)</button>
-                        </div>
-                        <div class="theme-inner border rounded-xl p-4 space-y-3 flex flex-col justify-between">
-                            <div class="space-y-1"><h3 class="font-cinzel text-base font-bold theme-title">Apoiar</h3><p class="text-sm theme-muted leading-relaxed">Se o projeto lhe for útil, pode oferecer um café.</p></div>
+                            <div class="space-y-1"><h3 class="font-cinzel text-base font-bold theme-title">Apoiar</h3><p class="text-sm theme-muted leading-relaxed">O Caminho Druídico é gratuito e sem publicidade. Se lhe for útil, pode oferecer um café: ajuda a manter e a fazer crescer o projeto.</p></div>
                             <a href="https://www.buymeacoffee.com/inoxllor" target="_blank" rel="noopener noreferrer" class="btn-coffee w-full py-2.5 px-3 font-semibold text-sm rounded-lg transition text-center block">Buy me a coffee ↗</a>
                         </div>
                         <div class="theme-inner border rounded-xl p-4 space-y-3 flex flex-col justify-between">
@@ -1315,7 +1316,7 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                         <ul class="text-sm theme-muted list-disc pl-5 space-y-1">
                             <li><strong>Meteorologia</strong> (Open-Meteo, open-meteo.com): as coordenadas, ao tocar em «Atualizar GPS & Clima».</li>
                             <li><strong>Nome do lugar</strong> (Nominatim, OpenStreetMap): as mesmas coordenadas, para mostrar o nome da localidade.</li>
-                            <li><strong>Exportar PDF ou ZIP</strong> (cdnjs, Cloudflare): descarrega a biblioteca necessária; não envia os seus dados.</li>
+                            <li><strong>Exportar PDF</strong> (cdnjs, Cloudflare): descarrega a biblioteca necessária; não envia os seus dados.</li>
                             <li><strong>Aprofundar IA</strong> (o serviço que configurar): a tiragem e a pergunta, com a sua chave.</li>
                         </ul>
                         <p class="text-sm theme-muted leading-relaxed">Para apagar tudo, limpe os dados deste site nas definições do browser.</p>

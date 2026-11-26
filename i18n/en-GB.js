@@ -1,4 +1,4 @@
-/* Dicionário pt-PT → en-GB do Caminho Druídico (2701 entradas).
+/* Dicionário pt-PT → en-GB do Caminho Druídico (2700 entradas).
    Chave: o texto tal como aparece no ecrã em português (espaços normalizados).
    Frases com números, datas e combinações («A · B», «Nome (Glosa)») são
    tratadas por padrões em js/00-idioma.js. Para traduzir um texto novo,
@@ -413,6 +413,11 @@ window.I18N_EN = {
 "Aplicação":"App",
 "Apogeu da luz solar, abundância e poder vital.":"The height of sunlight, abundance and vital power.",
 "Apoiar":"Support",
+"Esta leitura foi útil?":"Was this reading helpful?",
+"Ofereça um café ao projeto":"Buy the project a coffee",
+"Oferecer um café":"Buy a coffee",
+"O projeto é gratuito e sem publicidade. Um café ajuda a mantê-lo vivo.":"The project is free and ad-free. A coffee helps keep it alive.",
+"O Caminho Druídico é gratuito e sem publicidade. Se lhe for útil, pode oferecer um café: ajuda a manter e a fazer crescer o projeto.":"Druidic Path is free and ad-free. If you find it useful, you can buy a coffee: it helps keep the project going and growing.",
 "App instalada.":"App installed.",
 "Aprender as letras das árvores":"Learn the tree letters",
 "Aprofundar IA":"Deepen with AI",
@@ -803,8 +808,6 @@ window.I18N_EN = {
 "Desbloqueie o diário antes de remover o PIN.":"Unlock the journal before removing the PIN.",
 "Desbloqueie o diário antes de restaurar uma cópia.":"Unlock the journal before restoring a backup.",
 "Desbloqueie o diário para incluir os seus escritos na cópia.":"Unlock the journal to include your writing in the backup.",
-"Descarregar (.zip)":"Download (.zip)",
-"Descarregue a página completa num só ficheiro HTML, para usar offline ou adaptar.":"Download the full page as a single HTML file, to use offline or adapt.",
 "Desconfiança, falta de sintonia em parcerias ou desejo de fuga.":"Mistrust, lack of attunement in partnerships or a wish to escape.",
 "descreve uma passagem: o que veio de":"describes a passage: what came from",
 "Descrição da imagem":"Image description",
@@ -1059,7 +1062,6 @@ window.I18N_EN = {
 "Exportar Guião (PDF)":"Export Script (PDF)",
 "Exportar o mapa em PNG":"Export the map as PNG",
 "Exportar PDF":"Export PDF",
-"Exportar PDF ou ZIP":"Export PDF or ZIP",
 "Exportar TXT":"Export TXT",
 "Faça primeiro uma tiragem desse tipo.":"Do a spread of that type first.",
 "Fadiga antes da meta ou isolamento defensivo.":"Fatigue before the finish line or defensive isolation.",
@@ -1092,7 +1094,6 @@ window.I18N_EN = {
 "Festas da Roda do Ano":"Festivals of the Wheel of the Year",
 "Fev":"Feb",
 "Ficha":"Details",
-"Ficheiro .ZIP descarregado!":".ZIP file downloaded!",
 "Ficheiro Grove inválido.":"Invalid Grove file.",
 "Ficheiro JSON inválido.":"Invalid JSON file.",
 "Figura de":"Figure of",
@@ -2265,7 +2266,6 @@ window.I18N_EN = {
 "Se invertida":"If reversed",
 "se nada for conscientemente redireccionado.":"if nothing is consciously redirected.",
 "Se o botão não aparecer, use o menu do navegador e escolha «Instalar app» ou «Adicionar ao ecrã principal».":"If the button doesn't appear, use the browser menu and choose «Install app» or «Add to Home Screen».",
-"Se o projeto lhe for útil, pode oferecer um café.":"If you find the project useful, you can buy it a coffee.",
 "Se quiser, faça uma pergunta ao bosque. Não procure a resposta. Deixe-a chegar como uma imagem, um som ou uma sensação.":"If you wish, ask the grove a question. Don't search for the answer. Let it come as an image, a sound or a feeling.",
 "Se surgir uma imagem ou uma compreensão, receba-a sem a agarrar.":"If an image or an understanding arises, receive it without grasping it.",
 "Se surgir uma imagem, uma palavra ou um verso, guarde-o. Pode escrevê-lo no Caderno Bárdico.":"If an image, a word or a verse arises, keep it. You can write it in the Bardic Notebook.",
@@ -2703,6 +2703,5 @@ window.I18N_EN = {
 "Yule (Solstício Inverno)":"Yule (Winter Solstice)",
 "Yule, 21 de Dezembro":"Yule, 21 December",
 "Zen Mode ativo (Ecrã Inteiro Imersivo)":"Zen Mode on (Immersive Full Screen)",
-"ZÉNITE SOLAR":"SOLAR ZENITH",
-"ZIP descarregado!":"ZIP downloaded!"
+"ZÉNITE SOLAR":"SOLAR ZENITH"
 };

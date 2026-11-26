@@ -983,50 +983,6 @@ function showToast(msg, opts) {
     return toast;
 }
 
-async function downloadProjectZip() {
-    if (typeof JSZip === 'undefined') {
-        showToast('Biblioteca JSZip ainda a carregar.');
-        return;
-    }
-    const pending = showToast('A empacotar ficheiro...', { duration: 15000 });
-    try {
-        // Trabalha sobre um clone limpo: sem toasts, sem estilos gerados pelo Tailwind
-        // em runtime e sem estado temporário (zen, etc.), para o ficheiro exportado ser limpo.
-        const clone = document.documentElement.cloneNode(true);
-        const tc = clone.querySelector('#toast-container');
-        if (tc) tc.innerHTML = '';
-        clone.querySelectorAll('style').forEach(s => {
-            if ((s.textContent || '').includes('tailwindcss v3')) s.remove();
-        });
-        const cb = clone.querySelector('body');
-        if (cb) cb.classList.remove('zen-active');
-        const zb = clone.querySelector('#zen-float-btn');
-        if (zb) {
-            zb.setAttribute('aria-pressed', 'false');
-            zb.innerHTML = '<svg class="ic" aria-hidden="true"><use href="#i-zen"></use></svg><span class="zen-label">Zen Mode</span>';
-        }
-        const html = '<!DOCTYPE html>\n' + clone.outerHTML;
-
-        const zip = new JSZip();
-        zip.file('caminho-druidico-pro-ultimate.html', html);
-        const blob = await zip.generateAsync({ type: 'blob' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'caminho-druidico-pro-ultimate-standalone.zip';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
-        if (pending) pending.dismiss();
-        showToast('Ficheiro .ZIP descarregado!');
-    } catch (err) {
-        console.error('Erro ao criar ZIP:', err);
-        if (pending) pending.dismiss();
-        showToast('Não foi possível criar o .ZIP.');
-    }
-}
-
 window.addEventListener('DOMContentLoaded', () => {
     const _tc = document.getElementById('toast-container');
     if (_tc) _tc.innerHTML = '';
