@@ -1,7 +1,6 @@
 /* ============================================================
    App instalável e offline: regista o service worker (sw.js),
-   mostra o estado offline e o botão «Instalar app», e gera o
-   .zip de ficheiro único a partir dos ficheiros modulares.
+   mostra o estado offline e o botão «Instalar app».
    ============================================================ */
 (() => {
 const $ = id => document.getElementById(id);
@@ -84,54 +83,6 @@ window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); instal
 window.addEventListener('appinstalled', () => { installPrompt = null; updateInstallUI(); });
 window.addEventListener('online', updateOfflineStatus);
 window.addEventListener('offline', updateOfflineStatus);
-
-// ——— .zip com a página num ficheiro único ———
-async function fetchText(url) {
-  const r = await fetch(url, { cache: 'no-cache' });
-  if (!r.ok) throw new Error(url + ' ' + r.status);
-  return r.text();
-}
-const isLocal = p => !/^(https?:)?\/\//.test(p) && !p.startsWith('data:');
-
-/** Junta CSS e JS locais dentro do index.html (igual a tools/build-single.mjs). */
-async function buildSingleHTML() {
-  try { return await fetchText('caminho-druidico.html'); } catch (e) { /* não publicado: gerar aqui */ }
-  let html = await fetchText('index.html');
-  const jobs = [];
-  html.replace(/<link rel="stylesheet" href="([^"]+)">/g, (m, href) => { if (isLocal(href)) jobs.push([m, href, 'css']); return m; });
-  html.replace(/<script src="([^"]+)"><\/script>/g, (m, src) => { if (isLocal(src)) jobs.push([m, src, 'js']); return m; });
-  const texts = await Promise.all(jobs.map(([, u]) => fetchText(u)));
-  jobs.forEach(([tag, , kind], i) => {
-    const body = kind === 'css' ? `<style>\n${texts[i]}</style>` : `<script>\n${texts[i].replace(/<\/script/gi, '<\\/script')}</script>`;
-    html = html.split(tag).join(body);
-  });
-  return html;
-}
-
-const previousZip = window.downloadProjectZip;
-window.downloadProjectZip = async function () {
-  if (!/^https?:$/.test(location.protocol)) return previousZip && previousZip();
-  if (typeof window.loadLib === 'function') {
-    try { await window.loadLib('jszip'); } catch (e) { return showToast('Sem ligação: não foi possível carregar a biblioteca de exportação.'); }
-  }
-  if (typeof JSZip === 'undefined') return showToast('Biblioteca JSZip ainda a carregar.');
-  const pending = showToast('A preparar o ficheiro…', { duration: 15000 });
-  try {
-    const z = new JSZip();
-    z.file('caminho-druidico.html', await buildSingleHTML());
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(await z.generateAsync({ type: 'blob' }));
-    a.download = 'caminho-druidico.zip';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1e4);
-    if (pending && pending.dismiss) pending.dismiss();
-    showToast('ZIP descarregado!');
-  } catch (e) {
-    console.error(e);
-    if (pending && pending.dismiss) pending.dismiss();
-    showToast('Não foi possível criar o ZIP.');
-  }
-};
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAppPanel);
 else renderAppPanel();

@@ -46,7 +46,6 @@ jobs:
         run: |
           mkdir -p _site
           cp -r index.html manifest.json sw.js LICENSE css js fonts icons img i18n _site/
-          node tools/build-single.mjs _site/caminho-druidico.html
           # Junta e minifica o JS e o CSS só na cópia publicada
           node tools/build-pages.mjs _site
       - uses: actions/configure-pages@v5

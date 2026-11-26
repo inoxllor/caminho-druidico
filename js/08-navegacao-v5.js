@@ -87,8 +87,7 @@ function markNextFestival() {
 
 // Bibliotecas de exportação: só são descarregadas quando são precisas
 const LIBS = {
-  jspdf: ['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', () => window.jspdf],
-  jszip: ['https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js', () => window.JSZip]
+  jspdf: ['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', () => window.jspdf]
 };
 const pending = {};
 function loadLib(k) {
@@ -103,7 +102,7 @@ function loadLib(k) {
   }));
 }
 window.loadLib = loadLib;
-[['exportRitualPDF', 'jspdf'], ['exportTarotPDF', 'jspdf'], ['downloadProjectZip', 'jszip']].forEach(([fn, lib]) => {
+[['exportRitualPDF', 'jspdf'], ['exportTarotPDF', 'jspdf']].forEach(([fn, lib]) => {
   const orig = window[fn];
   window[fn] = async function (...a) {
     try { await loadLib(lib); } catch { return showToast('Sem ligação: não foi possível carregar a biblioteca de exportação.'); }

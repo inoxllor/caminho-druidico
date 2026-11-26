@@ -7,7 +7,7 @@ Aplicação web progressiva (PWA) *offline-first* com ferramentas para a explora
 
 - **No site:** abra a página publicada no GitHub Pages. Em *Mais › Sobre* aparece o botão **Instalar app**; depois da primeira visita funciona sem rede.
 - **Em inglês (en-GB):** escolha o idioma em *Ambiente & ajustes* ou abra o site com `?lang=en` (e `?lang=pt` para voltar). Num browser em inglês (ou noutra língua que não o português), a app abre logo em inglês.
-- **Num só ficheiro:** descarregue `caminho-druidico.html` (no site publicado ou em *Sobre › Descarregar (.zip)*) e abra-o diretamente no navegador. O ramo `HTML-UNICO` guarda também esta versão.
+- **Num só ficheiro:** o ramo `HTML-UNICO` guarda a versão num só ficheiro (o site publicado já não oferece o download).
 
 ## Estrutura
 
@@ -40,7 +40,7 @@ npm run build:pages -- _site         # junta e minifica o JS e o CSS numa cópia
 
 ## Publicação
 
-O workflow `.github/workflows/pages.yml` corre os testes em cada pull request e, a cada alteração no `main`, publica o site no GitHub Pages (com o ficheiro único `caminho-druidico.html` ao lado).
+O workflow `.github/workflows/pages.yml` corre os testes em cada pull request e, a cada alteração no `main`, publica o site no GitHub Pages.
 É preciso ativar uma vez: **Settings → Pages → Source: GitHub Actions**.
 
 Para atualizar o ramo `HTML-UNICO` a partir do `main`: **Actions → Atualizar ramo HTML-UNICO → Run workflow**.
