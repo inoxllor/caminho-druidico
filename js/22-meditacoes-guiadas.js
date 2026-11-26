@@ -23,7 +23,7 @@ function oghamOfDay(date = new Date()) {
 // Cada passo: texto narrado e segundos de silêncio depois dele.
 const MEDITATIONS = [
   {
-    id: 'nemeton', title: 'A clareira do Nemeton', theme: 'Santuário interior',
+    id: 'nemeton', grade: 'todos', title: 'A clareira do Nemeton', theme: 'Santuário interior',
     desc: 'Visualização do bosque sagrado interior, o lugar de paz a que pode voltar sempre que precisar.',
     steps: [
       ['Sente-se confortavelmente, com as costas direitas e os pés bem assentes no chão. Feche os olhos devagar.', 12],
@@ -42,7 +42,7 @@ const MEDITATIONS = [
     ]
   },
   {
-    id: 'arvore', title: 'A árvore: enraizar e elevar', theme: 'Terra e céu',
+    id: 'arvore', grade: 'ovate', title: 'A árvore: enraizar e elevar', theme: 'Terra e céu',
     desc: 'Exercício de enraizamento: raízes na terra, tronco firme, ramos abertos à luz.',
     steps: [
       ['De pé ou sentado, com a coluna direita, feche os olhos e respire fundo três vezes.', 18],
@@ -59,7 +59,7 @@ const MEDITATIONS = [
     ]
   },
   {
-    id: 'quadrantes', title: 'Os quatro quadrantes', theme: 'Ar, Fogo, Água, Terra',
+    id: 'quadrantes', grade: 'todos', title: 'Os quatro quadrantes', theme: 'Ar, Fogo, Água, Terra',
     desc: 'Volta ao círculo pelos quatro pontos cardeais e pelos seus elementos, como na abertura de um ritual.',
     steps: [
       ['Feche os olhos e imagine-se no centro de um círculo de pedras, num campo aberto.', 15],
@@ -74,7 +74,7 @@ const MEDITATIONS = [
     ]
   },
   {
-    id: 'awen', title: 'Respiração e canto do Awen', theme: 'Inspiração',
+    id: 'awen', grade: 'bardo', title: 'Respiração e canto do Awen', theme: 'Inspiração',
     desc: 'Respiração tranquila seguida do canto do Awen (A-U-E-N), a inspiração sagrada da tradição bárdica.',
     steps: [
       ['Sente-se com conforto e feche os olhos.', 10],
@@ -89,7 +89,7 @@ const MEDITATIONS = [
     ]
   },
   {
-    id: 'ogham-dia', title: 'A letra Ogham do dia', theme: 'Ogham', dynamic: true,
+    id: 'ogham-dia', grade: 'ovate', title: 'A letra Ogham do dia', theme: 'Ogham', dynamic: true,
     desc: 'Contemplação da árvore e da letra Ogham de hoje.',
     build() {
       const o = oghamOfDay();
@@ -108,8 +108,55 @@ const MEDITATIONS = [
         ['Abra os olhos e leve a letra consigo ao longo do dia.', 6]
       ].filter(Boolean);
     }
+  },
+  {
+    id: 'bardo-voz', grade: 'bardo', title: 'O bardo e a fonte', theme: 'Palavra e som',
+    desc: 'O Bardo aprende a escutar antes de falar: a fonte da inspiração, a voz e a memória das histórias.',
+    steps: [
+      ['Sente-se direito, com os pés no chão, e feche os olhos. Respire três vezes, devagar.', 15],
+      ['Imagine-se junto a uma fonte no meio de um prado ao amanhecer. A água sai da terra, fresca e clara.', 25],
+      ['Escute o som da água. Repare como nunca se repete e nunca pára. Esta é a voz da inspiração.', 35],
+      ['Debruce-se e beba um gole. Sinta a frescura descer pela garganta e espalhar-se pelo peito.', 25],
+      ['Deixe que surja uma palavra, uma imagem ou um verso. Não o escolha: receba-o.', 45],
+      ['Repita essa palavra em silêncio, devagar, três vezes. Sinta onde ressoa no corpo.', 30],
+      ['Lembre-se de uma história que ouviu em criança. Quem a contava? Que voz tinha?', 40],
+      ['Agradeça à fonte e aos que vieram antes de si e guardaram as histórias.', 15],
+      ['Respire fundo, mexa os dedos e abra os olhos. Se quiser, escreva a palavra no Caderno bárdico.', 8]
+    ]
+  },
+  {
+    id: 'ovate-antepassados', grade: 'ovate', title: 'O caminho dos antepassados', theme: 'Tempo e cura',
+    desc: 'O Ovate trabalha com o tempo, a cura e os antepassados: uma visita serena às raízes que o sustentam.',
+    steps: [
+      ['Feche os olhos e respire fundo. Sinta o peso do corpo a assentar.', 15],
+      ['Imagine-se ao entardecer num bosque de teixos. A luz é dourada e o ar cheira a terra húmida.', 25],
+      ['No chão há um carreiro de pedras antigas. Cada pedra é uma geração antes de si.', 25],
+      ['Caminhe devagar sobre as pedras. Sinta atrás de si a fila dos que vieram antes: pais, avós, bisavós.', 40],
+      ['Não precisa de os ver. Sinta apenas o apoio deles nas suas costas, como raízes de uma árvore.', 40],
+      ['Pergunte: que dom recebi de vós? Deixe a resposta chegar sem pressa.', 50],
+      ['Pergunte também: que peso posso pousar agora? Imagine-o a cair na terra, que o transforma.', 45],
+      ['Agradeça aos antepassados. Volte pelo carreiro até ao início do bosque.', 20],
+      ['Sinta o corpo, respire fundo e abra os olhos.', 8]
+    ]
+  },
+  {
+    id: 'druida-silencio', grade: 'druida', title: 'O silêncio do carvalho', theme: 'Visão e silêncio',
+    desc: 'O Druida procura a visão que nasce do silêncio: uma contemplação longa, com poucas palavras e muito espaço.',
+    steps: [
+      ['Feche os olhos. Respire naturalmente e deixe o corpo imóvel.', 15],
+      ['Imagine-se sentado sob um carvalho muito antigo, numa colina, numa noite sem lua e cheia de estrelas.', 30],
+      ['Encoste as costas ao tronco. Sinta a árvore a ligar a terra profunda ao céu aberto.', 40],
+      ['Não faça nada. Deixe os pensamentos passar como nuvens diante das estrelas.', 90],
+      ['Repare no espaço entre dois pensamentos. Fique nesse espaço.', 90],
+      ['Se surgir uma imagem ou uma compreensão, receba-a sem a agarrar.', 60],
+      ['Lembre-se do juramento de servir a terra e os seres. O que pede ele de si nesta estação?', 45],
+      ['Agradeça ao carvalho, às estrelas e ao silêncio.', 15],
+      ['Respire fundo, sinta o corpo e abra os olhos devagar.', 8]
+    ]
   }
 ];
+const GRADES = [['todas', 'Todas'], ['bardo', 'Bardo'], ['ovate', 'Ovate'], ['druida', 'Druida']];
+const GRADE_LABEL = { todos: 'Todos os graus', bardo: 'Bardo', ovate: 'Ovate', druida: 'Druida' };
 
 const stepsOf = m => (m.dynamic ? m.build() : m.steps);
 const totalSecs = m => stepsOf(m).reduce((t, [txt, s]) => t + s + Math.ceil(txt.split(/\s+/).length / 2.2), 0);
@@ -295,9 +342,13 @@ function renderPanel() {
       <h2 class="font-cinzel text-xl lg:text-2xl font-bold theme-title mt-1">Caminhos para o silêncio</h2>
       <p class="text-sm theme-muted mt-1">Escolha uma meditação. O texto aparece passo a passo e pode ser lido em voz alta pelo dispositivo, com um sino no início e no fim.</p>
     </div>
+    <div class="gm-grades" role="group" aria-label="Filtrar por grau da OBOD">
+      ${GRADES.map(([g, l]) => `<button type="button" class="gm-grade" data-grade="${g}" aria-pressed="false">${l}</button>`).join('')}
+    </div>
     <div id="gm-list" class="gm-list" role="group" aria-label="Meditações">
       ${MEDITATIONS.map(m => `
-        <button type="button" class="gm-item theme-inner border rounded-xl p-3 text-left cursor-pointer" data-id="${m.id}" aria-pressed="false">
+        <button type="button" class="gm-item theme-inner border rounded-xl p-3 text-left cursor-pointer" data-id="${m.id}" data-grade="${m.grade || 'todos'}" aria-pressed="false">
+          <span class="gm-grade-tag">${esc(GRADE_LABEL[m.grade || 'todos'])}</span>
           <span class="text-[11px] uppercase tracking-widest theme-accent font-semibold block">${esc(m.theme)}</span>
           <b class="font-cinzel theme-title block">${esc(m.title)}</b>
           <span class="text-xs theme-muted">cerca de ${Math.max(1, Math.round(totalSecs(m) / 60))} min</span>
@@ -338,6 +389,13 @@ function renderPanel() {
     else start(state.current ? state.current.id : MEDITATIONS[0].id);
   });
   $('gm-stop').addEventListener('click', () => stop());
+  const setGrade = g => {
+    store.set('druid_med_grade', g);
+    panel.querySelectorAll('.gm-grade').forEach(b => b.setAttribute('aria-pressed', b.dataset.grade === g));
+    panel.querySelectorAll('.gm-item').forEach(b => { b.hidden = !(g === 'todas' || b.dataset.grade === g || b.dataset.grade === 'todos'); });
+  };
+  panel.querySelectorAll('.gm-grade').forEach(b => b.addEventListener('click', () => setGrade(b.dataset.grade)));
+  setGrade(store.get('druid_med_grade', 'todas'));
   const v = $('gm-voice'), r = $('gm-rate'), bg = $('gm-bg');
   v.checked = state.voiceOn; r.value = String(state.rate); bg.value = state.bg;
   v.addEventListener('change', () => { state.voiceOn = v.checked; store.set('druid_med_voice', v.checked); if (!v.checked) synth?.cancel(); });

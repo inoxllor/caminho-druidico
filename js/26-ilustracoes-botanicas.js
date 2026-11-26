@@ -1019,7 +1019,7 @@ function decorate() {
           ? `<button type="button" class="bot-use-art" data-zoom="${hp}" data-title="${esc(label)}" aria-label="Ampliar a gravura: ${esc(label)}">${plateImg(hp, `Gravura: ${label}`, svg, 'bot-use-img')}</button>`
           : `<span class="bot-use-art bot-use-svg theme-glyph">${svg}</span>`;
         const latin = hp ? `<i class="bot-latin">${esc(PLATES[hp][0])}</i>` : '';
-        return `<div class="bot-use">${art}<div class="bot-use-txt"><b class="theme-title">${esc(label)}</b> ${latin}
+        return `<div class="bot-use" data-herb="${k}">${art}<div class="bot-use-txt"><b class="theme-title">${esc(label)}</b> ${latin}
           ${use[0] ? `<p>${esc(use[0])}</p>` : ''}${use[1] ? `<p class="bot-warn" role="note">⚠ ${esc(use[1])}</p>` : ''}</div></div>`;
       }).join('');
       const fito = [...card.querySelectorAll('p')].find(q => /Fitoterapia/.test(q.textContent));
@@ -1052,6 +1052,7 @@ document.addEventListener('error', e => {
 window.botanica.plates = PLATES;
 window.botanica.uses = USES;
 window.botanica.plateSrc = plateSrc;
+window.botanica.herbKey = herbKey;
 window.botanica.herbPlate = HERB_PLATE;
 
 const base = window.renderHerbalList;
