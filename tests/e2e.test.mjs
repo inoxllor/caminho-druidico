@@ -3,7 +3,7 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import { mkdtempSync } from 'node:fs';
+import { mkdtempSync, cpSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -436,4 +436,35 @@ test('HTML único funciona aberto a partir de um ficheiro', async () => {
   assert.equal(await page.evaluate(() => toOgham('Duir')), '᚛ᚇᚗᚏ᚜');
   assert.deepEqual(errors, []);
   await ctx.close();
+});
+
+test('site do Pages (JS junto e minificado) funciona com e sem rede', async () => {
+  const site = mkdtempSync(join(tmpdir(), 'druid-site-'));
+  for (const p of ['index.html', 'manifest.json', 'sw.js', 'LICENSE', 'css', 'js', 'fonts', 'icons', 'img'])
+    cpSync(join(root, p), join(site, p), { recursive: true });
+  execFileSync(process.execPath, [join(root, 'tools/build-pages.mjs'), site]);
+  const srv = createStaticServer(site);
+  await new Promise(r => srv.listen(0, r));
+  const url = `http://localhost:${srv.address().port}/`;
+  const context = await browser.newContext({ locale: 'pt-PT', timezoneId: 'Europe/Lisbon' });
+  const { page, errors } = await open(url, { context });
+  const scripts = await page.evaluate(() => [...document.scripts].map(s => s.getAttribute('src')).filter(Boolean));
+  assert.ok(scripts.some(s => s.startsWith('js/app.min.js?v=')), 'falta o bundle');
+  assert.ok(!scripts.some(s => /js\/\d\d-/.test(s)), 'ainda há scripts soltos');
+  await checkAllTabs(page);
+  await page.evaluate(() => { switchTab('runes'); drawRunes(3); });
+  await page.waitForFunction(() => document.getElementById('rune-card').innerText.length > 30);
+  await page.evaluate(async () => {
+    const reg = await window.appOfflineReady;
+    const sw = reg && reg.active;
+    if (sw && sw.state !== 'activated') await new Promise(r => sw.addEventListener('statechange', () => sw.state === 'activated' && r()));
+  });
+  await page.reload({ waitUntil: 'load' });
+  await context.setOffline(true);
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForFunction(() => typeof window.switchTab === 'function');
+  await checkAllTabs(page);
+  assert.deepEqual(errors, []);
+  await context.close();
+  srv.close();
 });

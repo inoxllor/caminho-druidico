@@ -17,7 +17,7 @@ js/01-…25-*.js      Código, por funcionalidade (scripts clássicos, partilham
 sw.js               Service worker: guarda a app para uso offline
 manifest.json       Manifesto da app instalável
 icons/              Ícones da app
-tools/              build-single.mjs (gera o HTML único) e serve.mjs (servidor local)
+tools/              build-single.mjs (gera o HTML único), build-pages.mjs (junta e minifica o JS e o CSS no Pages) e serve.mjs (servidor local)
 tests/              Testes automáticos
 ```
 
@@ -31,6 +31,7 @@ npx playwright install chromium      # uma vez
 npm run serve                        # http://localhost:8080/
 npm test                             # testes unitários e no browser
 npm run build:single                 # gera dist/caminho-druidico.html
+npm run build:pages -- _site         # junta e minifica o JS e o CSS numa cópia do site (o Pages faz isto sozinho)
 ```
 
 ## Publicação

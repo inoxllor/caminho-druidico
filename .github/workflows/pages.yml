@@ -40,11 +40,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Instalar o esbuild
+        run: npm install --no-audit --no-fund
       - name: Montar o site
         run: |
           mkdir -p _site
           cp -r index.html manifest.json sw.js LICENSE css js fonts icons img _site/
           node tools/build-single.mjs _site/caminho-druidico.html
+          # Junta e minifica o JS e o CSS só na cópia publicada
+          node tools/build-pages.mjs _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

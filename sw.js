@@ -2,12 +2,14 @@
    - Ficheiros da app (HTML, CSS, JS, ícones): com rede, vêm sempre da rede
      (assim uma atualização nunca mistura ficheiros novos com antigos);
      sem rede, vêm da cópia guardada na instalação.
-   - Fontes e bibliotecas de CDN: guardadas na primeira utilização.
+   - Fontes e bibliotecas de CDN e gravuras das ervas (img/plantas):
+     guardadas na primeira utilização, para a instalação ser leve.
    - APIs externas (tempo, localização, IA, QR): sempre pela rede.
    Ao mudar a lista PRECACHE ou o código, suba VERSION. */
-const VERSION = 'v30';
+const VERSION = 'v31';
 const CORE = `caminho-core-${VERSION}`;
 const RUNTIME = 'caminho-runtime-v1';
+const ON_DEMAND = /\/img\/plantas\//;
 
 const PRECACHE = [
   './',
@@ -54,45 +56,6 @@ const PRECACHE = [
   './js/32-saber-origem.js',
   './js/vendor-qrcode.js',
   './js/33-grove-leituras.js',
-  './img/plantas/herb-absinto.webp',
-  './img/plantas/herb-agrimonia.webp',
-  './img/plantas/herb-alecrim.webp',
-  './img/plantas/herb-amora-silvestre.webp',
-  './img/plantas/herb-artemisia.webp',
-  './img/plantas/herb-calendula.webp',
-  './img/plantas/herb-camomila.webp',
-  './img/plantas/herb-cardo-santo.webp',
-  './img/plantas/herb-dente-de-leao.webp',
-  './img/plantas/herb-erva-cidreira.webp',
-  './img/plantas/herb-hera-terrestre.webp',
-  './img/plantas/herb-lavanda.webp',
-  './img/plantas/herb-pinheiro.webp',
-  './img/plantas/herb-rosa-silvestre.webp',
-  './img/plantas/herb-salvia.webp',
-  './img/plantas/herb-ulmeira.webp',
-  './img/plantas/herb-valeriana.webp',
-  './img/plantas/herb-verbena.webp',
-  './img/plantas/herb-viscum.webp',
-  './img/plantas/tree-Ailm.webp',
-  './img/plantas/tree-Beith.webp',
-  './img/plantas/tree-Coll.webp',
-  './img/plantas/tree-Duir.webp',
-  './img/plantas/tree-Eadha.webp',
-  './img/plantas/tree-Fearn.webp',
-  './img/plantas/tree-Gort.webp',
-  './img/plantas/tree-Huath.webp',
-  './img/plantas/tree-Ioho.webp',
-  './img/plantas/tree-Luis.webp',
-  './img/plantas/tree-Muin.webp',
-  './img/plantas/tree-Ngetal.webp',
-  './img/plantas/tree-Nion.webp',
-  './img/plantas/tree-Onn.webp',
-  './img/plantas/tree-Quert.webp',
-  './img/plantas/tree-Ruis.webp',
-  './img/plantas/tree-Saille.webp',
-  './img/plantas/tree-Straif.webp',
-  './img/plantas/tree-Tinne.webp',
-  './img/plantas/tree-Ur.webp',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
@@ -164,6 +127,8 @@ self.addEventListener('fetch', event => {
 
   if (request.mode === 'navigate' && url.origin === self.location.origin) {
     event.respondWith(networkFirstPage(request));
+  } else if (url.origin === self.location.origin && ON_DEMAND.test(url.pathname)) {
+    event.respondWith(cacheFirst(request));
   } else if (url.origin === self.location.origin) {
     event.respondWith(networkFirstAsset(request));
   } else if (CACHEABLE_HOSTS.includes(url.hostname)) {
