@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Oráculos de Ogham, Tarot Nórdico e Runas, Roda do Ano, astronomia e diário druídico."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23080c14'/%3E%3Cpath d='M25 85L40 25M50 85V38M75 85L60 25' stroke='%23a5b4fc' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
-    <title>Caminho Druídico Pro Ultimate • Edição inspirada na OBOD &amp; Tarot Nórdico 16-Bit</title>
+    <title>Caminho Druídico</title>
     <meta name="theme-color" content="#0c1220">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Caminho Druídico">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-    <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t})()</script>
+    <script>(function(){var t='theme-night';try{t=localStorage.getItem('druid_theme')||(matchMedia('(prefers-color-scheme: light)').matches?'theme-parchment':'theme-night')}catch(e){}document.documentElement.className=t;window.__theme=t;try{var z=localStorage.getItem('druid_text_size');if(z==='lg'||z==='xl')document.documentElement.classList.add('ts-'+z)}catch(e){}})()</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:wght@400;500;600;700&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ogham&amp;family=Noto+Sans+Runic&amp;display=swap" rel="stylesheet">
     <style>
+/* Fontes Ogham e Rúnica embutidas (Noto Sans Ogham/Runic, SIL Open Font License 1.1):
+   os símbolos aparecem bem mesmo sem rede e no HTML único. */
+@font-face { font-family: 'Noto Sans Ogham'; font-style: normal; font-weight: 400; font-display: block; unicode-range: U+1680-169C;
+  src: url(data:font/woff2;base64,d09GMgABAAAAAA84ABAAAAAAJIwAAA7fAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGwwcGAZgAFQINAmcDBEICp1AmVILRgABNgIkA4EGBCAFhEwHgl4MgScbQiFFB2qPA6XFIQD/18cbo0cViQyzIXK6DSmm5kkcI6IlmwKTR4Gg7B70JhapkKjZ9f1pPharmpeu+vfAOxwI4VNq+92fTF0MvIVahcZFsxC92vXxCElm/ac1q/ehqqG6eYggy5hZzOwhCT85RCPXnSJ3wgCgUOxDefkvW+IEZRYFJymddAooWyn9kg+nwqcP83ATQlTb9o8hJkKlM0ZKMwZLkLEI39Ol8/7uzqU1w+vgzTAER5AwRAOx5mzo9mpaUlFhRF7LT/2VM8vgA7I0N//AT7o+QC9AYP/Nqk+aMl0ZC7b5lxvQxW3MHZ5Pm8lFlbACX/lhjzZAByhTwj6HpKB03nNRu6i3q572+P6nlnTmS3OlavcKYK2k41ZYAA4h1pd/pNHXrtsWyVtlXyuy06osp1cYVFHeoqR7c72zXXiHAnDu8QviATwwkEfnKMf5dCpJlKeYSGvVloD3Nu1UIifAy6NAAMKnHvDcJDfnHmpdMABb4MjKw7zECuBnUgPgxPnp0k2ItR9gZ1iNMisAQTWnYlqOrGIZ56HpsQz/f4FOMijgVQHALfE2oGcUsJO4YWqK2nKabRF8sL9/IEaPM2HTNCB8X1P8/1ftB8382xscKr42gB00N4H/1LUI/9/iI+178/qsnPzvunMAAR9CP4p8OMPkzQfsu1+BhQNGvqSpNJc+w57PfenJZqL7xlrwBVB7LVSYvINAT546GGrVOgRSH8rq0pzvUlJS8oVXXV8Gm4T5bSZEBrOba/T1rOVGg8nTu71hYXbbZD1/74bAVN+Wuuwmr+B1OIhtkzYWBW2SRCND2UQTu6CLNVIL70to9asd0TH7kz72QbCIx/HvUJAwzU7kbI8sFZRZ4XaufIlSYpxrRsKqJccRM/4MGt5PyFSaZ4oLIaeo39Pvh5xYgqUwxUg/BOxEnIC3ATwjtjHPNNHV3PUsn2UyQf3mmZE6xjpHKKmSAuI00kT10WEgfUE914LHUcAzj2/eWBuh7LAqz3VI24tXewFIkQMjgjwLobxizKUlTA2l6fl3W1OZaTta7YU0Mnkcg0Ybhcq7ACWjG7WdP3J4IGCnRcPU4B88MK8CzGe4nkIbfQbepSOA7Ph3Ek7OVGoBqFZyhFVSL+0vRBtMhH3/2DoPuLQzBdFMR6ekgKgn6Tf9RWqFl3FglD30HFBRWog4K+gt81biKUoMVCIyCyRSqCk7jEfSfDAK1qiNj60jReHGA+4qPUcGKIuQ8v0ktrPdfCRrwbeYxY4cx1HMgeRMZdP0F3ImaXbh5STQAxb48C0U/d2Ld4m3OotCuXEvfPj6UjJ2GeXKDShYdL97hXVoqHjyFAFh9yUtmHWCggrio1BUWERbtXkmLv3E7NIqVPjAYIDt13lPRlIOycTOtDBYO2Y8bIE82oMIbrWk+jZljZgraDz4FijMS5/EPLFB2Us6bdmdl/nchTnvvRag4cSgUhp6iWfTwZ3oaELBugOv2RYELYKhVQi0CYV2YaBDWOgUHnQJH7pFMDoOtUFHbP7wLahU0I9rzGcdE4CZTeaf20/OHDL/TlgP5kiTrBuhcvwiY0pG7MWIfRixHyMOYMRBjDiEEYcx4ghGHMWIYxjrU5ANp4XppkRLlu42dNesNcpM+W1xBgwvrZ/m0jELkaFYtKZ5RW/c20f5RgMwl3+ulaTzwOsmY/ayGF33w9MoqZ5X0cvA1Rcgr3Y/soi5+CYP1q1CaT/ZfTWEI1TPYEtXyoKu5Z2QJciGDGUIAXENOZZRXdlwrMBjiJOSK7qKwhLuSSVDYB72d80zj2yoWcK+sREy366ori8+dqwBBJrNo4469MAlkns4dg6aKRPZaFZ+d7JekYp2C9b8iMsWdl8HofImHGpcjuZQq+X96L0KIaXpHxXqIOGLCEsgb/Hy90y/o0y1YpjrHSozqobps+W4KKtUHKTSQV4xSsgB7Kaz0ocmKb5G1iwnO8Z4flsCq2i1EeEslro1fcl6m6NjQx/riAimCnVjJT1zs0KI8QYiF5aW7N3qdwTKa3u/4H2oZEOtgTvGBGOOCOuR1717/JI3ZKbHK4v55vav3d5NL032jYmePBX7ETNvr0Cl0uR1HtDMMDLjGGQjVmVGVx3HPsRDx2b05vvHtz3qOx8Aa2nR5EGwnpqeI/3sIzYr8AYsK2aq4FAFwUeDSvs7M5F58aWTelq2SSpdWaPxMErYci+vuFv/K4aeLOWSt2Vf3dAVY32m38a9wpFRXOtoho9Gcqff6qEkctWAx4L1Vb/c4lruXcjNWrq8O8e3nkCBBkos9/gkWDXh1L4Q+iqVDJr+orHyaTh1Cda82yCiJe2JkgDkORAqAl/F4Sc0GUGfA6EhaDRxSEox0DIAey6EjgG43aQDPQPw50IYGPjhurhEJBPEcyBMBH6Kw19kMkI+B8JCoMu9IUaFGDViNIjRIkaHGD1iDMieEYVqI+qppQTjmgtk/VnxTkJu0xIFOFgRjDUBNoPUzIxbs8Gd2QR7Fjk4IJDBowLBiQDnQWrnxIvZ4tVs8Wa2eFcRHgR4EvglMzt8mx1+zA6/Zoc/FeFPgNBniOrP4r97dJvAHrTa8I4d1Bobo+/gb5HT0ewOu4MbBQ70vyZFNafPEQ4C5oDvAmRD1W18wL5Eh3eKDhYc3iAGg3BvUlU/ylYtx3WOXocDE+GlCG1FmCRpbCXVhVY+eBA4E+sdcYmEYlySwxkImSB0eEqz2tz2mbmbb81CThw7pHN2TueMvv1eujbAXXOrU7iTVYYwldM5u9/FZOPax8rLUvUjv1S9lFacQ/0XL5NLaVKUpjRJcnZSvOq2s3jxSqjlD1/3xlcij7kjnnWJ7BBH7Cjngaw/miWnObpXeZ8yVgbL/vefmNg6TYdTFcWL1EoTfPrygQ4PhnDZE47w0tvd5TsKpXiIzsC1q8P9Dmu0WutUehm1TTeP3+wUY8wxIZ7kHfEbVlaqpJgcWBnA4bsdbKW8MqSFBuWljmg1NTdqsYd2p2Ic70nUPXyABDJabqAwt5GEdKbY1p0HTHFWmlYMkEXNK1jzij3kSHtdZOtr5D6PTU9er49HZOPU2etz0C9vjEqvLxv5yo1X6QDNhx4wqZAUMjlXHiS321SXpFyp2Tbfnx3Ule4uStnv68Mg2TCZXk+h7cNlCqIFnNXfVE/9m/ZXGt57wtRfKXfyrXJ/hbNN1m/dW0EJreZdN/8sZ38W6DsHnYx+1t/HpjRpUY5d2T09EA6lXdPuheQvPKgWtuWran5Bm7rg4IJvM1teMmOcTOjefCdKMiqMB9SelDyJKssMqeNlNMUHSNb9PrBbOvmk/J+mE7zqSQaJay/byyLNX3Z+2cFer7hELolFVyrWWXLWY4lcsp82ElRXujIMgTDkXoSIqwhTTSGmM+BZoxBI3nZzqnhDiFAFUI0h0BlAiGZkUPyoLpzZVdi8bhCe6sHL57lxK74s0BY+RjT4sBycDctz+zeF+pWRw7ODpCtFKskK3BlGhvtxZ8r+ILVKLBVZzt1RTHQcd2b88CAz0Iz/d9YdK+IbGKGgvYY+W1BlAKlJ30rYarCAlQLWjEH1/AfD1CwGRtxahEk8wBGx7nmoMj8KXs3HgyexH6UeOSov5cYgQJX70QhqIQECqUuJQalQJekm51Bla3C16Ba7PdEfFYYG8Z4MQ/WmKg1EmvBNKdUYZcwkgz578OrtJpM8d2zzlvipltnJPPgZk7GTAEFdWOdDMvJtU3Tw5fge7Tjwam3Zr0i3F/es8uItYo85q4OrSy/ncjj5VswS9GjZ3Q/T9/4toxazirLUMBhCw9BYYrUSI64PDZNn5VupoUCPKX/BcaSQ0ZHhocGBJUTzY/wMdJw1a7AhxbwgWeq2rSbPRvCt8YlxDEsNUXCwA5jvkGfpRYmahsLdgcCbiMaGssgzS9QyIsQngkCJ8hEK/4PaJk30IM7U4JPiFM/pddnC1lvRUDTOZzlH6S08vckYFabjXw6+EnyUEx+6xIbWHd0SoNMDQ7gXHSpG70WzVqpoYmseVuwZQIw4r3x/3N80y/p6u5vKIj05nyIBnQxt9DZkabDzfrvLt72tpRkrrNzLAuXCzVS+lHrqkB/s+VPR7+Zd/Vwr63v3dnW0FepB6y21qDX3DvT1NGgevxhu1MQq946NDDVpzF5NNitgGpQ0IszDEp6eqOb+IYRns8h5wrMYlLq1pbmpsaG+rramuqqyorystKS4qLAgP4/lylJOdlZmRnpaakpyUmJCfFxsTDSiECUKNDIiPMwBRdRhwrYjQIkYdC90IvcCB5OaFScsZywtAfVUnNt64SicI+1wEiDstThhrc1lbuIadMQat3z48X3a1ppuG0KXjriVltnnJnFdxcQBYOwfu86drLkk//xUfgXgw1O7/gL4pvC7+r9SS+V9ix8AFgwAIOD3eDm1GdAsW9PVzXqzg6ayRD/pC74TTJ6X+JTAV/8Vebhd9ck8QB/sdgrQx8wJ2yzBuMeY7BTgE+cIAgLg4x7ueRoAeEuLaBmhq2aWMRLqWyao+LhMMWVymcFFLcssxsRyItuA+yy4Vx4yIlGkrdsUqu4oLwBHaNStr/Fghjs5NywmKVBk0NZt5VoN8Lg4z11+Y79wZdrBCyu5dXLVp9WZeJB9OJ4oAkUJkvDrc4fqhTN2del++gK8IIsIjeNfjF41TrgY5rE2wTso8PRanu6ET6/KMpeLrXcqSYp0y8tZn7OyQ0OWalG26wVSM31Z9Lgiiu0vmScqodrck9EKXmdoQ3dp3B95b22joU7dqGihNmWFzf2ZnoFZdYempfW8SM/dWT2YDtXD/r8R/Tn7gJgEQkqGLHnkU0AhOYoopoRSysgpKGmgkSaaaaGVNtrpoJMuuumhNw6UWRZVFhTYLBzoptTp+VIhVilToUpCjToNUjJymhQELXPPt5cyFaok1KjTICUjp3mkQP4v18t2xpR7Yd/WH193uMfEZv/4Dhh72zkxsqXwmLvy0233zzfTwcEB7Ew55BcWwMFzylPXzuidpz63wV3ifHi2h6MJB7f3WCAl5ntrcMod2FzslNWBJibWlIx9OG3jqzsPZ5q/ttkaByc=) format('woff2'); }
+@font-face { font-family: 'Noto Sans Runic'; font-style: normal; font-weight: 400; font-display: block; unicode-range: U+16A0-16F8;
+  src: url(data:font/woff2;base64,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) format('woff2'); }
 /* Reset base */
 *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:var(--border-color)}
 html{line-height:1.5;-webkit-text-size-adjust:100%;tab-size:4}
@@ -1660,6 +1665,132 @@ html.theme-parchment .moon-svg .moon-rim { stroke: #8a6a2a; stroke-opacity: .8; 
 html.theme-lantern :is(.realm-oraculos, .realm-ciclos, .realm-pratica, .realm-saber, .realm-comunidade, .realm-hoje),
 html.theme-lantern :is(.nav-portal, .realm-tile)[data-realm] { --realm-tint: #f87171; }
 html.theme-lantern .oracle-sigil, html.theme-lantern .oracle-head { --oracle-tint: #f87171; }
+
+/* ============================================================
+   v16 — Sugestões dos utilizadores
+   ============================================================ */
+.items-end { align-items: flex-end; }
+@media (min-width: 1024px) { .lg\:p-6 { padding: 1.5rem; } }
+
+/* Tamanho do texto */
+html.ts-lg :is(#main, .sheet, dialog) { zoom: 1.12; }
+html.ts-xl :is(#main, .sheet, dialog) { zoom: 1.25; }
+.ts-wrap { margin-top: .75rem; }
+.ts-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 .4rem; }
+.ts-wrap .nav-group { padding-left: 0; padding-right: 0; }
+.ts-pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: .35rem; }
+.ts-pick button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 48px; border-radius: .6rem; background: var(--bg-inner); border: 1px solid var(--border-color); color: var(--text-title); cursor: pointer; font-family: Georgia, serif; font-weight: 700; line-height: 1; }
+.ts-pick button[aria-pressed="true"] { border-color: var(--glyph-highlight); box-shadow: inset 0 0 0 1px var(--glyph-highlight); color: var(--glyph-highlight); }
+.ts-name { font-family: Inter, system-ui, sans-serif; font-size: 10px; font-weight: 600; color: var(--text-muted); }
+
+/* Título numa só linha no telemóvel */
+.mob-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+@media (max-width: 420px) { .mob-title { font-size: 12px; letter-spacing: .04em; } }
+@media (max-width: 340px) { .mob-title { font-size: 10.5px; letter-spacing: 0; } .hdr-btn span { display: none; } }
+
+/* Primeiros passos */
+.first-steps { border-radius: 1rem; padding: 1.1rem 1.25rem; margin-top: 1rem; }
+.fs-head { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+.fs-head h3 { font-size: 1.2rem; font-weight: 700; color: var(--text-title); margin-top: .15rem; }
+.fs-head .icon-btn { width: 36px; height: 36px; flex: none; }
+.fs-head .icon-btn svg { width: 16px; height: 16px; }
+.fs-list { list-style: none; margin: .85rem 0 0; padding: 0; display: grid; gap: .5rem; }
+@media (min-width: 768px) { .fs-list { grid-template-columns: repeat(3, 1fr); } }
+.fs-list button { width: 100%; height: 100%; display: flex; align-items: center; gap: .75rem; text-align: left; padding: .7rem .8rem; border-radius: .75rem; background: var(--bg-inner); border: 1px solid var(--border-color); color: var(--text-title); cursor: pointer; }
+.fs-list button:hover { border-color: var(--border-hover); }
+.fs-n { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: .85rem; border: 1px solid var(--glyph-highlight); color: var(--glyph-highlight); }
+.fs-t { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.fs-t b { font-size: .9rem; }
+.fs-t span { font-size: .78rem; color: var(--text-muted); }
+.fs-list li.is-done button { opacity: .7; }
+.fs-list li.is-done .fs-n { background: var(--ok); border-color: var(--ok); color: var(--bg-body); }
+.fs-list li.is-done .fs-t b { text-decoration: line-through; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+.fs-help { margin-top: .75rem; font-size: .85rem; }
+.fs-help summary { cursor: pointer; color: var(--text-accent); font-weight: 600; min-height: 36px; display: flex; align-items: center; }
+.fs-help ul { list-style: none; padding: 0; margin: .4rem 0 0; display: grid; gap: .5rem; }
+.fs-help li { display: flex; gap: .6rem; align-items: flex-start; color: var(--text-muted); }
+.fs-help li svg { width: 18px; height: 18px; flex: none; margin-top: 2px; color: var(--text-accent); }
+.fs-help li b { color: var(--text-title); }
+
+/* Aviso de cópia de segurança */
+.backup-notice { display: grid; grid-template-columns: auto 1fr; gap: .4rem .75rem; align-items: start; padding: .85rem 1rem; margin-bottom: 1rem; border-radius: .85rem; border: 1px solid color-mix(in srgb, var(--glyph-highlight) 45%, var(--border-color)); background: color-mix(in srgb, var(--glyph-highlight) 8%, var(--bg-inner)); font-size: .875rem; color: var(--text-muted); }
+.backup-notice b { color: var(--text-title); display: block; }
+.bn-ic { color: var(--glyph-highlight); margin-top: 2px; }
+.bn-ic svg { width: 20px; height: 20px; }
+.bn-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; }
+
+/* Lembretes do ciclo */
+.cr-opts { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cr-opt { display: inline-flex; align-items: center; gap: .55rem; min-height: 44px; padding: 0 .85rem; border-radius: .6rem; background: var(--bg-inner); border: 1px solid var(--border-color); font-size: .875rem; color: var(--text-title); cursor: pointer; }
+.cr-opt input { width: 18px; height: 18px; accent-color: var(--glyph-highlight); }
+.cr-opt:has(input:disabled) { cursor: default; opacity: .85; }
+.cr-next { list-style: none; padding: 0; margin: 0; display: grid; gap: .35rem; border-top: 1px solid var(--border-color); padding-top: .75rem; }
+.cr-next li { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: .6rem; font-size: .875rem; color: var(--text-title); }
+.cr-next li > span:first-child { display: grid; place-items: center; color: var(--text-accent); }
+.cr-next li svg { width: 18px; height: 18px; }
+.cr-next li > span:last-child { font-size: .8rem; text-align: right; }
+
+/* O meu ano na Roda */
+.wy-bar { display: flex; gap: 4px; }
+.wy-bar i { width: 18px; height: 6px; border-radius: 3px; background: var(--border-color); }
+.wy-bar i.on { background: var(--glyph-highlight); box-shadow: 0 0 6px color-mix(in srgb, var(--glyph-highlight) 50%, transparent); }
+.wy-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
+.wy-list > li { border: 1px solid var(--border-color); border-radius: .75rem; background: var(--bg-inner); padding: .6rem .75rem; }
+.wy-list > li.is-done { border-color: color-mix(in srgb, var(--glyph-highlight) 40%, var(--border-color)); }
+.wy-row { display: flex; align-items: center; gap: .75rem; }
+.wy-ic { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: var(--text-accent); border: 1px solid var(--border-color); font-weight: 700; }
+.wy-ic svg { width: 18px; height: 18px; }
+.is-done .wy-ic { background: var(--glyph-highlight); border-color: var(--glyph-highlight); color: var(--bg-body); }
+.wy-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.wy-txt b { color: var(--text-title); font-size: .95rem; }
+.wy-txt > span { font-size: .78rem; color: var(--text-muted); }
+.wy-txt p { font-size: .85rem; color: var(--text-title); margin-top: .25rem; font-style: italic; overflow-wrap: anywhere; }
+.wy-row .btn-sec { flex: none; min-height: 38px; padding: 0 .8rem; }
+.wy-form { display: grid; gap: .6rem; margin-top: .75rem; padding-top: .75rem; border-top: 1px dashed var(--border-color); }
+.wy-form > label:not(.cr-opt) { display: flex; flex-direction: column; gap: .3rem; font-size: .8rem; font-weight: 600; color: var(--text-muted); }
+.wy-form input[type="date"] { min-height: 44px; max-width: 14rem; color: var(--text-title); }
+.wy-form textarea { width: 100%; color: var(--text-title); font-size: .9rem; resize: vertical; }
+.wy-form .cr-opt { align-self: start; }
+.wheel-node.is-done .disc { stroke: var(--ok); stroke-width: 3; }
+
+/* Ervas: colheita e lista */
+.bot-harvest { margin-top: .4rem; font-size: .78rem; color: var(--text-muted); }
+.bot-harvest span { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-accent); margin-right: .15rem; }
+.herb-fav { display: inline-flex; align-items: center; gap: .35rem; margin-top: .4rem; min-height: 36px; padding: 0 .7rem; border-radius: 999px; border: 1px solid var(--border-color); background: var(--bg-inner); color: var(--text-muted); font-size: .78rem; font-weight: 600; cursor: pointer; }
+.herb-fav:hover { border-color: var(--border-hover); }
+.herb-fav[aria-pressed="true"] { color: var(--glyph-highlight); border-color: color-mix(in srgb, var(--glyph-highlight) 55%, var(--border-color)); }
+.hv-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.hv-chip { display: inline-flex; align-items: baseline; gap: .35rem; min-height: 38px; padding: .45rem .8rem; border-radius: 999px; border: 1px solid var(--border-color); background: var(--bg-inner); color: var(--text-title); font-size: .85rem; font-weight: 600; cursor: pointer; text-align: left; }
+.hv-chip:hover { border-color: var(--border-hover); }
+.hv-chip.in-season { border-color: color-mix(in srgb, var(--ok) 55%, var(--border-color)); }
+.hv-chip small { font-size: .7rem; font-weight: 500; color: var(--text-muted); }
+.hv-chip > span[aria-hidden] { color: var(--glyph-highlight); }
+.hv-mine { border-top: 1px solid var(--border-color); padding-top: .85rem; display: grid; gap: .6rem; }
+.hv-mine h4 { font-size: 1rem; font-weight: 700; }
+.hv-seasons { display: grid; gap: .75rem; }
+@media (min-width: 768px) { .hv-seasons { grid-template-columns: 1fr 1fr; } }
+.hv-season > p { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .35rem; }
+.hv-season.is-now > p { color: var(--ok); }
+
+/* Sem rede */
+.net-banner { display: flex; align-items: center; gap: .6rem; padding: .6rem .9rem; margin-bottom: 1rem; border-radius: .75rem; border: 1px solid color-mix(in srgb, var(--info-highlight) 45%, var(--border-color)); background: color-mix(in srgb, var(--info-highlight) 10%, var(--bg-inner)); color: var(--text-title); font-size: .85rem; }
+.net-banner > span { font-size: 1.1rem; color: var(--info-highlight); }
+.net-note { margin-top: .35rem; font-size: .75rem; color: var(--text-muted); font-style: italic; }
+
+/* Meditações por grau */
+.gm-grades { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .85rem; }
+.gm-grade { min-height: 40px; padding: 0 .9rem; border-radius: 999px; border: 1px solid var(--border-color); background: var(--bg-inner); color: var(--text-muted); font-size: .85rem; font-weight: 600; cursor: pointer; }
+.gm-grade:hover { border-color: var(--border-hover); }
+.gm-grade[aria-pressed="true"] { color: var(--on-primary); background: var(--btn-primary); border-color: var(--btn-primary); }
+.gm-grade-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-accent); border: 1px solid var(--border-color); border-radius: 999px; padding: 1px .5rem; }
+.gm-item[hidden] { display: none !important; }
+@media (min-width: 1024px) { .gm-list { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 440px) {
+  .app-header { gap: .35rem; padding-left: .75rem; padding-right: .75rem; }
+  .hdr-actions { gap: .25rem; }
+  .hdr-btn { min-width: 44px; padding: 0 .25rem; }
+  .hdr-btn span { font-size: 9.5px; letter-spacing: 0; }
+}
 </style>
 </head>
 <body id="app-body" data-design-version="10" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
@@ -1758,7 +1889,7 @@ html.theme-lantern .oracle-sigil, html.theme-lantern .oracle-head { --oracle-tin
         <div class="flex items-center gap-2 min-w-0">
             <svg class="awen-svg !w-7 !h-7" viewBox="0 0 100 100" aria-hidden="true"><line x1="25" y1="85" x2="40" y2="20"></line><line x1="50" y1="85" x2="50" y2="35"></line><line x1="75" y1="85" x2="60" y2="20"></line><circle cx="50" cy="15" r="5" fill="var(--text-accent)" stroke="none"></circle></svg>
             <div class="min-w-0">
-                <h1 class="font-cinzel text-sm font-bold theme-title tracking-wider">CAMINHO DRUÍDICO</h1>
+                <h1 class="font-cinzel text-sm font-bold theme-title tracking-wider mob-title">CAMINHO DRUÍDICO</h1>
                 <p id="mob-tree-subtitle" class="text-[11px] theme-accent uppercase tracking-wide truncate">&nbsp;</p>
             </div>
         </div>
@@ -2637,8 +2768,8 @@ html.theme-lantern .oracle-sigil, html.theme-lantern .oracle-head { --oracle-tin
                 <div id="journal-lock-screen" class="hidden theme-card border rounded-2xl p-8 lg:p-12 text-center max-w-md mx-auto space-y-5">
                     <div class="flex justify-center theme-accent"><svg class="ic ic-hero" aria-hidden="true"><use href="#i-lock"></use></svg></div>
                     <h2 class="font-cinzel text-xl font-bold theme-title">Santuário Escrito Protegido</h2>
-                    <p class="text-sm theme-muted">Introduza o seu PIN de 4 dígitos para aceder ao Diário e ao Caderno de Poesia Bárdica.</p>
-                    <input type="password" id="journal-pin-unlock-input" maxlength="4" placeholder="••••" class="w-36 mx-auto text-center tracking-[0.5em] text-xl font-bold theme-inner border rounded-lg p-3 theme-title">
+                    <p class="text-sm theme-muted">Os seus escritos estão cifrados com o PIN. Introduza-o para abrir o Diário e o Caderno bárdico.</p>
+                    <input type="password" id="journal-pin-unlock-input" maxlength="64" autocomplete="current-password" placeholder="PIN ou frase" onkeydown="if(event.key==='Enter')unlockJournalWithPin()" class="w-56 mx-auto text-center tracking-[0.5em] text-xl font-bold theme-inner border rounded-lg p-3 theme-title">
                     <div id="pin-error-msg" class="c-danger text-sm hidden font-semibold">PIN incorreto. Tente novamente.</div>
                     <div>
                         <button onclick="unlockJournalWithPin()" class="bg-[var(--btn-primary)] hover:opacity-90 text-[var(--on-primary)] font-bold py-2.5 px-8 rounded-lg text-sm transition cursor-pointer">Desbloquear</button>
@@ -2662,10 +2793,10 @@ html.theme-lantern .oracle-sigil, html.theme-lantern .oracle-head { --oracle-tin
                     <div id="pin-settings-box" class="hidden theme-inner border rounded-xl p-4 flex flex-wrap items-center justify-between gap-3 text-sm">
                         <div class="space-y-0.5">
                             <strong class="theme-title block">Proteção por PIN Local</strong>
-                            <span class="theme-muted text-xs">Defina um código de 4 dígitos para proteger os seus escritos neste dispositivo.</span>
+                            <span class="theme-muted text-xs">O PIN cifra o Diário e o Caderno bárdico neste dispositivo (AES-256). Use pelo menos 4 caracteres; uma frase é mais segura. Se esquecer o PIN, o texto não pode ser recuperado: faça antes uma cópia de segurança.</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <input type="password" id="new-pin-input" maxlength="4" placeholder="4 dígitos" class="w-24 text-center theme-card border rounded-lg px-2.5 py-1.5 theme-title">
+                            <input type="password" id="new-pin-input" maxlength="64" autocomplete="new-password" placeholder="Novo PIN" class="w-36 text-center theme-card border rounded-lg px-2.5 py-1.5 theme-title">
                             <button onclick="saveNewJournalPin()" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-bold px-3 py-1.5 rounded-lg cursor-pointer">Ativar</button>
                             <button onclick="removeJournalPin()" class="border px-3 py-1.5 rounded-lg cursor-pointer tone-danger">Remover</button>
                         </div>
@@ -7700,7 +7831,7 @@ function oghamOfDay(date = new Date()) {
 // Cada passo: texto narrado e segundos de silêncio depois dele.
 const MEDITATIONS = [
   {
-    id: 'nemeton', title: 'A clareira do Nemeton', theme: 'Santuário interior',
+    id: 'nemeton', grade: 'todos', title: 'A clareira do Nemeton', theme: 'Santuário interior',
     desc: 'Visualização do bosque sagrado interior, o lugar de paz a que pode voltar sempre que precisar.',
     steps: [
       ['Sente-se confortavelmente, com as costas direitas e os pés bem assentes no chão. Feche os olhos devagar.', 12],
@@ -7719,7 +7850,7 @@ const MEDITATIONS = [
     ]
   },
   {
-    id: 'arvore', title: 'A árvore: enraizar e elevar', theme: 'Terra e céu',
+    id: 'arvore', grade: 'ovate', title: 'A árvore: enraizar e elevar', theme: 'Terra e céu',
     desc: 'Exercício de enraizamento: raízes na terra, tronco firme, ramos abertos à luz.',
     steps: [
       ['De pé ou sentado, com a coluna direita, feche os olhos e respire fundo três vezes.', 18],
@@ -7736,7 +7867,7 @@ const MEDITATIONS = [
     ]
   },
   {
-    id: 'quadrantes', title: 'Os quatro quadrantes', theme: 'Ar, Fogo, Água, Terra',
+    id: 'quadrantes', grade: 'todos', title: 'Os quatro quadrantes', theme: 'Ar, Fogo, Água, Terra',
     desc: 'Volta ao círculo pelos quatro pontos cardeais e pelos seus elementos, como na abertura de um ritual.',
     steps: [
       ['Feche os olhos e imagine-se no centro de um círculo de pedras, num campo aberto.', 15],
@@ -7751,7 +7882,7 @@ const MEDITATIONS = [
     ]
   },
   {
-    id: 'awen', title: 'Respiração e canto do Awen', theme: 'Inspiração',
+    id: 'awen', grade: 'bardo', title: 'Respiração e canto do Awen', theme: 'Inspiração',
     desc: 'Respiração tranquila seguida do canto do Awen (A-U-E-N), a inspiração sagrada da tradição bárdica.',
     steps: [
       ['Sente-se com conforto e feche os olhos.', 10],
@@ -7766,7 +7897,7 @@ const MEDITATIONS = [
     ]
   },
   {
-    id: 'ogham-dia', title: 'A letra Ogham do dia', theme: 'Ogham', dynamic: true,
+    id: 'ogham-dia', grade: 'ovate', title: 'A letra Ogham do dia', theme: 'Ogham', dynamic: true,
     desc: 'Contemplação da árvore e da letra Ogham de hoje.',
     build() {
       const o = oghamOfDay();
@@ -7785,8 +7916,55 @@ const MEDITATIONS = [
         ['Abra os olhos e leve a letra consigo ao longo do dia.', 6]
       ].filter(Boolean);
     }
+  },
+  {
+    id: 'bardo-voz', grade: 'bardo', title: 'O bardo e a fonte', theme: 'Palavra e som',
+    desc: 'O Bardo aprende a escutar antes de falar: a fonte da inspiração, a voz e a memória das histórias.',
+    steps: [
+      ['Sente-se direito, com os pés no chão, e feche os olhos. Respire três vezes, devagar.', 15],
+      ['Imagine-se junto a uma fonte no meio de um prado ao amanhecer. A água sai da terra, fresca e clara.', 25],
+      ['Escute o som da água. Repare como nunca se repete e nunca pára. Esta é a voz da inspiração.', 35],
+      ['Debruce-se e beba um gole. Sinta a frescura descer pela garganta e espalhar-se pelo peito.', 25],
+      ['Deixe que surja uma palavra, uma imagem ou um verso. Não o escolha: receba-o.', 45],
+      ['Repita essa palavra em silêncio, devagar, três vezes. Sinta onde ressoa no corpo.', 30],
+      ['Lembre-se de uma história que ouviu em criança. Quem a contava? Que voz tinha?', 40],
+      ['Agradeça à fonte e aos que vieram antes de si e guardaram as histórias.', 15],
+      ['Respire fundo, mexa os dedos e abra os olhos. Se quiser, escreva a palavra no Caderno bárdico.', 8]
+    ]
+  },
+  {
+    id: 'ovate-antepassados', grade: 'ovate', title: 'O caminho dos antepassados', theme: 'Tempo e cura',
+    desc: 'O Ovate trabalha com o tempo, a cura e os antepassados: uma visita serena às raízes que o sustentam.',
+    steps: [
+      ['Feche os olhos e respire fundo. Sinta o peso do corpo a assentar.', 15],
+      ['Imagine-se ao entardecer num bosque de teixos. A luz é dourada e o ar cheira a terra húmida.', 25],
+      ['No chão há um carreiro de pedras antigas. Cada pedra é uma geração antes de si.', 25],
+      ['Caminhe devagar sobre as pedras. Sinta atrás de si a fila dos que vieram antes: pais, avós, bisavós.', 40],
+      ['Não precisa de os ver. Sinta apenas o apoio deles nas suas costas, como raízes de uma árvore.', 40],
+      ['Pergunte: que dom recebi de vós? Deixe a resposta chegar sem pressa.', 50],
+      ['Pergunte também: que peso posso pousar agora? Imagine-o a cair na terra, que o transforma.', 45],
+      ['Agradeça aos antepassados. Volte pelo carreiro até ao início do bosque.', 20],
+      ['Sinta o corpo, respire fundo e abra os olhos.', 8]
+    ]
+  },
+  {
+    id: 'druida-silencio', grade: 'druida', title: 'O silêncio do carvalho', theme: 'Visão e silêncio',
+    desc: 'O Druida procura a visão que nasce do silêncio: uma contemplação longa, com poucas palavras e muito espaço.',
+    steps: [
+      ['Feche os olhos. Respire naturalmente e deixe o corpo imóvel.', 15],
+      ['Imagine-se sentado sob um carvalho muito antigo, numa colina, numa noite sem lua e cheia de estrelas.', 30],
+      ['Encoste as costas ao tronco. Sinta a árvore a ligar a terra profunda ao céu aberto.', 40],
+      ['Não faça nada. Deixe os pensamentos passar como nuvens diante das estrelas.', 90],
+      ['Repare no espaço entre dois pensamentos. Fique nesse espaço.', 90],
+      ['Se surgir uma imagem ou uma compreensão, receba-a sem a agarrar.', 60],
+      ['Lembre-se do juramento de servir a terra e os seres. O que pede ele de si nesta estação?', 45],
+      ['Agradeça ao carvalho, às estrelas e ao silêncio.', 15],
+      ['Respire fundo, sinta o corpo e abra os olhos devagar.', 8]
+    ]
   }
 ];
+const GRADES = [['todas', 'Todas'], ['bardo', 'Bardo'], ['ovate', 'Ovate'], ['druida', 'Druida']];
+const GRADE_LABEL = { todos: 'Todos os graus', bardo: 'Bardo', ovate: 'Ovate', druida: 'Druida' };
 
 const stepsOf = m => (m.dynamic ? m.build() : m.steps);
 const totalSecs = m => stepsOf(m).reduce((t, [txt, s]) => t + s + Math.ceil(txt.split(/\s+/).length / 2.2), 0);
@@ -7972,9 +8150,13 @@ function renderPanel() {
       <h2 class="font-cinzel text-xl lg:text-2xl font-bold theme-title mt-1">Caminhos para o silêncio</h2>
       <p class="text-sm theme-muted mt-1">Escolha uma meditação. O texto aparece passo a passo e pode ser lido em voz alta pelo dispositivo, com um sino no início e no fim.</p>
     </div>
+    <div class="gm-grades" role="group" aria-label="Filtrar por grau da OBOD">
+      ${GRADES.map(([g, l]) => `<button type="button" class="gm-grade" data-grade="${g}" aria-pressed="false">${l}</button>`).join('')}
+    </div>
     <div id="gm-list" class="gm-list" role="group" aria-label="Meditações">
       ${MEDITATIONS.map(m => `
-        <button type="button" class="gm-item theme-inner border rounded-xl p-3 text-left cursor-pointer" data-id="${m.id}" aria-pressed="false">
+        <button type="button" class="gm-item theme-inner border rounded-xl p-3 text-left cursor-pointer" data-id="${m.id}" data-grade="${m.grade || 'todos'}" aria-pressed="false">
+          <span class="gm-grade-tag">${esc(GRADE_LABEL[m.grade || 'todos'])}</span>
           <span class="text-[11px] uppercase tracking-widest theme-accent font-semibold block">${esc(m.theme)}</span>
           <b class="font-cinzel theme-title block">${esc(m.title)}</b>
           <span class="text-xs theme-muted">cerca de ${Math.max(1, Math.round(totalSecs(m) / 60))} min</span>
@@ -8015,6 +8197,13 @@ function renderPanel() {
     else start(state.current ? state.current.id : MEDITATIONS[0].id);
   });
   $('gm-stop').addEventListener('click', () => stop());
+  const setGrade = g => {
+    store.set('druid_med_grade', g);
+    panel.querySelectorAll('.gm-grade').forEach(b => b.setAttribute('aria-pressed', b.dataset.grade === g));
+    panel.querySelectorAll('.gm-item').forEach(b => { b.hidden = !(g === 'todas' || b.dataset.grade === g || b.dataset.grade === 'todos'); });
+  };
+  panel.querySelectorAll('.gm-grade').forEach(b => b.addEventListener('click', () => setGrade(b.dataset.grade)));
+  setGrade(store.get('druid_med_grade', 'todas'));
   const v = $('gm-voice'), r = $('gm-rate'), bg = $('gm-bg');
   v.checked = state.voiceOn; r.value = String(state.rate); bg.value = state.bg;
   v.addEventListener('change', () => { state.voiceOn = v.checked; store.set('druid_med_voice', v.checked); if (!v.checked) synth?.cancel(); });
@@ -9517,7 +9706,7 @@ function decorate() {
           ? `<button type="button" class="bot-use-art" data-zoom="${hp}" data-title="${esc(label)}" aria-label="Ampliar a gravura: ${esc(label)}">${plateImg(hp, `Gravura: ${label}`, svg, 'bot-use-img')}</button>`
           : `<span class="bot-use-art bot-use-svg theme-glyph">${svg}</span>`;
         const latin = hp ? `<i class="bot-latin">${esc(PLATES[hp][0])}</i>` : '';
-        return `<div class="bot-use">${art}<div class="bot-use-txt"><b class="theme-title">${esc(label)}</b> ${latin}
+        return `<div class="bot-use" data-herb="${k}">${art}<div class="bot-use-txt"><b class="theme-title">${esc(label)}</b> ${latin}
           ${use[0] ? `<p>${esc(use[0])}</p>` : ''}${use[1] ? `<p class="bot-warn" role="note">⚠ ${esc(use[1])}</p>` : ''}</div></div>`;
       }).join('');
       const fito = [...card.querySelectorAll('p')].find(q => /Fitoterapia/.test(q.textContent));
@@ -9550,6 +9739,7 @@ document.addEventListener('error', e => {
 window.botanica.plates = PLATES;
 window.botanica.uses = USES;
 window.botanica.plateSrc = plateSrc;
+window.botanica.herbKey = herbKey;
 window.botanica.herbPlate = HERB_PLATE;
 
 const base = window.renderHerbalList;
@@ -10231,6 +10421,664 @@ function init() {
   setInterval(renderTodayFeature, 10 * 60 * 1000);
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<script>
+/* ============================================================
+   Sugestões dos utilizadores (v16):
+   • Diário cifrado com o PIN (AES-GCM 256, chave PBKDF2) e aviso
+     de cópia de segurança.
+   • Título da página por secção e opção «Texto maior».
+   • Primeiros passos no Hoje e ajuda dos botões do topo.
+   • Lembretes das festas e das Luas Cheias (notificação e .ics).
+   • Registo do ritual de cada festa e «o meu ano na Roda».
+   • Ervas: favoritas, época de colheita e parte usada.
+   • Aviso quando não há rede.
+   ============================================================ */
+(() => {
+const $ = id => document.getElementById(id);
+const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ls = {
+  get: (k, d = null) => { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch { return d; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* nada */ } },
+  del: k => { try { localStorage.removeItem(k); } catch { /* nada */ } },
+  json: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  setJson: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* nada */ } }
+};
+const toast = m => (typeof showToast === 'function' ? showToast(m) : null);
+const ico = i => `<svg class="ic" aria-hidden="true"><use href="#i-${i}"></use></svg>`;
+const MES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+
+/* ============================================================
+   1) Diário cifrado com o PIN
+   ============================================================ */
+const ENC = 'druid_journal_enc', PEND = 'druid_journal_pending', LEGACY_PIN = 'druid_journal_pin';
+const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const hasCrypto = () => !!(window.crypto && crypto.subtle && window.isSecureContext !== false);
+let key = null, salt = null, saving = Promise.resolve();
+const encOn = () => !!ls.get(ENC);
+const locked = () => (encOn() || !!ls.get(LEGACY_PIN)) && !key;
+
+async function derive(pin, s) {
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pin), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt: s, iterations: 310000, hash: 'SHA-256' }, base,
+    { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+async function decryptWith(pin) {
+  const box = JSON.parse(ls.get(ENC));
+  const s = unb64(box.salt);
+  const k = await derive(pin, s);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(box.iv) }, k, unb64(box.ct));
+  return { k, s, data: JSON.parse(new TextDecoder().decode(plain)) };
+}
+function texts() {
+  return { journal: ($('journal-input') || {}).value || '', bardic: ($('bardic-input') || {}).value || '' };
+}
+function encryptSave() {
+  if (!key) return Promise.resolve();
+  const k = key, s = salt, payload = JSON.stringify(texts());
+  saving = saving.then(async () => {
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, k, new TextEncoder().encode(payload));
+    ls.set(ENC, JSON.stringify({ v: 1, alg: 'AES-GCM-256/PBKDF2-SHA256-310000', salt: b64(s), iv: b64(iv), ct: b64(ct) }));
+    ['druid_journal', 'druid_bardic', LEGACY_PIN].forEach(ls.del);
+  }).catch(e => console.warn('cifra do diário', e));
+  return saving;
+}
+function stamp(msg) {
+  const st = $('save-status');
+  if (st) st.textContent = msg || `Guardado e cifrado às ${new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`;
+}
+
+const baseAutoJournal = window.autoSaveJournal, baseAutoBardic = window.autoSaveBardic;
+window.autoSaveJournal = function () {
+  if (!encOn()) return baseAutoJournal.apply(this, arguments);
+  ls.del('druid_journal');
+  if (key) { encryptSave(); stamp(); }
+  else {
+    // Diário fechado: o texto novo fica à espera e é cifrado ao desbloquear.
+    ls.set(PEND, ($('journal-input') || {}).value || '');
+    stamp('Guardado. Será cifrado quando desbloquear o diário.');
+  }
+  if (typeof updateWordCount === 'function') try { updateWordCount(); } catch { /* nada */ }
+};
+window.autoSaveBardic = function () {
+  const r = baseAutoBardic.apply(this, arguments);
+  if (encOn()) { ls.del('druid_bardic'); if (key) { encryptSave(); stamp(); } }
+  return r;
+};
+
+window.checkJournalPinLock = function () {
+  const lockScreen = $('journal-lock-screen'), area = $('journal-unlocked-area');
+  if (!lockScreen || !area) return;
+  const l = locked();
+  lockScreen.classList.toggle('hidden', !l);
+  area.classList.toggle('hidden', l);
+  if (!l) renderBackupNotice();
+};
+window.unlockJournalWithPin = async function () {
+  const inp = $('journal-pin-unlock-input'), err = $('pin-error-msg');
+  const pin = inp ? inp.value : '';
+  const fail = () => { if (err) err.classList.remove('hidden'); toast('PIN incorreto.'); };
+  if (!pin) return fail();
+  if (!hasCrypto()) { toast('Este navegador não permite cifrar. Abra o site em https.'); return; }
+  try {
+    if (encOn()) {
+      const r = await decryptWith(pin);
+      key = r.k; salt = r.s;
+      const pend = ls.get(PEND, '');
+      $('journal-input').value = (r.data.journal || '') + (pend ? (r.data.journal ? '\n' : '') + pend : '');
+      $('bardic-input').value = r.data.bardic || '';
+      ls.del(PEND);
+      if (pend) await encryptSave();
+      if (typeof autoSaveBardic === 'function') { try { baseAutoBardic(); ls.del('druid_bardic'); } catch { /* nada */ } }
+    } else if (ls.get(LEGACY_PIN)) {
+      if (pin !== ls.get(LEGACY_PIN)) return fail();
+      // Migração: o PIN antigo só escondia o texto. Agora passa a cifrá-lo.
+      salt = crypto.getRandomValues(new Uint8Array(16));
+      key = await derive(pin, salt);
+      await encryptSave();
+      toast('O diário passou a estar cifrado com o seu PIN.');
+    } else return;
+    if (inp) inp.value = '';
+    if (err) err.classList.add('hidden');
+    stamp();
+    window.checkJournalPinLock();
+    toast('Santuário desbloqueado.');
+  } catch (e) {
+    fail();
+  }
+};
+window.saveNewJournalPin = async function () {
+  const inp = $('new-pin-input');
+  const pin = inp ? inp.value.trim() : '';
+  if (pin.length < 4) { toast('Use pelo menos 4 caracteres.'); return; }
+  if (!hasCrypto()) { toast('Este navegador não permite cifrar. Abra o site em https.'); return; }
+  if (locked()) { toast('Desbloqueie o diário antes de mudar o PIN.'); return; }
+  salt = crypto.getRandomValues(new Uint8Array(16));
+  key = await derive(pin, salt);
+  await encryptSave();
+  if (inp) inp.value = '';
+  const box = $('pin-settings-box'); if (box) box.classList.add('hidden');
+  stamp();
+  toast('Diário cifrado com o PIN. Guarde-o bem: sem ele o texto não se recupera.');
+};
+window.removeJournalPin = async function () {
+  if (locked()) { toast('Desbloqueie o diário antes de remover o PIN.'); return; }
+  const t = texts();
+  ls.set('druid_journal', t.journal); ls.set('druid_bardic', t.bardic);
+  [ENC, PEND, LEGACY_PIN].forEach(ls.del);
+  key = null; salt = null;
+  const box = $('pin-settings-box'); if (box) box.classList.add('hidden');
+  toast('PIN removido: o diário deixou de estar cifrado.');
+};
+window.lockJournalNow = function () {
+  if (!encOn()) return;
+  key = null; salt = null;
+  $('journal-input').value = ''; $('bardic-input').value = '';
+  window.checkJournalPinLock();
+};
+
+/* ——— Cópias de segurança ——— */
+const baseExport = window.exportBackupJSON, baseImport = window.importBackupJSON;
+window.exportBackupJSON = function () {
+  if (encOn()) {
+    if (!key) { toast('Desbloqueie o diário para incluir os seus escritos na cópia.'); return; }
+    const t = texts();
+    const data = { ...t, theme: ls.get('druid_theme', 'theme-night'), readings: ls.json('druid_readings', []), festLog: ls.json('druid_fest_log', []), herbFavs: ls.json('druid_herb_favs', []), exportedAt: new Date().toISOString() };
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+    a.download = `Backup_Caminho_Druidico_${new Date().toISOString().slice(0, 10)}.json`;
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1e4);
+    toast('Cópia de segurança exportada. Atenção: o ficheiro não vai cifrado.');
+  } else baseExport.apply(this, arguments);
+  ls.set('druid_last_backup', String(Date.now()));
+  renderBackupNotice();
+};
+window.importBackupJSON = function (ev) {
+  if (locked()) { toast('Desbloqueie o diário antes de restaurar uma cópia.'); if (ev && ev.target) ev.target.value = ''; return; }
+  const r = baseImport.apply(this, arguments);
+  const file = ev && ev.target && ev.target.files && ev.target.files[0];
+  if (file) file.text().then(txt => {
+    try {
+      const d = JSON.parse(txt);
+      if (Array.isArray(d.festLog)) ls.setJson('druid_fest_log', d.festLog);
+      if (Array.isArray(d.herbFavs)) ls.setJson('druid_herb_favs', d.herbFavs);
+    } catch { /* nada */ }
+    setTimeout(() => { if (encOn() && key) encryptSave(); }, 50);
+  });
+  return r;
+};
+function renderBackupNotice() {
+  const area = $('journal-unlocked-area');
+  if (!area) return;
+  let n = $('backup-notice');
+  const len = texts().journal.length + texts().bardic.length;
+  const last = +ls.get('druid_last_backup', 0), snooze = +ls.get('druid_backup_snooze', 0);
+  const days = last ? Math.floor((Date.now() - last) / 864e5) : null;
+  const show = len > 200 && (days === null || days >= 30) && Date.now() > snooze;
+  if (!show) { if (n) n.remove(); return; }
+  if (!n) {
+    n = document.createElement('div');
+    n.id = 'backup-notice';
+    n.className = 'backup-notice';
+    n.setAttribute('role', 'status');
+    area.prepend(n);
+  }
+  n.innerHTML = `<span class="bn-ic" aria-hidden="true">${ico('download')}</span>
+    <p><b>${days === null ? 'Ainda não fez nenhuma cópia de segurança.' : `A última cópia de segurança foi há ${days} dias.`}</b>
+    Os seus escritos só existem neste dispositivo${encOn() ? ' e, se esquecer o PIN, não se recuperam' : ''}.</p>
+    <div class="bn-actions"><button type="button" class="btn-sec theme-accent" onclick="exportBackupJSON()">Fazer cópia agora</button>
+    <button type="button" class="btn-link" onclick="snoozeBackup()">Lembrar daqui a uma semana</button></div>`;
+}
+window.snoozeBackup = () => { ls.set('druid_backup_snooze', String(Date.now() + 7 * 864e5)); renderBackupNotice(); };
+
+/* ============================================================
+   2) Título por secção e «Texto maior»
+   ============================================================ */
+const TAB_NAMES = { today: 'Hoje', treewheel: 'Roda das árvores', runelore: 'Runas: guia & treino', herbal: 'Árvores & ervas' };
+function tabName(id) {
+  if (TAB_NAMES[id]) return TAB_NAMES[id];
+  if (String(id).startsWith('portal-')) { const p = ((window.DruidRealms || {}).PORTALS || {})[id.slice(7)]; if (p) return p.label; }
+  const b = $('desk-nav-' + id);
+  return b ? b.textContent.trim() : '';
+}
+function setTitle(id) {
+  const n = tabName(id);
+  document.title = n && id !== 'today' ? `${n} · Caminho Druídico` : 'Caminho Druídico';
+}
+
+const SIZES = [['md', 'Normal'], ['lg', 'Maior'], ['xl', 'Muito maior']];
+function applySize(z) {
+  const h = document.documentElement;
+  h.classList.remove('ts-lg', 'ts-xl');
+  if (z === 'lg' || z === 'xl') h.classList.add('ts-' + z);
+  ls.set('druid_text_size', z);
+  document.querySelectorAll('.ts-pick button').forEach(b => b.setAttribute('aria-pressed', b.dataset.size === z));
+}
+window.setTextSize = applySize;
+function addSizeControls() {
+  const cur = ls.get('druid_text_size', 'md');
+  const make = id => {
+    const w = document.createElement('div');
+    w.className = 'ts-wrap';
+    w.innerHTML = `<p class="${id === 'mob' ? 'nav-group' : 'ts-label'}" id="ts-label-${id}">Tamanho do texto</p>
+      <div class="ts-pick" role="group" aria-labelledby="ts-label-${id}">${SIZES.map(([z, l], i) => `<button type="button" data-size="${z}" aria-pressed="${z === cur}" onclick="setTextSize('${z}')"><span style="font-size:${[13, 15.5, 18][i]}px" aria-hidden="true">A</span><span class="sr-only">${l}</span><span class="ts-name">${l}</span></button>`).join('')}</div>`;
+    return w;
+  };
+  const desk = $('theme-selector-desktop'), mob = $('theme-selector-mobile');
+  if (desk && !$('ts-label-desk')) desk.after(make('desk'));
+  if (mob && !$('ts-label-mob')) mob.after(make('mob'));
+}
+
+/* ============================================================
+   3) Primeiros passos e ajuda dos botões do topo
+   ============================================================ */
+const FS = [
+  ['ogham', 'Tirar uma letra Ogham', 'O conselho das árvores para hoje.', "drawDailyOracle('ogham')"],
+  ['tree', 'Ver a lua arbórea', 'Em que árvore do calendário celta estamos.', "switchTab('treewheel')"],
+  ['journal', 'Escrever no diário', 'Uma linha basta: o que sentiu hoje?', "switchTab('journal')"]
+];
+const fsDone = () => ls.json('druid_first_steps', {});
+function markStep(k) {
+  const d = fsDone();
+  if (d[k]) return;
+  d[k] = Date.now(); ls.setJson('druid_first_steps', d);
+  renderFirstSteps();
+}
+function renderFirstSteps() {
+  const host = $('today-feature');
+  if (!host) return;
+  let box = $('first-steps');
+  const d = fsDone();
+  const all = FS.every(([k]) => d[k]);
+  const veteran = ls.json('druid_readings', []).length >= 5 && !!(ls.get('druid_journal') || ls.get(ENC));
+  if (ls.get('druid_fs_hidden') || all || veteran) { if (box) box.remove(); return; }
+  if (!box) {
+    box = document.createElement('section');
+    box.id = 'first-steps';
+    box.className = 'first-steps theme-card border';
+    box.setAttribute('aria-labelledby', 'fs-title');
+    host.after(box);
+  }
+  const n = FS.filter(([k]) => d[k]).length;
+  box.innerHTML = `
+    <div class="fs-head">
+      <div><p class="eyebrow">Primeiros passos · ${n} de 3</p><h3 id="fs-title" class="font-cinzel">Comece por aqui</h3></div>
+      <button type="button" class="icon-btn" onclick="hideFirstSteps()" aria-label="Esconder os primeiros passos">${ico('close')}</button>
+    </div>
+    <ol class="fs-list">${FS.map(([k, t, s, act], i) => `
+      <li class="${d[k] ? 'is-done' : ''}">
+        <button type="button" onclick="${act}">
+          <span class="fs-n" aria-hidden="true">${d[k] ? '✓' : i + 1}</span>
+          <span class="fs-t"><b>${t}</b><span>${s}</span></span>
+          <span class="sr-only">${d[k] ? '(feito)' : ''}</span>
+        </button>
+      </li>`).join('')}</ol>
+    <details class="fs-help"><summary>O que fazem os botões do topo?</summary>
+      <ul>
+        <li>${ico('search')}<span><b>Pesquisar</b>: encontra letras, runas, ervas, festas, tríades e cartas.</span></li>
+        <li>${ico('lantern')}<span><b>Lanterna</b>: tudo em vermelho escuro, para ler à noite em ritual sem perder a visão noturna.</span></li>
+        <li>${ico('zen')}<span><b>Zen</b>: ecrã inteiro, sem menus nem distrações, para meditar ou ler uma tiragem.</span></li>
+      </ul>
+    </details>`;
+}
+window.hideFirstSteps = () => { ls.set('druid_fs_hidden', '1'); renderFirstSteps(); };
+
+/* ============================================================
+   4) Lembretes das festas e das Luas Cheias
+   ============================================================ */
+const FEST_NAMES = { 1: 'Yule', 2: 'Imbolc', 3: 'Ostara', 4: 'Beltane', 5: 'Litha', 6: 'Lughnasadh', 7: 'Mabon', 8: 'Samhain' };
+const FEST_ID = Object.fromEntries(Object.entries(FEST_NAMES).map(([k, v]) => [v, +k]));
+function festivalsOf(y) {
+  const se = (window.__druid || {}).solarEvent;
+  const l = [['Imbolc', new Date(y, 1, 1)], ['Beltane', new Date(y, 4, 1)], ['Lughnasadh', new Date(y, 7, 1)], ['Samhain', new Date(y, 9, 31)]];
+  if (se) l.push(['Ostara', se(y, 0)], ['Litha', se(y, 1)], ['Mabon', se(y, 2)], ['Yule', se(y, 3)]);
+  return l.map(([n, d]) => ({ name: n, id: FEST_ID[n], date: d })).sort((a, b) => a.date - b.date);
+}
+function upcomingEvents(days = 370) {
+  const now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), end = new Date(t0.getTime() + days * 864e5);
+  const cfg = ls.json('druid_cycle_rem', { fest: true, full: true });
+  const out = [];
+  if (cfg.fest) [now.getFullYear(), now.getFullYear() + 1].forEach(y => festivalsOf(y).forEach(f => {
+    const d = new Date(f.date.getFullYear(), f.date.getMonth(), f.date.getDate());
+    if (d >= t0 && d < end) out.push({ kind: 'fest', title: f.name, day: d, uid: `fest-${f.name}-${y}` });
+  }));
+  if (cfg.full && window.LunarCalc) LunarCalc.events(t0.getTime(), end.getTime()).filter(e => e.type === 2).forEach(e => {
+    const d = new Date(e.date.getFullYear(), e.date.getMonth(), e.date.getDate());
+    out.push({ kind: 'full', title: 'Lua Cheia', day: d, time: e.date, uid: `full-${d.toISOString().slice(0, 10)}` });
+  });
+  return out.sort((a, b) => a.day - b.day);
+}
+function checkCycleReminders() {
+  const cfg = ls.json('druid_cycle_rem', { fest: true, full: true, on: false });
+  if (!cfg.on) return;
+  const sent = ls.json('druid_cycle_sent', {});
+  const t0 = new Date(); t0.setHours(0, 0, 0, 0);
+  upcomingEvents(2).forEach(ev => {
+    const when = Math.round((ev.day - t0) / 864e5);
+    const k = ev.uid + '-' + when;
+    if (sent[k]) return;
+    const body = ev.kind === 'fest'
+      ? (when === 0 ? `Hoje é ${ev.title}. Bom ritual!` : `Amanhã é ${ev.title}. Prepare o altar.`)
+      : (when === 0 ? 'Hoje é Lua Cheia.' : 'Amanhã é Lua Cheia.') + (ev.time ? ` Pico às ${ev.time.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}.` : '');
+    sent[k] = Date.now();
+    if ('Notification' in window && Notification.permission === 'granted') {
+      try { new Notification('Caminho Druídico', { body, tag: k }); } catch { toast(body); }
+    } else toast(body);
+  });
+  ls.setJson('druid_cycle_sent', sent);
+}
+const icsDate = d => `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+window.exportCycleICS = function () {
+  const evs = upcomingEvents(370);
+  if (!evs.length) { toast('Escolha pelo menos festas ou Luas Cheias.'); return; }
+  const stampNow = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Caminho Druidico//Ciclos//PT', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Caminho Druídico · Ciclos'];
+  evs.forEach(ev => {
+    const next = new Date(ev.day.getTime() + 864e5);
+    lines.push('BEGIN:VEVENT', `UID:${ev.uid}@caminho-druidico`, `DTSTAMP:${stampNow}`, `DTSTART;VALUE=DATE:${icsDate(ev.day)}`, `DTEND;VALUE=DATE:${icsDate(next)}`,
+      `SUMMARY:${ev.kind === 'fest' ? '☀ ' + ev.title : '◯ Lua Cheia'}`,
+      `DESCRIPTION:${ev.kind === 'fest' ? 'Festa da Roda do Ano.' : 'Lua Cheia' + (ev.time ? ' (pico às ' + ev.time.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }) + ')' : '') + '.'}`,
+      'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${ev.title} amanhã`, 'TRIGGER:-PT15H', 'END:VALARM', 'END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' }));
+  a.download = 'caminho-druidico-ciclos.ics';
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1e4);
+  toast('Calendário descarregado: abra-o para juntar os avisos ao seu calendário.');
+};
+window.setCycleReminder = async function (field, val) {
+  const cfg = ls.json('druid_cycle_rem', { fest: true, full: true, on: false });
+  cfg[field] = val;
+  if (field === 'on' && val && 'Notification' in window && Notification.permission === 'default') {
+    try { await Notification.requestPermission(); } catch { /* nada */ }
+  }
+  ls.setJson('druid_cycle_rem', cfg);
+  renderCycleCard();
+  if (field === 'on' && val) { toast('Avisos ativos: na véspera e no dia, sempre que abrir a app.'); checkCycleReminders(); }
+};
+function renderCycleCard() {
+  const sec = $('tab-wheel');
+  if (!sec) return;
+  let box = $('cycle-reminders');
+  if (!box) { box = document.createElement('div'); box.id = 'cycle-reminders'; box.className = 'theme-card border rounded-2xl p-5 lg:p-8 space-y-4 max-w-4xl mx-auto'; sec.appendChild(box); }
+  const cfg = ls.json('druid_cycle_rem', { fest: true, full: true, on: false });
+  const perm = 'Notification' in window ? Notification.permission : 'unsupported';
+  const next = upcomingEvents(60).slice(0, 4);
+  box.innerHTML = `
+    <div><p class="eyebrow">Lembretes do ciclo</p><h3 class="font-cinzel text-xl font-bold theme-title mt-1">Avisos das festas e das Luas Cheias</h3>
+    <p class="text-sm theme-muted mt-1">Receba um aviso na véspera e no próprio dia. Para avisos mesmo com a app fechada, junte as datas ao calendário do telemóvel.</p></div>
+    <div class="cr-opts">
+      <label class="cr-opt"><input type="checkbox" ${cfg.fest ? 'checked' : ''} onchange="setCycleReminder('fest', this.checked)"> Festas da Roda do Ano</label>
+      <label class="cr-opt"><input type="checkbox" ${cfg.full ? 'checked' : ''} onchange="setCycleReminder('full', this.checked)"> Luas Cheias</label>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" class="${cfg.on ? 'btn-sec theme-title' : 'bg-[var(--btn-primary)] text-[var(--on-primary)] font-semibold text-sm px-4 rounded-lg cursor-pointer'}" onclick="setCycleReminder('on', ${!cfg.on})">${cfg.on ? 'Desligar avisos na app' : 'Ligar avisos na app'}</button>
+      <button type="button" class="btn-sec theme-accent" onclick="exportCycleICS()">${ico('download')}<span>&nbsp;Juntar ao calendário (.ics)</span></button>
+    </div>
+    ${cfg.on && perm === 'denied' ? '<p class="text-xs theme-muted">As notificações estão bloqueadas neste navegador: os avisos aparecem dentro da app.</p>' : ''}
+    ${next.length ? `<ul class="cr-next">${next.map(e => `<li><span>${e.kind === 'fest' ? ico('wheel') : (window.moonSVG ? moonSVG(0.5, 18) : '')}</span><b>${escH(e.title)}</b><span class="theme-muted">${e.day.toLocaleDateString('pt-PT', { weekday: 'short', day: 'numeric', month: 'long' })}</span></li>`).join('')}</ul>` : ''}`;
+}
+
+/* ============================================================
+   5) Registo do ritual de cada festa e o meu ano na Roda
+   ============================================================ */
+const festLog = () => ls.json('druid_fest_log', []);
+let editing = null;
+function renderYearCard() {
+  const sec = $('tab-wheel');
+  if (!sec) return;
+  let box = $('wheel-year');
+  if (!box) {
+    box = document.createElement('div'); box.id = 'wheel-year'; box.className = 'theme-card border rounded-2xl p-5 lg:p-8 space-y-4 max-w-4xl mx-auto';
+    const rem = $('cycle-reminders');
+    if (rem) sec.insertBefore(box, rem); else sec.appendChild(box);
+  }
+  const y = new Date().getFullYear(), log = festLog(), t0 = new Date(); t0.setHours(0, 0, 0, 0);
+  const fests = festivalsOf(y);
+  const done = fests.filter(f => log.some(e => e.fest === f.name && e.year === y)).length;
+  box.innerHTML = `
+    <div class="flex flex-wrap items-end justify-between gap-2">
+      <div><p class="eyebrow">O meu ano na Roda · ${y}</p><h3 class="font-cinzel text-xl font-bold theme-title mt-1">Rituais celebrados: ${done} de 8</h3></div>
+      <div class="wy-bar" aria-hidden="true">${fests.map(f => `<i class="${log.some(e => e.fest === f.name && e.year === y) ? 'on' : ''}"></i>`).join('')}</div>
+    </div>
+    <ul class="wy-list">${fests.map(f => {
+      const e = log.find(x => x.fest === f.name && x.year === y);
+      const past = f.date < t0;
+      const isEd = editing === f.name;
+      return `<li class="${e ? 'is-done' : ''}">
+        <div class="wy-row">
+          <span class="wy-ic" aria-hidden="true">${e ? '✓' : ico('wheel')}</span>
+          <div class="wy-txt"><b>${f.name}</b><span>${f.date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long' })}${e ? ` · celebrado a ${new Date(e.date).toLocaleDateString('pt-PT', { day: 'numeric', month: 'short' })}` : past ? ' · passou' : ''}</span>
+            ${e && e.text ? `<p>${escH(e.text.length > 220 ? e.text.slice(0, 217) + '…' : e.text)}</p>` : e && e.inJournal ? '<p class="theme-muted">Registado no diário.</p>' : ''}</div>
+          <button type="button" class="btn-sec ${e ? 'theme-muted' : 'theme-accent'}" onclick="editFestLog('${f.name}')" aria-expanded="${isEd}">${e ? 'Editar' : 'Registar'}</button>
+        </div>
+        ${isEd ? `<div class="wy-form">
+          <label>Data <input type="date" id="wy-date" value="${(e ? new Date(e.date) : (past ? f.date : new Date())).toLocaleDateString('sv')}" class="theme-inner border rounded-lg px-3"></label>
+          <label class="wy-wide">O que fez e o que sentiu<textarea id="wy-text" rows="3" class="theme-inner border rounded-lg p-3" placeholder="Ex.: acendi a vela ao amanhecer, li uma tríade, deixei uma oferenda de maçã…">${escH(e ? e.text || '' : '')}</textarea></label>
+          <label class="cr-opt"><input type="checkbox" id="wy-journal" ${encOn() ? 'checked disabled' : 'checked'}> Copiar também para o Diário${encOn() ? ' (o texto fica só no diário cifrado)' : ''}</label>
+          <div class="flex flex-wrap gap-2"><button type="button" class="bg-[var(--btn-primary)] text-[var(--on-primary)] font-semibold text-sm px-4 rounded-lg cursor-pointer" onclick="saveFestLog('${f.name}')">Guardar</button>
+          <button type="button" class="btn-link" onclick="editFestLog(null)">Cancelar</button>
+          ${e ? `<button type="button" class="btn-link tone-danger" onclick="deleteFestLog('${f.name}')">Apagar registo</button>` : ''}</div>
+        </div>` : ''}
+      </li>`;
+    }).join('')}</ul>`;
+  document.querySelectorAll('.wheel-node').forEach(g => {
+    const n = FEST_NAMES[g.dataset.fest];
+    g.classList.toggle('is-done', log.some(e => e.fest === n && e.year === y));
+  });
+}
+window.editFestLog = name => { editing = name; renderYearCard(); const t = $('wy-text'); if (t) t.focus(); };
+window.saveFestLog = function (name) {
+  const y = new Date().getFullYear();
+  const date = ($('wy-date') || {}).value || new Date().toLocaleDateString('sv');
+  const text = (($('wy-text') || {}).value || '').trim();
+  const toJournal = encOn() || ($('wy-journal') || {}).checked;
+  const log = festLog().filter(e => !(e.fest === name && e.year === y));
+  log.push({ fest: name, year: y, date, text: encOn() ? '' : text, inJournal: !!toJournal });
+  ls.setJson('druid_fest_log', log);
+  if (toJournal && text && typeof appendToJournal === 'function') {
+    if (locked()) { const pend = ls.get(PEND, ''); ls.set(PEND, `${pend}\n--- [${new Date(date).toLocaleDateString('pt-PT')}] RITUAL DE ${name.toUpperCase()}: ${text}\n`); }
+    else appendToJournal(`RITUAL DE ${name.toUpperCase()}: ${text}`);
+  }
+  editing = null;
+  renderYearCard();
+  toast(`Ritual de ${name} registado.`);
+};
+window.deleteFestLog = function (name) {
+  const y = new Date().getFullYear();
+  ls.setJson('druid_fest_log', festLog().filter(e => !(e.fest === name && e.year === y)));
+  editing = null; renderYearCard();
+};
+
+/* ============================================================
+   6) Ervas: favoritas, época de colheita e parte usada
+   ============================================================ */
+const ALL = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const HARVEST = {
+  'casca de vidoeiro': ['casca e folhas novas', [3, 4, 5], 'primavera'],
+  'dente-de-leão': ['folhas e raiz', [3, 4, 5, 9, 10], 'folhas na primavera, raiz no outono'],
+  'bagas de sorveira': ['bagas maduras', [9, 10], 'outono'],
+  'verbena': ['partes aéreas em flor', [6, 7, 8], 'verão'],
+  'folhas de amieiro': ['folhas', [5, 6, 7], 'primavera e verão'],
+  'ulmeira': ['flores', [6, 7, 8], 'verão'],
+  'casca de salgueiro': ['casca de ramos novos', [2, 3, 4], 'fim do inverno e primavera'],
+  'artemísia': ['folhas e sumidades floridas', [7, 8, 9], 'verão'],
+  'sementes de freixo': ['sementes (sâmaras)', [9, 10], 'outono'],
+  'agrimónia': ['partes aéreas em flor', [6, 7, 8], 'verão'],
+  'flores de espinheiro': ['flores e bagas', [4, 5, 9, 10], 'flor na primavera, baga no outono'],
+  'rosa silvestre': ['frutos (cinórrodos)', [9, 10, 11], 'outono'],
+  'bolota': ['bolotas', [10, 11], 'outono'],
+  'musgo de carvalho': ['o líquen inteiro', [10, 11, 12, 1, 2, 3], 'outono e inverno, com humidade'],
+  'viscum': ['folhas e raminhos', [11, 12, 1], 'inverno'],
+  'folhas de azevinho': ['folhas', [11, 12], 'inverno'],
+  'cardo santo': ['partes aéreas em flor', [6, 7], 'verão'],
+  'avelãs': ['frutos', [8, 9], 'fim do verão'],
+  'sálvia': ['folhas', [5, 6, 7], 'antes de florir, primavera e verão'],
+  'flor de macieira': ['flores', [4, 5], 'primavera'],
+  'camomila': ['flores', [5, 6, 7], 'primavera e verão'],
+  'folha de videira': ['folhas', [5, 6], 'primavera'],
+  'amora silvestre': ['folhas e frutos', [4, 5, 8, 9], 'folha na primavera, fruto no fim do verão'],
+  'hera terrestre': ['partes aéreas', [4, 5, 6], 'primavera'],
+  'alecrim': ['ramos com folhas', ALL, 'todo o ano'],
+  'raiz de junco': ['rizoma', [10, 11], 'outono'],
+  'valeriana': ['raiz', [9, 10], 'outono'],
+  'abrunhos': ['frutos', [10, 11], 'outono, depois das primeiras geadas'],
+  'absinto': ['folhas e sumidades floridas', [7, 8], 'verão'],
+  'flor e baga de sabugueiro': ['flores e bagas maduras', [5, 6, 8, 9], 'flor na primavera, baga no fim do verão'],
+  'agulhas de pinheiro': ['agulhas novas', [3, 4, 5], 'primavera'],
+  'resina': ['resina já seca no tronco', [6, 7, 8], 'verão'],
+  'flores douradas de tojo': ['flores', [1, 2, 3, 4], 'fim do inverno e primavera'],
+  'calêndula': ['flores', [5, 6, 7, 8, 9], 'da primavera ao outono'],
+  'flores de urze': ['ramos em flor', [8, 9], 'fim do verão'],
+  'lavanda': ['espigas floridas', [6, 7], 'verão'],
+  'folhas de choupo': ['gomos e folhas novas', [2, 3, 4], 'fim do inverno e primavera'],
+  'erva-cidreira': ['folhas', [5, 6, 7, 8], 'primavera e verão'],
+  'teixo': ['nenhuma: não colher', [], 'nunca: todas as partes são venenosas']
+};
+window.HERB_HARVEST = HARVEST;
+const favs = () => ls.json('druid_herb_favs', []);
+const label = k => k.charAt(0).toUpperCase() + k.slice(1);
+function decorateHerbs() {
+  document.querySelectorAll('#tree-list .bot-use[data-herb]').forEach(u => {
+    const k = u.dataset.herb, h = HARVEST[k];
+    const txt = u.querySelector('.bot-use-txt');
+    if (!txt || u.dataset.harvest) return;
+    u.dataset.harvest = '1';
+    if (h) {
+      const p = document.createElement('p');
+      p.className = 'bot-harvest';
+      p.innerHTML = `<span>Colheita</span> ${escH(h[2])} · <span>Parte usada</span> ${escH(h[0])}`;
+      txt.appendChild(p);
+    }
+    if (k !== 'teixo') {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'herb-fav'; b.dataset.herb = k;
+      txt.appendChild(b);
+    }
+  });
+  syncFavButtons();
+}
+function syncFavButtons() {
+  const f = favs();
+  document.querySelectorAll('.herb-fav').forEach(b => {
+    const on = f.includes(b.dataset.herb);
+    b.setAttribute('aria-pressed', on);
+    b.innerHTML = `<span aria-hidden="true">${on ? '★' : '☆'}</span> ${on ? 'Na minha lista' : 'Juntar à minha lista'}`;
+    b.setAttribute('aria-label', `${on ? 'Tirar' : 'Juntar'} ${label(b.dataset.herb)} ${on ? 'da' : 'à'} minha lista de ervas`);
+  });
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('.herb-fav');
+  if (!b) return;
+  const k = b.dataset.herb, f = favs();
+  ls.setJson('druid_herb_favs', f.includes(k) ? f.filter(x => x !== k) : [...f, k]);
+  syncFavButtons(); renderHarvestPanel();
+});
+function treeOfHerb(k) {
+  const D = typeof OGHAM_DATA !== 'undefined' ? OGHAM_DATA : [];
+  const hk = (window.botanica || {}).herbKey;
+  return D.find(o => ((window.botanica || {}).splitHerbs || (x => [x]))(o.herb).some(n => (hk ? hk(n) : n.toLowerCase()) === k));
+}
+function chip(k, inSeason) {
+  const o = treeOfHerb(k);
+  return `<button type="button" class="hv-chip${inSeason ? ' in-season' : ''}" onclick="openTreeInGuide && openTreeInGuide('${o ? o.name : ''}')" title="${escH(HARVEST[k] ? HARVEST[k][2] : '')}">
+    ${favs().includes(k) ? '<span aria-hidden="true">★</span>' : ''}${escH(label(k))}${o ? `<small>${escH(o.name)}</small>` : ''}</button>`;
+}
+function renderHarvestPanel() {
+  const host = $('tab-herbal');
+  if (!host) return;
+  let box = $('harvest-panel');
+  if (!box) {
+    box = document.createElement('div'); box.id = 'harvest-panel'; box.className = 'theme-card border rounded-2xl p-5 lg:p-6 space-y-4';
+    const first = host.querySelector(':scope > .theme-card');
+    if (first) first.after(box); else host.appendChild(box);
+  }
+  const m = new Date().getMonth() + 1;
+  const now = Object.keys(HARVEST).filter(k => HARVEST[k][1].includes(m));
+  const f = favs();
+  const bySeason = [['Inverno', [12, 1, 2]], ['Primavera', [3, 4, 5]], ['Verão', [6, 7, 8]], ['Outono', [9, 10, 11]]];
+  box.innerHTML = `
+    <div><p class="eyebrow">Colheita</p><h3 class="font-cinzel text-xl font-bold theme-title mt-1">Em época em ${MES[m - 1]}</h3>
+    <p class="text-sm theme-muted mt-1">Ervas e árvores do guia que se colhem este mês. Toque numa para ver a ficha. Colha só o que conhece bem, longe de estradas e sem arrancar a planta.</p></div>
+    <div class="hv-chips">${now.length ? now.map(k => chip(k, true)).join('') : '<p class="text-sm theme-muted">Nenhuma erva do guia se colhe este mês.</p>'}</div>
+    <div class="hv-mine">
+      <h4 class="font-cinzel theme-title">A minha lista ${f.length ? `(${f.length})` : ''}</h4>
+      ${f.length ? `<div class="hv-seasons">${bySeason.map(([s, ms]) => {
+        const ks = f.filter(k => HARVEST[k] && HARVEST[k][1].some(x => ms.includes(x)));
+        return ks.length ? `<div class="hv-season${ms.includes(m) ? ' is-now' : ''}"><p>${s}${ms.includes(m) ? ' · agora' : ''}</p><div class="hv-chips">${ks.map(k => chip(k, HARVEST[k][1].includes(m))).join('')}</div></div>` : '';
+      }).join('')}</div>` : '<p class="text-sm theme-muted">Toque em «☆ Juntar à minha lista» nas ervas do guia para montar a sua lista de colheita por estação.</p>'}
+    </div>`;
+}
+
+/* ============================================================
+   7) Aviso quando não há rede
+   ============================================================ */
+function renderNet() {
+  const off = navigator.onLine === false;
+  let b = $('net-banner');
+  if (!off) { if (b) b.remove(); document.querySelectorAll('.net-note').forEach(n => n.remove()); return; }
+  if (!b) {
+    b = document.createElement('div'); b.id = 'net-banner'; b.className = 'net-banner'; b.setAttribute('role', 'status');
+    b.innerHTML = `<span aria-hidden="true">⦸</span> Sem rede. Tudo funciona, exceto a meteorologia, o nome do lugar e a interpretação por IA.`;
+    const main = $('main'); if (main) main.prepend(b);
+  }
+  const cache = ls.json('druid_weather_cache', null);
+  const when = cache && cache.ts ? new Date(cache.ts).toLocaleString('pt-PT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : null;
+  const msg = when ? `Sem rede: a meteorologia mostra o último valor guardado (${when}).` : 'Sem rede: a meteorologia volta quando houver ligação.';
+  ['today-element-weather', 'weather-elem-assoc'].forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    let n = el.parentElement.querySelector(':scope > .net-note');
+    if (!n) { n = document.createElement('p'); n.className = 'net-note'; el.after(n); }
+    n.textContent = msg;
+  });
+}
+window.addEventListener('online', renderNet);
+window.addEventListener('offline', renderNet);
+
+/* ============================================================
+   Ligações e arranque
+   ============================================================ */
+const prevSwitch = window.switchTab;
+window.switchTab = function (id) {
+  const r = prevSwitch.apply(this, arguments);
+  setTitle(id);
+  if (id === 'treewheel') markStep('tree');
+  if (id === 'today') renderFirstSteps();
+  if (id === 'wheel') { renderYearCard(); renderCycleCard(); }
+  if (id === 'herbal') { decorateHerbs(); renderHarvestPanel(); }
+  if (id === 'journal') renderBackupNotice();
+  return r;
+};
+const prevDaily = window.drawDailyOracle;
+if (typeof prevDaily === 'function') window.drawDailyOracle = function (t) { const r = prevDaily.apply(this, arguments); if (t === 'ogham') markStep('ogham'); return r; };
+const prevOgham = window.drawOghamCard;
+if (typeof prevOgham === 'function') window.drawOghamCard = function () { const r = prevOgham.apply(this, arguments); markStep('ogham'); return r; };
+const wrappedJournal = window.autoSaveJournal;
+window.autoSaveJournal = function () { const r = wrappedJournal.apply(this, arguments); if ((($('journal-input') || {}).value || '').trim()) markStep('journal'); return r; };
+
+function init() {
+  // Começa fechado se o diário estiver cifrado (ou com o PIN antigo).
+  if (encOn()) { const j = $('journal-input'), b = $('bardic-input'); if (j) j.value = ''; if (b) b.value = ''; }
+  addSizeControls();
+  renderFirstSteps();
+  renderYearCard(); renderCycleCard();
+  decorateHerbs(); renderHarvestPanel();
+  const list = $('tree-list');
+  if (list && 'MutationObserver' in window) new MutationObserver(() => decorateHerbs()).observe(list, { childList: true });
+  renderNet();
+  const cur = [...document.querySelectorAll('.tab-content')].find(s => !s.classList.contains('hidden'));
+  setTitle(cur ? cur.id.slice(4) : 'today');
+  if (cur && cur.id === 'tab-journal') window.checkJournalPinLock();
+  checkCycleReminders();
+  setInterval(checkCycleReminders, 30 * 60 * 1000);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+window.DruidPrivacy = { encOn, locked, lock: () => window.lockJournalNow() };
 })();
 </script>
 </body></html>
