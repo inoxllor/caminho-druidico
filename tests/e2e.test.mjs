@@ -602,3 +602,30 @@ test('versão en-GB: tradução, datas, pesquisa e voltar ao português', async 
   assert.match(await page.textContent('.skip-link'), /Saltar para o conteúdo/);
   await ctx.close();
 });
+
+test('frequências dos chakras: 7 chakras, duas afinações, tocar e silenciar', async () => {
+  const { ctx, page, errors } = await open(base);
+  await page.evaluate(() => switchTab('grounding'));
+  assert.equal(await page.locator('#chakra-freqs .ck-item').count(), 7);
+  assert.match(await page.textContent('#chakra-freqs'), /Coração.*639 Hz/s);
+  assert.match(await page.textContent('#chakra-freqs'), /não substitui cuidados médicos/);
+  await page.click('#chakra-freqs .ck-item[data-i="3"]');
+  assert.equal(await page.getAttribute('#chakra-freqs .ck-item[data-i="3"]', 'aria-pressed'), 'true');
+  assert.equal(await page.evaluate(() => ChakraSound.state().playing), 3);
+  // Mudar de afinação mantém o chakra e muda a frequência
+  await page.click('#chakra-freqs .ck-set[data-set="cosmica"]');
+  assert.match(await page.textContent('#chakra-freqs .ck-item[data-i="3"]'), /136\.1 Hz/);
+  assert.equal(await page.evaluate(() => ChakraSound.state().playing), 3);
+  // «Silenciar Áudio» pára também a frequência
+  await page.click('#tab-grounding button[onclick="stopAmbientSound()"]');
+  assert.equal(await page.evaluate(() => ChakraSound.state().playing), null);
+  assert.equal(await page.getAttribute('#chakra-freqs .ck-item[data-i="3"]', 'aria-pressed'), 'false');
+  // Percurso da raiz à coroa; a chuva toma o lugar e pára o percurso
+  await page.click('#ck-seq');
+  assert.deepEqual(await page.evaluate(() => ChakraSound.state()), { set: 'cosmica', playing: 0, journey: true });
+  await page.evaluate(() => toggleAmbientSound('rain'));
+  assert.deepEqual(await page.evaluate(() => ChakraSound.state()), { set: 'cosmica', playing: null, journey: false });
+  await page.evaluate(() => stopAmbientSound());
+  assert.deepEqual(errors, []);
+  await ctx.close();
+});

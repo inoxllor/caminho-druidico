@@ -2126,3 +2126,29 @@ html.i18n-wait body { visibility: hidden; }
 .anc-ritual-form { margin-top: 1.25rem; }
 .anc-steps, .anc-steps > li { list-style: none; padding-left: 0; }
 .anc-reading .oc-rs { max-width: 54rem; margin: 0 auto; }
+
+/* ——— Frequências dos chakras (js/35-chakras-som.js) ——— */
+.ck-box { text-align: left; }
+.ck-box > span, .ck-box .ck-sets { justify-content: center; text-align: center; }
+.ck-sets { display: flex; flex-wrap: wrap; gap: .4rem; }
+#ck-set-desc { text-align: center; }
+.ck-grid { display: grid; grid-template-columns: 1fr; gap: .45rem; }
+@media (min-width: 640px) { .ck-grid { grid-template-columns: 1fr 1fr; } .ck-item:last-child { grid-column: 1 / -1; } }
+.ck-item { display: flex; align-items: center; gap: .7rem; min-height: 52px; padding: .55rem .75rem; text-align: left; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+.ck-item:hover { border-color: var(--ck); }
+.ck-item[aria-pressed="true"] { border-color: var(--ck); box-shadow: 0 0 0 1px var(--ck) inset, 0 0 18px -6px var(--ck); }
+.ck-dot { flex: none; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff8 0, var(--ck) 55%); box-shadow: 0 0 0 2px color-mix(in srgb, var(--ck) 35%, transparent); }
+.ck-item[aria-pressed="true"] .ck-dot { animation: ck-pulse 2.4s ease-in-out infinite; }
+@keyframes ck-pulse { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--ck) 25%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .ck-item[aria-pressed="true"] .ck-dot { animation: none; } }
+.ck-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.ck-txt b { font-size: .9rem; }
+.ck-skt { font-size: .72rem; }
+.ck-hz { flex: none; font-size: .8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ck-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .6rem 1rem; }
+.ck-controls label { display: flex; align-items: center; gap: .45rem; }
+.ck-vol input { width: 110px; accent-color: var(--btn-primary); }
+.ck-select { padding: .3rem .4rem; color: var(--text-title); min-height: 36px; }
+.ck-seq-btn { min-height: 40px; padding: 0 1rem; font-size: .85rem; font-weight: 600; color: var(--on-primary); background: var(--btn-primary); border-color: var(--btn-primary); cursor: pointer; }
+#ck-status, .ck-note { text-align: center; }
+#ck-status:empty { display: none; }
