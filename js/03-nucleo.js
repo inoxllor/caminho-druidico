@@ -624,9 +624,20 @@ function drawRandomTriad() {
     document.getElementById('triad-text').textContent = `"${t}"`;
 }
 
+// O símbolo do Awen é /|\ . Em template strings a barra invertida tem de ir
+// dobrada; antes perdia-se e o diário ficava com «(/|)».
+const AWEN_LINE = 'Prática de Invocação da Awen (/|\\) concluída.';
+function fixAwenSymbol(text) {
+    return String(text || '')
+        .replace(/Invocação da Awen \(\/\|\)/g, 'Invocação da Awen (/|\\)')
+        .replace(/Awen Invocation Practice \(\/\|\)/g, 'Awen Invocation Practice (/|\\)');
+}
+window.fixAwenSymbol = fixAwenSymbol;
+
 function registerAwenPractice() {
     const area = document.getElementById('journal-input');
-    area.value += `\n[${new Date().toLocaleString('pt-PT')}] Prática de Invocação da Awen (/|\) concluída.\n`;
+    const line = typeof window.t === 'function' ? window.t(AWEN_LINE) : AWEN_LINE;
+    area.value += `\n[${new Date().toLocaleString('pt-PT')}] ${line}\n`;
     autoSaveJournal();
     showToast('Prática de Awen registada no Diário!');
 }
@@ -747,8 +758,9 @@ function importBackupJSON(event) {
         try {
             const data = JSON.parse(e.target.result);
             if (data.journal !== undefined) {
-                localStorage.setItem('druid_journal', data.journal);
-                document.getElementById('journal-input').value = data.journal;
+                const journal = fixAwenSymbol(data.journal);
+                localStorage.setItem('druid_journal', journal);
+                document.getElementById('journal-input').value = journal;
             }
             if (data.bardic !== undefined) {
                 localStorage.setItem('druid_bardic', data.bardic);
@@ -998,7 +1010,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const jInput = document.getElementById('journal-input');
     const bInput = document.getElementById('bardic-input');
-    if (jInput) jInput.value = localStorage.getItem('druid_journal') || '';
+    if (jInput) {
+        const saved = localStorage.getItem('druid_journal') || '';
+        jInput.value = fixAwenSymbol(saved);
+        if (jInput.value !== saved) localStorage.setItem('druid_journal', jInput.value);
+    }
     if (bInput) {
         bInput.value = localStorage.getItem('druid_bardic') || '';
         autoSaveBardic();
