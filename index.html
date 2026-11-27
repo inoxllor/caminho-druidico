@@ -1287,6 +1287,8 @@ body[data-tab="today"] .top-info { visibility: hidden; }
 
 /* Lua desenhada em SVG (mapa lunar e legenda) */
 .moon-svg { display: inline-block; vertical-align: middle; }
+.moon-slot { display: inline-flex; align-items: center; justify-content: center; line-height: 0; flex: none; }
+#moon-icon .moon-svg { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--moon-color) 35%, transparent)); }
 .moon-svg .moon-dark { fill: #1e2433; }
 .moon-svg .moon-lit { fill: #f8f6ec; }
 .moon-svg .moon-rim { fill: none; stroke: #f8f6ec; stroke-opacity: .55; stroke-width: 1.2; }
@@ -1703,7 +1705,6 @@ html.theme-lantern .moon-svg .moon-dark { fill: #2a0808; }
 html.theme-lantern .moon-svg .moon-lit { fill: #b4443a; }
 html.theme-lantern .moon-svg .moon-rim { stroke: #b4443a; }
 html.theme-lantern :is(.bot-fallback, .tf-plate.bot-fallback) { color: #b4443a; }
-html.theme-lantern #top-moon-icon, html.theme-lantern #moon-icon { filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(4) brightness(.7); }
 
 /* ——— Lua no tema claro: parte iluminada preenchida e quente ——— */
 html.theme-parchment .moon-svg .moon-dark { fill: #3b4252; }
@@ -2323,7 +2324,7 @@ html.i18n-wait body { visibility: hidden; }
         <div class="hidden lg:flex items-center justify-between px-8 py-3 border-b border-[var(--border-color)] zen-hide">
             <div class="flex items-center gap-6 text-sm">
                 <button type="button" onclick="switchTab('astro')" class="flex items-center gap-2 text-left cursor-pointer">
-                    <span id="top-moon-icon" class="text-lg" aria-hidden="true">🌓</span>
+                    <span id="top-moon-icon" class="moon-slot" aria-hidden="true"></span>
                     <span><span class="theme-muted block text-[11px] uppercase tracking-wide">Lua atual</span><strong id="top-moon-text" class="theme-info-hl font-semibold">—</strong></span>
                 </button>
                 <div class="h-6 w-px bg-[var(--border-color)]"></div>
@@ -2536,7 +2537,7 @@ html.i18n-wait body { visibility: hidden; }
                                 <h2 id="moon-phase-name" class="font-cinzel text-2xl theme-info-hl font-bold mt-1">—</h2>
                                 <p id="moon-details" class="text-sm theme-muted mt-1"></p>
                             </div>
-                            <div id="moon-icon" class="text-5xl select-none" aria-hidden="true">🌓</div>
+                            <div id="moon-icon" class="moon-slot select-none" aria-hidden="true"></div>
                         </div>
 
                         <!-- Gráfico SVG do Ciclo Lunar -->
@@ -2576,6 +2577,7 @@ html.i18n-wait body { visibility: hidden; }
                                 <!-- Posição atual da Lua na órbita (atualizada via JS) -->
                                 <circle id="lunar-orbit-halo" cx="160" cy="150" r="16" fill="url(#moonGlow)"/>
                                 <circle id="lunar-orbit-dot" cx="160" cy="150" r="6.5" fill="var(--moon-color)" stroke="var(--bg-body)" stroke-width="1.5"/>
+                                <g id="lunar-orbit-moon"></g>
                             </svg>
                             <div id="lunar-next-milestones" class="w-full grid grid-cols-2 gap-2 pt-2 border-t border-[var(--border-color)] text-xs text-center">
                                 <div class="theme-card border rounded-lg py-1.5 px-2"><span class="theme-muted block">Próxima Lua Cheia</span><strong id="next-full-moon" class="theme-info-hl">—</strong></div>
@@ -3978,7 +3980,39 @@ if (window.SpeechSynthesisUtterance) {
     };
   }
 
-  window.LunarCalc = { NAMES, ICONS, phaseTime, events, geometry, dayPhase, state };
+  // Fração do ciclo que representa um dia civil (a mesma em todo o site):
+  // nos dias de Nova/Quarto/Cheia a fase exata; nos outros, a Lua ao meio-dia.
+  const EVENT_FRAC = [0, 0.25, 0.5, 0.75];
+  function dayFrac(date = new Date()) {
+    const y = date.getFullYear(), m = date.getMonth(), d = date.getDate();
+    const p = dayPhase(y, m, d);
+    return p.event ? EVENT_FRAC[p.event.type] : geometry(new Date(y, m, d, 12).getTime()).frac;
+  }
+
+  window.LunarCalc = { NAMES, ICONS, phaseTime, events, geometry, dayPhase, dayFrac, state };
+
+  /**
+   * Desenha a Lua em SVG para a fração do ciclo (0 = Nova, .5 = Cheia):
+   * igual em todos os aparelhos, ao contrário dos emoji 🌑…🌘.
+   * É o único desenho da Lua usado no site.
+   */
+  window.moonSVG = function (frac, size = 22) {
+    const f = ((frac % 1) + 1) % 1, r = 10, c = 12;
+    const k = Math.cos(2 * Math.PI * f), rx = (Math.abs(k) * r).toFixed(2);
+    let lit = '';
+    if (f > 0.03 && f < 0.97) {
+      if (Math.abs(f - 0.5) < 0.03) lit = `<circle cx="${c}" cy="${c}" r="${r}" class="moon-lit"/>`;
+      else {
+        const waxing = f < 0.5;
+        const edge = waxing ? 1 : 0;
+        const term = waxing ? (k > 0 ? 0 : 1) : (k > 0 ? 1 : 0);
+        lit = `<path class="moon-lit" d="M${c} ${c - r}A${r} ${r} 0 0 ${edge} ${c} ${c + r}A${rx} ${r} 0 0 ${term} ${c} ${c - r}Z"/>`;
+      }
+    }
+    return `<svg class="moon-svg" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true"><circle cx="${c}" cy="${c}" r="${r}" class="moon-dark"/>${lit}<circle cx="${c}" cy="${c}" r="${r}" class="moon-rim"/></svg>`;
+  };
+  // Lua de hoje (ou de outra data) com o mesmo desenho e cálculo do mapa lunar
+  window.moonDaySVG = (date = new Date(), size = 22) => window.moonSVG(dayFrac(date), size);
 })();
     </script>
     <script>
@@ -4575,12 +4609,13 @@ function updateAstronomy() {
     const moonIconEl = document.getElementById('moon-icon');
     const moonNameEl = document.getElementById('moon-phase-name');
     const moonDetailsEl = document.getElementById('moon-details');
-    if (moonIconEl) moonIconEl.textContent = icon;
+    const moonArt = size => (window.moonDaySVG ? moonDaySVG(now, size) : icon);
+    if (moonIconEl) moonIconEl.innerHTML = moonArt(56);
     if (moonNameEl) moonNameEl.textContent = phaseName;
     if (moonDetailsEl) moonDetailsEl.textContent = `Idade: ${phaseAge.toFixed(1)} dias • Iluminação: ${illumination}% • ${now.toLocaleDateString('pt-PT')}`;
     const topMoonIcon = document.getElementById('top-moon-icon');
     const topMoonText = document.getElementById('top-moon-text');
-    if (topMoonIcon) topMoonIcon.textContent = icon;
+    if (topMoonIcon) topMoonIcon.innerHTML = moonArt(22);
     if (topMoonText) topMoonText.textContent = `${phaseName} (${illumination}%)`;
 
     const startOfYear = new Date(now.getFullYear(), 0, 0);
@@ -5727,7 +5762,7 @@ function renderToday() {
   const p = $('today-panel'); if (!p || !$('moon-icon')) return;
   const n = nextFestival(), s = streak(), e = window.esc || (x => x), ico = i => `<svg class="ic" aria-hidden="true"><use href="#i-${i}"></use></svg>`;
   const c = (i, l, v, tab) => `<button type="button" class="today-chip" onclick="switchTab('${tab}')"><span class="tc-i" aria-hidden="true">${i}</span><span class="tc-t"><span class="t-lb">${l}</span><span class="t-v">${v}</span></span></button>`;
-  p.innerHTML = c($('moon-icon').textContent, 'Lua', e($('moon-phase-name').textContent), 'astro') +
+  p.innerHTML = c(window.moonDaySVG ? moonDaySVG(new Date(), 26) : e($('moon-icon').textContent), 'Lua', e($('moon-phase-name').textContent), 'astro') +
     c(ico('sun'), 'Sol', e($('top-sun-text').textContent), 'astro') +
     c(`<span class="tc-glyph">${e($('celtic-month-symbol').textContent)}</span>`, 'Mês arbóreo', e($('celtic-month-title').textContent.split(' — ')[0]), 'herbal') +
     c(ico('wheel'), 'Próxima festa', `${n.name} · ${n.days === 0 ? 'hoje' : 'em ' + n.days + ' d'}`, 'wheel');
@@ -5964,6 +5999,12 @@ window.addEventListener('DOMContentLoaded', () => {
         const halo = $('lunar-orbit-halo');
         if (dot) { dot.setAttribute('cx', cx.toFixed(1)); dot.setAttribute('cy', cy.toFixed(1)); }
         if (halo) { halo.setAttribute('cx', cx.toFixed(1)); halo.setAttribute('cy', cy.toFixed(1)); }
+        // A Lua na órbita usa o mesmo desenho do mapa lunar e do cartão do Hoje
+        const orbitMoon = $('lunar-orbit-moon');
+        if (orbitMoon && window.moonDaySVG) {
+            orbitMoon.innerHTML = moonDaySVG(now, 18).replace('<svg ', `<svg x="${(cx - 9).toFixed(1)}" y="${(cy - 9).toFixed(1)}" `);
+            if (dot) dot.style.display = 'none';
+        }
 
         // Próxima Lua Cheia e Próxima Lua Nova (instantes astronómicos reais)
         const fmtShort = d => d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
@@ -6478,26 +6519,6 @@ window.resetLunarMap = function () {
   renderLunarMap();
 };
 
-/**
- * Desenha a Lua em SVG para a fração do ciclo (0 = Nova, .5 = Cheia):
- * igual em todos os aparelhos, ao contrário dos emoji 🌑…🌘.
- */
-window.moonSVG = function (frac, size = 22) {
-  const f = ((frac % 1) + 1) % 1, r = 10, c = 12;
-  const k = Math.cos(2 * Math.PI * f), rx = (Math.abs(k) * r).toFixed(2);
-  let lit = '';
-  if (f > 0.03 && f < 0.97) {
-    if (Math.abs(f - 0.5) < 0.03) lit = `<circle cx="${c}" cy="${c}" r="${r}" class="moon-lit"/>`;
-    else {
-      const waxing = f < 0.5;
-      const edge = waxing ? 1 : 0;
-      const term = waxing ? (k > 0 ? 0 : 1) : (k > 0 ? 1 : 0);
-      lit = `<path class="moon-lit" d="M${c} ${c - r}A${r} ${r} 0 0 ${edge} ${c} ${c + r}A${rx} ${r} 0 0 ${term} ${c} ${c - r}Z"/>`;
-    }
-  }
-  return `<svg class="moon-svg" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true"><circle cx="${c}" cy="${c}" r="${r}" class="moon-dark"/>${lit}<circle cx="${c}" cy="${c}" r="${r}" class="moon-rim"/></svg>`;
-};
-const EVENT_FRAC = { 0: 0, 2: 0.25, 4: 0.5, 6: 0.75 };
 
 window.renderLunarMap = function () {
   document.querySelectorAll('.lunar-map-legend [data-moon]').forEach(el => {
@@ -6531,11 +6552,11 @@ window.renderLunarMap = function () {
       info.name += ' às ' + hm;
       ev = '<span class="ld-ev" aria-hidden="true">' + (['Nova', '', 'Q.C.', '', 'Cheia', '', 'Q.M.', ''][info.idx] || '') + '<i> ' + hm + '</i></span>';
     }
-    const frac = info.event ? EVENT_FRAC[info.idx] : LunarCalc.geometry(new Date(y, m, d, 12).getTime()).frac;
+    const frac = LunarCalc.dayFrac(new Date(y, m, d));
     const isToday = (lunarMapOffset || 0) === 0 &&
       d === now.getDate() && m === now.getMonth() && y === now.getFullYear();
     const cls = ['lunar-day', phaseClass(info.idx), isToday ? 'is-today' : ''].filter(Boolean).join(' ');
-    const label = d + '/' + (m + 1) + '/' + y + ' · ' + info.icon + ' ' + info.name;
+    const label = d + '/' + (m + 1) + '/' + y + ' · ' + info.name;
     out += '<div class="' + cls + '" role="gridcell" title="' + label + '" aria-label="' + label + '">' +
       '<span class="ld-phase" aria-hidden="true">' + moonSVG(frac) + '</span>' +
       '<span class="ld-num">' + d + '</span>' + ev + '</div>';
@@ -10439,7 +10460,7 @@ function renderTodayFeature() {
   if (!o) return;
   const L = window.LunarCalc ? LunarCalc.state(now) : null;
   const fest = window.__druid && __druid.nextFestival ? __druid.nextFestival(now) : null;
-  const moonArt = L && window.moonSVG ? moonSVG(L.frac, 44) : '';
+  const moonArt = L && window.moonSVG ? moonSVG(LunarCalc.dayFrac(now), 44) : '';
   const sun = ($('top-sun-text') || {}).textContent || '';
   const daysLeft = Math.round((m.end - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
   const fDate = fest ? fest.date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long' }) : '';
@@ -10520,7 +10541,7 @@ function renderTreeWheel() {
   const a = ang(now);
   const [px0, py0] = polar(R_IN - 6, a), [px1, py1] = polar(R_OUT + 4, a);
   const L = window.LunarCalc ? LunarCalc.state(now) : null;
-  const centre = L && window.moonSVG ? moonSVG(L.frac, 64).replace('<svg ', `<svg x="${C - 32}" y="${C - 50}" `) : '';
+  const centre = L && window.moonSVG ? moonSVG(LunarCalc.dayFrac(now), 64).replace('<svg ', `<svg x="${C - 32}" y="${C - 50}" `) : '';
   host.innerHTML = `
     <div class="tw-wheel">
       <svg viewBox="0 0 400 400" class="tw-svg" role="group" aria-label="Roda das árvores: 13 luas arbóreas">
