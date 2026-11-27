@@ -50,6 +50,7 @@ changeTheme = function (t) { _ct(t); const m = document.querySelector('meta[name
 let amb = null, wl = null;
 const _ta = toggleAmbientSound, _tv = toggleVocalDrone;
 toggleAmbientSound = function (t) { if (amb === t) { stopAmbientSound(); amb = null; showToast('Som parado'); return; } amb = t; _ta(t); };
+window.resetAmbientToggle = () => { amb = null; };   // js/35: outra fonte de som tomou o lugar
 toggleVocalDrone = function (f, l) { const k = 'd' + f; if (amb === k) { stopAmbientSound(); amb = null; showToast('Drone parado'); return; } amb = k; _tv(f, l); };
 async function wake() {
   const on = isMedRunning || document.body.classList.contains('zen-active');

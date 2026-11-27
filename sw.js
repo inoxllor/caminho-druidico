@@ -6,7 +6,7 @@
      guardadas na primeira utilização, para a instalação ser leve.
    - APIs externas (tempo, localização, IA, QR): sempre pela rede.
    Ao mudar a lista PRECACHE ou o código, suba VERSION. */
-const VERSION = 'v36';
+const VERSION = 'v37';
 const CORE = `caminho-core-${VERSION}`;
 const RUNTIME = 'caminho-runtime-v1';
 const ON_DEMAND = /\/img\/plantas\//;
@@ -59,6 +59,7 @@ const PRECACHE = [
   './js/vendor-qrcode.js',
   './js/33-grove-leituras.js',
   './js/34-antepassados.js',
+  './js/35-chakras-som.js',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
