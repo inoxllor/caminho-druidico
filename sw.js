@@ -6,7 +6,7 @@
      guardadas na primeira utilização, para a instalação ser leve.
    - APIs externas (tempo, localização, IA, QR): sempre pela rede.
    Ao mudar a lista PRECACHE ou o código, suba VERSION. */
-const VERSION = 'v35';
+const VERSION = 'v36';
 const CORE = `caminho-core-${VERSION}`;
 const RUNTIME = 'caminho-runtime-v1';
 const ON_DEMAND = /\/img\/plantas\//;
