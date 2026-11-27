@@ -197,7 +197,7 @@
         <div class="hidden lg:flex items-center justify-between px-8 py-3 border-b border-[var(--border-color)] zen-hide">
             <div class="flex items-center gap-6 text-sm">
                 <button type="button" onclick="switchTab('astro')" class="flex items-center gap-2 text-left cursor-pointer">
-                    <span id="top-moon-icon" class="text-lg" aria-hidden="true">🌓</span>
+                    <span id="top-moon-icon" class="moon-slot" aria-hidden="true"></span>
                     <span><span class="theme-muted block text-[11px] uppercase tracking-wide">Lua atual</span><strong id="top-moon-text" class="theme-info-hl font-semibold">—</strong></span>
                 </button>
                 <div class="h-6 w-px bg-[var(--border-color)]"></div>
@@ -410,7 +410,7 @@
                                 <h2 id="moon-phase-name" class="font-cinzel text-2xl theme-info-hl font-bold mt-1">—</h2>
                                 <p id="moon-details" class="text-sm theme-muted mt-1"></p>
                             </div>
-                            <div id="moon-icon" class="text-5xl select-none" aria-hidden="true">🌓</div>
+                            <div id="moon-icon" class="moon-slot select-none" aria-hidden="true"></div>
                         </div>
 
                         <!-- Gráfico SVG do Ciclo Lunar -->
@@ -450,6 +450,7 @@
                                 <!-- Posição atual da Lua na órbita (atualizada via JS) -->
                                 <circle id="lunar-orbit-halo" cx="160" cy="150" r="16" fill="url(#moonGlow)"/>
                                 <circle id="lunar-orbit-dot" cx="160" cy="150" r="6.5" fill="var(--moon-color)" stroke="var(--bg-body)" stroke-width="1.5"/>
+                                <g id="lunar-orbit-moon"></g>
                             </svg>
                             <div id="lunar-next-milestones" class="w-full grid grid-cols-2 gap-2 pt-2 border-t border-[var(--border-color)] text-xs text-center">
                                 <div class="theme-card border rounded-lg py-1.5 px-2"><span class="theme-muted block">Próxima Lua Cheia</span><strong id="next-full-moon" class="theme-info-hl">—</strong></div>

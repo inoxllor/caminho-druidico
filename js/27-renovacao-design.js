@@ -68,7 +68,7 @@ function renderTodayFeature() {
   if (!o) return;
   const L = window.LunarCalc ? LunarCalc.state(now) : null;
   const fest = window.__druid && __druid.nextFestival ? __druid.nextFestival(now) : null;
-  const moonArt = L && window.moonSVG ? moonSVG(L.frac, 44) : '';
+  const moonArt = L && window.moonSVG ? moonSVG(LunarCalc.dayFrac(now), 44) : '';
   const sun = ($('top-sun-text') || {}).textContent || '';
   const daysLeft = Math.round((m.end - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
   const fDate = fest ? fest.date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long' }) : '';
@@ -149,7 +149,7 @@ function renderTreeWheel() {
   const a = ang(now);
   const [px0, py0] = polar(R_IN - 6, a), [px1, py1] = polar(R_OUT + 4, a);
   const L = window.LunarCalc ? LunarCalc.state(now) : null;
-  const centre = L && window.moonSVG ? moonSVG(L.frac, 64).replace('<svg ', `<svg x="${C - 32}" y="${C - 50}" `) : '';
+  const centre = L && window.moonSVG ? moonSVG(LunarCalc.dayFrac(now), 64).replace('<svg ', `<svg x="${C - 32}" y="${C - 50}" `) : '';
   host.innerHTML = `
     <div class="tw-wheel">
       <svg viewBox="0 0 400 400" class="tw-svg" role="group" aria-label="Roda das árvores: 13 luas arbóreas">

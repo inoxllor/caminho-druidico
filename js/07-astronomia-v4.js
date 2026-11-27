@@ -35,7 +35,7 @@ function renderToday() {
   const p = $('today-panel'); if (!p || !$('moon-icon')) return;
   const n = nextFestival(), s = streak(), e = window.esc || (x => x), ico = i => `<svg class="ic" aria-hidden="true"><use href="#i-${i}"></use></svg>`;
   const c = (i, l, v, tab) => `<button type="button" class="today-chip" onclick="switchTab('${tab}')"><span class="tc-i" aria-hidden="true">${i}</span><span class="tc-t"><span class="t-lb">${l}</span><span class="t-v">${v}</span></span></button>`;
-  p.innerHTML = c($('moon-icon').textContent, 'Lua', e($('moon-phase-name').textContent), 'astro') +
+  p.innerHTML = c(window.moonDaySVG ? moonDaySVG(new Date(), 26) : e($('moon-icon').textContent), 'Lua', e($('moon-phase-name').textContent), 'astro') +
     c(ico('sun'), 'Sol', e($('top-sun-text').textContent), 'astro') +
     c(`<span class="tc-glyph">${e($('celtic-month-symbol').textContent)}</span>`, 'Mês arbóreo', e($('celtic-month-title').textContent.split(' — ')[0]), 'herbal') +
     c(ico('wheel'), 'Próxima festa', `${n.name} · ${n.days === 0 ? 'hoje' : 'em ' + n.days + ' d'}`, 'wheel');

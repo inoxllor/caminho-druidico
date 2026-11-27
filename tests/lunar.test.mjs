@@ -66,3 +66,16 @@ test('estado: idade da Lua e próximas fases coerentes', () => {
   assert.ok(s.nextNew > new Date('2025-03-20T12:00Z'));
   assert.equal(new Date(s.nextNew).toISOString().slice(0, 10), '2025-03-29');
 });
+
+test('a Lua de um dia é a mesma em todo o site (dayFrac e moonSVG)', () => {
+  // Dia de Lua Cheia: desenho exato da Cheia, de manhã ou à noite
+  assert.equal(L.dayFrac(new Date(2026, 2, 3, 9)), 0.5);
+  assert.equal(L.dayFrac(new Date(2026, 2, 3, 23)), 0.5);
+  // Num dia sem evento, a hora não muda o desenho
+  const a = L.dayFrac(new Date(2026, 10, 27, 0, 5)), b = L.dayFrac(new Date(2026, 10, 27, 23, 55));
+  assert.equal(a, b);
+  assert.ok(a > 0.5 && a < 0.75, '27/11/2026 é Gibosa Minguante');
+  const svg = ctx.window.moonSVG(0.5, 20);
+  assert.match(svg, /class="moon-lit"/);
+  assert.equal(ctx.window.moonDaySVG(new Date(2026, 10, 27, 8), 20), ctx.window.moonSVG(a, 20));
+});

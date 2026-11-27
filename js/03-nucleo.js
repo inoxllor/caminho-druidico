@@ -195,12 +195,13 @@ function updateAstronomy() {
     const moonIconEl = document.getElementById('moon-icon');
     const moonNameEl = document.getElementById('moon-phase-name');
     const moonDetailsEl = document.getElementById('moon-details');
-    if (moonIconEl) moonIconEl.textContent = icon;
+    const moonArt = size => (window.moonDaySVG ? moonDaySVG(now, size) : icon);
+    if (moonIconEl) moonIconEl.innerHTML = moonArt(56);
     if (moonNameEl) moonNameEl.textContent = phaseName;
     if (moonDetailsEl) moonDetailsEl.textContent = `Idade: ${phaseAge.toFixed(1)} dias • Iluminação: ${illumination}% • ${now.toLocaleDateString('pt-PT')}`;
     const topMoonIcon = document.getElementById('top-moon-icon');
     const topMoonText = document.getElementById('top-moon-text');
-    if (topMoonIcon) topMoonIcon.textContent = icon;
+    if (topMoonIcon) topMoonIcon.innerHTML = moonArt(22);
     if (topMoonText) topMoonText.textContent = `${phaseName} (${illumination}%)`;
 
     const startOfYear = new Date(now.getFullYear(), 0, 0);
