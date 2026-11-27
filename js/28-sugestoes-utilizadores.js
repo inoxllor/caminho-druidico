@@ -102,10 +102,13 @@ window.unlockJournalWithPin = async function () {
       const r = await decryptWith(pin);
       key = r.k; salt = r.s;
       const pend = ls.get(PEND, '');
-      $('journal-input').value = (r.data.journal || '') + (pend ? (r.data.journal ? '\n' : '') + pend : '');
+      const fixA = typeof window.fixAwenSymbol === 'function' ? window.fixAwenSymbol : (x => x);
+      const joined = (r.data.journal || '') + (pend ? (r.data.journal ? '\n' : '') + pend : '');
+      $('journal-input').value = fixA(joined);
       $('bardic-input').value = r.data.bardic || '';
       ls.del(PEND);
-      if (pend) await encryptSave();
+      // Entradas antigas com «Awen (/|)» são corrigidas e voltam a ser cifradas.
+      if (pend || $('journal-input').value !== joined) await encryptSave();
       if (typeof autoSaveBardic === 'function') { try { baseAutoBardic(); ls.del('druid_bardic'); } catch { /* nada */ } }
     } else if (ls.get(LEGACY_PIN)) {
       if (pin !== ls.get(LEGACY_PIN)) return fail();
