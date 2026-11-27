@@ -101,5 +101,37 @@
     };
   }
 
-  window.LunarCalc = { NAMES, ICONS, phaseTime, events, geometry, dayPhase, state };
+  // Fração do ciclo que representa um dia civil (a mesma em todo o site):
+  // nos dias de Nova/Quarto/Cheia a fase exata; nos outros, a Lua ao meio-dia.
+  const EVENT_FRAC = [0, 0.25, 0.5, 0.75];
+  function dayFrac(date = new Date()) {
+    const y = date.getFullYear(), m = date.getMonth(), d = date.getDate();
+    const p = dayPhase(y, m, d);
+    return p.event ? EVENT_FRAC[p.event.type] : geometry(new Date(y, m, d, 12).getTime()).frac;
+  }
+
+  window.LunarCalc = { NAMES, ICONS, phaseTime, events, geometry, dayPhase, dayFrac, state };
+
+  /**
+   * Desenha a Lua em SVG para a fração do ciclo (0 = Nova, .5 = Cheia):
+   * igual em todos os aparelhos, ao contrário dos emoji 🌑…🌘.
+   * É o único desenho da Lua usado no site.
+   */
+  window.moonSVG = function (frac, size = 22) {
+    const f = ((frac % 1) + 1) % 1, r = 10, c = 12;
+    const k = Math.cos(2 * Math.PI * f), rx = (Math.abs(k) * r).toFixed(2);
+    let lit = '';
+    if (f > 0.03 && f < 0.97) {
+      if (Math.abs(f - 0.5) < 0.03) lit = `<circle cx="${c}" cy="${c}" r="${r}" class="moon-lit"/>`;
+      else {
+        const waxing = f < 0.5;
+        const edge = waxing ? 1 : 0;
+        const term = waxing ? (k > 0 ? 0 : 1) : (k > 0 ? 1 : 0);
+        lit = `<path class="moon-lit" d="M${c} ${c - r}A${r} ${r} 0 0 ${edge} ${c} ${c + r}A${rx} ${r} 0 0 ${term} ${c} ${c - r}Z"/>`;
+      }
+    }
+    return `<svg class="moon-svg" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true"><circle cx="${c}" cy="${c}" r="${r}" class="moon-dark"/>${lit}<circle cx="${c}" cy="${c}" r="${r}" class="moon-rim"/></svg>`;
+  };
+  // Lua de hoje (ou de outra data) com o mesmo desenho e cálculo do mapa lunar
+  window.moonDaySVG = (date = new Date(), size = 22) => window.moonSVG(dayFrac(date), size);
 })();

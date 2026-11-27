@@ -58,6 +58,12 @@
         const halo = $('lunar-orbit-halo');
         if (dot) { dot.setAttribute('cx', cx.toFixed(1)); dot.setAttribute('cy', cy.toFixed(1)); }
         if (halo) { halo.setAttribute('cx', cx.toFixed(1)); halo.setAttribute('cy', cy.toFixed(1)); }
+        // A Lua na órbita usa o mesmo desenho do mapa lunar e do cartão do Hoje
+        const orbitMoon = $('lunar-orbit-moon');
+        if (orbitMoon && window.moonDaySVG) {
+            orbitMoon.innerHTML = moonDaySVG(now, 18).replace('<svg ', `<svg x="${(cx - 9).toFixed(1)}" y="${(cy - 9).toFixed(1)}" `);
+            if (dot) dot.style.display = 'none';
+        }
 
         // Próxima Lua Cheia e Próxima Lua Nova (instantes astronómicos reais)
         const fmtShort = d => d.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });

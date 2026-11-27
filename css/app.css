@@ -1270,6 +1270,8 @@ body[data-tab="today"] .top-info { visibility: hidden; }
 
 /* Lua desenhada em SVG (mapa lunar e legenda) */
 .moon-svg { display: inline-block; vertical-align: middle; }
+.moon-slot { display: inline-flex; align-items: center; justify-content: center; line-height: 0; flex: none; }
+#moon-icon .moon-svg { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--moon-color) 35%, transparent)); }
 .moon-svg .moon-dark { fill: #1e2433; }
 .moon-svg .moon-lit { fill: #f8f6ec; }
 .moon-svg .moon-rim { fill: none; stroke: #f8f6ec; stroke-opacity: .55; stroke-width: 1.2; }
@@ -1686,7 +1688,6 @@ html.theme-lantern .moon-svg .moon-dark { fill: #2a0808; }
 html.theme-lantern .moon-svg .moon-lit { fill: #b4443a; }
 html.theme-lantern .moon-svg .moon-rim { stroke: #b4443a; }
 html.theme-lantern :is(.bot-fallback, .tf-plate.bot-fallback) { color: #b4443a; }
-html.theme-lantern #top-moon-icon, html.theme-lantern #moon-icon { filter: grayscale(1) sepia(1) hue-rotate(-50deg) saturate(4) brightness(.7); }
 
 /* ——— Lua no tema claro: parte iluminada preenchida e quente ——— */
 html.theme-parchment .moon-svg .moon-dark { fill: #3b4252; }
