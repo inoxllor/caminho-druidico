@@ -188,7 +188,7 @@ test('oráculos: Ogham, Runas e Tarot tiram cartas', async () => {
   }
   assert.equal(await page.$$eval('#tab-oracle .spread-card', e => e.length), 4);
   assert.equal(await page.$$eval('#tab-runes .spread-card', e => e.length), 9);
-  assert.equal(await page.$$eval('#tab-tarot .spread-card', e => e.length), 4);
+  assert.equal(await page.$$eval('#tab-tarot .spread-card', e => e.length), 9);
   await page.evaluate(() => { switchTab('tarot'); drawTarotCard(3); });
   await page.waitForFunction(() => document.querySelectorAll('#tarot-card-container .tarot-flip-wrapper, #tarot-card-container > *').length >= 1);
   assert.deepEqual(errors, []);

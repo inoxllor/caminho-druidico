@@ -71,7 +71,7 @@ window.openTarotDetail = function (id) {
     <div class="theme-inner border rounded-lg p-3 text-left">
       <p class="text-xs font-semibold c-danger uppercase tracking-wide">Invertida</p>
       <p class="text-sm theme-title leading-relaxed mt-1">${esc(c.reversed)}</p>
-    </div>`;
+    </div>${window.tarotDetailExtra ? window.tarotDetailExtra(c) : ''}`;
   d.showModal();
 };
 

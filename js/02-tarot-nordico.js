@@ -14,7 +14,7 @@ const NORDIC_MAJOR_ARCANA = [
     { id: 'M09', num: 'IX', suit: 'major', name: 'Odin Peregrino (Vegtam)', title: 'O EREMITA', realm: 'CAMINHOS DE YGGDRASIL', rune: 'ᛁ', upright: 'Retiro espiritual, busca solitária pela verdade, lanterna interior e prudência.', reversed: 'Isolamento excessivo, solidão amarga ou recusa em aceitar ajuda.', art: 'hermit' },
     { id: 'M10', num: 'X', suit: 'major', name: 'As Três Nornas do Poço', title: 'A RODA DO DESTINO', realm: 'URÐARBRUNNR', rune: 'ᛃ', upright: 'Ponto de viragem no tecido do Wyrd, ciclos inevitáveis, boa fortuna e evolução.', reversed: 'Resistência à mudança, atrasos cíclicos ou sensação de impotência.', art: 'norns' },
     { id: 'M11', num: 'XI', suit: 'major', name: 'Forseti, Juiz de Glitnir', title: 'A JUSTIÇA', realm: 'GLITNIR', rune: 'ᛇ', upright: 'Equilíbrio, verdade cristalina, resolução justa de disputas e responsabilidade cármica.', reversed: 'Injustiça, parcialidade, negação da responsabilidade ou desequilíbrio.', art: 'forseti' },
-    { id: 'M12', num: 'XII', suit: 'major', name: 'O Sacrifício em Yggdrasil', title: 'O PENDURADO', realm: 'ÁRVORE DO MUNDO', rune: 'ᛟ', upright: 'Pausa sagrada, entrega do ego para alcançar iluminação, nova perspetiva e sacrifício voluntário.', reversed: 'Estagnação estéril, vitimismo ou resistência a soltar o que já cumpriu o seu ciclo.', art: 'hanged' },
+    { id: 'M12', num: 'XII', suit: 'major', name: 'O Sacrifício em Yggdrasil', title: 'O PENDURADO', realm: 'ÁRVORE DO MUNDO', rune: 'ᚾ', upright: 'Pausa sagrada, entrega do ego para alcançar iluminação, nova perspetiva e sacrifício voluntário.', reversed: 'Estagnação estéril, vitimismo ou resistência a soltar o que já cumpriu o seu ciclo.', art: 'hanged' },
     { id: 'M13', num: 'XIII', suit: 'major', name: 'Hel, Senhora de Helheim', title: 'A MORTE', realm: 'HELHEIM', rune: 'ᚺ', upright: 'Transformação profunda, encerramento definitivo de um ciclo e renascimento inevitável.', reversed: 'Medo da mudança, apego ao passado ou estagnação dolorosa.', art: 'hel' },
     { id: 'M14', num: 'XIV', suit: 'major', name: 'Idunn & As Maçãs Douradas', title: 'A TEMPERANÇA', realm: 'POMAR DE ASGARD', rune: 'ᛚ', upright: 'Alquimia interior, moderação, cura regenerativa, harmonia entre opostos e paciência.', reversed: 'Desequilíbrio, excessos, impaciência ou falta de propósito.', art: 'idunn' },
     { id: 'M15', num: 'XV', suit: 'major', name: 'Surt, Senhor de Muspelheim', title: 'O DIABO', realm: 'MUSPELHEIM', rune: 'ᚦ', upright: 'Apego material, paixões ardentes, sombra interior que exige confronto e libertação.', reversed: 'Quebra de correntes, despertar da ilusão e recuperação da autonomia.', art: 'surt' },
@@ -33,6 +33,8 @@ const NORDIC_SUITS = [
     { key: 'pentacles', label: 'Draupnir (Ouro)', element: 'Terra • Midgard', colorPrimary: '#eab308', colorSecondary: '#fef08a', bg: '#181408', theme: 'prosperidade, corpo, ofício e manifestação material' }
 ];
 
+// Os sentidos abaixo são só um molde de reserva: os sentidos próprios de cada
+// Arcano Menor e as correspondências estão em js/36-tarot-avancado.js.
 const NORDIC_RANKS = [
     { rank: 1, num: 'ÁS', title: 'Ás', upright: 'Semente pura e dom primordial de {theme}.', reversed: 'Bloqueio inicial ou energia dispersa em {theme}.' },
     { rank: 2, num: 'II', title: 'Dois', upright: 'Equilíbrio dual, decisão e parceria em {theme}.', reversed: 'Indecisão, dualidade em conflito ou desequilíbrio.' },
@@ -44,7 +46,7 @@ const NORDIC_RANKS = [
     { rank: 8, num: 'VIII', title: 'Oito', upright: 'Movimento rápido, mestria técnica e dedicação em {theme}.', reversed: 'Pressa precipitada, bloqueio de fluxo ou frustração.' },
     { rank: 9, num: 'IX', title: 'Nove', upright: 'Resiliência final, plenitude individual e sabedoria em {theme}.', reversed: 'Fadiga antes da meta ou isolamento defensivo.' },
     { rank: 10, num: 'X', title: 'Dez', upright: 'Culminação máxima do ciclo e legado duradouro em {theme}.', reversed: 'Sobrecarga de responsabilidades ou fim de um fardo.' },
-    { rank: 11, num: 'THRALL', title: 'Escudeiro', upright: 'Curiosidade jovem, mensagem importante e início de estudo em {theme}.', reversed: 'Imaturidade, notícias atrasadas ou falta de foco.' },
+    { rank: 11, num: 'SVEINN', title: 'Escudeiro', upright: 'Curiosidade jovem, mensagem importante e início de estudo em {theme}.', reversed: 'Imaturidade, notícias atrasadas ou falta de foco.' },
     { rank: 12, num: 'VALK', title: 'Valquíria', upright: 'Avanço destemido, missão ativa e paixão em {theme}.', reversed: 'Impulsividade temerária ou estagnação na jornada.' },
     { rank: 13, num: 'VÖLVA', title: 'Völva (Rainha)', upright: 'Mestria interior, intuição receptiva e soberania em {theme}.', reversed: 'Insegurança interior ou desequilíbrio emocional.' },
     { rank: 14, num: 'JARL', title: 'Jarl (Rei)', upright: 'Liderança sábia, autoridade madura e domínio pleno em {theme}.', reversed: 'Autoritarismo, rigidez ou perda de visão estratégica.' }
@@ -117,18 +119,8 @@ function describeTarotArt(card) {
     9: 'em duas colunas de quatro, com a nona ao centro',
     10: 'em duas colunas de quatro, com duas ao centro'
   }[r].replace('um@', SUIT.f ? 'uma' : 'um').replace(/@/g, SUIT.f ? 'a' : 'o').replace('a quinta', SUIT.f ? 'a quinta' : 'o quinto').replace('a sétima', SUIT.f ? 'a sétima' : 'o sétimo').replace('a nona', SUIT.f ? 'a nona' : 'o nono').replace(/com duas ao centro/, SUIT.f ? 'com duas ao centro' : 'com dois ao centro');
-  const MEANING = {
-    2: 'Duas forças do mesmo naipe em diálogo ou tensão inicial.',
-    3: 'Expansão: criação, colaboração ou primeira colheita.',
-    4: 'Estrutura estável que firma o tema do naipe no mundo.',
-    5: 'Quatro cantos em tensão à volta de um centro disputado: conflito ou prova.',
-    6: 'Passagem e partilha; o olhar é guiado em fluxo generoso.',
-    7: 'Defesa ou perseverança: uma resiste acima das restantes.'.replace('uma resiste', SUIT.f ? 'uma resiste' : 'um resiste'),
-    8: 'Ritmo, ofício ou restrição em padrão repetido.',
-    9: 'Quase a culminação: plenitude individual, reserva ou vigília.',
-    10: 'Ciclo completo do naipe: fardo ou plenitude, conforme a orientação.'
-  }[r];
-  return `${NUM} ${SUIT.many} ${LAYOUT}, ${SUIT.scene}. ${MEANING}`;
+  // Só a imagem: o sentido de cada número está na ficha (js/36)
+  return `${NUM} ${SUIT.many} ${LAYOUT}, ${SUIT.scene}.`;
 }
 
 const NORDIC_TAROT_DECK = (() => {
@@ -338,6 +330,7 @@ function buildPixelCardHTML(card, isReversed = false, positionLabel = '') {
                 </div>
                 <p class="text-[11px] theme-muted leading-relaxed italic">${describeTarotArt(card)}</p>
                 <p class="text-xs theme-title leading-relaxed">${meaning || ''}</p>
+                ${window.tarotCardExtra ? window.tarotCardExtra(card) : ''}
             </div>
         </div>`;
 }
