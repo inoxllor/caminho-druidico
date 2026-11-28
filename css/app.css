@@ -2152,3 +2152,43 @@ html.i18n-wait body { visibility: hidden; }
 .ck-seq-btn { min-height: 40px; padding: 0 1rem; font-size: .85rem; font-weight: 600; color: var(--on-primary); background: var(--btn-primary); border-color: var(--btn-primary); cursor: pointer; }
 #ck-status, .ck-note { text-align: center; }
 #ck-status:empty { display: none; }
+
+/* ---------- Tarot para leitores avançados (js/36) ---------- */
+.spread-grid-adv { margin-bottom: .25rem; }
+.tarot-adv-opts { display: flex; flex-direction: column; align-items: stretch; gap: .75rem; }
+.tarot-sig-pick { flex: 1 1 16rem; max-width: 24rem; }
+.dia-dense i { width: 7px; height: 10px; border-radius: 1.5px; display: block; }
+.dia-celta i:nth-child(1), .dia-celta i:nth-child(2) { left: 12px; top: 15px; }
+.dia-celta i:nth-child(2) { transform: rotate(90deg); opacity: .6; }
+.dia-celta i:nth-child(3) { left: 12px; top: 28px; } .dia-celta i:nth-child(4) { left: 1px; top: 15px; }
+.dia-celta i:nth-child(5) { left: 12px; top: 2px; } .dia-celta i:nth-child(6) { left: 23px; top: 15px; }
+.dia-celta i:nth-child(7) { left: 44px; top: 30px; } .dia-celta i:nth-child(8) { left: 44px; top: 20px; }
+.dia-celta i:nth-child(9) { left: 44px; top: 10px; } .dia-celta i:nth-child(10) { left: 44px; top: 0; }
+.dia-ferr i:nth-child(1) { left: 0; top: 2px; } .dia-ferr i:nth-child(2) { left: 7px; top: 16px; } .dia-ferr i:nth-child(3) { left: 16px; top: 26px; }
+.dia-ferr i:nth-child(4) { left: 24.5px; top: 30px; } .dia-ferr i:nth-child(5) { left: 33px; top: 26px; } .dia-ferr i:nth-child(6) { left: 42px; top: 16px; } .dia-ferr i:nth-child(7) { left: 49px; top: 2px; }
+.dia-rel i:nth-child(1) { left: 10px; top: 3px; } .dia-rel i:nth-child(2) { left: 39px; top: 3px; } .dia-rel i:nth-child(3) { left: 24.5px; top: 14px; }
+.dia-rel i:nth-child(4) { left: 10px; top: 25px; } .dia-rel i:nth-child(5) { left: 39px; top: 25px; } .dia-rel i:nth-child(6) { left: 24.5px; top: 30px; }
+.dia-roda i:nth-child(1) { left: 24.5px; top: 0; } .dia-roda i:nth-child(2) { left: 36.5px; top: 4.4px; } .dia-roda i:nth-child(3) { left: 41.5px; top: 15px; } .dia-roda i:nth-child(4) { left: 36.5px; top: 25.6px; }
+.dia-roda i:nth-child(5) { left: 24.5px; top: 30px; } .dia-roda i:nth-child(6) { left: 12.5px; top: 25.6px; } .dia-roda i:nth-child(7) { left: 7.5px; top: 15px; } .dia-roda i:nth-child(8) { left: 12.5px; top: 4.4px; }
+.dia-enc i:nth-child(1) { left: 24.5px; top: 30px; } .dia-enc i:nth-child(2) { left: 15px; top: 17px; } .dia-enc i:nth-child(3) { left: 5px; top: 3px; }
+.dia-enc i:nth-child(4) { left: 34px; top: 17px; } .dia-enc i:nth-child(5) { left: 44px; top: 3px; } .dia-enc i:nth-child(6) { left: 24.5px; top: 9px; opacity: .55; }
+@media (min-width: 1024px) {
+    .grid.spread-celtic { grid-template-columns: repeat(4, minmax(0, 14rem)); justify-content: center;
+        grid-template-areas: ". p5 . p10" "p4 p1 p6 p9" ". p2 . p8" ". p3 . p7"; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(1) { grid-area: p1; } .grid.spread-celtic > [data-tarot-slot]:nth-child(2) { grid-area: p2; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(3) { grid-area: p3; } .grid.spread-celtic > [data-tarot-slot]:nth-child(4) { grid-area: p4; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(5) { grid-area: p5; } .grid.spread-celtic > [data-tarot-slot]:nth-child(6) { grid-area: p6; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(7) { grid-area: p7; } .grid.spread-celtic > [data-tarot-slot]:nth-child(8) { grid-area: p8; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(9) { grid-area: p9; } .grid.spread-celtic > [data-tarot-slot]:nth-child(10) { grid-area: p10; }
+}
+.tarot-sig { padding-bottom: 1rem; border-bottom: 1px dashed var(--border-color); }
+.tc-corr { font-size: 11px; line-height: 1.45; color: var(--text-muted); display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .3rem; }
+.tc-person { font-size: 11px; line-height: 1.45; color: var(--text-muted); }
+.tc-person b { color: var(--text-accent); font-weight: 600; }
+.tc-sw { display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; vertical-align: -1px; margin-right: .15rem; border: 1px solid color-mix(in srgb, var(--text-title) 35%, transparent); flex: none; }
+.tc-heb { font-size: 1.05em; font-weight: 600; }
+.tc-corr-list { display: grid; grid-template-columns: max-content 1fr; gap: .35rem .75rem; margin-top: .5rem; font-size: .85rem; }
+.tc-corr-list dt { color: var(--text-muted); font-weight: 600; font-size: .75rem; padding-top: .1rem; }
+.tc-corr-list dd { margin: 0; color: var(--text-title); line-height: 1.45; }
+@media (max-width: 420px) { .tc-corr-list { grid-template-columns: 1fr; gap: .1rem; } .tc-corr-list dd { margin-bottom: .45rem; } }
+@media (max-width: 767px) { .spread-grid-adv > :last-child:nth-child(odd) { grid-column: 1 / -1; } }

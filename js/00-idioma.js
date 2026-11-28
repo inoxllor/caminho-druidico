@@ -82,6 +82,7 @@ const PATTERNS = [
   [/^Partilhar a ficha de (.+) como imagem$/, m => `Share the details card of ${m[1]} as an image`],
   [/^(\S+ \S+) (.+?) Som «(.+?)» (Aett de \S+) · (\d+)( Simétrica)?$/,
     m => `${m[1]} ${T(m[2])} Sound «${m[3]}» ${T(m[4])} · ${m[5]}${m[6] ? ' Symmetrical' : ''}`],
+  [/^Tiragem «(.+?)»\.$/, m => `«${T(m[1])}» spread.`],
   [/^Tiragem (.+?)\. (.+)$/, m => `${T(m[1])} spread. ` + m[2].split(/\.\s*/).filter(Boolean).map(p => {
     const [k, ...v] = p.split(': ');
     return `${T(k)}: ${v.join(': ').replace(/, invertida$/, ', reversed')}`;

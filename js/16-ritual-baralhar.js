@@ -20,10 +20,12 @@
     return Math.floor(Math.random() * n);
   }
   const rand01 = () => randInt(1e6) / 1e6;
+  // Probabilidade de invertida: 35%, ou 0 se a pessoa as desligou (js/36)
+  const tarotRev = () => (window.tarotRevChance ? window.tarotRevChance() : 0.35);
   function shuffleDeck(deck) {
     for (let i = deck.length - 1; i > 0; i--) { const j = randInt(i + 1); [deck[i], deck[j]] = [deck[j], deck[i]]; }
-    // Cada carta fica invertida com probabilidade de 35% (igual ao sorteio direto)
-    deck.forEach(d => { d.isReversed = rand01() < 0.35; });
+    // Cada carta fica invertida com a mesma probabilidade do sorteio direto
+    deck.forEach(d => { d.isReversed = rand01() < tarotRev(); });
     return deck;
   }
   const vibrate = ms => { if (navigator.vibrate) try { navigator.vibrate(ms); } catch {} };
@@ -41,7 +43,7 @@
     if (pool.length < spread.pos.length) return _draw(n);
     state = {
       n, spread,
-      deck: pool.map(card => ({ card, isReversed: rand01() < 0.35 })),
+      deck: pool.map(card => ({ card, isReversed: rand01() < tarotRev() })),
       shuffles: 0, picked: [],
       question: ($('tarot-question')?.value || '').trim()
     };

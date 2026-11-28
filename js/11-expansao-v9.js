@@ -84,7 +84,7 @@ window.drawDailyOracle = function (type) {
     text = `OGHAM DO DIA: ${o.symbol} ${o.name} (${o.tree}) — ${o.meaning}`;
   } else if (type === 'tarot' && ((typeof NORDIC_TAROT_DECK !== 'undefined' && NORDIC_TAROT_DECK?.length) || window.NORDIC_TAROT_DECK?.length)) {
     const c = NORDIC_TAROT_DECK[Math.floor(Math.random() * NORDIC_TAROT_DECK.length)];
-    const rev = Math.random() < 0.3;
+    const rev = Math.random() < (window.tarotRevChance ? tarotRevChance() : 0.3);
     const meaning = rev ? c.reversed : c.upright;
     html = `<div class="reveal-in space-y-2"><h4 class="font-cinzel text-lg font-bold theme-info-hl">${esc(c.name)}${rev ? ' (inv.)' : ''}</h4><p class="text-xs theme-muted">${esc(c.title || '')}</p><p class="text-sm theme-muted">${esc(meaning)}</p></div>`;
     text = `TAROT DO DIA: ${c.name}${rev ? ' (invertida)' : ''} — ${meaning}`;
@@ -162,7 +162,7 @@ window.drawYesNo = function (system) {
       if (!tarot || !tarot.length) { showToast('Dados de Tarot indisponíveis.'); return; }
       if (typeof switchTarotMode === 'function') try { switchTarotMode('draw'); } catch(e) {}
       const c = tarot[Math.floor(Math.random() * tarot.length)];
-      const rev = Math.random() < 0.35;
+      const rev = Math.random() < (window.tarotRevChance ? tarotRevChance() : 0.35);
       lastTarotReading = [{ card: c, isReversed: rev, pos: 'Sim / Não' }];
       lastTarotMeta = { question: 'Sim ou Não?', spread: 'Sim / Não' };
       const el = document.getElementById('tarot-card-container');

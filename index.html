@@ -300,7 +300,20 @@
                                 <button type="button" onclick="drawTarotCard(5)" class="spread-card"><span class="spread-dia dia-5 dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Cruz Elemental</span><span class="spread-meta">5 cartas · situação completa</span></button>
                                 <button type="button" onclick="drawYesNo('tarot')" class="spread-card"><span class="spread-dia dia-yn dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 carta · resposta direta</span></button>
                             </div>
+                            <p class="spreads-title mt-2">Para leitores experientes</p>
+                            <div class="spread-grid spread-grid-3 spread-grid-adv">
+                                <button type="button" onclick="drawTarotCard('celta')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-celta" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Cruz Celta</span><span class="spread-meta">10 cartas · a leitura clássica completa</span></button>
+                                <button type="button" onclick="drawTarotCard('ferradura')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-ferr" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Ferradura</span><span class="spread-meta">7 cartas · do passado ao desfecho</span></button>
+                                <button type="button" onclick="drawTarotCard('relacao')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-rel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Laço de Freyja</span><span class="spread-meta">6 cartas · uma relação</span></button>
+                                <button type="button" onclick="drawTarotCard('roda')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-roda" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Roda do Ano</span><span class="spread-meta">8 cartas · uma por festival</span></button>
+                                <button type="button" onclick="drawTarotCard('encruzilhada')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-enc" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Encruzilhada</span><span class="spread-meta">6 cartas · escolher entre dois caminhos</span></button>
+                            </div>
                             <label class="tr-toggle"><input type="checkbox" id="tarot-ritual-on" checked onchange="setTarotRitual(this.checked)"><span>Ritual de baralhar · escolher as cartas do leque</span></label>
+                            <div class="tarot-adv-opts">
+                                <label class="tr-toggle"><input type="checkbox" id="tarot-rev-on" checked onchange="setTarotReversals(this.checked)"><span>Usar cartas invertidas</span></label>
+                                <div class="tarot-sig-pick"><label for="tarot-sig" class="spreads-title block mb-1">Carta significadora (opcional)</label>
+                                <select id="tarot-sig" onchange="setTarotSignificator(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5"><option value="">Sem significador</option></select></div>
+                            </div>
                         </div>
                         <div>
                             <span class="spreads-title block mb-2">Baralho</span>
@@ -1420,6 +1433,17 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                         <p class="font-semibold theme-accent">Sim / Não</p>
                         <p class="theme-muted">Resposta polar com uma carta de apoio. Use quando precisar de decisão rápida; confirme depois com uma tiragem de 3 se o tema for importante.</p>
                     </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Para leitores experientes</p>
+                        <ul class="theme-muted mt-1 space-y-1">
+                            <li><strong>Cruz Celta</strong> — 10 cartas: o centro (1 e 2), a cruz (3 a 6) e o bastão (7 a 10), lido de baixo para cima.</li>
+                            <li><strong>Ferradura</strong> — 7 cartas em arco, do passado ao desfecho; a do meio é o obstáculo.</li>
+                            <li><strong>Laço de Freyja</strong> — 6 cartas sobre uma relação: as duas pessoas, o laço, o que une, o que separa e o conselho.</li>
+                            <li><strong>Roda do Ano</strong> — uma carta por festival, do Samhain ao Mabon.</li>
+                            <li><strong>Encruzilhada</strong> — dois caminhos lado a lado, com o que trazem e onde levam.</li>
+                        </ul>
+                        <p class="theme-muted mt-2">Pode escolher uma carta significadora, que sai do baralho e abre a leitura, e desligar as invertidas se ler só com cartas direitas. A ficha de cada carta mostra as correspondências da Golden Dawn: astrologia, letra hebraica, caminho na Árvore da Vida, numerologia e cores.</p>
+                    </div>
                 </div>
                 <p class="theme-muted mt-2">Cartas invertidas: leia o sentido “invertido” como bloqueio, excesso ou interiorização do tema — não como “má sorte”.</p>
             </div>
@@ -1649,4 +1673,5 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
 <script src="js/33-grove-leituras.js"></script>
 <script src="js/34-antepassados.js"></script>
 <script src="js/35-chakras-som.js"></script>
+<script src="js/36-tarot-avancado.js"></script>
 </body></html>

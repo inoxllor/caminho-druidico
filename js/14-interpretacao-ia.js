@@ -44,15 +44,25 @@
       };
     }
     if (type === 'tarot' && typeof lastTarotReading !== 'undefined' && lastTarotReading?.length) {
+      const meta = typeof lastTarotMeta !== 'undefined' ? lastTarotMeta : {};
+      const S = typeof TAROT_SPREADS !== 'undefined' ? TAROT_SPREADS[meta.key] : null;
+      const sig = meta.sig && typeof NORDIC_TAROT_DECK !== 'undefined' ? NORDIC_TAROT_DECK.find(c => c.id === meta.sig) : null;
+      const items = lastTarotReading.map((t, i) => ({
+        pos: t.pos || ['Oráculo', 'Urd', 'Verdandi', 'Skuld'][i] || `Carta ${i + 1}`,
+        hint: t.hint || '',
+        label: `${t.card?.name || ''}${t.isReversed ? ' (invertida)' : ''}`,
+        text: (t.isReversed ? (t.card?.reversed || '') : (t.card?.upright || '')) + (t.card?.person ? `\nComo pessoa: ${t.card.person}` : ''),
+        art: t.card?.artDesc || '',
+        card: t.card,
+        rev: !!t.isReversed
+      }));
       return {
+        sig: sig ? { label: sig.name, text: sig.upright || '' } : null,
         type: 'tarot',
-        question: q || (typeof lastTarotMeta !== 'undefined' ? lastTarotMeta.question : '') || '',
-        items: lastTarotReading.map((t, i) => ({
-          pos: t.pos || ['Oráculo', 'Urd', 'Verdandi', 'Skuld'][i] || `Carta ${i + 1}`,
-          label: `${t.card?.name || ''}${t.isReversed ? ' (invertida)' : ''}`,
-          text: t.isReversed ? (t.card?.reversed || '') : (t.card?.upright || ''),
-          art: t.card?.artDesc || ''
-        }))
+        question: q || meta.question || '',
+        spread: meta.spread || '',
+        guide: S && S.how ? S.how : '',
+        items
       };
     }
     if (type === 'daily' && typeof lastDailyOracle === 'string' && lastDailyOracle) {
@@ -71,6 +81,8 @@
       ? `À luz da pergunta «${q}», esta tiragem sugere o seguinte.`
       : `Esta tiragem oferece um espelho do momento presente.`);
 
+    if (reading.sig) lines.push(`\nSignificador — ${reading.sig.label}\n${reading.sig.text}`);
+
     // Per card
     reading.items.forEach((it, i) => {
       lines.push(`\n${it.pos} — ${it.label}${it.hint ? `\n(${it.hint})` : ''}\n${it.text}`);
@@ -80,8 +92,9 @@
     // Synthesis by count
     lines.push('\n— Síntese —');
     if (reading.guide && n > 1) {
-      lines.push(`Tiragem «${reading.spread}». ${reading.guide}`);
-      lines.push(`O fio da leitura vai de ${reading.items[0].label} (${reading.items[0].pos.toLowerCase()}) até ${reading.items[n - 1].label} (${reading.items[n - 1].pos.toLowerCase()}): leia as runas em diálogo, cada uma à luz da sua casa.`);
+      lines.push(`Tiragem «${reading.spread}».`);
+      lines.push(reading.guide);
+      lines.push(`O fio da leitura vai de ${reading.items[0].label} (${reading.items[0].pos.toLowerCase()}) até ${reading.items[n - 1].label} (${reading.items[n - 1].pos.toLowerCase()}): leia ${reading.type === 'tarot' ? 'as cartas' : 'as runas'} em diálogo, cada uma à luz da sua casa.`);
     } else if (n === 1) {
       lines.push(`O núcleo da mensagem concentra-se em «${reading.items[0].label}». Trate este símbolo como um conselho único: uma qualidade a cultivar ou um aviso a respeitar nas próximas decisões.`);
     } else if (n === 3) {
@@ -93,6 +106,15 @@
       lines.push('Procure uma palavra que se repita em espírito entre as posições — esse é muitas vezes o verdadeiro tema.');
     } else {
       lines.push('Leia as peças em diálogo, não isoladas. O sentido emerge da relação entre elas.');
+    }
+
+    // Tarot: técnicas de leitor experiente (js/36)
+    if (reading.type === 'tarot' && typeof window.tarotAnalysis === 'function') {
+      const extra = window.tarotAnalysis(reading.items);
+      if (extra.length) {
+        lines.push(window.APP_LANG === 'en-GB' ? '\n— The spread as a whole —' : '\n— A tiragem no seu todo —');
+        extra.forEach(t => lines.push('• ' + t));
+      }
     }
 
     // Keywords heuristic
@@ -140,8 +162,8 @@ Avoid fatalism and medical or legal diagnoses. The reading below is in Portugues
 
     const user = `Sistema: ${reading.type}
 Pergunta: ${reading.question || '(não formulada)'}
-Tiragem${reading.spread ? ' «' + reading.spread + '»' : ''}:${reading.guide ? '\nComo ler: ' + reading.guide : ''}
-${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}`).join('\n')}`;
+Tiragem${reading.spread ? ' «' + reading.spread + '»' : ''}:${reading.guide ? '\nComo ler: ' + reading.guide : ''}${reading.sig ? '\nSignificador: ' + reading.sig.label : ''}
+${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}${it.card && window.tarotCorrespondences ? '\n  Correspondências: ' + window.tarotCorrespondences(it.card).map(([k, v]) => k + ': ' + v.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()).join('; ') : ''}`).join('\n')}${reading.type === 'tarot' && window.tarotAnalysis ? '\nAnálise: ' + window.tarotAnalysis(reading.items).join(' ') : ''}`;
 
     const res = await fetch(base + '/chat/completions', {
       method: 'POST',
