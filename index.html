@@ -2169,6 +2169,46 @@ html.i18n-wait body { visibility: hidden; }
 .ck-seq-btn { min-height: 40px; padding: 0 1rem; font-size: .85rem; font-weight: 600; color: var(--on-primary); background: var(--btn-primary); border-color: var(--btn-primary); cursor: pointer; }
 #ck-status, .ck-note { text-align: center; }
 #ck-status:empty { display: none; }
+
+/* ---------- Tarot para leitores avançados (js/36) ---------- */
+.spread-grid-adv { margin-bottom: .25rem; }
+.tarot-adv-opts { display: flex; flex-direction: column; align-items: stretch; gap: .75rem; }
+.tarot-sig-pick { flex: 1 1 16rem; max-width: 24rem; }
+.dia-dense i { width: 7px; height: 10px; border-radius: 1.5px; display: block; }
+.dia-celta i:nth-child(1), .dia-celta i:nth-child(2) { left: 12px; top: 15px; }
+.dia-celta i:nth-child(2) { transform: rotate(90deg); opacity: .6; }
+.dia-celta i:nth-child(3) { left: 12px; top: 28px; } .dia-celta i:nth-child(4) { left: 1px; top: 15px; }
+.dia-celta i:nth-child(5) { left: 12px; top: 2px; } .dia-celta i:nth-child(6) { left: 23px; top: 15px; }
+.dia-celta i:nth-child(7) { left: 44px; top: 30px; } .dia-celta i:nth-child(8) { left: 44px; top: 20px; }
+.dia-celta i:nth-child(9) { left: 44px; top: 10px; } .dia-celta i:nth-child(10) { left: 44px; top: 0; }
+.dia-ferr i:nth-child(1) { left: 0; top: 2px; } .dia-ferr i:nth-child(2) { left: 7px; top: 16px; } .dia-ferr i:nth-child(3) { left: 16px; top: 26px; }
+.dia-ferr i:nth-child(4) { left: 24.5px; top: 30px; } .dia-ferr i:nth-child(5) { left: 33px; top: 26px; } .dia-ferr i:nth-child(6) { left: 42px; top: 16px; } .dia-ferr i:nth-child(7) { left: 49px; top: 2px; }
+.dia-rel i:nth-child(1) { left: 10px; top: 3px; } .dia-rel i:nth-child(2) { left: 39px; top: 3px; } .dia-rel i:nth-child(3) { left: 24.5px; top: 14px; }
+.dia-rel i:nth-child(4) { left: 10px; top: 25px; } .dia-rel i:nth-child(5) { left: 39px; top: 25px; } .dia-rel i:nth-child(6) { left: 24.5px; top: 30px; }
+.dia-roda i:nth-child(1) { left: 24.5px; top: 0; } .dia-roda i:nth-child(2) { left: 36.5px; top: 4.4px; } .dia-roda i:nth-child(3) { left: 41.5px; top: 15px; } .dia-roda i:nth-child(4) { left: 36.5px; top: 25.6px; }
+.dia-roda i:nth-child(5) { left: 24.5px; top: 30px; } .dia-roda i:nth-child(6) { left: 12.5px; top: 25.6px; } .dia-roda i:nth-child(7) { left: 7.5px; top: 15px; } .dia-roda i:nth-child(8) { left: 12.5px; top: 4.4px; }
+.dia-enc i:nth-child(1) { left: 24.5px; top: 30px; } .dia-enc i:nth-child(2) { left: 15px; top: 17px; } .dia-enc i:nth-child(3) { left: 5px; top: 3px; }
+.dia-enc i:nth-child(4) { left: 34px; top: 17px; } .dia-enc i:nth-child(5) { left: 44px; top: 3px; } .dia-enc i:nth-child(6) { left: 24.5px; top: 9px; opacity: .55; }
+@media (min-width: 1024px) {
+    .grid.spread-celtic { grid-template-columns: repeat(4, minmax(0, 14rem)); justify-content: center;
+        grid-template-areas: ". p5 . p10" "p4 p1 p6 p9" ". p2 . p8" ". p3 . p7"; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(1) { grid-area: p1; } .grid.spread-celtic > [data-tarot-slot]:nth-child(2) { grid-area: p2; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(3) { grid-area: p3; } .grid.spread-celtic > [data-tarot-slot]:nth-child(4) { grid-area: p4; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(5) { grid-area: p5; } .grid.spread-celtic > [data-tarot-slot]:nth-child(6) { grid-area: p6; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(7) { grid-area: p7; } .grid.spread-celtic > [data-tarot-slot]:nth-child(8) { grid-area: p8; }
+    .grid.spread-celtic > [data-tarot-slot]:nth-child(9) { grid-area: p9; } .grid.spread-celtic > [data-tarot-slot]:nth-child(10) { grid-area: p10; }
+}
+.tarot-sig { padding-bottom: 1rem; border-bottom: 1px dashed var(--border-color); }
+.tc-corr { font-size: 11px; line-height: 1.45; color: var(--text-muted); display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .3rem; }
+.tc-person { font-size: 11px; line-height: 1.45; color: var(--text-muted); }
+.tc-person b { color: var(--text-accent); font-weight: 600; }
+.tc-sw { display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; vertical-align: -1px; margin-right: .15rem; border: 1px solid color-mix(in srgb, var(--text-title) 35%, transparent); flex: none; }
+.tc-heb { font-size: 1.05em; font-weight: 600; }
+.tc-corr-list { display: grid; grid-template-columns: max-content 1fr; gap: .35rem .75rem; margin-top: .5rem; font-size: .85rem; }
+.tc-corr-list dt { color: var(--text-muted); font-weight: 600; font-size: .75rem; padding-top: .1rem; }
+.tc-corr-list dd { margin: 0; color: var(--text-title); line-height: 1.45; }
+@media (max-width: 420px) { .tc-corr-list { grid-template-columns: 1fr; gap: .1rem; } .tc-corr-list dd { margin-bottom: .45rem; } }
+@media (max-width: 767px) { .spread-grid-adv > :last-child:nth-child(odd) { grid-column: 1 / -1; } }
 </style>
 </head>
 <body id="app-body" data-design-version="10" class="min-h-screen flex flex-col lg:flex-row pb-20 lg:pb-0">
@@ -2453,7 +2493,20 @@ html.i18n-wait body { visibility: hidden; }
                                 <button type="button" onclick="drawTarotCard(5)" class="spread-card"><span class="spread-dia dia-5 dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Cruz Elemental</span><span class="spread-meta">5 cartas · situação completa</span></button>
                                 <button type="button" onclick="drawYesNo('tarot')" class="spread-card"><span class="spread-dia dia-yn dia-cards" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Sim ou Não</span><span class="spread-meta">1 carta · resposta direta</span></button>
                             </div>
+                            <p class="spreads-title mt-2">Para leitores experientes</p>
+                            <div class="spread-grid spread-grid-3 spread-grid-adv">
+                                <button type="button" onclick="drawTarotCard('celta')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-celta" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Cruz Celta</span><span class="spread-meta">10 cartas · a leitura clássica completa</span></button>
+                                <button type="button" onclick="drawTarotCard('ferradura')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-ferr" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Ferradura</span><span class="spread-meta">7 cartas · do passado ao desfecho</span></button>
+                                <button type="button" onclick="drawTarotCard('relacao')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-rel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Laço de Freyja</span><span class="spread-meta">6 cartas · uma relação</span></button>
+                                <button type="button" onclick="drawTarotCard('roda')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-roda" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Roda do Ano</span><span class="spread-meta">8 cartas · uma por festival</span></button>
+                                <button type="button" onclick="drawTarotCard('encruzilhada')" class="spread-card"><span class="spread-dia dia-cards dia-dense dia-enc" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="spread-name">Encruzilhada</span><span class="spread-meta">6 cartas · escolher entre dois caminhos</span></button>
+                            </div>
                             <label class="tr-toggle"><input type="checkbox" id="tarot-ritual-on" checked onchange="setTarotRitual(this.checked)"><span>Ritual de baralhar · escolher as cartas do leque</span></label>
+                            <div class="tarot-adv-opts">
+                                <label class="tr-toggle"><input type="checkbox" id="tarot-rev-on" checked onchange="setTarotReversals(this.checked)"><span>Usar cartas invertidas</span></label>
+                                <div class="tarot-sig-pick"><label for="tarot-sig" class="spreads-title block mb-1">Carta significadora (opcional)</label>
+                                <select id="tarot-sig" onchange="setTarotSignificator(this.value)" class="w-full bg-[var(--bg-inner)] border border-[var(--border-color)] text-sm rounded-lg px-3 py-2.5"><option value="">Sem significador</option></select></div>
+                            </div>
                         </div>
                         <div>
                             <span class="spreads-title block mb-2">Baralho</span>
@@ -3573,6 +3626,17 @@ Verso 3..." class="w-full h-72 lg:h-80 theme-inner border rounded-xl p-5 theme-t
                         <p class="font-semibold theme-accent">Sim / Não</p>
                         <p class="theme-muted">Resposta polar com uma carta de apoio. Use quando precisar de decisão rápida; confirme depois com uma tiragem de 3 se o tema for importante.</p>
                     </div>
+                    <div class="theme-inner border rounded-lg p-3">
+                        <p class="font-semibold theme-accent">Para leitores experientes</p>
+                        <ul class="theme-muted mt-1 space-y-1">
+                            <li><strong>Cruz Celta</strong> — 10 cartas: o centro (1 e 2), a cruz (3 a 6) e o bastão (7 a 10), lido de baixo para cima.</li>
+                            <li><strong>Ferradura</strong> — 7 cartas em arco, do passado ao desfecho; a do meio é o obstáculo.</li>
+                            <li><strong>Laço de Freyja</strong> — 6 cartas sobre uma relação: as duas pessoas, o laço, o que une, o que separa e o conselho.</li>
+                            <li><strong>Roda do Ano</strong> — uma carta por festival, do Samhain ao Mabon.</li>
+                            <li><strong>Encruzilhada</strong> — dois caminhos lado a lado, com o que trazem e onde levam.</li>
+                        </ul>
+                        <p class="theme-muted mt-2">Pode escolher uma carta significadora, que sai do baralho e abre a leitura, e desligar as invertidas se ler só com cartas direitas. A ficha de cada carta mostra as correspondências da Golden Dawn: astrologia, letra hebraica, caminho na Árvore da Vida, numerologia e cores.</p>
+                    </div>
                 </div>
                 <p class="theme-muted mt-2">Cartas invertidas: leia o sentido “invertido” como bloqueio, excesso ou interiorização do tema — não como “má sorte”.</p>
             </div>
@@ -3770,6 +3834,7 @@ const PATTERNS = [
   [/^Partilhar a ficha de (.+) como imagem$/, m => `Share the details card of ${m[1]} as an image`],
   [/^(\S+ \S+) (.+?) Som «(.+?)» (Aett de \S+) · (\d+)( Simétrica)?$/,
     m => `${m[1]} ${T(m[2])} Sound «${m[3]}» ${T(m[4])} · ${m[5]}${m[6] ? ' Symmetrical' : ''}`],
+  [/^Tiragem «(.+?)»\.$/, m => `«${T(m[1])}» spread.`],
   [/^Tiragem (.+?)\. (.+)$/, m => `${T(m[1])} spread. ` + m[2].split(/\.\s*/).filter(Boolean).map(p => {
     const [k, ...v] = p.split(': ');
     return `${T(k)}: ${v.join(': ').replace(/, invertida$/, ', reversed')}`;
@@ -4058,7 +4123,7 @@ const NORDIC_MAJOR_ARCANA = [
     { id: 'M09', num: 'IX', suit: 'major', name: 'Odin Peregrino (Vegtam)', title: 'O EREMITA', realm: 'CAMINHOS DE YGGDRASIL', rune: 'ᛁ', upright: 'Retiro espiritual, busca solitária pela verdade, lanterna interior e prudência.', reversed: 'Isolamento excessivo, solidão amarga ou recusa em aceitar ajuda.', art: 'hermit' },
     { id: 'M10', num: 'X', suit: 'major', name: 'As Três Nornas do Poço', title: 'A RODA DO DESTINO', realm: 'URÐARBRUNNR', rune: 'ᛃ', upright: 'Ponto de viragem no tecido do Wyrd, ciclos inevitáveis, boa fortuna e evolução.', reversed: 'Resistência à mudança, atrasos cíclicos ou sensação de impotência.', art: 'norns' },
     { id: 'M11', num: 'XI', suit: 'major', name: 'Forseti, Juiz de Glitnir', title: 'A JUSTIÇA', realm: 'GLITNIR', rune: 'ᛇ', upright: 'Equilíbrio, verdade cristalina, resolução justa de disputas e responsabilidade cármica.', reversed: 'Injustiça, parcialidade, negação da responsabilidade ou desequilíbrio.', art: 'forseti' },
-    { id: 'M12', num: 'XII', suit: 'major', name: 'O Sacrifício em Yggdrasil', title: 'O PENDURADO', realm: 'ÁRVORE DO MUNDO', rune: 'ᛟ', upright: 'Pausa sagrada, entrega do ego para alcançar iluminação, nova perspetiva e sacrifício voluntário.', reversed: 'Estagnação estéril, vitimismo ou resistência a soltar o que já cumpriu o seu ciclo.', art: 'hanged' },
+    { id: 'M12', num: 'XII', suit: 'major', name: 'O Sacrifício em Yggdrasil', title: 'O PENDURADO', realm: 'ÁRVORE DO MUNDO', rune: 'ᚾ', upright: 'Pausa sagrada, entrega do ego para alcançar iluminação, nova perspetiva e sacrifício voluntário.', reversed: 'Estagnação estéril, vitimismo ou resistência a soltar o que já cumpriu o seu ciclo.', art: 'hanged' },
     { id: 'M13', num: 'XIII', suit: 'major', name: 'Hel, Senhora de Helheim', title: 'A MORTE', realm: 'HELHEIM', rune: 'ᚺ', upright: 'Transformação profunda, encerramento definitivo de um ciclo e renascimento inevitável.', reversed: 'Medo da mudança, apego ao passado ou estagnação dolorosa.', art: 'hel' },
     { id: 'M14', num: 'XIV', suit: 'major', name: 'Idunn & As Maçãs Douradas', title: 'A TEMPERANÇA', realm: 'POMAR DE ASGARD', rune: 'ᛚ', upright: 'Alquimia interior, moderação, cura regenerativa, harmonia entre opostos e paciência.', reversed: 'Desequilíbrio, excessos, impaciência ou falta de propósito.', art: 'idunn' },
     { id: 'M15', num: 'XV', suit: 'major', name: 'Surt, Senhor de Muspelheim', title: 'O DIABO', realm: 'MUSPELHEIM', rune: 'ᚦ', upright: 'Apego material, paixões ardentes, sombra interior que exige confronto e libertação.', reversed: 'Quebra de correntes, despertar da ilusão e recuperação da autonomia.', art: 'surt' },
@@ -4077,6 +4142,8 @@ const NORDIC_SUITS = [
     { key: 'pentacles', label: 'Draupnir (Ouro)', element: 'Terra • Midgard', colorPrimary: '#eab308', colorSecondary: '#fef08a', bg: '#181408', theme: 'prosperidade, corpo, ofício e manifestação material' }
 ];
 
+// Os sentidos abaixo são só um molde de reserva: os sentidos próprios de cada
+// Arcano Menor e as correspondências estão em js/36-tarot-avancado.js.
 const NORDIC_RANKS = [
     { rank: 1, num: 'ÁS', title: 'Ás', upright: 'Semente pura e dom primordial de {theme}.', reversed: 'Bloqueio inicial ou energia dispersa em {theme}.' },
     { rank: 2, num: 'II', title: 'Dois', upright: 'Equilíbrio dual, decisão e parceria em {theme}.', reversed: 'Indecisão, dualidade em conflito ou desequilíbrio.' },
@@ -4088,7 +4155,7 @@ const NORDIC_RANKS = [
     { rank: 8, num: 'VIII', title: 'Oito', upright: 'Movimento rápido, mestria técnica e dedicação em {theme}.', reversed: 'Pressa precipitada, bloqueio de fluxo ou frustração.' },
     { rank: 9, num: 'IX', title: 'Nove', upright: 'Resiliência final, plenitude individual e sabedoria em {theme}.', reversed: 'Fadiga antes da meta ou isolamento defensivo.' },
     { rank: 10, num: 'X', title: 'Dez', upright: 'Culminação máxima do ciclo e legado duradouro em {theme}.', reversed: 'Sobrecarga de responsabilidades ou fim de um fardo.' },
-    { rank: 11, num: 'THRALL', title: 'Escudeiro', upright: 'Curiosidade jovem, mensagem importante e início de estudo em {theme}.', reversed: 'Imaturidade, notícias atrasadas ou falta de foco.' },
+    { rank: 11, num: 'SVEINN', title: 'Escudeiro', upright: 'Curiosidade jovem, mensagem importante e início de estudo em {theme}.', reversed: 'Imaturidade, notícias atrasadas ou falta de foco.' },
     { rank: 12, num: 'VALK', title: 'Valquíria', upright: 'Avanço destemido, missão ativa e paixão em {theme}.', reversed: 'Impulsividade temerária ou estagnação na jornada.' },
     { rank: 13, num: 'VÖLVA', title: 'Völva (Rainha)', upright: 'Mestria interior, intuição receptiva e soberania em {theme}.', reversed: 'Insegurança interior ou desequilíbrio emocional.' },
     { rank: 14, num: 'JARL', title: 'Jarl (Rei)', upright: 'Liderança sábia, autoridade madura e domínio pleno em {theme}.', reversed: 'Autoritarismo, rigidez ou perda de visão estratégica.' }
@@ -4161,18 +4228,8 @@ function describeTarotArt(card) {
     9: 'em duas colunas de quatro, com a nona ao centro',
     10: 'em duas colunas de quatro, com duas ao centro'
   }[r].replace('um@', SUIT.f ? 'uma' : 'um').replace(/@/g, SUIT.f ? 'a' : 'o').replace('a quinta', SUIT.f ? 'a quinta' : 'o quinto').replace('a sétima', SUIT.f ? 'a sétima' : 'o sétimo').replace('a nona', SUIT.f ? 'a nona' : 'o nono').replace(/com duas ao centro/, SUIT.f ? 'com duas ao centro' : 'com dois ao centro');
-  const MEANING = {
-    2: 'Duas forças do mesmo naipe em diálogo ou tensão inicial.',
-    3: 'Expansão: criação, colaboração ou primeira colheita.',
-    4: 'Estrutura estável que firma o tema do naipe no mundo.',
-    5: 'Quatro cantos em tensão à volta de um centro disputado: conflito ou prova.',
-    6: 'Passagem e partilha; o olhar é guiado em fluxo generoso.',
-    7: 'Defesa ou perseverança: uma resiste acima das restantes.'.replace('uma resiste', SUIT.f ? 'uma resiste' : 'um resiste'),
-    8: 'Ritmo, ofício ou restrição em padrão repetido.',
-    9: 'Quase a culminação: plenitude individual, reserva ou vigília.',
-    10: 'Ciclo completo do naipe: fardo ou plenitude, conforme a orientação.'
-  }[r];
-  return `${NUM} ${SUIT.many} ${LAYOUT}, ${SUIT.scene}. ${MEANING}`;
+  // Só a imagem: o sentido de cada número está na ficha (js/36)
+  return `${NUM} ${SUIT.many} ${LAYOUT}, ${SUIT.scene}.`;
 }
 
 const NORDIC_TAROT_DECK = (() => {
@@ -4382,6 +4439,7 @@ function buildPixelCardHTML(card, isReversed = false, positionLabel = '') {
                 </div>
                 <p class="text-[11px] theme-muted leading-relaxed italic">${describeTarotArt(card)}</p>
                 <p class="text-xs theme-title leading-relaxed">${meaning || ''}</p>
+                ${window.tarotCardExtra ? window.tarotCardExtra(card) : ''}
             </div>
         </div>`;
 }
@@ -5575,9 +5633,35 @@ window.addEventListener('DOMContentLoaded', () => {
 const TAROT_SPREADS = {
     1: { name: 'Oráculo de Odin', cols: 'grid-cols-1 max-w-xs mx-auto', pos: [['Oráculo de Odin', 'O conselho central para este momento.']] },
     3: { name: 'As Três Nornas', cols: 'grid-cols-1 md:grid-cols-3', pos: [['Urd (passado)', 'O que o trouxe até aqui.'], ['Verdandi (presente)', 'O que se desenrola agora.'], ['Skuld (futuro)', 'O que se está a formar.']] },
-    5: { name: 'Cruz Elemental', cols: 'grid-cols-1 sm:grid-cols-2 spread-cross', pos: [['Centro (situação)', 'O tema que une todas as cartas.'], ['Norte (desafios)', 'O que é preciso enraizar.'], ['Leste (conselho)', 'A ideia a ouvir.'], ['Sul (força)', 'A energia ao seu dispor.'], ['Oeste (desfecho)', 'O que o tempo trará.']] }
+    5: { name: 'Cruz Elemental', cols: 'grid-cols-1 sm:grid-cols-2 spread-cross', pos: [['Centro (situação)', 'O tema que une todas as cartas.'], ['Norte (desafios)', 'O que é preciso enraizar.'], ['Leste (conselho)', 'A ideia a ouvir.'], ['Sul (força)', 'A energia ao seu dispor.'], ['Oeste (desfecho)', 'O que o tempo trará.']] },
+    // Tiragens para leitores experientes (2026-11-28)
+    celta: {
+        name: 'Cruz Celta', cols: 'grid-cols-2 lg:grid-cols-4 spread-celtic',
+        how: 'As cartas 1 e 2 são o centro: a situação e o que a atravessa. A cruz (3 a 6) dá a raiz, o passado recente, o objetivo consciente e o futuro próximo. O bastão (7 a 10) lê-se de baixo para cima: a sua atitude, o ambiente, esperanças e medos, e o desfecho provável.',
+        pos: [['1 · Situação', 'O coração da questão.'], ['2 · O que atravessa', 'O desafio ou a força que cruza a situação.'], ['3 · Raiz', 'A base inconsciente, o que está por baixo.'], ['4 · Passado recente', 'O que está a sair de cena.'], ['5 · Coroa', 'O objetivo consciente, o melhor possível.'], ['6 · Futuro próximo', 'O que vem a seguir.'], ['7 · A sua atitude', 'Como se coloca perante a questão.'], ['8 · Ambiente', 'As pessoas e as circunstâncias à volta.'], ['9 · Esperanças e medos', 'O que deseja e o que teme, muitas vezes a mesma coisa.'], ['10 · Desfecho', 'A tendência se nada mudar.']]
+    },
+    ferradura: {
+        name: 'Ferradura', cols: 'grid-cols-2 lg:grid-cols-4',
+        how: 'Lê-se em arco, da esquerda para a direita, do passado ao desfecho. A carta do meio (4) é o obstáculo e muitas vezes a chave da leitura.',
+        pos: [['1 · Passado', 'O que deu origem à situação.'], ['2 · Presente', 'Onde está agora.'], ['3 · Influências ocultas', 'O que ainda não vê.'], ['4 · Obstáculo', 'O nó a desatar.'], ['5 · Os outros', 'Como as outras pessoas veem ou pesam a questão.'], ['6 · Conselho', 'O que fazer.'], ['7 · Desfecho', 'Para onde tende, se seguir o conselho.']]
+    },
+    relacao: {
+        name: 'Laço de Freyja', cols: 'grid-cols-2 lg:grid-cols-3',
+        how: 'Leia 1 e 2 lado a lado, como espelhos; a 3 é o fio entre as duas pessoas. Pese a 4 contra a 5 e deixe a 6 dizer o que fazer com isso.',
+        pos: [['1 · Você', 'Como está nesta relação.'], ['2 · A outra pessoa', 'Como ela está, tal como a leitura a mostra.'], ['3 · O laço', 'O que existe entre as duas pessoas agora.'], ['4 · O que une', 'A força em comum.'], ['5 · O que separa', 'O desafio ou a ferida.'], ['6 · Conselho', 'O passo que serve a relação.']]
+    },
+    roda: {
+        name: 'Roda do Ano', cols: 'grid-cols-2 lg:grid-cols-4',
+        how: 'Uma carta por festival, para o ano que começa no Samhain, o Ano Novo celta. Volte à carta de cada festival quando ele chegar.',
+        pos: [['Samhain', 'O que deixar morrer; os antepassados.'], ['Yule', 'A luz que renasce; a esperança.'], ['Imbolc', 'O que começa a despertar.'], ['Ostara', 'Equilíbrio e sementeira.'], ['Beltane', 'Paixão, fertilidade e união.'], ['Litha', 'O auge: onde vai brilhar.'], ['Lughnasadh', 'A primeira colheita; o esforço que rende.'], ['Mabon', 'Gratidão, balanço e partilha.']]
+    },
+    encruzilhada: {
+        name: 'Encruzilhada', cols: 'grid-cols-2 lg:grid-cols-3',
+        how: 'Antes de tirar, decida qual é o caminho A e qual é o B. Compare 2 e 3 com 4 e 5; a 1 lembra o que procura de facto e a 6 traz o que ainda não pesou.',
+        pos: [['1 · Situação', 'Onde está e o que procura.'], ['2 · Caminho A', 'O que a primeira opção traz.'], ['3 · Desfecho de A', 'Onde a primeira opção leva.'], ['4 · Caminho B', 'O que a segunda opção traz.'], ['5 · Desfecho de B', 'Onde a segunda opção leva.'], ['6 · O que falta saber', 'O fator que ainda não considerou.']]
+    }
 };
-let lastTarotMeta = { question: '', spread: '' };
+let lastTarotMeta = { question: '', spread: '', key: 1, sig: '' };
 let tarotQuery = '';
 let skipRecord = false;
 
@@ -5595,20 +5679,22 @@ switchTarotMode = function (m) {
 
 drawTarotCard = function (count) {
     if (activeTarotMode !== 'draw') { skipRecord = true; switchTarotMode('draw'); skipRecord = false; }
-    const spread = TAROT_SPREADS[count] || TAROT_SPREADS[1];
+    const key = TAROT_SPREADS[count] ? count : 1;
+    const spread = TAROT_SPREADS[key];
+    const sig = window.tarotSigCard ? window.tarotSigCard() : null;
     const pool = [...getFilteredNordicDeck()];
     const drawn = [];
     const chosen = window.__tarotChosen; window.__tarotChosen = null; // cartas escolhidas no ritual de baralhar
     if (chosen && chosen.length) {
-        chosen.slice(0, spread.pos.length).forEach((c, i) => drawn.push({ card: c.card, isReversed: c.isReversed, pos: spread.pos[i][0] }));
+        chosen.slice(0, spread.pos.length).forEach((c, i) => drawn.push({ card: c.card, isReversed: c.isReversed, pos: spread.pos[i][0], hint: spread.pos[i][1] }));
     } else {
         for (let i = 0; i < spread.pos.length && pool.length; i++) {
             const card = pool.splice(Math.floor(Math.random() * pool.length), 1)[0];
-            drawn.push({ card, isReversed: Math.random() < 0.35, pos: spread.pos[i][0] });
+            drawn.push({ card, isReversed: Math.random() < (window.tarotRevChance ? tarotRevChance() : 0.35), pos: spread.pos[i][0], hint: spread.pos[i][1] });
         }
     }
     lastTarotReading = drawn;
-    lastTarotMeta = { question: (document.getElementById('tarot-question')?.value || '').trim(), spread: spread.name };
+    lastTarotMeta = { question: (document.getElementById('tarot-question')?.value || '').trim(), spread: spread.name, key, sig: sig ? sig.id : '' };
 
     const slots = drawn.map((it, i) => {
         let html = buildPixelCardHTML(it.card, it.isReversed, '')
@@ -5623,7 +5709,10 @@ drawTarotCard = function (count) {
     document.getElementById('tarot-card-container').innerHTML = `
         <div class="w-full space-y-5">
             <div class="text-center"><h3 class="font-cinzel text-base font-bold theme-title">${spread.name}</h3>
-            ${lastTarotMeta.question ? `<p class="text-sm theme-muted mt-1">“${esc(lastTarotMeta.question)}”</p>` : ''}</div>
+            ${lastTarotMeta.question ? `<p class="text-sm theme-muted mt-1">“${esc(lastTarotMeta.question)}”</p>` : ''}
+            ${spread.how ? `<p class="text-xs theme-muted mt-2 max-w-2xl mx-auto leading-relaxed">${spread.how}</p>` : ''}</div>
+            ${sig ? `<div class="tarot-sig flex flex-col items-center gap-2"><div class="text-center max-w-[230px]"><span class="text-sm font-semibold theme-accent">Significador</span>
+            <p class="text-xs theme-muted leading-snug">A carta que escolheu para representar a pessoa ou a questão. Fica fora do baralho.</p></div>${buildPixelCardHTML(sig, false, '')}</div>` : ''}
             <div id="tarot-reveal-bar" class="flex items-center justify-center gap-3 text-sm theme-muted">
                 <span id="tarot-reveal-count"></span>
                 <button type="button" onclick="revealAllTarot()" class="theme-accent font-semibold underline cursor-pointer">Revelar todas</button>
@@ -5933,7 +6022,7 @@ window.openTarotDetail = function (id) {
     <div class="theme-inner border rounded-lg p-3 text-left">
       <p class="text-xs font-semibold c-danger uppercase tracking-wide">Invertida</p>
       <p class="text-sm theme-title leading-relaxed mt-1">${esc(c.reversed)}</p>
-    </div>`;
+    </div>${window.tarotDetailExtra ? window.tarotDetailExtra(c) : ''}`;
   d.showModal();
 };
 
@@ -6378,7 +6467,7 @@ window.drawDailyOracle = function (type) {
     text = `OGHAM DO DIA: ${o.symbol} ${o.name} (${o.tree}) — ${o.meaning}`;
   } else if (type === 'tarot' && ((typeof NORDIC_TAROT_DECK !== 'undefined' && NORDIC_TAROT_DECK?.length) || window.NORDIC_TAROT_DECK?.length)) {
     const c = NORDIC_TAROT_DECK[Math.floor(Math.random() * NORDIC_TAROT_DECK.length)];
-    const rev = Math.random() < 0.3;
+    const rev = Math.random() < (window.tarotRevChance ? tarotRevChance() : 0.3);
     const meaning = rev ? c.reversed : c.upright;
     html = `<div class="reveal-in space-y-2"><h4 class="font-cinzel text-lg font-bold theme-info-hl">${esc(c.name)}${rev ? ' (inv.)' : ''}</h4><p class="text-xs theme-muted">${esc(c.title || '')}</p><p class="text-sm theme-muted">${esc(meaning)}</p></div>`;
     text = `TAROT DO DIA: ${c.name}${rev ? ' (invertida)' : ''} — ${meaning}`;
@@ -6456,7 +6545,7 @@ window.drawYesNo = function (system) {
       if (!tarot || !tarot.length) { showToast('Dados de Tarot indisponíveis.'); return; }
       if (typeof switchTarotMode === 'function') try { switchTarotMode('draw'); } catch(e) {}
       const c = tarot[Math.floor(Math.random() * tarot.length)];
-      const rev = Math.random() < 0.35;
+      const rev = Math.random() < (window.tarotRevChance ? tarotRevChance() : 0.35);
       lastTarotReading = [{ card: c, isReversed: rev, pos: 'Sim / Não' }];
       lastTarotMeta = { question: 'Sim ou Não?', spread: 'Sim / Não' };
       const el = document.getElementById('tarot-card-container');
@@ -7429,15 +7518,25 @@ window.openReadingGuide = function (section) {
       };
     }
     if (type === 'tarot' && typeof lastTarotReading !== 'undefined' && lastTarotReading?.length) {
+      const meta = typeof lastTarotMeta !== 'undefined' ? lastTarotMeta : {};
+      const S = typeof TAROT_SPREADS !== 'undefined' ? TAROT_SPREADS[meta.key] : null;
+      const sig = meta.sig && typeof NORDIC_TAROT_DECK !== 'undefined' ? NORDIC_TAROT_DECK.find(c => c.id === meta.sig) : null;
+      const items = lastTarotReading.map((t, i) => ({
+        pos: t.pos || ['Oráculo', 'Urd', 'Verdandi', 'Skuld'][i] || `Carta ${i + 1}`,
+        hint: t.hint || '',
+        label: `${t.card?.name || ''}${t.isReversed ? ' (invertida)' : ''}`,
+        text: (t.isReversed ? (t.card?.reversed || '') : (t.card?.upright || '')) + (t.card?.person ? `\nComo pessoa: ${t.card.person}` : ''),
+        art: t.card?.artDesc || '',
+        card: t.card,
+        rev: !!t.isReversed
+      }));
       return {
+        sig: sig ? { label: sig.name, text: sig.upright || '' } : null,
         type: 'tarot',
-        question: q || (typeof lastTarotMeta !== 'undefined' ? lastTarotMeta.question : '') || '',
-        items: lastTarotReading.map((t, i) => ({
-          pos: t.pos || ['Oráculo', 'Urd', 'Verdandi', 'Skuld'][i] || `Carta ${i + 1}`,
-          label: `${t.card?.name || ''}${t.isReversed ? ' (invertida)' : ''}`,
-          text: t.isReversed ? (t.card?.reversed || '') : (t.card?.upright || ''),
-          art: t.card?.artDesc || ''
-        }))
+        question: q || meta.question || '',
+        spread: meta.spread || '',
+        guide: S && S.how ? S.how : '',
+        items
       };
     }
     if (type === 'daily' && typeof lastDailyOracle === 'string' && lastDailyOracle) {
@@ -7456,6 +7555,8 @@ window.openReadingGuide = function (section) {
       ? `À luz da pergunta «${q}», esta tiragem sugere o seguinte.`
       : `Esta tiragem oferece um espelho do momento presente.`);
 
+    if (reading.sig) lines.push(`\nSignificador — ${reading.sig.label}\n${reading.sig.text}`);
+
     // Per card
     reading.items.forEach((it, i) => {
       lines.push(`\n${it.pos} — ${it.label}${it.hint ? `\n(${it.hint})` : ''}\n${it.text}`);
@@ -7465,8 +7566,9 @@ window.openReadingGuide = function (section) {
     // Synthesis by count
     lines.push('\n— Síntese —');
     if (reading.guide && n > 1) {
-      lines.push(`Tiragem «${reading.spread}». ${reading.guide}`);
-      lines.push(`O fio da leitura vai de ${reading.items[0].label} (${reading.items[0].pos.toLowerCase()}) até ${reading.items[n - 1].label} (${reading.items[n - 1].pos.toLowerCase()}): leia as runas em diálogo, cada uma à luz da sua casa.`);
+      lines.push(`Tiragem «${reading.spread}».`);
+      lines.push(reading.guide);
+      lines.push(`O fio da leitura vai de ${reading.items[0].label} (${reading.items[0].pos.toLowerCase()}) até ${reading.items[n - 1].label} (${reading.items[n - 1].pos.toLowerCase()}): leia ${reading.type === 'tarot' ? 'as cartas' : 'as runas'} em diálogo, cada uma à luz da sua casa.`);
     } else if (n === 1) {
       lines.push(`O núcleo da mensagem concentra-se em «${reading.items[0].label}». Trate este símbolo como um conselho único: uma qualidade a cultivar ou um aviso a respeitar nas próximas decisões.`);
     } else if (n === 3) {
@@ -7478,6 +7580,15 @@ window.openReadingGuide = function (section) {
       lines.push('Procure uma palavra que se repita em espírito entre as posições — esse é muitas vezes o verdadeiro tema.');
     } else {
       lines.push('Leia as peças em diálogo, não isoladas. O sentido emerge da relação entre elas.');
+    }
+
+    // Tarot: técnicas de leitor experiente (js/36)
+    if (reading.type === 'tarot' && typeof window.tarotAnalysis === 'function') {
+      const extra = window.tarotAnalysis(reading.items);
+      if (extra.length) {
+        lines.push(window.APP_LANG === 'en-GB' ? '\n— The spread as a whole —' : '\n— A tiragem no seu todo —');
+        extra.forEach(t => lines.push('• ' + t));
+      }
     }
 
     // Keywords heuristic
@@ -7525,8 +7636,8 @@ Avoid fatalism and medical or legal diagnoses. The reading below is in Portugues
 
     const user = `Sistema: ${reading.type}
 Pergunta: ${reading.question || '(não formulada)'}
-Tiragem${reading.spread ? ' «' + reading.spread + '»' : ''}:${reading.guide ? '\nComo ler: ' + reading.guide : ''}
-${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}`).join('\n')}`;
+Tiragem${reading.spread ? ' «' + reading.spread + '»' : ''}:${reading.guide ? '\nComo ler: ' + reading.guide : ''}${reading.sig ? '\nSignificador: ' + reading.sig.label : ''}
+${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${it.label}\n  ${it.text}${it.art ? '\n  Arte: ' + it.art : ''}${it.card && window.tarotCorrespondences ? '\n  Correspondências: ' + window.tarotCorrespondences(it.card).map(([k, v]) => k + ': ' + v.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()).join('; ') : ''}`).join('\n')}${reading.type === 'tarot' && window.tarotAnalysis ? '\nAnálise: ' + window.tarotAnalysis(reading.items).join(' ') : ''}`;
 
     const res = await fetch(base + '/chat/completions', {
       method: 'POST',
@@ -7719,10 +7830,12 @@ ${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${
     return Math.floor(Math.random() * n);
   }
   const rand01 = () => randInt(1e6) / 1e6;
+  // Probabilidade de invertida: 35%, ou 0 se a pessoa as desligou (js/36)
+  const tarotRev = () => (window.tarotRevChance ? window.tarotRevChance() : 0.35);
   function shuffleDeck(deck) {
     for (let i = deck.length - 1; i > 0; i--) { const j = randInt(i + 1); [deck[i], deck[j]] = [deck[j], deck[i]]; }
-    // Cada carta fica invertida com probabilidade de 35% (igual ao sorteio direto)
-    deck.forEach(d => { d.isReversed = rand01() < 0.35; });
+    // Cada carta fica invertida com a mesma probabilidade do sorteio direto
+    deck.forEach(d => { d.isReversed = rand01() < tarotRev(); });
     return deck;
   }
   const vibrate = ms => { if (navigator.vibrate) try { navigator.vibrate(ms); } catch {} };
@@ -7740,7 +7853,7 @@ ${reading.items.map(it => `- ${it.pos}${it.hint ? ' (' + it.hint + ')' : ''}: ${
     if (pool.length < spread.pos.length) return _draw(n);
     state = {
       n, spread,
-      deck: pool.map(card => ({ card, isReversed: rand01() < 0.35 })),
+      deck: pool.map(card => ({ card, isReversed: rand01() < tarotRev() })),
       shuffles: 0, picked: [],
       question: ($('tarot-question')?.value || '').trim()
     };
@@ -15819,6 +15932,536 @@ function render() {
 window.ChakraSound = { CHAKRAS, SETS, play: i => { endSeq(); startTone(i); }, stop: () => stopAmbientSound(), state: () => ({ set: setKey, playing: current ? current.idx : null, journey: !!seq }) };
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render); else render();
+})();
+</script>
+<script>
+/* ============================================================
+   TAROT PARA LEITORES AVANÇADOS (2026-11-28)
+   - Sentidos próprios para os 56 Arcanos Menores, direitos e
+     invertidos, na linha da tradição Rider-Waite-Smith (substituem
+     o modelo genérico de js/02, que dava o mesmo invertido aos
+     quatro naipes).
+   - Figuras da corte: retrato como pessoa, combinação elemental e
+     zodíaco (Golden Dawn).
+   - Correspondências da Golden Dawn: planeta ou signo e letra
+     hebraica dos Maiores, caminho na Árvore da Vida, decanatos dos
+     Menores 2 a 10, sefirá de cada número, numerologia e cores
+     (escala do Rei para os caminhos, escala da Rainha para as
+     sefirot).
+   - Ficha da carta e cartas tiradas mostram as correspondências.
+   - Opção de desligar as invertidas (tarotRevChance) e carta
+     significadora (fica fora do baralho e abre a leitura).
+   - Análise da tiragem para a interpretação local (tarotAnalysis):
+     Maiores, naipes dominantes e em falta, números repetidos,
+     cortes, invertidas, quintessência e dignidades elementais.
+   As traduções inglesas dos sentidos estão aqui ao lado do português
+   e entram no dicionário (window.I18N_EN) quando a app está em en-GB.
+   ============================================================ */
+(() => {
+const EN = window.APP_LANG === 'en-GB';
+const L = (pt, en) => (EN ? en : pt);
+const reg = (pt, en) => {
+  if (window.I18N_EN && pt && en) window.I18N_EN[String(pt).replace(/\s+/g, ' ').trim()] = en;
+  return pt;
+};
+const tr = v => (window.t ? window.t(v) : v);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const VS = '︎'; // força os símbolos astrológicos em texto, nunca emoji
+
+/* ——— Sentidos dos Arcanos Menores: [direito, invertido, upright, reversed] ——— */
+const MINOR = {
+  wands: [
+    ['Centelha de inspiração, nova iniciativa, vontade de criar e energia para começar algo com paixão.', 'Atrasos no arranque, falta de motivação, ideia que não pega fogo ou energia desperdiçada.',
+     'A spark of inspiration, a new venture, the will to create and the energy to begin something with passion.', 'Delays in getting started, lack of drive, an idea that will not catch fire or energy going to waste.'],
+    ['Planeamento e visão de longo alcance: o mundo nas mãos e a decisão de partir ou ficar.', 'Medo do desconhecido, planos que não passam do papel, ficar na zona de conforto ou má avaliação.',
+     'Planning and far-reaching vision: the world in your hands and the choice to set out or stay.', 'Fear of the unknown, plans that never leave the page, staying in your comfort zone or poor judgement.'],
+    ['Expansão, horizontes que se abrem, primeiros resultados e espera confiante pelos barcos que chegam.', 'Obstáculos à expansão, atrasos, falta de previsão ou regresso frustrado.',
+     'Expansion, opening horizons, first results and confident waiting for the ships to come in.', 'Obstacles to growth, delays, lack of foresight or a frustrating return.'],
+    ['Celebração, lar, comunidade, alicerces firmes e um marco alcançado (festa, casamento, mudança de casa).', 'Instabilidade no lar, celebração adiada, transição ou falta de sentido de pertença.',
+     'Celebration, home, community, firm foundations and a milestone reached (a feast, a wedding, a move).', 'Instability at home, a postponed celebration, transition or a lack of belonging.'],
+    ['Competição, rivalidade, choque de egos e treino de forças: conflito mais ruidoso do que perigoso.', 'Evitar o conflito, tensão interior, tréguas ou disputa que finalmente acalma.',
+     'Competition, rivalry, clashing egos and sparring: conflict that is noisier than it is dangerous.', 'Avoiding conflict, inner tension, a truce or a dispute that finally settles.'],
+    ['Vitória pública, reconhecimento, regresso triunfal e confiança renovada.', 'Falta de reconhecimento, orgulho antes da queda, sucesso só em privado ou vaidade.',
+     'Public victory, recognition, a triumphant return and renewed confidence.', 'Lack of recognition, pride before a fall, success kept private or vanity.'],
+    ['Defender a posição, coragem perante a oposição, perseverança e firmeza de convicções.', 'Sentir-se sobrecarregado, ceder sob pressão, desistir ou defensividade excessiva.',
+     'Holding your ground, courage against opposition, perseverance and firm convictions.', 'Feeling overwhelmed, giving way under pressure, giving up or excessive defensiveness.'],
+    ['Movimento rápido, notícias, viagens, ação veloz e acontecimentos que se precipitam.', 'Atrasos, frustração, pressa que atrapalha ou energia que se dispersa.',
+     'Swift movement, news, travel, fast action and events that rush forward.', 'Delays, frustration, haste that gets in the way or scattered energy.'],
+    ['Resiliência, a última prova, vigilância e força para continuar apesar das feridas.', 'Exaustão, desconfiança de tudo, defesa rígida ou recusa em aceitar ajuda.',
+     'Resilience, the last test, vigilance and the strength to carry on despite your wounds.', 'Exhaustion, suspicion of everything, rigid defence or refusing help.'],
+    ['Fardo pesado, excesso de responsabilidades e trabalho árduo perto do fim.', 'Largar o fardo, delegar, aprender a dizer não, ou colapso por sobrecarga.',
+     'A heavy burden, too many responsibilities and hard work close to the end.', 'Putting the burden down, delegating, learning to say no, or collapse from overload.'],
+    ['Entusiasmo, descoberta, espírito livre e uma mensagem que acende nova paixão.', 'Ideias sem seguimento, impaciência, más notícias ou falta de rumo.',
+     'Enthusiasm, discovery, a free spirit and news that kindles a new passion.', 'Ideas with no follow-through, impatience, bad news or lack of direction.'],
+    ['Ação ousada, aventura, paixão impetuosa e coragem para avançar já.', 'Impulsividade, ira, imprudência ou partidas adiadas.',
+     'Bold action, adventure, impetuous passion and the courage to move now.', 'Impulsiveness, anger, recklessness or delayed departures.'],
+    ['Confiança, carisma, calor humano, determinação e independência criativa.', 'Ciúme, insegurança, exigência excessiva ou fogo que se vira para dentro.',
+     'Confidence, charisma, warmth, determination and creative independence.', 'Jealousy, insecurity, being overly demanding or a fire turned inwards.'],
+    ['Liderança natural, visão, espírito empreendedor e uma honra que inspira os outros.', 'Arrogância, impulsividade, expectativas impossíveis ou liderança tirânica.',
+     'Natural leadership, vision, an enterprising spirit and honour that inspires others.', 'Arrogance, impulsiveness, impossible expectations or tyrannical leadership.']
+  ],
+  cups: [
+    ['Novo amor, abertura emocional, compaixão, criatividade e a taça do coração a transbordar.', 'Emoções reprimidas, vazio interior, amor-próprio ferido ou sentimentos bloqueados.',
+     'New love, emotional openness, compassion, creativity and the cup of the heart overflowing.', 'Repressed emotions, inner emptiness, wounded self-love or blocked feelings.'],
+    ['União, atração mútua, parceria, reconciliação e um laço de igual para igual.', 'Desequilíbrio na relação, separação, desconfiança ou falta de reciprocidade.',
+     'Union, mutual attraction, partnership, reconciliation and a bond between equals.', 'Imbalance in a relationship, separation, mistrust or lack of reciprocity.'],
+    ['Amizade, celebração, comunidade e alegria partilhada à volta do hidromel.', 'Excessos, mexericos, isolamento social ou uma terceira pessoa a interferir.',
+     'Friendship, celebration, community and joy shared over the mead.', 'Overindulgence, gossip, social isolation or a third party interfering.'],
+    ['Apatia, contemplação, descontentamento e uma oferta que passa despercebida.', 'Despertar, aceitar uma nova oportunidade ou sair do alheamento.',
+     'Apathy, contemplation, discontent and an offer that goes unnoticed.', 'Waking up, accepting a new opportunity or coming out of withdrawal.'],
+    ['Perda, luto e arrependimento: olhar para o que se derramou e esquecer o que resta.', 'Aceitação, perdão, seguir em frente e reencontrar o que ficou de pé.',
+     'Loss, grief and regret: staring at what was spilt and forgetting what remains.', 'Acceptance, forgiveness, moving on and finding what is still standing.'],
+    ['Nostalgia, memórias de infância, inocência, reencontro e generosidade simples.', 'Preso ao passado, idealização, ou a necessidade de crescer e largar velhas histórias.',
+     'Nostalgia, childhood memories, innocence, reunion and simple generosity.', 'Stuck in the past, idealisation, or the need to grow up and release old stories.'],
+    ['Fantasia, muitas escolhas, ilusões e desejos que pedem discernimento.', 'Clareza, escolha feita, regresso à realidade ou tentação reconhecida.',
+     'Fantasy, many choices, illusions and wishes that call for discernment.', 'Clarity, a choice made, a return to reality or a temptation seen for what it is.'],
+    ['Partir, abandonar o que já não alimenta e procurar um sentido mais fundo.', 'Medo de partir, ficar por obrigação ou andar à deriva.',
+     'Walking away, leaving what no longer nourishes and seeking a deeper meaning.', 'Fear of leaving, staying out of obligation or drifting aimlessly.'],
+    ['Desejo realizado, satisfação, prazer e gratidão: a carta dos desejos.', 'Insatisfação, materialismo, excesso de indulgência ou desejo vazio.',
+     'A wish fulfilled, satisfaction, pleasure and gratitude: the wish card.', 'Dissatisfaction, materialism, overindulgence or a hollow wish.'],
+    ['Harmonia familiar, felicidade duradoura, um lar emocional e valores alinhados.', 'Família desavinda, valores em conflito ou um ideal de felicidade que não bate com a realidade.',
+     'Family harmony, lasting happiness, an emotional home and aligned values.', 'A family at odds, conflicting values or an ideal of happiness that does not match reality.'],
+    ['Mensagem afetiva, sensibilidade, intuição jovem e convite criativo.', 'Imaturidade emocional, ilusão, bloqueio criativo ou notícias tristes.',
+     'An emotional message, sensitivity, young intuition and a creative invitation.', 'Emotional immaturity, illusion, creative block or sad news.'],
+    ['Romance, proposta, encanto, seguir o coração: a idealista que traz a taça.', 'Ciúme, promessas vazias, humor instável ou desilusão romântica.',
+     'Romance, a proposal, charm, following the heart: the idealist bearing the cup.', 'Jealousy, empty promises, moodiness or romantic disappointment.'],
+    ['Compaixão, cuidado, intuição profunda e uma calma emocional que acolhe.', 'Dependência emocional, martírio, insegurança ou falta de limites.',
+     'Compassion, care, deep intuition and an emotional calm that holds others.', 'Emotional dependence, martyrdom, insecurity or lack of boundaries.'],
+    ['Equilíbrio emocional, diplomacia, sabedoria serena e generosidade madura.', 'Manipulação emocional, frieza, humor volátil ou emoções escondidas.',
+     'Emotional balance, diplomacy, calm wisdom and mature generosity.', 'Emotional manipulation, coldness, volatile moods or hidden feelings.']
+  ],
+  swords: [
+    ['Clareza súbita, verdade, uma ideia poderosa e a decisão que corta a confusão.', 'Confusão, caos mental, uma ideia mal usada ou verdade dita com crueldade.',
+     'Sudden clarity, truth, a powerful idea and a decision that cuts through confusion.', 'Confusion, mental chaos, an idea misused or truth spoken cruelly.'],
+    ['Impasse, decisão difícil adiada, olhos vendados e trégua frágil.', 'Indecisão que já não se aguenta, excesso de informação ou verdade revelada.',
+     'Stalemate, a difficult decision put off, a blindfold and a fragile truce.', 'Indecision that can no longer hold, information overload or a truth revealed.'],
+    ['Desgosto, dor emocional, tristeza, separação e uma verdade que fere.', 'Recuperação, perdão, libertar a dor, ou mágoa ainda guardada por dentro.',
+     'Heartbreak, emotional pain, sorrow, separation and a truth that wounds.', 'Recovery, forgiveness, releasing pain, or hurt still held inside.'],
+    ['Descanso, recuperação, retiro, contemplação e uma trégua para sarar.', 'Esgotamento, inquietação, regresso precoce à luta ou estagnação.',
+     'Rest, recovery, retreat, contemplation and a truce in order to heal.', 'Burnout, restlessness, returning to the fight too soon or stagnation.'],
+    ['Conflito, vencer a qualquer custo, derrota, humilhação e ganho vazio.', 'Reconciliação, arrependimento, abandonar a luta ou ressentimento antigo.',
+     'Conflict, winning at any cost, defeat, humiliation and a hollow gain.', 'Reconciliation, remorse, walking away from the fight or old resentment.'],
+    ['Transição, deixar para trás, viagem para águas mais calmas e recuperação lenta.', 'Bagagem emocional, resistência à mudança ou travessia interrompida.',
+     'Transition, leaving behind, a journey to calmer waters and slow recovery.', 'Emotional baggage, resistance to change or an unfinished crossing.'],
+    ['Estratégia, astúcia, segredo, engano ou agir sozinho e às escondidas.', 'Confissão, consciência pesada, engano descoberto ou autoengano.',
+     'Strategy, cunning, secrecy, deception or acting alone and in hiding.', 'Confession, a guilty conscience, deceit uncovered or self-deception.'],
+    ['Restrição, prisão mental, sentir-se encurralado e papel de vítima.', 'Libertação, nova perspetiva, assumir a própria força ou medos que se dissolvem.',
+     'Restriction, a mental prison, feeling trapped and playing the victim.', 'Release, a new perspective, owning your strength or fears dissolving.'],
+    ['Ansiedade, pesadelos, preocupação excessiva, culpa e noites sem dormir.', 'Esperança, pedir ajuda, ansiedade que se dissipa, ou desespero no seu ponto mais fundo.',
+     'Anxiety, nightmares, excessive worry, guilt and sleepless nights.', 'Hope, reaching out for help, anxiety lifting, or despair at its deepest.'],
+    ['Fim doloroso, traição, fundo do poço e ponto final: daqui só se pode subir.', 'Recuperação, regeneração, resistir a um fim inevitável ou dor que se arrasta.',
+     'A painful ending, betrayal, rock bottom and a full stop: from here the only way is up.', 'Recovery, regeneration, resisting an inevitable end or pain that drags on.'],
+    ['Curiosidade, sede de saber, vigilância, ideias novas e comunicação direta.', 'Mexericos, palavras sem pensar, espionagem ou falta de planeamento.',
+     'Curiosity, thirst for knowledge, vigilance, new ideas and direct communication.', 'Gossip, thoughtless words, spying or lack of planning.'],
+    ['Ambição, ação rápida e decidida, argumento afiado e avanço a direito.', 'Agressividade, pressa imprudente, palavras que ferem ou falta de rumo.',
+     'Ambition, fast and decisive action, a sharp argument and a straight charge forward.', 'Aggression, reckless haste, wounding words or lack of direction.'],
+    ['Independência, perceção clara, juízo imparcial e honestidade sem rodeios.', 'Frieza, amargura, crueldade ou julgamento sem compaixão.',
+     'Independence, clear perception, impartial judgement and plain honesty.', 'Coldness, bitterness, cruelty or judgement without compassion.'],
+    ['Autoridade intelectual, verdade, ética, lei e decisões lúcidas.', 'Manipulação, abuso de poder, tirania mental ou falta de ética.',
+     'Intellectual authority, truth, ethics, law and clear-headed decisions.', 'Manipulation, abuse of power, mental tyranny or lack of ethics.']
+  ],
+  pentacles: [
+    ['Nova oportunidade material, prosperidade, semente de riqueza, saúde e manifestação.', 'Oportunidade perdida, falta de planeamento ou insegurança financeira.',
+     'A new material opportunity, prosperity, the seed of wealth, health and manifestation.', 'A missed opportunity, poor planning or financial insecurity.'],
+    ['Equilíbrio de prioridades, adaptabilidade e gestão do tempo e do dinheiro.', 'Desorganização, sobrecarga, malabarismo que falha ou prioridades trocadas.',
+     'Balancing priorities, adaptability and managing time and money.', 'Disorganisation, overload, juggling that fails or misplaced priorities.'],
+    ['Trabalho de equipa, ofício, aprendizagem, competência reconhecida e construção em conjunto.', 'Falta de cooperação, trabalho mal feito ou competência por reconhecer.',
+     'Teamwork, craft, apprenticeship, recognised skill and building together.', 'Lack of cooperation, shoddy work or skill that goes unrecognised.'],
+    ['Segurança, poupança, controlo e conservar o que se tem; por vezes, avareza.', 'Generosidade, largar o controlo, gastos imprudentes ou medo da perda.',
+     'Security, saving, control and holding on to what you have; at times, greed.', 'Generosity, letting go of control, reckless spending or fear of loss.'],
+    ['Dificuldade material, pobreza, exclusão, doença e sentir-se à porta, ao frio.', 'Recuperação, ajuda que chega, fim de um período difícil ou pobreza espiritual.',
+     'Material hardship, poverty, exclusion, illness and feeling left out in the cold.', 'Recovery, help arriving, the end of a hard spell or spiritual poverty.'],
+    ['Generosidade, dar e receber, caridade e partilha justa dos recursos.', 'Dívidas, dádivas com condições, desigualdade ou egoísmo.',
+     'Generosity, giving and receiving, charity and a fair sharing of resources.', 'Debt, gifts with strings attached, inequality or selfishness.'],
+    ['Paciência, investimento a longo prazo, balanço do trabalho feito e espera pela colheita.', 'Impaciência, esforço sem retorno, investimento mal pensado ou desistir cedo demais.',
+     'Patience, long-term investment, taking stock of the work done and waiting for the harvest.', 'Impatience, effort without reward, an ill-judged investment or giving up too soon.'],
+    ['Dedicação, mestria, aperfeiçoamento, disciplina e trabalho bem feito.', 'Perfeccionismo, falta de foco, trabalho repetitivo sem alma ou atalhos.',
+     'Dedication, mastery, refinement, discipline and work done well.', 'Perfectionism, lack of focus, soulless repetitive work or shortcuts.'],
+    ['Abundância conquistada, independência, conforto, autossuficiência e requinte.', 'Dependência financeira, aparências, excesso de trabalho ou solidão no meio do luxo.',
+     'Hard-won abundance, independence, comfort, self-sufficiency and refinement.', 'Financial dependence, keeping up appearances, overwork or loneliness amid luxury.'],
+    ['Riqueza duradoura, herança, família, linhagem e legado entre gerações.', 'Conflitos de herança, perda financeira, tradição que aprisiona ou instabilidade familiar.',
+     'Lasting wealth, inheritance, family, lineage and a legacy across generations.', 'Inheritance disputes, financial loss, a tradition that confines or family instability.'],
+    ['Estudo, nova competência, plano prático, oportunidade concreta e diligência.', 'Preguiça, falta de progresso, adiar tudo ou oportunidade desperdiçada.',
+     'Study, a new skill, a practical plan, a concrete opportunity and diligence.', 'Laziness, lack of progress, putting everything off or a wasted opportunity.'],
+    ['Trabalho constante, responsabilidade, rotina, paciência e fiabilidade.', 'Estagnação, tédio, teimosia ou trabalho sem fim à vista.',
+     'Steady work, responsibility, routine, patience and reliability.', 'Stagnation, boredom, stubbornness or work with no end in sight.'],
+    ['Cuidado prático, abundância que nutre, bom senso terreno e segurança doméstica.', 'Desequilíbrio entre casa e trabalho, dependência, descuido consigo ou possessividade.',
+     'Practical care, nurturing abundance, down-to-earth sense and domestic security.', 'Imbalance between home and work, dependence, self-neglect or possessiveness.'],
+    ['Prosperidade, segurança, disciplina, sucesso material e o provedor generoso.', 'Ganância, materialismo, teimosia ou riqueza mal gerida.',
+     'Prosperity, security, discipline, material success and the generous provider.', 'Greed, materialism, stubbornness or mismanaged wealth.']
+  ]
+};
+
+/* ——— Figuras da corte como pessoa: [pt, en] por posto (11 a 14) ——— */
+const PERSON = {
+  wands: {
+    11: ['Jovem entusiasta e curioso, mensageiro de ideias novas, inquieto e cheio de energia.', 'An enthusiastic, curious youth, a messenger of new ideas, restless and full of energy.'],
+    12: ['Aventureira apaixonada e impetuosa, carismática, sempre a partir para a próxima conquista.', 'A passionate, impetuous adventurer, charismatic, always off to the next conquest.'],
+    13: ['Alguém caloroso, confiante e magnético, que lidera pelo exemplo e protege os seus com ferocidade.', 'Someone warm, confident and magnetic, who leads by example and fiercely protects their own.'],
+    14: ['Líder visionário e empreendedor, honrado e ousado, que inspira os outros a segui-lo.', 'A visionary, enterprising leader, honourable and daring, who inspires others to follow.']
+  },
+  cups: {
+    11: ['Jovem sonhador e sensível, artístico, intuitivo e de coração aberto.', 'A sensitive young dreamer, artistic, intuitive and open-hearted.'],
+    12: ['Romântica idealista, poeta ou sedutora, guiada pelos sentimentos e pela beleza.', 'An idealistic romantic, poet or charmer, led by feelings and by beauty.'],
+    13: ['Alguém empático e intuitivo, que cuida, escuta e sente o que os outros não dizem.', 'Someone empathic and intuitive, who cares, listens and senses what others leave unsaid.'],
+    14: ['Conselheiro sereno e diplomático, que domina as emoções sem as negar.', 'A calm, diplomatic counsellor who masters emotions without denying them.']
+  },
+  swords: {
+    11: ['Jovem perspicaz e vigilante, curioso, rápido nas palavras e por vezes indiscreto.', 'A sharp, watchful youth, curious, quick with words and sometimes indiscreet.'],
+    12: ['Guerreira intelectual, direta e veloz, que abre caminho com argumentos.', 'An intellectual warrior, direct and swift, who cuts a path with arguments.'],
+    13: ['Alguém independente, lúcido e frontal, que diz a verdade e já conheceu a dor.', 'Someone independent, clear-sighted and frank, who speaks the truth and has known sorrow.'],
+    14: ['Juiz ou estratega, racional, justo e exigente, guiado pela lógica e pela ética.', 'A judge or strategist, rational, fair and demanding, guided by logic and ethics.']
+  },
+  pentacles: {
+    11: ['Estudante aplicado, prático e fiável, que aprende a fazer.', 'A diligent student, practical and reliable, who learns by doing.'],
+    12: ['Trabalhadora paciente e metódica, que avança devagar mas nunca desiste.', 'A patient, methodical worker who moves slowly but never gives up.'],
+    13: ['Alguém prático e acolhedor, que cria conforto, gere bem os recursos e cuida do corpo e da casa.', 'Someone practical and nurturing, who creates comfort, manages resources well and cares for body and home.'],
+    14: ['Provedor próspero e estável, empresário ou chefe de família, sólido como a terra.', 'A prosperous, steady provider, a businessperson or head of a household, solid as the earth.']
+  }
+};
+
+/* ——— Tabelas de correspondências ——— */
+const PLANET = {
+  mercury: ['☿', 'Mercúrio', 'Mercury'], moon: ['☽', 'Lua', 'Moon'], venus: ['♀', 'Vénus', 'Venus'],
+  jupiter: ['♃', 'Júpiter', 'Jupiter'], mars: ['♂', 'Marte', 'Mars'], sun: ['☉', 'Sol', 'Sun'], saturn: ['♄', 'Saturno', 'Saturn']
+};
+const SIGN = {
+  aries: ['♈', 'Carneiro', 'Aries', 'fire'], taurus: ['♉', 'Touro', 'Taurus', 'earth'], gemini: ['♊', 'Gémeos', 'Gemini', 'air'],
+  cancer: ['♋', 'Caranguejo', 'Cancer', 'water'], leo: ['♌', 'Leão', 'Leo', 'fire'], virgo: ['♍', 'Virgem', 'Virgo', 'earth'],
+  libra: ['♎', 'Balança', 'Libra', 'air'], scorpio: ['♏', 'Escorpião', 'Scorpio', 'water'], sagittarius: ['♐', 'Sagitário', 'Sagittarius', 'fire'],
+  capricorn: ['♑', 'Capricórnio', 'Capricorn', 'earth'], aquarius: ['♒', 'Aquário', 'Aquarius', 'air'], pisces: ['♓', 'Peixes', 'Pisces', 'water']
+};
+const ELEM = { fire: ['Fogo', 'Fire'], water: ['Água', 'Water'], air: ['Ar', 'Air'], earth: ['Terra', 'Earth'] };
+const SUIT_ELEM = { wands: 'fire', cups: 'water', swords: 'air', pentacles: 'earth' };
+const HEB = {
+  aleph: ['א', 'Aleph', 'boi', 'ox'], beth: ['ב', 'Beth', 'casa', 'house'], gimel: ['ג', 'Gimel', 'camelo', 'camel'],
+  daleth: ['ד', 'Daleth', 'porta', 'door'], heh: ['ה', 'Heh', 'janela', 'window'], vav: ['ו', 'Vav', 'prego', 'nail'],
+  zayin: ['ז', 'Zayin', 'espada', 'sword'], cheth: ['ח', 'Cheth', 'cerca', 'fence'], teth: ['ט', 'Teth', 'serpente', 'serpent'],
+  yod: ['י', 'Yod', 'mão', 'hand'], kaph: ['כ', 'Kaph', 'palma da mão', 'palm of the hand'], lamed: ['ל', 'Lamed', 'aguilhão', 'ox-goad'],
+  mem: ['מ', 'Mem', 'água', 'water'], nun: ['נ', 'Nun', 'peixe', 'fish'], samekh: ['ס', 'Samekh', 'esteio', 'prop'],
+  ayin: ['ע', 'Ayin', 'olho', 'eye'], peh: ['פ', 'Peh', 'boca', 'mouth'], tzaddi: ['צ', 'Tzaddi', 'anzol', 'fish-hook'],
+  qoph: ['ק', 'Qoph', 'nuca', 'back of the head'], resh: ['ר', 'Resh', 'cabeça', 'head'], shin: ['ש', 'Shin', 'dente', 'tooth'],
+  tav: ['ת', 'Tav', 'marca, cruz', 'mark, cross']
+};
+// Sefirot: [nome, pt, en, cor(es) da escala da Rainha, cor pt, cor en]
+const SEPH = [null,
+  ['Kether', 'Coroa', 'Crown', ['#ffffff'], 'branco brilhante', 'brilliant white'],
+  ['Chokmah', 'Sabedoria', 'Wisdom', ['#9ca3af'], 'cinzento', 'grey'],
+  ['Binah', 'Entendimento', 'Understanding', ['#111111'], 'negro', 'black'],
+  ['Chesed', 'Misericórdia', 'Mercy', ['#2563eb'], 'azul', 'blue'],
+  ['Geburah', 'Severidade', 'Severity', ['#dc2626'], 'vermelho-escarlate', 'scarlet red'],
+  ['Tiphareth', 'Beleza', 'Beauty', ['#facc15'], 'amarelo-dourado', 'golden yellow'],
+  ['Netzach', 'Vitória', 'Victory', ['#10b981'], 'verde-esmeralda', 'emerald green'],
+  ['Hod', 'Esplendor', 'Splendour', ['#f97316'], 'laranja', 'orange'],
+  ['Yesod', 'Fundamento', 'Foundation', ['#7c3aed'], 'violeta', 'violet'],
+  ['Malkuth', 'Reino', 'Kingdom', ['#c9b03a', '#6b7c2b', '#8b4a2b', '#111111'], 'citrino, oliva, castanho-avermelhado e negro', 'citrine, olive, russet and black']
+];
+// Arcanos Maiores: letra, astrologia [tipo, chave], caminho, de → para, cor (escala do Rei)
+const MAJOR = {
+  M00: ['aleph', ['element', 'air'], 11, 1, 2, '#fff7a8', 'amarelo-pálido brilhante', 'bright pale yellow'],
+  M01: ['beth', ['planet', 'mercury'], 12, 1, 3, '#facc15', 'amarelo', 'yellow'],
+  M02: ['gimel', ['planet', 'moon'], 13, 1, 6, '#2563eb', 'azul', 'blue'],
+  M03: ['daleth', ['planet', 'venus'], 14, 2, 3, '#10b981', 'verde-esmeralda', 'emerald green'],
+  M04: ['heh', ['sign', 'aries'], 15, 2, 6, '#dc2626', 'escarlate', 'scarlet'],
+  M05: ['vav', ['sign', 'taurus'], 16, 2, 4, '#ea580c', 'vermelho-alaranjado', 'red-orange'],
+  M06: ['zayin', ['sign', 'gemini'], 17, 3, 6, '#f97316', 'laranja', 'orange'],
+  M07: ['cheth', ['sign', 'cancer'], 18, 3, 5, '#f59e0b', 'âmbar', 'amber'],
+  M08: ['teth', ['sign', 'leo'], 19, 4, 5, '#d4dc22', 'amarelo-esverdeado', 'greenish yellow'],
+  M09: ['yod', ['sign', 'virgo'], 20, 4, 6, '#a3c935', 'verde-amarelado', 'yellowish green'],
+  M10: ['kaph', ['planet', 'jupiter'], 21, 4, 7, '#7c3aed', 'violeta', 'violet'],
+  M11: ['lamed', ['sign', 'libra'], 22, 5, 6, '#10b981', 'verde-esmeralda', 'emerald green'],
+  M12: ['mem', ['element', 'water'], 23, 5, 8, '#1e3a8a', 'azul-escuro', 'deep blue'],
+  M13: ['nun', ['sign', 'scorpio'], 24, 6, 7, '#0d9488', 'azul-esverdeado', 'green-blue'],
+  M14: ['samekh', ['sign', 'sagittarius'], 25, 6, 9, '#2563eb', 'azul', 'blue'],
+  M15: ['ayin', ['sign', 'capricorn'], 26, 6, 8, '#3730a3', 'índigo', 'indigo'],
+  M16: ['peh', ['planet', 'mars'], 27, 7, 8, '#dc2626', 'escarlate', 'scarlet'],
+  M17: ['tzaddi', ['sign', 'aquarius'], 28, 7, 9, '#7c3aed', 'violeta', 'violet'],
+  M18: ['qoph', ['sign', 'pisces'], 29, 7, 10, '#9f1239', 'carmesim (ultravioleta)', 'crimson (ultraviolet)'],
+  M19: ['resh', ['planet', 'sun'], 30, 8, 9, '#f97316', 'laranja', 'orange'],
+  M20: ['shin', ['element', 'fire'], 31, 8, 10, '#f2541b', 'laranja-escarlate incandescente', 'glowing orange-scarlet'],
+  M21: ['tav', ['planet', 'saturn'], 32, 9, 10, '#3730a3', 'índigo', 'indigo']
+};
+// Decanatos dos Menores 2 a 10 (Golden Dawn): [planeta, signo, decanato 0-2]
+const DECAN = {
+  wands: [['mars', 'aries', 0], ['sun', 'aries', 1], ['venus', 'aries', 2], ['saturn', 'leo', 0], ['jupiter', 'leo', 1], ['mars', 'leo', 2], ['mercury', 'sagittarius', 0], ['moon', 'sagittarius', 1], ['saturn', 'sagittarius', 2]],
+  cups: [['venus', 'cancer', 0], ['mercury', 'cancer', 1], ['moon', 'cancer', 2], ['mars', 'scorpio', 0], ['sun', 'scorpio', 1], ['venus', 'scorpio', 2], ['saturn', 'pisces', 0], ['jupiter', 'pisces', 1], ['mars', 'pisces', 2]],
+  swords: [['moon', 'libra', 0], ['saturn', 'libra', 1], ['jupiter', 'libra', 2], ['venus', 'aquarius', 0], ['mercury', 'aquarius', 1], ['moon', 'aquarius', 2], ['jupiter', 'gemini', 0], ['mars', 'gemini', 1], ['sun', 'gemini', 2]],
+  pentacles: [['jupiter', 'capricorn', 0], ['mars', 'capricorn', 1], ['sun', 'capricorn', 2], ['mercury', 'taurus', 0], ['moon', 'taurus', 1], ['saturn', 'taurus', 2], ['sun', 'virgo', 0], ['venus', 'virgo', 1], ['mercury', 'virgo', 2]]
+};
+// Cortes (Golden Dawn): Valquíria = Rei a cavalo (Fogo), Völva = Rainha (Água),
+// Jarl = Príncipe (Ar), Escudeiro = Princesa (Terra). Zodíaco de 21° a 20°.
+const COURT = { 11: ['earth', 10], 12: ['fire', 2], 13: ['water', 3], 14: ['air', 6] };
+const COURT_ZOD = {
+  wands: { 12: ['scorpio', 'sagittarius'], 13: ['pisces', 'aries'], 14: ['cancer', 'leo'], 11: ['cancer', 'leo', 'virgo'] },
+  cups: { 12: ['aquarius', 'pisces'], 13: ['gemini', 'cancer'], 14: ['libra', 'scorpio'], 11: ['libra', 'scorpio', 'sagittarius'] },
+  swords: { 12: ['taurus', 'gemini'], 13: ['virgo', 'libra'], 14: ['capricorn', 'aquarius'], 11: ['capricorn', 'aquarius', 'pisces'] },
+  pentacles: { 12: ['leo', 'virgo'], 13: ['sagittarius', 'capricorn'], 14: ['aries', 'taurus'], 11: ['aries', 'taurus', 'gemini'] }
+};
+const COURT_ROLE = {
+  11: ['Princesa na Golden Dawn: o elemento a tomar corpo, aprender e trazer mensagens.', 'Princess in the Golden Dawn: the element taking form, learning and bringing messages.'],
+  12: ['Rei a cavalo na Golden Dawn (Cavaleiro no Rider-Waite): o elemento em ataque, rápido e decidido.', 'Mounted King in the Golden Dawn (Knight in Rider-Waite): the element charging, swift and decisive.'],
+  13: ['Rainha: o elemento recebido, sentido e guardado por dentro.', 'Queen: the element received, felt and held within.'],
+  14: ['Príncipe no carro na Golden Dawn (Rei no Rider-Waite): o elemento posto a governar no mundo.', 'Prince in the chariot in the Golden Dawn (King in Rider-Waite): the element set to rule in the world.']
+};
+const NUM = [
+  ['potencial puro, o vazio antes de todo o número', 'pure potential, the void before every number'],
+  ['início, unidade, a semente', 'beginning, unity, the seed'],
+  ['dualidade, escolha, parceria', 'duality, choice, partnership'],
+  ['expansão, criação, o primeiro fruto', 'growth, creation, the first fruit'],
+  ['estrutura, estabilidade, alicerce', 'structure, stability, foundation'],
+  ['crise, mudança, prova', 'crisis, change, a test'],
+  ['harmonia, partilha, reequilíbrio', 'harmony, sharing, rebalancing'],
+  ['avaliação, mistério, perseverança', 'assessment, mystery, perseverance'],
+  ['movimento, poder, mestria', 'movement, power, mastery'],
+  ['culminação, plenitude, recolhimento', 'culmination, fulfilment, solitude'],
+  ['fim de ciclo, excesso, passagem ao seguinte', 'end of a cycle, excess, passing to the next']
+];
+const SUIT_COLOUR = {
+  wands: ['laranja e ocre de Muspelheim', 'the orange and ochre of Muspelheim'],
+  cups: ['azul-celeste e prata de Vanaheim', 'the sky blue and silver of Vanaheim'],
+  swords: ['cinzento-azulado e branco de Niflheim', 'the slate blue and white of Niflheim'],
+  pentacles: ['dourado e ocre de Midgard', 'the gold and ochre of Midgard']
+};
+
+const planet = k => `${PLANET[k][0]}${VS} ${L(PLANET[k][1], PLANET[k][2])}`;
+const sign = k => `${SIGN[k][0]}${VS} ${L(SIGN[k][1], SIGN[k][2])}`;
+const elem = k => L(ELEM[k][0], ELEM[k][1]);
+const sephName = n => `${SEPH[n][0]} (${L(SEPH[n][1], SEPH[n][2])})`;
+const majorIndex = c => parseInt(String(c.id).slice(1), 10);
+const swatch = (hex, label) => `<span class="tc-sw" style="background:${hex}" title="${esc(label)}" aria-hidden="true"></span>`;
+
+/* ——— Aplicar ao baralho ——— */
+function apply() {
+  const deck = (typeof NORDIC_TAROT_DECK !== 'undefined' && NORDIC_TAROT_DECK) || window.NORDIC_TAROT_DECK;
+  if (!deck) return;
+  deck.forEach(c => {
+    if (c.suit === 'major') {
+      const m = MAJOR[c.id];
+      if (!m) return;
+      c.value = majorIndex(c);
+      c.element = m[1][0] === 'element' ? m[1][1] : m[1][0] === 'sign' ? SIGN[m[1][1]][3] : null;
+      return;
+    }
+    const row = MINOR[c.suit] && MINOR[c.suit][c.rank - 1];
+    if (!row) return;
+    c.upright = reg(row[0], row[2]);
+    c.reversed = reg(row[1], row[3]);
+    c.element = SUIT_ELEM[c.suit];
+    c.value = c.rank <= 10 ? c.rank : null;
+    const p = PERSON[c.suit][c.rank];
+    if (p) c.person = reg(p[0], p[1]);
+  });
+}
+
+/* ——— Correspondências de uma carta: [[rótulo, html], …] ——— */
+function correspondences(c) {
+  const rows = [];
+  if (c.suit === 'major') {
+    const m = MAJOR[c.id];
+    if (!m) return rows;
+    const [hk, [type, key], path, from, to, hex, cpt, cen] = m;
+    const h = HEB[hk];
+    const astro = type === 'planet' ? planet(key)
+      : type === 'sign' ? `${sign(key)} · ${L('signo de', 'a sign of')} ${elem(SIGN[key][3])}`
+      : `${L('Elemento', 'Element')} ${elem(key)}${key === 'fire' ? L(' (e Espírito)', ' (and Spirit)') : ''}`;
+    rows.push([L('Astrologia', 'Astrology'), esc(astro) + (c.id === 'M21' ? esc(L(' (e o elemento Terra)', ' (and the element Earth)')) : '')]);
+    rows.push([L('Letra hebraica', 'Hebrew letter'), `<span class="tc-heb" lang="he">${h[0]}</span> ${esc(h[1])} · ${esc(L(h[2], h[3]))}`]);
+    rows.push([L('Árvore da Vida', 'Tree of Life'), esc(`${L('Caminho', 'Path')} ${path}: ${sephName(from)} → ${sephName(to)}`)]);
+    const n = c.value;
+    let num;
+    if (n <= 10) num = `${n} · ${L(NUM[n][0], NUM[n][1])}`;
+    else {
+      const steps = [];
+      let s = n;
+      while (s > 9) { const d = String(s).split('').map(Number); const t = d.reduce((a, b) => a + b, 0); steps.push(`${d.join('+')} = ${t}`); s = t; }
+      const base = NORDIC_TAROT_DECK.find(x => x.id === 'M' + String(s).padStart(2, '0'));
+      num = `${n} → ${steps.join(' → ')} · ${L('eco de', 'echoes')} ${base ? tr(base.title) : s}: ${L(NUM[s][0], NUM[s][1])}`;
+    }
+    rows.push([L('Numerologia', 'Numerology'), esc(num)]);
+    rows.push([L('Cores', 'Colours'), `${swatch(hex, L(cpt, cen))} ${esc(L(cpt, cen))} <span class="theme-muted">· ${esc(L('escala do Rei, Golden Dawn', 'King scale, Golden Dawn'))}</span>`]);
+    return rows;
+  }
+  const se = SUIT_ELEM[c.suit];
+  if (c.rank === 1) {
+    rows.push([L('Astrologia', 'Astrology'), esc(L(`Raiz dos poderes do ${elem(se)}; sem decanato`, `Root of the powers of ${elem(se)}; no decan`))]);
+  } else if (c.rank <= 10) {
+    const [p, s, d] = DECAN[c.suit][c.rank - 2];
+    rows.push([L('Astrologia', 'Astrology'), esc(`${planet(p)} ${L('em', 'in')} ${sign(s)} (${d * 10}°–${d * 10 + 10}°)`)]);
+  } else {
+    const z = COURT_ZOD[c.suit][c.rank];
+    const zt = z.length === 3
+      ? L(`Quadrante celeste de ${z.map(sign).join(', ').replace(/, ([^,]+)$/, ' e $1')}`, `Celestial quadrant of ${z.map(sign).join(', ').replace(/, ([^,]+)$/, ' and $1')}`)
+      : `21° ${sign(z[0])} – 20° ${sign(z[1])}`;
+    rows.push([L('Astrologia', 'Astrology'), esc(zt)]);
+    const [ce] = COURT[c.rank];
+    rows.push([L('Posto', 'Rank'), esc(`${elem(ce)} ${L('de', 'of')} ${elem(se)} · ${L(COURT_ROLE[c.rank][0], COURT_ROLE[c.rank][1])}`)]);
+  }
+  const sn = c.rank <= 10 ? c.rank : COURT[c.rank][1];
+  rows.push([L('Árvore da Vida', 'Tree of Life'), esc(`${sephName(sn)}${L(' no mundo de ', ' in the world of ')}${elem(se)}`)]);
+  if (c.rank <= 10) rows.push([L('Numerologia', 'Numerology'), esc(`${c.rank} · ${L(NUM[c.rank][0], NUM[c.rank][1])}`)]);
+  const sc = c.suitObj ? c.suitObj.colorPrimary : '#888';
+  const sp = SEPH[sn];
+  rows.push([L('Cores', 'Colours'),
+    `${swatch(sc, L(SUIT_COLOUR[c.suit][0], SUIT_COLOUR[c.suit][1]))} ${esc(L('Naipe', 'Suit'))}: ${esc(L(SUIT_COLOUR[c.suit][0], SUIT_COLOUR[c.suit][1]))}<br>` +
+    `${sp[3].map(h => swatch(h, L(sp[4], sp[5]))).join('')} ${esc(sp[0])}: ${esc(L(sp[4], sp[5]))} <span class="theme-muted">· ${esc(L('escala da Rainha', 'Queen scale'))}</span>`]);
+  return rows;
+}
+
+// Linha curta para as cartas tiradas
+function corrShort(c) {
+  if (c.suit === 'major') {
+    const m = MAJOR[c.id];
+    if (!m) return '';
+    const [hk, [type, key], path, , , hex, cpt, cen] = m;
+    const a = type === 'planet' ? planet(key) : type === 'sign' ? sign(key) : elem(key);
+    return `${swatch(hex, L(cpt, cen))}${esc(a)} · <span lang="he">${HEB[hk][0]}</span> ${esc(HEB[hk][1])} · ${esc(L('caminho', 'path'))} ${path}`;
+  }
+  const sn = c.rank <= 10 ? c.rank : COURT[c.rank][1];
+  let a;
+  if (c.rank === 1) a = L(`Raiz do ${elem(SUIT_ELEM[c.suit])}`, `Root of ${elem(SUIT_ELEM[c.suit])}`);
+  else if (c.rank <= 10) { const [p, s] = DECAN[c.suit][c.rank - 2]; a = `${planet(p)} ${L('em', 'in')} ${sign(s)}`; }
+  else a = `${elem(COURT[c.rank][0])} ${L('de', 'of')} ${elem(SUIT_ELEM[c.suit])}`;
+  return `${swatch(SEPH[sn][3][0], L(SEPH[sn][4], SEPH[sn][5]))}${esc(a)} · ${esc(SEPH[sn][0])}`;
+}
+
+window.tarotCorrespondences = correspondences;
+window.tarotCardExtra = function (c) {
+  if (!c) return '';
+  const s = corrShort(c);
+  return (s ? `<p class="tc-corr">${s}</p>` : '') + (c.person ? `<p class="tc-person"><b>${esc(L('Como pessoa', 'As a person'))}:</b> ${esc(c.person)}</p>` : '');
+};
+window.tarotDetailExtra = function (c) {
+  if (!c) return '';
+  const rows = correspondences(c);
+  const person = c.person ? `<div class="theme-inner border rounded-lg p-3 text-left">
+      <p class="text-xs font-semibold theme-accent uppercase tracking-wide">${esc(L('Como pessoa', 'As a person'))}</p>
+      <p class="text-sm theme-title leading-relaxed mt-1">${esc(c.person)}</p></div>` : '';
+  if (!rows.length) return person;
+  return person + `<div class="theme-inner border rounded-lg p-3 text-left">
+      <p class="text-xs font-semibold theme-accent uppercase tracking-wide">${esc(L('Correspondências', 'Correspondences'))}</p>
+      <dl class="tc-corr-list">${rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl>
+      <p class="text-[11px] theme-muted mt-2">${esc(L('Sistema da Golden Dawn, o mais usado nos baralhos Rider-Waite e Thoth. A runa e o reino nórdico são criação deste baralho.', 'Golden Dawn system, the one most used with the Rider-Waite and Thoth decks. The rune and the Norse realm are this deck’s own.'))}</p>
+    </div>`;
+};
+
+/* ——— Invertidas ——— */
+const REV_KEY = 'druid_tarot_rev';
+const revOn = () => { try { return localStorage.getItem(REV_KEY) !== 'off'; } catch { return true; } };
+window.tarotRevChance = () => (revOn() ? 0.35 : 0);
+window.setTarotReversals = on => {
+  try { localStorage.setItem(REV_KEY, on ? 'on' : 'off'); } catch { /* sem armazenamento */ }
+  const el = document.getElementById('tarot-rev-on');
+  if (el) el.checked = !!on;
+};
+
+/* ——— Carta significadora ——— */
+let sigId = '';
+window.tarotSigCard = () => (sigId ? NORDIC_TAROT_DECK.find(c => c.id === sigId) || null : null);
+window.setTarotSignificator = id => { sigId = id || ''; };
+if (typeof getFilteredNordicDeck === 'function') {
+  const _gf = getFilteredNordicDeck;
+  getFilteredNordicDeck = function () {
+    const d = _gf();
+    return sigId && typeof activeTarotMode !== 'undefined' && activeTarotMode === 'draw' ? d.filter(c => c.id !== sigId) : d;
+  };
+}
+function fillSignificator() {
+  const sel = document.getElementById('tarot-sig');
+  if (!sel || sel.options.length > 1) return;
+  const groups = [['major', L('Arcanos Maiores', 'Major Arcana')], ['court', L('Figuras da corte', 'Court cards')], ['pips', L('Outros Menores', 'Other Minor Arcana')]];
+  const pick = g => NORDIC_TAROT_DECK.filter(c => g === 'major' ? c.suit === 'major' : g === 'court' ? c.rank > 10 : c.suit !== 'major' && c.rank <= 10);
+  sel.insertAdjacentHTML('beforeend', groups.map(([g, label]) =>
+    `<optgroup label="${esc(label)}">${pick(g).map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</optgroup>`).join(''));
+}
+
+/* ——— Análise da tiragem (interpretação local) ——— */
+const SUIT_NAME = { wands: ['Lanças', 'Spears'], cups: ['Hidromel', 'Mead'], swords: ['Espadas', 'Swords'], pentacles: ['Draupnir', 'Draupnir'] };
+const ELEM_MSG = {
+  fire: ['a vontade, a ação e a paixão mandam nesta questão', 'will, action and passion rule this question'],
+  water: ['os sentimentos, as relações e a intuição estão no centro', 'feelings, relationships and intuition are at the centre'],
+  air: ['pensamentos, decisões e palavras pesam mais do que tudo', 'thoughts, decisions and words weigh more than anything'],
+  earth: ['o corpo, o trabalho, o dinheiro e o concreto dominam', 'the body, work, money and practical matters dominate']
+};
+const ELEM_MISSING = {
+  fire: ['falta Fogo: pode faltar entusiasmo ou iniciativa', 'no Fire: enthusiasm or initiative may be missing'],
+  water: ['falta Água: os sentimentos podem estar a ser postos de lado', 'no Water: feelings may be being pushed aside'],
+  air: ['falta Ar: talvez falte pensar com clareza ou falar', 'no Air: clear thinking or speaking up may be missing'],
+  earth: ['falta Terra: atenção ao lado prático e aos pés no chão', 'no Earth: mind the practical side and staying grounded']
+};
+const RANK_WORD = { 1: ['Ases', 'Aces'], 2: ['Dois', 'Twos'], 3: ['Três', 'Threes'], 4: ['Quatros', 'Fours'], 5: ['Cincos', 'Fives'], 6: ['Seis', 'Sixes'], 7: ['Setes', 'Sevens'], 8: ['Oitos', 'Eights'], 9: ['Noves', 'Nines'], 10: ['Dez', 'Tens'], 11: ['Escudeiros', 'Squires'], 12: ['Valquírias', 'Valkyries'], 13: ['Völvas', 'Völvas'], 14: ['Jarls', 'Jarls'] };
+const COUNT_WORD = { 2: ['Dois', 'Two'], 3: ['Três', 'Three'], 4: ['Quatro', 'Four'] };
+const friendly = (a, b) => (a === 'fire' && b === 'air') || (a === 'air' && b === 'fire') || (a === 'water' && b === 'earth') || (a === 'earth' && b === 'water');
+const contrary = (a, b) => (a === 'fire' && b === 'water') || (a === 'water' && b === 'fire') || (a === 'air' && b === 'earth') || (a === 'earth' && b === 'air');
+
+window.tarotAnalysis = function (items) {
+  const cards = items.filter(it => it.card).map(it => ({ c: it.card, rev: !!it.rev, pos: it.pos }));
+  const n = cards.length;
+  if (!n) return [];
+  const out = [];
+  const majors = cards.filter(x => x.c.suit === 'major').length;
+  if (n >= 3 && majors / n >= 0.5) out.push(L(`${majors} de ${n} cartas são Arcanos Maiores: forças grandes e lições de vida estão em jogo; nem tudo depende só da sua vontade.`, `${majors} of ${n} cards are Major Arcana: great forces and life lessons are at play; not everything depends on your will alone.`));
+  else if (n >= 3 && majors === 0) out.push(L('Nenhum Arcano Maior: a questão vive no plano do dia a dia e está, em grande parte, nas suas mãos.', 'No Major Arcana: the question lives in everyday life and is largely in your hands.'));
+  if (n >= 3) {
+    const count = { wands: 0, cups: 0, swords: 0, pentacles: 0 };
+    cards.forEach(x => { if (count[x.c.suit] !== undefined) count[x.c.suit]++; });
+    const minors = n - majors;
+    const top = Object.entries(count).sort((a, b) => b[1] - a[1])[0];
+    if (minors >= 2 && top[1] >= 2 && top[1] / n >= 0.4) {
+      const e = SUIT_ELEM[top[0]];
+      out.push(L(`Predomina ${SUIT_NAME[top[0]][0]} (${elem(e)}, ${top[1]} cartas): ${ELEM_MSG[e][0]}.`, `${SUIT_NAME[top[0]][1]} dominate (${elem(e)}, ${top[1]} cards): ${ELEM_MSG[e][1]}.`));
+    }
+    if (n >= 5) {
+      const miss = Object.keys(count).filter(k => !count[k]).map(k => SUIT_ELEM[k]);
+      if (miss.length && miss.length < 4) out.push(L('Elementos em falta: ', 'Missing elements: ') + miss.map(e => L(ELEM_MISSING[e][0], ELEM_MISSING[e][1])).join('; ') + '.');
+    }
+  }
+  const ranks = {};
+  cards.forEach(x => { if (x.c.suit !== 'major') ranks[x.c.rank] = (ranks[x.c.rank] || 0) + 1; });
+  Object.entries(ranks).filter(([, k]) => k >= 2).forEach(([r, k]) => {
+    r = +r;
+    const cw = COUNT_WORD[k] || [String(k), String(k)];
+    const what = r <= 10 ? L(NUM[r][0], NUM[r][1]) : L(COURT_ROLE[r][0], COURT_ROLE[r][1]).split(':')[1].trim().replace(/\.$/, '');
+    out.push(r <= 10
+      ? L(`${cw[0]} ${RANK_WORD[r][0]} na mesa: o número reforça o tema (${what}).`, `${cw[1]} ${RANK_WORD[r][1]} on the table: the number underlines the theme (${what}).`)
+      : L(`${cw[0]} ${RANK_WORD[r][0]} na mesa: o posto repete-se (${what}).`, `${cw[1]} ${RANK_WORD[r][1]} on the table: the rank repeats (${what}).`));
+  });
+  const courts = cards.filter(x => x.c.rank > 10).length;
+  if (n >= 3 && courts >= 2) out.push(L(`${courts} figuras da corte: há pessoas envolvidas, ou papéis que a própria pessoa está a assumir. Veja o «Como pessoa» de cada uma.`, `${courts} court cards: other people are involved, or roles you yourself are taking on. See the «As a person» of each one.`));
+  const revs = cards.filter(x => x.rev).length;
+  if (n >= 3 && revs / n >= 0.5) out.push(L(`${revs} de ${n} cartas invertidas: muita energia está bloqueada, em atraso ou a ser vivida por dentro.`, `${revs} of ${n} cards reversed: much of the energy is blocked, delayed or being lived inwardly.`));
+  if (n >= 3) {
+    let sum = cards.reduce((a, x) => a + (x.c.value || 0), 0);
+    if (sum > 0) {
+      const orig = sum;
+      while (sum > 22) sum = String(sum).split('').reduce((a, b) => a + Number(b), 0);
+      const q = NORDIC_TAROT_DECK.find(c => c.id === 'M' + String(sum === 22 ? 0 : sum).padStart(2, '0'));
+      if (q) out.push(L(`Quintessência: a soma dos números (${orig}) reduz-se a ${sum === 22 ? '22 = 0' : sum}, ${q.name} (${q.title}): o conselho de fundo de toda a tiragem.`, `Quintessence: the sum of the numbers (${orig}) reduces to ${sum === 22 ? '22 = 0' : sum}, ${tr(q.name)} (${tr(q.title)}): the underlying advice of the whole spread.`));
+    }
+  }
+  if (n === 3) {
+    const [a, b, c] = cards.map(x => x.c.element);
+    if (b && a && c) {
+      const f = [a, c].filter(e => e === b || friendly(e, b)).length;
+      const k = [a, c].filter(e => contrary(e, b)).length;
+      if (k === 2) out.push(L('Dignidades elementais: as duas cartas dos lados são contrárias ao elemento da carta do meio e enfraquecem-na; leia-a com menos força.', 'Elemental dignities: both side cards are contrary to the middle card’s element and weaken it; read it with less force.'));
+      else if (f === 2) out.push(L('Dignidades elementais: as cartas dos lados apoiam o elemento da carta do meio, que ganha força.', 'Elemental dignities: the side cards support the middle card’s element, which gains strength.'));
+      else if (contrary(a, c)) out.push(L('Dignidades elementais: as cartas dos lados são contrárias entre si; a carta do meio faz de ponte entre duas forças opostas.', 'Elemental dignities: the side cards are contrary to each other; the middle card bridges two opposing forces.'));
+    }
+  }
+  return out;
+};
+
+apply();
+document.addEventListener('DOMContentLoaded', () => {
+  fillSignificator();
+  const r = document.getElementById('tarot-rev-on');
+  if (r) r.checked = revOn();
+});
+if (document.readyState !== 'loading') {
+  fillSignificator();
+  const r = document.getElementById('tarot-rev-on');
+  if (r) r.checked = revOn();
+}
 })();
 </script>
 </body></html>
